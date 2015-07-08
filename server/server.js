@@ -1,6 +1,10 @@
 var express = require('express');
+var path = require('path');
 var app = express();
 var port = process.env.PORT || 3000;
+
+app.set('views', path.join(__dirname, "views"));
+app.set('view engine', 'ejs');
 
 var options = {
   root: __dirname + '/public',
@@ -12,7 +16,7 @@ var options = {
 }
 
 app.get('/', function(req, res){
-  res.sendFile('index.html', options);
+  res.render('index');
 });
 
 app.listen(port);
