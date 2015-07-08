@@ -1,0 +1,23 @@
+{
+  "name": "talentgg",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server/server.js",
+  "dependencies": {
+    "express": "^4.13.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/talentgg/talentgg.git"
+  },
+  "author": "Talent.gg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seangrogg/talentgg/issues"
+  },
+  "homepage": "https://github.com/seangrogg/talentgg"
+}
