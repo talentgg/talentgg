@@ -8,7 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "nodemon server/server.js",
+    "test": "node server/server.js",
     "postinstall": "bower install"
   },
   "repository": {
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/seangrogg/talentgg",
   "engines": {
-    "node": "0.12.4"
+    "node": "0.12.6",
+    "npm": "^2.1"
   }
 }
