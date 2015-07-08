@@ -58,7 +58,7 @@ var Team = sequelize.define('team', {
   who: Sequelize.STRING(1024),
   style: Sequelize.STRING(1024),
   when: Sequelize.STRING(1024),
-  lookingFor: Sequelize.STRING(1024),
+  lookingFor: Sequelize.STRING(1024)
 
   // LoL specific                        // it'll just display the team members
 
