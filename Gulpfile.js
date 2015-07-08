@@ -6,9 +6,9 @@ var reload = bs.reload;
 
 gulp.task('start', function () {
   nodemon({
-    script: 'server/server.js'
-  , ext: 'js html ejs jsx'
-  , env: { 'NODE_ENV': 'development' }
+    script: 'server/server.js',
+    ext: 'js html ejs jsx',
+    env: { 'NODE_ENV': 'development' }
   })
 })
 
