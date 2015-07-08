@@ -15,7 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "nodemon server/server.js"
+    "test": "node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,9 @@
   "bugs": {
     "url": "https://github.com/seangrogg/talentgg/issues"
   },
-  "homepage": "https://github.com/seangrogg/talentgg"
+  "homepage": "https://github.com/seangrogg/talentgg",
+  "engines": {
+    "node": "0.12.6",
+    "npm": "^2.1"
+  }
 }
