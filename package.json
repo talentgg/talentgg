@@ -8,8 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node server/server.js",
-    "postinstall": "bower install"
+    "test": "node server/server.js"
   },
   "repository": {
     "type": "git",
