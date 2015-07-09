@@ -8,9 +8,9 @@ module.exports = function( app ) {
     res.render( 'index' );
   } );
 
-  // app.post('/register', function(req, res, next) {
-  //   User.register(req, res, next);
-  // });
+  app.post( '/register', function( req, res, next ) {
+    User.register( req, res, next );
+  } );
 
   // app.post('/signin', passport.authenticate('local'), function(req, res, next) {
   //   User.signin(req, res, next);
