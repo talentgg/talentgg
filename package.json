@@ -9,6 +9,7 @@
     "connect-flash": "^0.1.1",
     "ejs": "^2.3.2",
     "express": "^4.13.1",
+    "flux": "^2.0.3",
     "gulp": "^3.9.0",
     "gulp-nodemon": "^2.0.3",
     "passport": "^0.2.2",
