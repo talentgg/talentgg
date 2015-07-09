@@ -1,4 +1,4 @@
 module.exports = {
   port: process.env.PORT || 3000, // the server port
-  secret: 'poptart eating cats like lasagna too',
+  psql: process.env.PSQL || 'postgres://localhost:5432/talentgg'
 };

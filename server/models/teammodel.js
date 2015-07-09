@@ -1,12 +1,13 @@
-var Sequelize = require('sequelize');
-var pg = require('pg').native;
-var PassportLocalStrategy = require('passport-local').Strategy;
+var Sequelize = require( 'sequelize' );
+var pg = require( 'pg' ).native;
+var PassportLocalStrategy = require( 'passport-local' ).Strategy;
+var db = require( '../db/db' )
 
-var Team = sequelize.define('team', {
+var Team = db.define( 'team', {
 
   //FIXED FIELDS
-  teamname: Sequelize.STRING(16),    
-  timezone: Sequelize.INTEGER,// +- GMT
+  teamname: Sequelize.STRING( 16 ),
+  timezone: Sequelize.INTEGER, // +- GMT
   language: Sequelize.STRING,
   game: Sequelize.STRING,
   seeking: Sequelize.STRING,
@@ -14,10 +15,10 @@ var Team = sequelize.define('team', {
   id: Sequelize.UUID,
 
   // ESSAY FIELDS
-  who: Sequelize.STRING(1024),
-  style: Sequelize.STRING(1024),
-  when: Sequelize.STRING(1024),
-  lookingFor: Sequelize.STRING(1024)
+  who: Sequelize.STRING( 1024 ),
+  style: Sequelize.STRING( 1024 ),
+  when: Sequelize.STRING( 1024 ),
+  lookingFor: Sequelize.STRING( 1024 )
 
   // LoL specific                        // it'll just display the team members
 
@@ -33,6 +34,6 @@ var Team = sequelize.define('team', {
   // loud: Sequelize.INTEGER,            // loud / calm
   // commitment: Sequelize.INTEGER,
   // ambition: Sequelize.INTEGER
-});
+} );
 
 Team.sync();
