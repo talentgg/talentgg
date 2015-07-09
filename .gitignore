@@ -1,5 +1,10 @@
 # Dependencies
 node_modules
 server/public/bower
+
+# Private Files
+server/config/private.js
+
+# Loose Files
 .idea
 dist
