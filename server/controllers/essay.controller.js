@@ -1,1 +1,0 @@
-//essay helper functions here
