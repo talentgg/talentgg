@@ -11,9 +11,9 @@ var Form = React.createClass({
     e.preventDefault();
 
     var data = {
-      name: this.refs.name.getDOMENode().value,
-      email: this.refs.email.getDOMENode().value,
-      password: this.refs.password.getDOMENode().value
+      name: this.refs.name.getDOMNode().value,
+      email: this.refs.email.getDOMNode().value,
+      password: this.refs.password.getDOMNode().value
     }
     
     this.props.signUp(data);
@@ -44,8 +44,11 @@ var Registration = React.createClass({
   getInitialState: function() {
     return {};
   },
-  signUp: function() {
+  signUp: function(data) {
     // todo: send payload to server or action
+    $.post(./server/routes/user, function(data) {
+
+    });
   },
   render: function() {
     return (
