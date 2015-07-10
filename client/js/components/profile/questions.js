@@ -27,4 +27,4 @@ var Questions = React.createClass({
   }
 });
 
-React.render(<Questions />, document.getElementById('app'));
+module.exports = Questions
