@@ -1,3 +1,13 @@
-/**
- * Created by billyrukh on 7/10/15.
- */
+var React = require("react");
+
+var About = React.createClass({
+  render: function () {
+    return (
+      <div>
+        <h1>About</h1>
+      </div>
+    )
+  }
+});
+
+module.exports = About;
