@@ -1,7 +1,7 @@
 var request = require( 'request' );
-var api = 'c648b154-e354-43a5-9e56-7fe6eb1569ba';
-//var api = require( '../config/private' ).api;
+var api = require( '../config/config' ).api;
 
+//Helper function for dealing with API calls
 var relay = function( url, callback ) {
   request( url, function( err, stat, body ) {
     if ( err ) {
