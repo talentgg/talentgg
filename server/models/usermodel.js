@@ -24,7 +24,6 @@ var User = db.define( 'user', {
   language: Sequelize.STRING,
   games: Sequelize.JSON, // i think there's a better way of doing this
   seeking: Sequelize.STRING,
-  lastUpdated: Sequelize.NOW,
 
   // ESSAY FIELDS
   about: Sequelize.STRING( 1024 ),
