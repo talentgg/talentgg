@@ -1,4 +1,5 @@
 var React = require('react');
+var success = require('/success');
 
 var fieldValues = {
   name: null,
@@ -11,13 +12,13 @@ var Form = React.createClass({
     e.preventDefault();
 
     var data = {
-      name: this.refs.name.getDOMENode().value,
-      email: this.refs.email.getDOMENode().value,
-      password: this.refs.password.getDOMENode().value
+      name: this.refs.name.getDOMNode().value,
+      email: this.refs.email.getDOMNode().value,
+      password: this.refs.password.getDOMNode().value
     }
     
     this.props.signUp(data);
-    
+
   },
   render: function() {
     return (
@@ -44,8 +45,10 @@ var Registration = React.createClass({
   getInitialState: function() {
     return {};
   },
-  signUp: function() {
-    // todo: send payload to server or action
+  signUp: function(data) {
+    // todo: save data
+    //    redirect to success or login page  
+    });
   },
   render: function() {
     return (
