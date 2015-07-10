@@ -10,10 +10,18 @@ var Profile = React.createClass({
   },
   render: function() {
     return: (
-      <Avatar />
-      <BasicInfo />
-      <UserQuestions />
-      <Footer />
+      <div>
+        <Avatar username={username} avatar={this.state.avatar}/>
+      </div>
+      <div>
+        <BasicInfo username={username} info={this.state.basic-info}/>
+      </div>
+      <div>
+        <UserQuestions username={username} questions={this.state.user-questions}/>
+      </div>
+      <div>
+        <Footer username={username} footer={this.state.footer}/>
+      </div>
     );
   }
 });
