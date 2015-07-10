@@ -47,7 +47,8 @@ var Registration = React.createClass({
   },
   signUp: function(data) {
     // todo: save data
-    //    redirect to success or login page
+    //    redirect to success or login page  
+    });
   },
   render: function() {
     return (
