@@ -1,4 +1,5 @@
 var React = require('react');
+var success = require('/success');
 
 var fieldValues = {
   name: null,
@@ -17,7 +18,7 @@ var Form = React.createClass({
     }
     
     this.props.signUp(data);
-    
+
   },
   render: function() {
     return (
@@ -45,10 +46,8 @@ var Registration = React.createClass({
     return {};
   },
   signUp: function(data) {
-    // todo: send payload to server or action
-    $.post(./server/routes/user, function(data) {
-
-    });
+    // todo: save data
+    //    redirect to success or login page
   },
   render: function() {
     return (
