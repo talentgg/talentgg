@@ -39,17 +39,20 @@ var User = db.define( 'user', {
   id: Sequelize.STRING, // string or int?
 
   // PROFILE RATINGS
-  //leadership
+  // leadership
   dominance: Sequelize.INTEGER,
   adaptability: Sequelize.INTEGER,
-  //playing style
-  aggressive: Sequelize.INTEGER, // aggressive / patient
-  tank: Sequelize.INTEGER, // tank / technical
-  support: Sequelize.INTEGER, // supportive / independent
-  troll: Sequelize.INTEGER, // troll / polite
-  loud: Sequelize.INTEGER, // loud / calm
+
+  // playing style
+  aggressive: Sequelize.INTEGER,      // aggressive / patient
+  tank: Sequelize.INTEGER,            // tank / technical
+  support: Sequelize.INTEGER,         // supportive / independent
+  troll: Sequelize.INTEGER,           // troll / polite
+  loud: Sequelize.INTEGER,            // loud / calm
+
   commitment: Sequelize.INTEGER,
   ambition: Sequelize.INTEGER
 } );
 
 User.sync();
+
