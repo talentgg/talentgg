@@ -1,7 +1,13 @@
 var React = require('react');
-var success = require('/success');
+var success = require('./success');
 
 var Form = React.createClass({
+  propTypes: {
+    data: React.PropTypes.object.isRequired,
+    name: React.PropTypes.string.isRequired,
+    email: React.PropTypes.string.isRequired,
+    password: React.PropTypes.string.isRequired
+  },
   handleSubmit: function(e) {
     e.preventDefault();
 
@@ -42,7 +48,6 @@ var Registration = React.createClass({
   signUp: function(data) {
     // todo: save data
     //    redirect to success or login page  
-    });
   },
   render: function() {
     return (
