@@ -1,10 +1,10 @@
 var React = require('react');
-var success = require('/success');
+var success = require('./success');
 
 var fieldValues = {
-  name: null,
-  email: null,
-  password: null
+  name: "",
+  email: "",
+  password: ""
 }
 
 var Form = React.createClass({
@@ -45,11 +45,11 @@ var Registration = React.createClass({
   getInitialState: function() {
     return {};
   },
-  signUp: function(data) {
+  /*signUp: function(data) {
     // todo: save data
     //    redirect to success or login page  
-    });
-  },
+    })
+  },*/
   render: function() {
     return (
       <Form />
