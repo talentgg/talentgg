@@ -1,7 +1,7 @@
 var express = require( 'express' );
 var path = require( 'path' );
 var app = express();
-var port = require( './config/config' ).port;
+var config = require( './config/config' );
 
 //auth middleware
 var session = require( 'express-session' );
@@ -29,7 +29,7 @@ app.use( session( {
 
 app.use( passport.initialize() );
 app.use( passport.session() );
-passport.use( User.createStrategy() );
+passport.use( new LocalStrategy( User.authenticate() ) );
 passport.serializeUser( User.serializeUser() );
 passport.deserializeUser( User.deserializeUser() );
 
@@ -38,7 +38,5 @@ passport.deserializeUser( User.deserializeUser() );
 require( './routes/user.routes.js' )( app );
 // require( './routes/teamroutes.js' )( app );
 
-
-
-app.listen( port );
-console.log( 'Listening on port ' + port );
+app.listen( config.port );
+console.log( 'Listening on port ' + config.port );
