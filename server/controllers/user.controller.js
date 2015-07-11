@@ -18,16 +18,17 @@ module.exports = {
         res.render( 'index' );
       } );
     } );
-  }
+  },
 
+  logout: function( req, res ) {
+    req.logout();
+    res.end();
+  }
   //sign in
 
   //sign out
 
-  // logout: function( req, res ) {
-  //   req.logout();
-  //   res.end();
-  // }
+  
 
   //change info
 
