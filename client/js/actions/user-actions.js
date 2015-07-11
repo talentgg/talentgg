@@ -1,6 +1,13 @@
-var React = require('React');
-var Flux = require('/lib/flux');
+var UserConstants = require('../constants/user-constants');
+var Dispatcher = require('../dispatchers/dispatcher');
 
-_signUp: function(obj) {
-  
-}
+var UserActions = {
+  signUp: function(data) {
+    Dispatcher.handleViewAction({
+      actionType: UserConstants.SIGN_UP,
+      data: data
+    })
+  }
+};
+
+module.exports = UserActions;
