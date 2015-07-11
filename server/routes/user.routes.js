@@ -1,30 +1,30 @@
 var User = require( '../controllers/user.controller.js' );
 var passport = require( 'passport' );
 var handle = require( './handler' );
+var db = require( '../config/db.js' );
+var LocalStrategy = require('passport-local').Strategy;
+var UserModel = require('../models/user.model.js');
 
-//LOCAL STRATEGY BELOW
-// passport.use( new LocalStrategy(
-//   function( username, password, done ) {
-//     User.findOne( {
-//       username: username
-//     }, function( err, user ) {
-//       if ( err ) {
-//         return done( err );
-//       }
-//       if ( !user ) {
-//         return done( null, false, {
-//           message: 'Incorrect username.'
-//         } );
-//       }
-//       if ( !user.validPassword( password ) ) {
-//         return done( null, false, {
-//           message: 'Incorrect password.'
-//         } );
-//       }
-//       return done( null, user );
-//     } );
-//   }
-// ) );
+passport.use( new LocalStrategy(
+  function( username, password, done ) {
+    UserModel.findOne( { where: { username: username } } ).then(function( err, user ) {
+      if ( err ) {
+        return done( err );
+      }
+      if ( !user ) {
+        return done( null, false, {
+          message: 'Incorrect username.'
+        } );
+      }
+      if ( !user.validPassword( password ) ) {
+        return done( null, false, {
+          message: 'Incorrect password.'
+        } );
+      }
+      return done( null, user );
+    } );
+  }
+) );
 
 module.exports = function( app ) {
 
@@ -36,11 +36,11 @@ module.exports = function( app ) {
     User.register( req, res, next );
   } );
 
-  // app.post( '/login', passport.authenticate( 'local' ), function( req, res ) {
-  //   // If this function gets called, authentication was successful.
-  //   // `req.user` contains the authenticated user.
-  //   res.redirect( '/' );
-  // } );
+  app.post( '/login', passport.authenticate( 'local' ), function( req, res ) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.redirect( '/' );
+  } );
 
   // app.post('/signout', function(req, res, next){
   //   User.signout(req, res, next);
