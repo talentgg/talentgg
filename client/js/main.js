@@ -5,7 +5,6 @@ var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
 
-<<<<<<< HEAD
 
 var Registration = require("./components/registration/registration");
 var About = require("./components/about/app-about");
@@ -41,6 +40,3 @@ Router.run(routes, function (Handler) {
 
 
  */
-=======
-React.render(<App/>, document.getElementById('root'));
->>>>>>> avatar component
