@@ -1,48 +1,45 @@
 var Sequelize = require( 'sequelize' );
-var DataTypes = require( '../../node_modules/sequelize/lib/data-types' );
-var PassportLocalStrategy = require( 'passport-local' ).Strategy;
 var db = require( '../config/db.js' );
 
 var Team = db.define( 'team', {
 
-  //Defaulted Fields
+  //Standard fields
   id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
     primaryKey: true
   },
-  lastUpdated: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+  teamName: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false
+  },
+  createdAt: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  }
+  updatedAt: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
   },
 
-  //Static Fields
-  teamname: Sequelize.STRING( 16 ),
-  timezone: Sequelize.INTEGER, // +- GMT
-  language: Sequelize.STRING,
-  game: Sequelize.STRING,
-  seeking: Sequelize.STRING,
+  //Team-specific schema
+  data: {
+    //This is for storing team-level data, similar to bio
+    type: Sequelize.JSON,
+    defaultValue: {}
+  },
+  members: {
+    //This is for storing the members that are part of the team
+    type: Sequelize.JSON,
+    defaultValue: []
+  },
+  game: {
+    //This is for storing the team's game data, should only be one game
+    type: Sequelize.JSON,
+    defaultValue: {}
+  }
 
-  // ESSAY FIELDS
-  who: Sequelize.STRING( 1024 ),
-  style: Sequelize.STRING( 1024 ),
-  when: Sequelize.STRING( 1024 ),
-  lookingFor: Sequelize.STRING( 1024 )
-
-  // LoL specific                        // it'll just display the team members
-
-  // // PROFILE RATINGS
-  // //leadership
-  // dominance: Sequelize.INTEGER,
-  // adaptability: Sequelize.INTEGER,
-  // //playing style
-  // aggressive: Sequelize.INTEGER,      // aggressive / patient
-  // tank: Sequelize.INTEGER,            // tank / technical
-  // support: Sequelize.INTEGER,         // supportive / independent
-  // troll: Sequelize.INTEGER,           // troll / polite
-  // loud: Sequelize.INTEGER,            // loud / calm
-  // commitment: Sequelize.INTEGER,
-  // ambition: Sequelize.INTEGER
 } );
 
 Team.sync();

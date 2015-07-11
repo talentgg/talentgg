@@ -149,7 +149,7 @@ var attachToUser = function( UserSchema, options ) {
         }
 
         if ( user ) {
-          return user.authenticate( password, cb );
+          return cb( null, user );
         } else {
           return cb( null, false, {
             message: options.incorrectUsernameError

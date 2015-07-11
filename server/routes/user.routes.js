@@ -2,29 +2,6 @@ var User = require( '../controllers/user.controller.js' );
 var passport = require( 'passport' );
 var handle = require( './handler' );
 var db = require( '../config/db.js' );
-var LocalStrategy = require('passport-local').Strategy;
-var UserModel = require('../models/user.model.js');
-
-passport.use( new LocalStrategy(
-  function( username, password, done ) {
-    UserModel.findOne( { where: { username: username } } ).then(function( err, user ) {
-      if ( err ) {
-        return done( err );
-      }
-      if ( !user ) {
-        return done( null, false, {
-          message: 'Incorrect username.'
-        } );
-      }
-      if ( !user.validPassword( password ) ) {
-        return done( null, false, {
-          message: 'Incorrect password.'
-        } );
-      }
-      return done( null, user );
-    } );
-  }
-) );
 
 module.exports = function( app ) {
 
@@ -42,13 +19,13 @@ module.exports = function( app ) {
     res.redirect( '/' );
   } );
 
-  app.post('/logout', function(req, res, next){
-    User.logout(req, res, next);
-  });
+  app.post( '/logout', function( req, res, next ) {
+    User.logout( req, res, next );
+  } );
 
-  app.post('/password', function(req, res, next){
-    User.changePassword(req, res, next);
-  });
+  app.post( '/password', function( req, res, next ) {
+    User.changePassword( req, res, next );
+  } );
 
   // app.post('/user', utils.checkAuth, function(req, res, next){
   //   User.update(req, res, next);
