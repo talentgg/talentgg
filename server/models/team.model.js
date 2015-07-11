@@ -1,7 +1,7 @@
 var Sequelize = require( 'sequelize' );
 var DataTypes = require( '../../node_modules/sequelize/lib/data-types' );
 var PassportLocalStrategy = require( 'passport-local' ).Strategy;
-var db = require( '../db/db' );
+var db = require( '../config/db.js' );
 
 var Team = db.define( 'team', {
 
@@ -46,3 +46,5 @@ var Team = db.define( 'team', {
 } );
 
 Team.sync();
+
+module.exports = Team;

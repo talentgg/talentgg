@@ -1,4 +1,4 @@
 var Sequelize = require( 'sequelize' );
-var config = require( '../config/config' );
+var config = require( './config' );
 
 module.exports = new Sequelize( config.psql );

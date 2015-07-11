@@ -1,25 +1,55 @@
 var Sequelize = require( 'sequelize' );
 var DataTypes = require( '../../node_modules/sequelize/lib/data-types' );
-var PassportLocalStrategy = require( 'passport-local' ).Strategy;
-var db = require( '../db/db' );
+var passportMagic = require( '../config/magic' );
+var db = require( '../config/db.js' );
 
+var User = passportMagic.defineUser( db, {
+  // remainder of schema would go in here
+
+  // email: {
+  //   type: Sequelize.STRING,
+  //   unique: true,
+  //   allowNull: false
+  // }
+} );
+
+User.sync();
+
+module.exports = User;
+
+// The remainder of the schema is commented out for testing purposes!
+// It will likely be re-included incrementally.
+
+/*
 var User = db.define( 'user', {
 
   //Defaulted Fields
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
+    autoIncrement: true,
     primaryKey: true
   },
   lastUpdated: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
   },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false
+  },
+  username: {
+    type: Sequelize.STRING,
+    // unique: true,
+    allowNull: false
+  }
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
 
   //Static Fields
-  username: Sequelize.STRING( 16 ),
-  password: Sequelize.STRING( 32 ), // secure this after we pick a strategy
-  email: Sequelize.STRING, // parse this
   timezone: Sequelize.INTEGER, // +- GMT
   language: Sequelize.STRING,
   games: Sequelize.JSON, // i think there's a better way of doing this
@@ -43,15 +73,15 @@ var User = db.define( 'user', {
   adaptability: Sequelize.INTEGER,
 
   // playing style
-  aggressive: Sequelize.INTEGER,      // aggressive / patient
-  tank: Sequelize.INTEGER,            // tank / technical
-  support: Sequelize.INTEGER,         // supportive / independent
-  troll: Sequelize.INTEGER,           // troll / polite
-  loud: Sequelize.INTEGER,            // loud / calm
+  aggressive: Sequelize.INTEGER, // aggressive / patient
+  tank: Sequelize.INTEGER, // tank / technical
+  support: Sequelize.INTEGER, // supportive / independent
+  troll: Sequelize.INTEGER, // troll / polite
+  loud: Sequelize.INTEGER, // loud / calm
 
   commitment: Sequelize.INTEGER,
   ambition: Sequelize.INTEGER
 } );
 
-User.sync();
 
+*/
