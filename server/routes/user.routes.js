@@ -42,9 +42,9 @@ module.exports = function( app ) {
     res.redirect( '/' );
   } );
 
-  // app.post('/signout', function(req, res, next){
-  //   User.signout(req, res, next);
-  // });
+  app.post('/logout', function(req, res, next){
+    User.logout(req, res, next);
+  });
 
   // app.post('/user/password', utils.checkAuth, function(req, res, next){
   //   User.changePassword(req, res, next);
