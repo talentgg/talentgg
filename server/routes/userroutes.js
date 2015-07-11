@@ -1,6 +1,25 @@
-var User = require( '../controllers/user.controller.js' );
+var UserController = require( '../controllers/user.controller.js' );
+var User = require( '../models/usermodel' ).User;
 var passport = require( 'passport' );
 var handle = require( './handler' );
+var LocalStrategy = require('passport-local').Strategy;
+
+//LOCAL STRATEGY BELOW
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
 
 module.exports = function( app ) {
 
@@ -9,12 +28,14 @@ module.exports = function( app ) {
   } );
 
   app.post( '/register', function( req, res, next ) {
-    User.register( req, res, next );
+    UserController.register( req, res, next );
   } );
 
-  // app.post('/signin', passport.authenticate('local'), function(req, res, next) {
-  //   User.signin(req, res, next);
-  // });
+   app.post('/login', passport.authenticate('local'), function(req, res) {
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      res.redirect('/');
+    } );
 
   // app.post('/signout', function(req, res, next){
   //   User.signout(req, res, next);
