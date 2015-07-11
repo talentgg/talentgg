@@ -1,26 +1,21 @@
 var React = require("react");
-var Router = require("react-router-component");
-var Template = require("./app-template");
-var Registration = require("./registration/registration");
-var About = require("./about/app-about");
-var Landing = require("./landing/app-landing");
-var UserQuestions = require("./user-profile/user-questions.js");
-var Locations = Router.Locations;
-var Location = Router.Location;
+var Router = require('react-router');
+var Route = Router.Route;
+var RouteHandler = Router.RouteHandler;
+var Link = Router.Link;
 
-var App = React.createClass({
+var Template = require("./app-template");
+
+
+var APP = React.createClass({
   render: function () {
     return (
       <Template>
-        <Locations>
-          <Location path="/" handler= {Landing}/>
-          <Location path="/register" handler={Registration}/>
-          <Location path="/about" handler={About}/>
-          <Location path="/userquestions" handler={UserQuestions}/>
-        </Locations>
+        <RouteHandler/>
       </Template>
     )
   }
 });
 
-module.exports = App;
+
+exports.APP = APP;

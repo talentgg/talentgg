@@ -1,16 +1,19 @@
 var React = require("react");
-var Link = require("react-router-component").Link;
+var Router = require('react-router');
+var Route = Router.Route;
+var RouteHandler = Router.RouteHandler;
+var Link = Router.Link;
 
 
 var Header = React.createClass({
   render: function () {
     return (
       <div>
-        <h1>Talent.gg</h1>
+        <Link to="/"><h1>Talent.gg</h1></Link>
+
         /* add navigation */
-        <Link href="/register">Register</Link>
-        <Link href="/about">About</Link>
-        <Link href="/userquestions">Questions(testing)</Link>
+        <Link to="register">Register</Link>
+        <Link to="about">About</Link>
       </div>
     );
   }
