@@ -1,6 +1,6 @@
 var React = require("react");
 var Header = require("./header/app-header");
-var Landing = require("./landing/app-landing");
+
 
 
 var Template = React.createClass({
@@ -9,7 +9,6 @@ var Template = React.createClass({
       <div>
         <Header />
         {this.props.children}
-        <Landing />
       </div>
     )
   }

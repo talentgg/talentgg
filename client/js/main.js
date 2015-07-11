@@ -23,3 +23,20 @@ var routes = (
 Router.run(routes, function (Handler) {
   React.render(<Handler/>, document.getElementById('root'));
 });
+
+/*
+  RIGHT NOW LANDING SHOWS UP WITH THE TEMPLATE, HERE IS HOW WE WILL FIX IT WITH AUTH ROUTES
+ <Route handler={Application}>
+   <Route handler={Authed}> // VIEWS NESTED WHEN THEY ARE AUTHENTICATED
+     <Route name="dashboard" handler={Dashboard}/>
+     < name="profile" handler={Profile}/>
+   </Route>
+   <Route handler={NotAuthed}> // VIEWS WHEN THEY ARE NOT AUTHENTICATED
+     <Route name="login" handler={Login}/>
+     <Route name="about" handler={About}/>
+   </Route>
+ </Route>
+
+
+
+ */
