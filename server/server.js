@@ -18,8 +18,12 @@ app.set( 'view engine', 'ejs' );
 //middleware injection
 app.use( express.static( 'public' ) );
 app.use( cookieParser() );
-app.use( bodyParser() );
+app.use( bodyParser.urlencoded( {
+  extended: true
+} ) );
 app.use( session( {
+  resave: false,
+  saveUninitialized: false,
   secret: 'keyboard cat'
 } ) );
 
