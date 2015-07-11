@@ -46,9 +46,9 @@ module.exports = function( app ) {
     User.logout(req, res, next);
   });
 
-  // app.post('/user/password', utils.checkAuth, function(req, res, next){
-  //   User.changePassword(req, res, next);
-  // });
+  app.post('/password', function(req, res, next){
+    User.changePassword(req, res, next);
+  });
 
   // app.post('/user', utils.checkAuth, function(req, res, next){
   //   User.update(req, res, next);

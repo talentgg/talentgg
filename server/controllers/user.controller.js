@@ -23,7 +23,17 @@ module.exports = {
   logout: function( req, res ) {
     req.logout();
     res.end();
+  },
+
+  changePassword: function(req, res, next) {
+    User.update( { activationKey: req.body.password }, { where: { username : req.body.username } } )
+   //    .then(function() { 
+   //    console.log("Password Updated!");
+   //    }).error(function(err) { 
+   //   console.log("Update Failed !");
+   // })
   }
+  
   //sign in
 
   //sign out
