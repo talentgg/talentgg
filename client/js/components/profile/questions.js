@@ -1,9 +1,14 @@
 var React = require('react');
 
-var Questions = React.createClass({
+var UserQuestions = React.createClass({
   getInitialState: function() {
     return {
-     placeholder: null  // temp
+      testData: {
+          questionText: "Does this work",
+          answersText: ["yes", "no"],
+          answersEffect: [["competence", "+=10"], ["competence", "-=10"]]  //it might be easier to have the answer and effect wrapped  in one tuple
+
+      }
     };
   },
   handleSubmit: function(e) {
@@ -16,10 +21,8 @@ var Questions = React.createClass({
       return (      
       <div className="questionnaire">
         <form id="question" onSubmit={this.handleSubmit}>        
-          <h2> Placeholder text. This should pull questions and answers from the server. </h2>
-          <br /><input type="radio" name="temp" value="+=10" />dominant answer?
-          <br /><input type="radio" name="temp" value="+=0" />adaptable answer?
-          <br /><input type="radio" name="temp" value="-=10" />passive answer?
+          <h2>{this.state.testData.questionText}</h2>
+          <AnswersList data={this.state.testData} />       
           <br /><input type="submit" value="submit" />
         </form>
       </div>      
@@ -27,4 +30,25 @@ var Questions = React.createClass({
   }
 });
 
-module.exports = Questions
+
+var AnswersList = React.createClass({
+render: function() {
+    var answerNodes = this.props.data.answersText.map(function (answer) {
+      return (
+        <input type="radio" name="temp"> {answer}        
+      );
+    });
+    return (
+      <div className="answersList">
+        {answerNodes}
+      </div>
+    );
+  }
+});
+
+module.exports = UserQuestions
+
+
+          // <br /><input type="radio" name="temp" value="+=10" />dominant answer?
+          // <br /><input type="radio" name="temp" value="+=0" />adaptable answer?
+          // <br /><input type="radio" name="temp" value="-=10" />passive answer?

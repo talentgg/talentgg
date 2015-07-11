@@ -7,7 +7,7 @@ var BasicInfo = React.createClass({
     rank: React.PropTypes.string
   },
   render: function() {
-    return: (
+    return (
       <div>
         <h2>User info:</h2>
         <p>Username: {this.props.username}</p>

@@ -10,6 +10,7 @@ var Header = React.createClass({
         /* add navigation */
         <Link href="/register">Register</Link>
         <Link href="/about">About</Link>
+        <Link href="/userquestions">Questions(testing)</Link>
       </div>
     );
   }
