@@ -25,7 +25,7 @@
     "pg-native": "^1.8.1",
     "react": "^0.13.3",
     "react-async": "^2.1.0",
-    "react-router-component": "^0.25.4",
+    "react-router": "^0.13.3",
     "reactify": "^1.1.1",
     "request": "^2.58.0",
     "sequelize": "^3.3.2",
