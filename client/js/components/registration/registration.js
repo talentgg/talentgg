@@ -1,12 +1,10 @@
 var React = require('react');
 var success = require('./success');
+var UserActions = require('../../actions/user-actions')
 
-var Form = React.createClass({
-  propTypes: {
-    data: React.PropTypes.object.isRequired,
-    name: React.PropTypes.string.isRequired,
-    email: React.PropTypes.string.isRequired,
-    password: React.PropTypes.string.isRequired
+var Registration = React.createClass({
+  getInitialState: function() {
+    return {};
   },
   handleSubmit: function(e) {
     e.preventDefault();
@@ -17,7 +15,7 @@ var Form = React.createClass({
       password: this.refs.password.getDOMNode().value
     }
     
-    this.props.signUp(data);
+    UserActions.signUp(data);
 
   },
   render: function() {
@@ -41,19 +39,19 @@ var Form = React.createClass({
   }
 });
 
-var Registration = React.createClass({
-  getInitialState: function() {
-    return {};
-  },
-  signUp: function(data) {
-    // todo: save data
-    //    redirect to success or login page  
-  },
-  render: function() {
-    return (
-      <Form signUp={signUp} />
-    );
-  }
-});
+// var Registration = React.createClass({
+//   getInitialState: function() {
+//     return {};
+//   },
+//   signUp: function(data) {
+//     // todo: save data
+//     //    redirect to success or login page  
+//   },
+//   render: function() {
+//     return (
+//       <Form signUp={signUp} />
+//     );
+//   }
+// });
 
 module.exports = Registration;
