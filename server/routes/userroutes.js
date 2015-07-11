@@ -1,8 +1,8 @@
 var UserController = require( '../controllers/user.controller.js' );
-var User = require( '../models/usermodel' ).User;
+var User = require('../models/usermodel');
 var passport = require( 'passport' );
 var handle = require( './handler' );
-var LocalStrategy = require('passport-local').Strategy;
+var LocalStrategy = require( 'passport-local' ).Strategy;
 
 //LOCAL STRATEGY BELOW
 passport.use(new LocalStrategy(
@@ -20,7 +20,6 @@ passport.use(new LocalStrategy(
   }
 ));
 
-
 module.exports = function( app ) {
 
   app.get( '/', function( req, res ) {
@@ -31,11 +30,11 @@ module.exports = function( app ) {
     UserController.register( req, res, next );
   } );
 
-   app.post('/login', passport.authenticate('local'), function(req, res) {
-      // If this function gets called, authentication was successful.
-      // `req.user` contains the authenticated user.
-      res.redirect('/');
-    } );
+  app.post( '/login', passport.authenticate('local'), function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.redirect('/');
+  } );
 
   // app.post('/signout', function(req, res, next){
   //   User.signout(req, res, next);

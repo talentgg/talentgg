@@ -7,9 +7,18 @@ var port = process.env.PORT || 3000;
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
 app.set( 'views', path.join( __dirname, "views" ) );
 app.set( 'view engine', 'ejs' );
+
+app.use(express.static('public'));
+app.use(cookieParser());
+app.use(bodyParser());
+app.use(session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //add user specific routes
 require( './routes/userroutes.js' )( app );
