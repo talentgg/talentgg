@@ -1,24 +1,34 @@
-var User = require( '../models/usermodel' );
-var Sequelize = require( 'sequelize' );
-var db = require( '../db/db' );
+var User = require( '../models/user.model' );
+var passport = require( 'passport' );
 
 module.exports = {
 
-  // signup / register a user
+  //create a new User
   register: function( req, res, next ) {
-    // register is provided by passport
-    var newUser = User.build( {
-      username: req.body.username,
-      password: req.body.password,
-      email: req.body.email
-    } );
-
-    newUser.save().complete( function( err ) {
-      if ( err ) {
-        console.log( 'Error in Inserting Record' );
-      } else {
-        console.log( 'Data successfully inserted' );
+    console.log( req.body );
+    User.register( req.body.username, req.body.password, function( er, user ) {
+      if ( er ) {
+        console.log( 'Could not create user ', req.body.username, ' ', er );
+        return res.json( {
+          user: user,
+          error: er
+        } );
       }
+      passport.authenticate( 'local' )( req, res, function() {
+        res.render( 'index' );
+      } );
     } );
   }
-}
+
+  //sign in
+
+  //sign out
+
+  // logout: function( req, res ) {
+  //   req.logout();
+  //   res.end();
+  // }
+
+  //change info
+
+};

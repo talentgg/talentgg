@@ -1,7 +1,7 @@
 var Sequelize = require( 'sequelize' );
 var DataTypes = require( '../../node_modules/sequelize/lib/data-types' );
 var PassportLocalStrategy = require( 'passport-local' ).Strategy;
-var db = require( '../db/db' );
+var db = require( '../config/db.js' );
 
 var Question = db.define( 'question', {
 
@@ -18,9 +18,11 @@ var Question = db.define( 'question', {
 
   //Static Fields
   questionText: Sequelize.STRING,
-  category: Sequelize.STRING,  
+  category: Sequelize.STRING,
   answersText: Sequelize.ARRAY,
   answersEffect: Sequelize.ARRAY,
 } );
 
-Team.sync();
+Question.sync();
+
+module.exports = Question;
