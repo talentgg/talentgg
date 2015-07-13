@@ -1,12 +1,16 @@
-var keymirror = require("keymirror");
+/* OUR ACTION CONSTANTS ARE CONTAINED WITHIN THIS FILE
+ * WHENEVER WE WANT TO CREATE A NEW ACTION, WE MUST FIRST CREATE A CONSTANT FOR THAT ACTION */
 
-/*  Link to the API */
+
+var keyMirror = require('keymirror');
+
+var APIRoot = "http://localhost:8000";
 
 module.exports = {
 
   APIEndPoints: {
-    LOGIN: null,
-    REGISTRATION: null,
+    LOGIN: APIRoot + '/login',
+    REGISTRATION: APIRoot + '/signup'
   },
 
   PayLoadSources: keyMirror({
@@ -14,7 +18,7 @@ module.exports = {
     VIEW_ACTION: null
   }),
 
-  ActionTypes: keymirror({
+  ActionTypes: keyMirror({
 
     // Session
 
