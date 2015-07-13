@@ -37,7 +37,7 @@ var LoginPage = React.createClass({
   render: function() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form method="POST" action="/login">
 
           <label name="username">Usernamel</label>
           <input type="text" name="username" ref="username" />
