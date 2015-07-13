@@ -6,6 +6,11 @@ var db = require( '../config/db.js' );
 // team routes here
 module.exports = function( app ) {
 
+  //register your team
+  app.post( '/team/register/*', function( req, res ) {
+    Team.register(req);
+  } );
+
   // get team profile
   app.get( '/team/profile/*', function( req, res ) {
     var profile = Team.getProfile(req);
