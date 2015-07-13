@@ -1,3 +1,4 @@
+/*
 var React = require('react');
 
 var UserQuestions = React.createClass({
@@ -46,9 +47,9 @@ render: function() {
   }
 });
 
-module.exports = UserQuestions
+module.exports = UserQuestions;
 
 
-          // <br /><input type="radio" name="temp" value="+=10" />dominant answer?
+         /!* // <br /><input type="radio" name="temp" value="+=10" />dominant answer?
           // <br /><input type="radio" name="temp" value="+=0" />adaptable answer?
-          // <br /><input type="radio" name="temp" value="-=10" />passive answer?
+          // <br /><input type="radio" name="temp" value="-=10" />passive answer?*!/*/
