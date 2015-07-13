@@ -45,22 +45,14 @@ var SignupPage = React.createClass({
     var errors = (this.state.errors.length > 0) ? <Error errors={this.state.errors}/> : <div></div>;
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <li>
-            <label>Name</label>
-            <input placeholder="username" ref="username" />
-          </li>
+        <form method="POST" action="/register">
           <li>
             <label>Email</label>
-            <input placeholder="enter email" ref="email" />
+            <input name="username" placeholder="enter email" ref="email" />
           </li>
           <li>
             <label>Password</label>
-            <input placeholder="enter password" ref="password" />
-          </li>
-          <li>
-            <label>Confirm</label>
-            <input placeholder="confirm password" ref="confirm" />
+            <input name="password" placeholder="enter password" ref="password" />
           </li>
           <button>Register</button>
         </form>
