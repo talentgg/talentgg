@@ -37,7 +37,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node server/server.js"
+    "test": "node server/server.js",
+    "postinstall": "gulp"
   },
   "repository": {
     "type": "git",

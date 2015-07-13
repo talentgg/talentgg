@@ -33,11 +33,18 @@ exports.userInfo = function(username, region, callback) {
     obj.icon = JSON.parse(data)[username].profileIconId;
     console.log(obj);
     //second api call
-    relay('https://' + region + '.api.pvp.net/api/lol/na/v2.5/league/by-summoner/' + obj.id + '?api_key=' + api, function(er, stats) {
-      console.log(stats);
-      obj.rank = JSON.parse(stats)[obj.id][0].tier;
-      //invoke callback on obj
-      callback(obj);
+    request('https://' + region + '.api.pvp.net/api/lol/na/v2.5/league/by-summoner/' + obj.id + '?api_key=' + api, function(err, stat, body) {
+      if(err) {
+        callback(err, null);
+      } else if(stat.statusCode === 404) {
+        obj.rank = "unranked";
+        callback(obj);
+      } else if(stat.statusCode < 200 || stat.statusCode >= 400) {
+        console.log("Status Code: " + stat.statusCode);
+      } else {
+        obj.rank = JSON.parse(body)[obj.id][0].tier;
+        callback(obj);
+      }
     });
   });
 }
