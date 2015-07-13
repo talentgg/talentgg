@@ -16,7 +16,9 @@
     "flux": "^2.0.3",
     "gulp": "^3.9.0",
     "gulp-nodemon": "^2.0.3",
+    "keymirror": "^0.1.1",
     "lodash": "^3.10.0",
+    "object-assign": "^3.0.0",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "path": "^0.11.14",
@@ -29,6 +31,7 @@
     "reactify": "^1.1.1",
     "request": "^2.58.0",
     "sequelize": "^3.3.2",
+    "superagent": "^1.2.0",
     "util": "^0.10.3",
     "vinyl-source-stream": "^1.1.0"
   },
