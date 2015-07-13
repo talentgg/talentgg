@@ -1,3 +1,12 @@
+/* SESSION STORE WILL MANAGE THE STATE OF OUR AUTH.
+ LOGIN RESPONSE CREATES AN ACCESS TOKEN IF ONE EXISTS.
+ AND WILL SAVE IT IN sessionStorage.
+
+ WE WILL HAVE TO MAKE CHANGES WHEN WE GET OUR WEBAPI UTIL SETUP
+ WITH OUR BACKEND
+ */
+
+
 var AppDispatcher = require("../dispatchers/app-dispatcher");
 var AppConstants = require("../constants/app-constants");
 var EventEmitter = require("events").EventEmitter;
@@ -12,7 +21,7 @@ var CHANGE_EVENT = "change";
 
 var _accessToken = sessionStorage.getItem('accessToken');
 var _email = sessionStorage.getItem('email');
-var _erros = [];
+var _errors = [];
 
 var SessionStore = assign({}, EventEmitter.prototype, {
 
@@ -83,16 +92,6 @@ SessionStore.dispatchToken = AppDispatcher.register(function (payload) {
 });
 
 module.exports = SessionStore;
-
-
-
-/* SESSION STORE WILL MANAGE THE STATE OF OUR AUTH.
-   LOGIN RESPONSE CREATES AN ACCESS TOKEN IF ONE EXISTS.
-   AND WILL SAVE IT IN sessionStorage.
-
-   WE WILL HAVE TO MAKE CHANGES WHEN WE GET OUR WEBAPI UTIL SETUP
-   WITH OUR BACKEND
- */
 
 
 
