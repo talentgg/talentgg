@@ -38,7 +38,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "node server/server.js",
-    "postinstall": "gulp"
+    "postinstall": "gulp copy"
   },
   "repository": {
     "type": "git",
