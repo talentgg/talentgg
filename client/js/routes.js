@@ -16,6 +16,7 @@ var App = require("./components/app");
 var SignupPage = require("./components/session/app-signup");
 var About = require("./components/about/app-about");
 var LoginPage = require("./components/session/app-login");
+var UserQuestions = require("./components/user-profile/user-questions.js");
 
 module.exports = (
 
@@ -23,6 +24,7 @@ module.exports = (
     <Route name="login" path="/login" handler={LoginPage}/>
     <Route name="signup" path="/signup" handler={SignupPage}/>
     <Route name="about" path="/about" handler={About}/>
+    <Route name="userquestions" path="/userquestions" handler={UserQuestions}/>
   </Route>
 
 );
