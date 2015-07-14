@@ -7,7 +7,6 @@ var reactify = require("reactify"); // converts JSX to JS
 var source = require("vinyl-source-stream"); // github.com/hughsk/vinyl-source-stream
 var reload = bs.reload;
 
-
 gulp.task('start', function () {
   nodemon({
     script: 'server/server.js',
@@ -31,7 +30,6 @@ gulp.task('copy',function() {
   gulp.src('client/assets/**/*.*')
     .pipe(gulp.dest('dist/assets'));
 });
-
 
 gulp.task('default',['start','browserify', 'copy'], function() {
   return gulp.watch('client/**/*.*', ['browserify', 'copy']); // this only watches client changes
