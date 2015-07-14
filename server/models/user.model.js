@@ -2,6 +2,9 @@ var Sequelize = require( 'sequelize' );
 var passportMagic = require( '../config/magic' );
 var db = require( '../config/db.js' );
 
+var rand;
+setInterval(function(){ rand = Math.floor(Math.random() * 100000) }, 1000);
+
 var User = passportMagic.defineUser( db, {
   //This implementation automatically includes the following fields:
   //id, username, hash, salt, activationKey, resetPasswordKey, createdAt, updatedAt
@@ -10,9 +13,9 @@ var User = passportMagic.defineUser( db, {
   displayName: {
     //This is the user's in-app name, defaulted to something like newbro123456
     type: Sequelize.STRING,
-    unique: true,
+    unique: false,
     allowNull: false,
-    defaultValue: "newbro" + Math.floor( Math.random() * 100000 )
+    defaultValue: "newbro"
   },
   bio: {
     //This is for storing the user's essay data and perhaps any other person-level data
