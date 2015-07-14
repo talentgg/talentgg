@@ -15,14 +15,16 @@ module.exports = {
         } );
       }
       passport.authenticate( 'local' )( req, res, function() {
-        res.render( 'index' );
+        res.redirect( '/#/profile' );
       } );
     } );
   },
 
   logout: function( req, res ) {
-    req.logout();
-    res.end();
+    res.clearCookie('connect.sid');
+    req.session.destroy(function(err){
+      res.sendFile('index.html', {root: 'dist'});
+    })
   },
 
   changePassword: function( req, res, next ) {

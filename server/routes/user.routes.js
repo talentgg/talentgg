@@ -5,10 +5,9 @@ var db = require('../config/db.js');
 
 module.exports = function(app) {
 
-  app.get('/', function(req, res) {
-    res.sendFile('index.html', {
-      root: 'dist'
-    });
+  app.get('/', handle.isAuth, function(req, res) {
+    //If they're authenticated send them to their profile page
+    res.redirect('/#/profile');
   });
 
   app.post('/register', function(req, res, next) {
@@ -18,7 +17,7 @@ module.exports = function(app) {
   app.post('/login', passport.authenticate('local'), function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
-    res.redirect('/');
+    res.redirect('/#/profile');
   });
 
   app.post('/logout', function(req, res, next) {
