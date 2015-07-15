@@ -19,8 +19,9 @@ var Question = db.define( 'question', {
   //Static Fields
   questionText: Sequelize.STRING,
   category: Sequelize.STRING,
-  answersText: Sequelize.ARRAY,
-  answersEffect: Sequelize.ARRAY,
+  answersText: Sequelize.ARRAY(Sequelize.STRING),
+  answersEffect: Sequelize.ARRAY(Sequelize.STRING),
+  potential: Sequelize.ARRAY(Sequelize.STRING)
 } );
 
 Question.sync();

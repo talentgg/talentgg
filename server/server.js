@@ -36,6 +36,7 @@ passport.deserializeUser(User.deserializeUser());
 //Routers
 require('./routes/user.routes.js')(app);
 // require( './routes/teamroutes.js' )( app );
+require('./routes/questions.routes.js')(app);
 
 app.listen(config.port);
 console.log('Listening on port ' + config.port);

@@ -24,7 +24,7 @@ module.exports = (
     <Route name="login" path="/login" handler={LoginPage}/>
     <Route name="signup" path="/signup" handler={SignupPage}/>
     <Route name="about" path="/about" handler={About}/>
-    <Route name="userquestions" path="/userquestions" handler={UserQuestions}/>
+    <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
   </Route>
 
 );
