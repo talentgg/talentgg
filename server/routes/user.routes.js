@@ -14,7 +14,7 @@ module.exports = function(app) {
   });
 
   app.post('/profile', function(req, res){
-    console.log(req.body);
+    User.updateBio(req, res);
   });
 
   app.post('/register', function(req, res, next) {
