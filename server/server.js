@@ -35,7 +35,7 @@ passport.deserializeUser(User.deserializeUser());
 
 //Routers
 require('./routes/user.routes.js')(app);
-// require( './routes/teamroutes.js' )( app );
+require( './routes/team.routes.js' )( app );
 require('./routes/questions.routes.js')(app);
 
 app.listen(config.port);
