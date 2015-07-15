@@ -40,14 +40,13 @@ module.exports = {
       //    }).error(function(err) {
       //   console.log("Update Failed !");
       // })
+  },
+
+  getProfile: function(req, res){
+    User.findOne({where: {username: req.session.passport.user}})
+    .then(function(data){
+      res.json(data);
+    });
   }
-
-  //sign in
-
-  //sign out
-
-
-
-  //change info
 
 };
