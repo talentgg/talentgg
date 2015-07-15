@@ -17,10 +17,6 @@ var BioForm = React.createClass({
       <div className="BioForm">
         <form method="POST" action="/profile" >
           <li>
-            <label>display-name</label>
-            <input name="display-name" placeholder="edit" ref="display-name" />
-          </li>
-          <li>
             <label>Times Available</label>
             <input name="times" placeholder="edit times" ref="times" />
           </li>
