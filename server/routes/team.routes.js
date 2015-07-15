@@ -13,8 +13,7 @@ module.exports = function( app ) {
 
   // get team profile
   app.get( '/team/profile/*', function( req, res ) {
-    var profile = Team.getProfile(req);
-    res.send( profile );
+    Team.getProfile(req, res);
   } );
 
   //update team profile

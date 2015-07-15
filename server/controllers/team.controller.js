@@ -5,16 +5,15 @@ module.exports = {
 
   register: function( req, res, next ) {
     Team.create({
-      teamName: req.body.teamName;
-    })
-  }
-
-  getProfile: function( req, res, next ){
-    Team.findOne({where: {teamName: req.url.split('/')[2]}})
-      .then(function (teamProfile) {
-        return teamProfile;
     })
   },
+
+  getProfile: function( req, res, next ){
+    Team.findOne({where: {teamName: req.url.split('/')[3]}})
+       .then(function (teamProfile) {
+         res.json(teamProfile)
+     })
+   },
 
   updateProfile: function( req, res, next ){
     // change this to loop over keys
