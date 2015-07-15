@@ -1,10 +1,10 @@
 var React = require('react');
 
-var avatar = React.createClass({
+var Avatar = React.createClass({
   render: function() {
-    return: (
+    return (
       <div>
-        {this.props.avatar_url && <img src={this.props.avatar_url}}
+        <h1>Picture</h1>
       </div>
     )
   }
