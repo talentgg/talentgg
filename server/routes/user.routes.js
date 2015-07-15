@@ -6,16 +6,15 @@ var db = require('../config/db.js');
 module.exports = function(app) {
 
   app.get('/', handle.isAuth, function(req, res) {
-    //If they're authenticated send them to their profile page
-
-    //TODO: This should likely be sending a file
-
-    res.redirect('/#/profile');
+    res.sendFile('main.html', {root: 'dist'});
   });
 
   app.get('/profile', function(req, res){
-    console.log("cookie: " + JSON.stringify(req.session.passport.user));
     User.getProfile(req, res);
+  });
+
+  app.post('/profile', function(req, res){
+    console.log(req.body);
   });
 
   app.post('/register', function(req, res, next) {
@@ -23,12 +22,7 @@ module.exports = function(app) {
   });
 
   app.post('/login', passport.authenticate('local'), function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-
-    //TODO: This should likely be sending a file
-
-    res.redirect('/#/profile');
+    res.sendFile('main.html', {root: 'dist'});
   });
 
   app.post('/logout', function(req, res, next) {

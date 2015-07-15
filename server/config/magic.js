@@ -115,6 +115,7 @@ var attachToUser = function( UserSchema, options ) {
 
       var randomHex = buf.toString( 'hex' );
       self.set( options.activationKeyField, randomHex );
+      self.set( "displayName", "newbro" + Math.floor(Math.random()*1000000));
       cb( null, self );
 
     } );
