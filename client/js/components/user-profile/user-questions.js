@@ -1,15 +1,27 @@
 var React = require('react');
+var axios = require('axios');
+// TODO: add field for potentialMax
+// TODO: add record of answers
+// TODO: iterate through questions
 
 var UserQuestions = React.createClass({
   getInitialState: function() {
     return {
+      // testData: {
+      // // 1: {
+      //   questionText: "How do you want to change testprofile1?",
+      //   answers: [{label: "add 10 to attribute1", value: 1, effects: [10], categories: ["attribute1"]},
+      //   {label: "subtract 10 from attribute1", value: 2, effects: [-10], categories: ["attribute1"]},
+      //   {label: "change attribute2 -10", value: 3, effects: [-10], categories: ["attribute2"]},
+      //   {label: "change attribute5 -5 and attribute3 -7", value: 4, effects: [-5, -7], categories: ["attribute5", "attribute3"]}],
+      //   potential: []
+      // },
       testData: {
-        questionText: "How do you want to change testprofile1?",
-        answers: [{label: "add 10 to attribute1", value: 1, effects: [10], categories: ["attribute1"]},
-        {label: "subtract 10 from attribute1", value: 2, effects: [-10], categories: ["attribute1"]},
-        {label: "change attribute2 -10", value: 3, effects: [-10], categories: ["attribute2"]},
-        {label: "change attribute5 -5 and attribute3 -7", value: 4, effects: [-5, -7], categories: ["attribute5", "attribute3"]}]
+        questionText: "",
+        answers: [],
+        potential: []
       },
+      counter: 0,
       testProfile1: {
         attribute1: 0,
         attribute2: 10,
@@ -47,6 +59,24 @@ var UserQuestions = React.createClass({
       }
     };
   },
+  componentDidMount: function() {
+    console.log("start");
+    var context = this;
+    axios.get('/questions').
+      then(function(response) {
+        console.log("xxxxxxx");
+        console.log(response.data[0]);
+        console.log("xxxxxxx");
+        context.setState({
+          testData: response.data[0]       
+        });
+        console.log("------");
+        console.log(context.state.testData);
+        console.log("------");
+      });    
+  },
+  
+
   handleSubmit: function(e) {
     e.preventDefault();    
     var newProfile = {};
@@ -156,6 +186,7 @@ var UserQuestions = React.createClass({
 var AnswersList = React.createClass({
 render: function() {    
     var answerNodes = [];
+    console.log(this.props.data)
     for (var i = 0; i < this.props.data.answers.length; i++) {      
       answerNodes.push(
         <div>
