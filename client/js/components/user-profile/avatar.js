@@ -11,3 +11,5 @@ var Avatar = React.createClass({
 });
 
 module.exports = Avatar;
+
+// {this.props.bio.avatar_url && <li className="list-group-item"><img src={this.props.bio.avatar_url}></li>}

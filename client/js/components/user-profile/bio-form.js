@@ -1,6 +1,10 @@
 var React = require('react');
 
 var BioForm = React.createClass({
+  propTypes: {
+    username: React.PropTypes.string.isRequired,
+    handleEditProfile: React.PropTypes.func.isRequired
+  },
   handleSubmit: function() {
     // etc. etc.
   },
@@ -21,8 +25,11 @@ var BioForm = React.createClass({
             <input name="times" placeholder="edit times" ref="times" />
           </li>
           <li>
-            <label>Seeking</label>
-            <input name="seeking" placeholder="enter password" ref="seeking" />
+            <select name="seeking">
+              <option value="seeking" selected>Seeking</option>
+              <option value="recruiting">Recruiting</option>
+              <option value="neither">Neither</option>
+            </select> 
           </li>
           <li>
             <label>About</label>
