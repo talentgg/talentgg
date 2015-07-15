@@ -2,7 +2,6 @@ var React = require('react');
 var axios = require('axios');
 // TODO: add field for potentialMax
 // TODO: add record of answers
-// TODO: iterate through questions
 
 var UserQuestions = React.createClass({
   getInitialState: function() {
@@ -21,8 +20,10 @@ var UserQuestions = React.createClass({
         answers: [],
         potential: []
       },
+      questionStore: [],      
       counter: 0,
       testProfile1: {
+        answerHistory: [],
         attribute1: 0,
         attribute2: 10,
         attribute3: 10,
@@ -60,20 +61,14 @@ var UserQuestions = React.createClass({
     };
   },
   componentDidMount: function() {
-    console.log("start");
     var context = this;
     axios.get('/questions').
       then(function(response) {
-        console.log("xxxxxxx");
-        console.log(response.data[0]);
-        console.log("xxxxxxx");
         context.setState({
-          testData: response.data[0]       
+          testData: response.data[context.state.counter],
+          questionStore: response.data     
         });
-        console.log("------");
-        console.log(context.state.testData);
-        console.log("------");
-      });    
+      });     
   },
   
 
@@ -83,9 +78,12 @@ var UserQuestions = React.createClass({
     for (key in this.state.testProfile1) {
       newProfile[key] = this.state.testProfile1[key];
     }
+    if (newProfile.answerHistory === undefined) {
+      newProfile.answerHistory = [];
+    }
+    newProfile.answerHistory[this.state.counter] = e.target.answer.value;
     var targetKey = Number(e.target.answer.value);    
-    for (var i = 0; i < this.state.testData.answers.length; i++) {      
-      
+    for (var i = 0; i < this.state.testData.answers.length; i++) {            
       if (this.state.testData.answers[i].value === targetKey) {
         for (var x = 0; x < this.state.testData.answers[i].categories.length; x++) {
           var category = this.state.testData.answers[i].categories[x];
@@ -93,11 +91,12 @@ var UserQuestions = React.createClass({
           newProfile[category] = newVal;
         }
       }
-    }
+    }    
     this.setState({
-      testProfile1: newProfile
-    });
-    
+      testProfile1: newProfile,
+      testData: this.state.questionStore[this.state.counter + 1],
+      counter: this.state.counter + 1      
+    });    
     if (!this.state.answer) return; // check for answer
     else {
 
@@ -113,7 +112,7 @@ var UserQuestions = React.createClass({
           <br /><input type="submit" value="Submit" />
         </form>
 
-
+        <QuestionHistory historyArray={this.state.testProfile1.answerHistory} qs={this.state.questionStore} />
 
         <div>
           <h1> Profiles </h1>
@@ -186,7 +185,6 @@ var UserQuestions = React.createClass({
 var AnswersList = React.createClass({
 render: function() {    
     var answerNodes = [];
-    console.log(this.props.data)
     for (var i = 0; i < this.props.data.answers.length; i++) {      
       answerNodes.push(
         <div>
@@ -241,6 +239,31 @@ render: function() {
           {MatchNodes}
         </ul>
           Overall: {overallScore}%
+      </div>
+    );
+  }
+});
+
+var QuestionHistory = React.createClass({  
+render: function() {        
+    var HistoryNodes = [];
+
+    for (var i = this.props.historyArray.length - 1; i >= 0; i--) {
+          HistoryNodes.push(
+        <div>
+          <h3> {this.props.qs[i].questionText} </h3>
+          <h4> You answered: </h4>
+          <h5> {this.props.qs[i].answers[this.props.historyArray[i]].label} </h5>
+        </div>
+        )
+    };
+
+
+    return (
+      <div>
+        <ul className="QuestionHistory">
+          {HistoryNodes}
+        </ul>          
       </div>
     );
   }
