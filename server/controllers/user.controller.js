@@ -5,7 +5,6 @@ module.exports = {
 
   //create a new User
   register: function( req, res, next ) {
-    console.log( req.body );
     User.register( req.body.username, req.body.password, function( er, user ) {
       if ( er ) {
         console.log( 'Could not create user ', req.body.username, ' ', er );
@@ -45,7 +44,25 @@ module.exports = {
   getProfile: function(req, res){
     User.findOne({where: {username: req.session.passport.user}})
     .then(function(data){
-      res.json(data);
+      var obj = data;
+
+      //This will likely become a function if it gets reused
+
+      delete obj.hash;
+      delete obj.salt;
+      delete obj.createdAt;
+      delete obj.updatedAt;
+      delete obj.username;
+      delete obj.resetPasswordKey;
+      delete obj.activationKey;
+      res.json(obj);
+    });
+  },
+
+  updateBio: function(req, res){
+    User.findOne({where: {username: req.session.passport.user}})
+    .then(function(data){
+      User.update({bio: req.body},{where: {username: req.session.passport.user}});
     });
   }
 
