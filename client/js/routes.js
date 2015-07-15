@@ -16,7 +16,9 @@ var App = require("./components/app");
 var SignupPage = require("./components/session/app-signup");
 var About = require("./components/about/app-about");
 var LoginPage = require("./components/session/app-login");
-var UserQuestions = require("./components/user-profile/user-questions.js");
+var UserProfile = require("./components/user-profile/profile");
+var UserQuestions = require("./components/user-profile/user-questions");
+var BioForm = require("./components/user-profile/bio-form");
 
 module.exports = (
 
@@ -24,7 +26,9 @@ module.exports = (
     <Route name="login" path="/login" handler={LoginPage}/>
     <Route name="signup" path="/signup" handler={SignupPage}/>
     <Route name="about" path="/about" handler={About}/>
+    <Route name="user-profile" path="/user-profile/:username" handler={UserProfile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
+    <Route name="bioform" path="/bioform" handler={BioForm}/>
   </Route>
 
 );

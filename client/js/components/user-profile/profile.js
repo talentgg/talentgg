@@ -1,26 +1,53 @@
 var React = require('react');
+var Router = require("react-router");
+var Route = Router.Route;
+var DefaultRoute = Router.DefaultRoute;
 var Avatar = require('./avatar');
-var BasicInfo = require('./basic-info');
+var Bio = require('./bio');
+var BioForm = require('./bio-form');
 var Footer = require('./footer');
 var UserQuestions = require('./user-questions');
 
 var Profile = React.createClass({
+
+  mixins: [Router.State],
+
   getInitialState: function() {
-    return {};
+    return {
+      avatar: {},
+      bio: [],
+      userquestions: [],
+      footer: {}
+    };
   },
-  render: function() { //html must be wrapped in one big tag (div, form, etc.)
+
+  componentDidMount: function() {
+    // api get bio/user questions
+  },
+
+  componentWillUnmount: function() {
+    
+  },
+
+  handleEditProfile: function(form) {
+    // form fields update bio on submit, can also do html form post to db than get without cache
+    this.ref.child(this.getParams().username).set(this.state.bio.concat([form]));
+  },
+
+  render: function() {
+    var username = this.getParams().username;
     return (
-      <div>  
-        <div>
+      <div className="row">  
+        <div className="col-md-2">
           <Avatar username={username} avatar={this.state.avatar}/>
         </div>
-        <div>
-          <BasicInfo username={username} info={this.state.basic-info}/>
+        <div className="col-md-10">
+          <Bio username={username} bio={this.state.bio}/>
         </div>
-        <div>
-          <UserQuestions username={username} questions={this.state.user-questions}/>
+        <div className="col-md-12">
+          <UserQuestions username={username} questions={this.state.userquestions}/>
         </div>
-        <div>
+        <div className="col-md-12">
           <Footer username={username} footer={this.state.footer}/>
         </div>
       </div>
