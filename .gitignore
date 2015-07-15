@@ -8,3 +8,4 @@ server/config/private.js
 # Loose Files
 .idea
 dist
+npm-debug-log
