@@ -10,7 +10,7 @@ var Bio = React.createClass({
     bio: React.PropTypes.array.isRequired,
   },
   componentDidMount: function() {
-    Axios.get('/user/profile/:id')
+    Axios.get('/profile')
       .then(function(response) {
         console.log(response);
       })

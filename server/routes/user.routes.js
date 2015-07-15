@@ -28,9 +28,9 @@ module.exports = function(app) {
     User.changePassword(req, res, next);
   });
 
-  // app.post('/user', utils.checkAuth, function(req, res, next){
-  //   User.update(req, res, next);
-  // });
+  app.post('/profile', function(req, res){
+    console.log(req.body);
+  });
 
   // League API route
   app.get(/\/lol\/.*\/.*\.json/, function(req, res) { //i.e. localhost:3000/lol/na/nexas.json
