@@ -15,7 +15,7 @@ module.exports = {
         } );
       }
       passport.authenticate( 'local' )( req, res, function() {
-        res.redirect( '/#/profile' );
+        res.sendFile('main.html', {root: 'dist'});
       } );
     } );
   },

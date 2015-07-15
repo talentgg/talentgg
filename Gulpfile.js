@@ -25,13 +25,12 @@ gulp.task('browserify', function() {
 });
 
 gulp.task('copy',function() {
-  gulp.src('client/index.html')
+  gulp.src('client/*.*')
     .pipe(gulp.dest('dist'));
-  gulp.src('client/assets/**/*.*')
-    .pipe(gulp.dest('dist/assets'));
+  gulp.src('client/styles/*.*')
+    .pipe(gulp.dest('dist/styles'));
 });
 
 gulp.task('default',['start','browserify', 'copy'], function() {
   return gulp.watch('client/**/*.*', ['browserify', 'copy']); // this only watches client changes
 });
-
