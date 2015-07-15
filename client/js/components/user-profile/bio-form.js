@@ -15,17 +15,13 @@ var BioForm = React.createClass({
   render: function() {
     return (
       <div className="BioForm">
-        <form method="POST" action="/user" >
+        <form method="POST" action="/profile" >
           <li>
-            <label>username</label>
-            <input name="username" placeholder="edit" ref="username" />
+            <label>display-name</label>
+            <input name="display-name" placeholder="edit" ref="display-name" />
           </li>
           <li>
-            <label>email</label>
-            <input name="email" placeholder="edit email" ref="email" />
-          </li>
-          <li>
-            <label>Times</label>
+            <label>Times Available</label>
             <input name="times" placeholder="edit times" ref="times" />
           </li>
           <li>
@@ -37,11 +33,7 @@ var BioForm = React.createClass({
           </li>
           <li>
             <label>About</label>
-            <input name="about" placeholder="edit about" ref="about" />
-          </li>
-          <li>
-            <label>Style</label>
-            <input name="style" placeholder="edit style, strengths & weaknesses" ref="style" />
+            <textarea name="about" placeholder="edit about" ref="about"></textarea>
           </li>
           <li>
             <label>Fav</label>
