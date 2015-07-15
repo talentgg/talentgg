@@ -1,17 +1,16 @@
 var React = require('react');
 var Axios = require('axios');
 var Router = require('react-router');
-var BioForm = require('./bio-form');d
+var BioForm = require('./bio-form');
 
 var Bio = React.createClass({
   mixins: [Router.Navigation],
   propTypes: {
     username: React.PropTypes.string.isRequired,
     bio: React.PropTypes.array.isRequired,
-    handleEditProfile: React.PropTypes.func.isRequired
   },
   componentDidMount: function() {
-    Axios.get('/user')
+    Axios.get('/user/profile/:id')
       .then(function(response) {
         console.log(response);
       })
@@ -20,17 +19,17 @@ var Bio = React.createClass({
       });
   },
   componentWillUnmount: function() {
-    
+    // this.unbind('bio');
   },
   handleEdit: function() {
-    this.transitionTo('BioForm', {username: username});
+    this.transitionTo('bioform', {username: 'username'});
   },
   render: function() {
     return (
       <div>
         <h3>About Me</h3>
         <ul className="list-group">
-          {this.props.bio.username && <li className="list-group-item">Name:{this.props.bio.username}</li>}
+          {this.props.bio.name && <li className="list-group-item">Name:{this.props.bio.name}</li>}
           {this.props.bio.email && <li className="list-group-item">Email:{this.props.bio.email}</li>}
           {this.props.bio.times && <li className="list-group-item">Times:{this.props.bio.times}</li>}
           {this.props.bio.seeking && <li className="list-group-item">Seeking:{this.props.bio.seeking}</li>}
@@ -41,7 +40,9 @@ var Bio = React.createClass({
           {this.props.bio.summoner && <li className="list-group-item">Summoner:{this.props.bio.summoner}</li>}
           {this.props.bio.region && <li className="list-group-item">Region:{this.props.bio.region}</li>}
         </ul>
-        <button onClick={handleEdit}>Joe Budden</button>
+        <span class="list-group-btn">
+          <button className="btn btn-default" type="button" onClick={this.handleEdit}>Joe Budden</button>
+        </span>
       </div>
     )
   }

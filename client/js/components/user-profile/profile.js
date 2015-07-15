@@ -26,7 +26,7 @@ var Profile = React.createClass({
   },
 
   componentWillUnmount: function() {
-    this.unbind('bio');
+    
   },
 
   handleEditProfile: function(form) {

@@ -1,12 +1,16 @@
 var React = require('react');
+var Router = require('react-router');
 
 var BioForm = React.createClass({
+  mixins: [Router.Navigation],
   propTypes: {
     username: React.PropTypes.string.isRequired,
-    handleEditProfile: React.PropTypes.func.isRequired
   },
   handleSubmit: function() {
     // etc. etc.
+    var obj = this.refs.getDOMNodes().value;
+    console.log('obj: ');
+    console.log(obj);
   },
   render: function() {
     return (
