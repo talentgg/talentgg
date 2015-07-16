@@ -20,6 +20,8 @@ var Profile = React.createClass({
     var context = this;
     Axios.get('/profile').
       then(function(response) {
+        console.log('data:');
+        console.log(response);
         context.setState({
           bio: response.data.bio     
         });
