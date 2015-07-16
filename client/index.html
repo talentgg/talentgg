@@ -26,8 +26,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-creative/1.0.1/css/creative.min.css" type="text/css">
 
   <style>
-  header{
+  header {
     background-image: url('http://img13.deviantart.net/2c69/i/2014/022/b/d/league_of_legends_wallpaper_by_su_ke-d73cjhw.jpg');
+  }
+  nav a {
+    cursor: pointer;
+  }
+  .modal-content {
+    background-color: rgba(255,255,255,0.8) !important;
   }
   </style>
 
@@ -62,28 +68,7 @@
           <a class="page-scroll" href="#page-top">Signup</a>
         </li>
         <li>
-          <a data-toggle="modal" data-target=".bs-example-modal-lg">Login</a>
-          <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div></div>
-                <div>
-                  <form method="POST" action="/register">
-
-                    <label name="username">Usernamel</label>
-                    <input type="text" name="username" />
-
-                    <label name="password">Password</label>
-                    <input type="password" name="password"/>
-
-                    <button type="submit">Submit</button>
-
-                  </form>
-                </div>
-                <div></div>
-              </div>
-            </div>
-          </div>
+          <a data-toggle="modal" data-target=".login-modal">Login</a>
         </li>
         <li>
           <a class="page-scroll" href="#services">Features</a>
@@ -125,6 +110,33 @@
 
 
 <section id="services">
+
+  <div class="modal fade login-modal" tabindex="-1" role="dialog" aria-labelledby="largeModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form class="form-horizontal" method="POST" action="/login">
+            <div class="form-group"><br>
+              <label class="col-sm-offset-1 col-sm-2 control-label">Username</label>
+              <div class="col-sm-8">
+                <input class="form-control" type="email" name="username">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-2 control-label">Password</label>
+              <div class="col-sm-8">
+                <input class="form-control" type="password" name="password">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-5 col-sm-2">
+                <button type="submit" class="btn btn-block btn-primary">Sign in</button>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
