@@ -26,6 +26,8 @@
     "pg": "^4.4.0",
     "pg-hstore": "^2.3.2",
     "pg-native": "^1.8.1",
+    "promise": "^7.0.3",
+    "promise.prototype.finally": "^1.0.1",
     "react": "^0.13.3",
     "react-async": "^2.1.0",
     "react-router": "^0.13.3",

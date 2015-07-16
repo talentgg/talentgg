@@ -7,10 +7,9 @@ var BioForm = React.createClass({
     username: React.PropTypes.string.isRequired,
   },
   handleSubmit: function() {
-    // etc. etc.
-    var obj = this.refs.getDOMNodes().value;
-    console.log('obj: ');
-    console.log(obj);
+    Axios.post('/profile')
+    // finish axios post
+    router.transitionTo('profile', {username: username});
   },
   render: function() {
     return (
