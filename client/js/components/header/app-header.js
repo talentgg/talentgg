@@ -22,34 +22,26 @@ var Header = React.createClass({
     SessionActionCreators.logout();
   },
   render: function() {
-    /*var rightNav = this.props.isLoggedIn ? (
-
-      /!* WHAT TO DISPLAY IN THE HEADER IF THEY ARE LOGGED IN *!/
-
-      <ul>
-        <li><Link to="login">Login</Link></li>
-        <li><Link to="signup">Sign up</Link></li>
-      </ul>
-
-    ) : (
-
-      /!* WHAT TO DISPLAY IF THEY ARENT LOGGED IN (PLACEHOLDER) *!/
-
-      <ul>
-        <li><Link to="login">Login</Link></li>
-        <li><Link to="signup">Sign up</Link></li>
-      </ul>
-    );*/
-
     return (
-      <div>
-
-        <Link to="/"><h1>Talent.gg</h1></Link>
-
-        <li><Link to="login">Login</Link></li>
-        <li><Link to="signup">Sign up</Link></li>
-
-      </div>
+      <nav className="navbar navbar-default">
+        <div className="container">
+          <div className="navbar-header">
+            <Link className="navbar-brand" to="/">Talent.gg</Link>
+          </div>
+          <div className="collapse navbar-collapse">
+            <ul className="nav navbar-nav">
+              {/* These are the left-aligned navbar components */}
+              {/* I recommend this side be used for our services (my teams, browse matches, tinder-like recommender) */}
+            </ul>
+            <ul className="nav navbar-nav navbar-right">
+              {/* These are the right-aligned navbar components */}
+              {/* I recommend this side be used for notifications and self-referentials (my profile, my settings) */}
+              <li><Link to="/profile"><span className="glyphicon glyphicon-envelope"></span></Link></li>
+              <li><Link to="/profile"><span className="glyphicon glyphicon-user"></span> Username</Link></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     );
   }
 });
