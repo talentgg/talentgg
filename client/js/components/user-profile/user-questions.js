@@ -22,41 +22,49 @@ var UserQuestions = React.createClass({
       },
       questionStore: [],      
       counter: 0,
-      testProfile1: {
-        answerHistory: [],
+      answerHistory: [],      
+      attributes: {
         attribute1: 0,
         attribute2: 10,
         attribute3: 10,
         attribute4: 10,
-        attribute5: 10
+        attribute5: 10    
       },
       testProfile2: {
-        attribute1: 10,
-        attribute2: 10,
-        attribute3: 10,
-        attribute4: 10,
-        attribute5: 10
+        attributes: {
+          attribute1: 10,
+          attribute2: 10,
+          attribute3: 10,
+          attribute4: 10,
+          attribute5: 10
+        }
       },
       testProfile3: {
-        attribute1: -10,
-        attribute2: -10,
-        attribute3: -10,
-        attribute4: -10,
-        attribute5: -10
+        attributes: {
+          attribute1: -10,
+          attribute2: -10,
+          attribute3: -10,
+          attribute4: -10,
+          attribute5: -10
+        }
       },
       testProfile4: {
-        attribute1: 4,
-        attribute2: -3,
-        attribute3: 1,
-        attribute4: 8,
-        attribute5: -5
+        attributes: {
+          attribute1: 4,
+          attribute2: -3,
+          attribute3: 1,
+          attribute4: 8,
+          attribute5: -5
+        }
       },
       testProfile5: {
-        attribute1: 2,
-        attribute2: -9,
-        attribute3: 4,
-        attribute4: 6,
-        attribute5: -6
+        attributes: {
+          attribute1: 2,
+          attribute2: -9,
+          attribute3: 4,
+          attribute4: 6,
+          attribute5: -6
+        }
       }
     };
   },
@@ -74,26 +82,23 @@ var UserQuestions = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();    
-    var newProfile = {};
-    for (key in this.state.testProfile1) {
-      newProfile[key] = this.state.testProfile1[key];
+    var attributeUpdate = {};
+    for (key in this.state.attributes) {
+      attributeUpdate[key] = this.state.attributes[key];
     }
-    if (newProfile.answerHistory === undefined) {
-      newProfile.answerHistory = [];
-    }
-    newProfile.answerHistory[this.state.counter] = e.target.answer.value;
+    this.state.answerHistory[this.state.counter] = e.target.answer.value;
     var targetKey = Number(e.target.answer.value);    
     for (var i = 0; i < this.state.testData.answers.length; i++) {            
       if (this.state.testData.answers[i].value === targetKey) {
         for (var x = 0; x < this.state.testData.answers[i].categories.length; x++) {
           var category = this.state.testData.answers[i].categories[x];
-          var newVal = Number(this.state.testProfile1[category]) + Number(this.state.testData.answers[i].effects[x]);        
-          newProfile[category] = newVal;
+          var newVal = Number(this.state.attributes[category]) + Number(this.state.testData.answers[i].effects[x]);        
+          attributeUpdate[category] = newVal;
         }
       }
     }    
     this.setState({
-      testProfile1: newProfile,
+      attributes: attributeUpdate,
       testData: this.state.questionStore[this.state.counter + 1],
       counter: this.state.counter + 1      
     });    
@@ -112,37 +117,37 @@ var UserQuestions = React.createClass({
           <br /><input type="submit" value="Submit" />
         </form>
 
-        <QuestionHistory historyArray={this.state.testProfile1.answerHistory} qs={this.state.questionStore} />
+        <QuestionHistory historyArray={this.state.answerHistory} qs={this.state.questionStore} />
 
         <div>
           <h1> Profiles </h1>
           <div>
           <h2>Profile 1</h2>
-          <RatingList data={this.state.testProfile1} />
+          <RatingList data={this.state.attributes} />
           <br />
           </div>     
 
           <div>
           <h2>Profile 2</h2>
-          <RatingList data={this.state.testProfile2} />
+          <RatingList data={this.state.testProfile2.attributes} />
           <br />
           </div>     
 
           <div>
           <h2>Profile 3</h2>
-          <RatingList data={this.state.testProfile3} />
+          <RatingList data={this.state.testProfile3.attributes} />
           <br />
           </div>
 
           <div>
           <h2>Profile 4</h2>
-          <RatingList data={this.state.testProfile4} />
+          <RatingList data={this.state.testProfile4.attributes} />
           <br />
           </div>     
 
           <div>
           <h2>Profile 5</h2>
-          <RatingList data={this.state.testProfile5} />
+          <RatingList data={this.state.testProfile5.attributes} />
           <br />
           </div>          
         </div>      
@@ -153,27 +158,27 @@ var UserQuestions = React.createClass({
           scores because the maximum increases based on sample size. Individual scores<br />
           are out of 20 while overall is out of 100.
           <h2>One and Two</h2>
-          <MatchList data={this.state.testProfile1} comp={this.state.testProfile2} />
+          <MatchList data={this.state.attributes} comp={this.state.testProfile2.attributes} />
         </div>
 
         <div>
           <h2>One and Three</h2>
-          <MatchList data={this.state.testProfile1} comp={this.state.testProfile3} />
+          <MatchList data={this.state.attributes} comp={this.state.testProfile3.attributes} />
         </div>
 
         <div>
           <h2>One and Four</h2>
-          <MatchList data={this.state.testProfile1} comp={this.state.testProfile4} />
+          <MatchList data={this.state.attributes} comp={this.state.testProfile4.attributes} />
         </div>
 
         <div>
           <h2>One and Five</h2>
-          <MatchList data={this.state.testProfile1} comp={this.state.testProfile5} />
+          <MatchList data={this.state.attributes} comp={this.state.testProfile5.attributes} />
         </div>
 
         <div>
           <h2>Four and Five</h2> (more realistic sample)
-          <MatchList data={this.state.testProfile4} comp={this.state.testProfile5} />
+          <MatchList data={this.state.testProfile4.attributes} comp={this.state.testProfile5.attributes} />
         </div>
 
       </div>      
