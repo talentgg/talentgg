@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
 
 //middleware injection
-app.use(express.static(__dirname + '/../dist'));
+app.use(express.static(__dirname + '/../dist', {index: false}));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: true

@@ -14,7 +14,8 @@ module.exports = {
         } );
       }
       passport.authenticate( 'local' )( req, res, function() {
-        res.sendFile('main.html', {root: 'dist'});
+        res.redirect('/');
+        // res.sendFile('main.html', {root: 'dist'});
       } );
     } );
   },
@@ -22,7 +23,8 @@ module.exports = {
   logout: function( req, res ) {
     res.clearCookie('connect.sid');
     req.session.destroy(function(err){
-      res.sendFile('index.html', {root: 'dist'});
+      res.redirect('/');
+      // res.sendFile('index.html', {root: 'dist'});
     })
   },
 
