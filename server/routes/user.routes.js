@@ -5,8 +5,13 @@ var db = require('../config/db.js');
 
 module.exports = function(app) {
 
-  app.get('/', handle.isAuth, function(req, res) {
-    res.sendFile('main.html', {root: 'dist'});
+  app.get('/', function(req, res) {
+    if(req.session.passport.user){
+      res.sendFile('main.html', {root: 'dist'});
+    } else {
+      res.sendFile('index.html', {root: 'dist'});
+    }
+    console.log(req.session);
   });
 
   app.get('/profile', function(req, res){
