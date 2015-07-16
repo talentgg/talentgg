@@ -24,7 +24,6 @@ var Profile = React.createClass({
           bio: response.data.bio     
         });
       });  
-
   },
   componentWillMount: function() {
     this.router = this.context.router;

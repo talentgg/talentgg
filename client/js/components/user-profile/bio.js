@@ -4,22 +4,14 @@ var Router = require('react-router');
 var BioForm = require('./bio-form');
 
 var Bio = React.createClass({
-  mixins: [Router.Navigation],
+  mixins: [Router.State, Router.Navigation],
   propTypes: {
     username: React.PropTypes.string.isRequired,
     bio: React.PropTypes.object.isRequired
   },
-  componentWillMount: function() {
-    //this.setState()
-  },
-  componentDidMount: function() {
-    
-  },
-  componentWillUnmount: function() {
-    
-  },
   handleEdit: function() {
-    this.transitionTo('bioform', {username: 'username'});
+    var router = this.context.router;
+    router.transitionTo('bioform', {username: 'username'});
   },
   render: function() {
     return (
@@ -45,15 +37,3 @@ var Bio = React.createClass({
 });
 
 module.exports = Bio;
-
-    // var items = this.props.bio.map(function(item, index) {
-    //   return <li className="list-group-item" key={index}> {item} </li>
-    // });
-    // return (
-    //   <div>
-    //   <ul className="list-group">
-    //     {items}
-    //   </ul>
-    //   </div>
-    // )
-  

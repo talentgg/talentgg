@@ -1,14 +1,17 @@
 var React = require('react');
 var Router = require('react-router');
+var Axios = require('axios');
 
 var BioForm = React.createClass({
-  mixins: [Router.Navigation],
+  mixins: [Router.State, Router.Navigation],
   propTypes: {
     username: React.PropTypes.string.isRequired,
   },
   handleSubmit: function() {
-    Axios.post('/profile')
+    // Axios.post('/profile')
     // finish axios post
+    var router = this.context.router;
+    var username = this.getParams().username;
     router.transitionTo('profile', {username: username});
   },
   render: function() {
@@ -46,7 +49,7 @@ var BioForm = React.createClass({
             <label>Region</label>
             <input name="region" placeholder="edit region" ref="region" />
           </li>
-          <button>Joe Budden</button>
+          <button onClick={this.handleSubmit}>Joe Budden</button>
         </form>
       </div>
     )
