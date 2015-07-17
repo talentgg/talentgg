@@ -31,6 +31,10 @@ module.exports = function(app) {
     User.updateBio(req, res);
   });
 
+  app.post('/ratings', function(req, res){ // Update bio data
+    User.updateRatings(req, res);
+  });
+
   app.post('/settings', function(req, res){
     User.updateSettings(req, res);
   });
