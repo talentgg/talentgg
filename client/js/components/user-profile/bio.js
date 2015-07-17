@@ -6,6 +6,7 @@ var BioForm = require('./bio-form');
 var Bio = React.createClass({
   mixins: [Router.State, Router.Navigation],
   propTypes: {
+    displayName: React.PropTypes.string.isRequired,
     username: React.PropTypes.string.isRequired,
     bio: React.PropTypes.object.isRequired
   },
@@ -19,7 +20,7 @@ var Bio = React.createClass({
         <h3>About Me</h3>
         <ul className="list-group">
           {<li className="list-group-item"><img src={this.props.bio.avatar_url}></img></li>}
-          {<li className="list-group-item">Name:{this.props.username}</li>}
+          {<li className="list-group-item">Name:{this.props.displayName}</li>}
           {<li className="list-group-item">Times:{this.props.bio.times}</li>}
           {<li className="list-group-item">Seeking:{this.props.bio.seeking}</li>}
           {<li className="list-group-item">About:{this.props.bio.about}</li>}

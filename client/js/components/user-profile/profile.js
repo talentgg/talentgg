@@ -13,6 +13,8 @@ var Profile = React.createClass({
     return {
       bio: {},
       userquestions: [],
+      username: '',
+      displayName: ''
     };
   },
   init: function() {
@@ -23,7 +25,9 @@ var Profile = React.createClass({
         console.log('data:');
         console.log(response);
         context.setState({
-          bio: response.data.bio     
+          bio: response.data.bio,
+          username: response.data.username,  
+          displayName: response.data.displayName  
         });
       });  
   },
@@ -45,7 +49,7 @@ var Profile = React.createClass({
     return (
       <div className="row">  
         <div className="col-md-12">
-          <Bio username={username} bio={this.state.bio}/>
+          <Bio displayName={this.state.displayName} bio={this.state.bio}/>
         </div>
         <div className="col-md-12">
           <UserQuestions username={username} questions={this.state.userquestions}/>
