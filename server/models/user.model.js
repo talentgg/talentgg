@@ -43,6 +43,10 @@ var User = db.define( 'user', {
     type: Sequelize.JSON,
     defaultValue: {}
   },
+  counter: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
   ratings: {
     //This is for storing the user's attributes
     type: Sequelize.JSON,

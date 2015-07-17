@@ -63,6 +63,16 @@ module.exports = {
     });
   },
 
+  updateRatings: function(req, res){
+    User.findById(req.session.passport.user)
+    .then(function(data){
+      User.update({
+        ratings: req.body.ratings,
+        counter: req.body.counter
+      },{where: {id: req.session.passport.user}});
+    });
+  },
+
   updateSettings: function(req, res){
     console.log(req.body);
     User.findById(req.session.passport.user)
