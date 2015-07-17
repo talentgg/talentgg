@@ -21,9 +21,9 @@ var UserQuestions = React.createClass({
         potential: []
       },
       questionStore: [],      
-      counter: this.props.counter,
+      counter: 0,
       answerHistory: [],      
-      attributes: this.props.ratings,
+      attributes: {},
       // attributes: {
       //     dominance: 0,
       //     adaptable: 0,
@@ -96,14 +96,32 @@ var UserQuestions = React.createClass({
   },
   componentDidMount: function() {
     var context = this;
-    axios.get('/questions').
-      then(function(response) {
-        context.setState({
-          testData: response.data[context.state.counter],
-          questionStore: response.data,
-        });
-      });     
+
+    function getQuestions() {
+        return axios.get('/questions');
+    }
+
+    function getRatings() {
+        return axios.get('/profile');
+    }
+
+    axios.all([getQuestions(), getRatings()])
+        .then(axios.spread(function(qs, profile) {
+          console.log("----")
+          console.log(qs.data[0]);
+          console.log(profile);
+          console.log(profile.counter);
+          console.log(profile.ratings);
+            context.setState({
+              testData: qs.data[profile.data.counter],
+              questionStore: qs.data,
+              counter: profile.data.counter,
+              ratings: profile.data.ratings
+            });
+        }));
   },
+
+
   
 
   handleSubmit: function(e) {
