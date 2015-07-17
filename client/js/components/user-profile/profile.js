@@ -26,8 +26,8 @@ var Profile = React.createClass({
         context.setState({
           bio: response.data.bio,
           username: response.data.username,  
-          displayName: response.data.displayName
-
+          displayName: response.data.displayName,
+          ratings: response.data.ratings
         });
       });  
   },
@@ -44,8 +44,6 @@ var Profile = React.createClass({
         <div className="col-md-12">
           <Bio displayName={this.state.displayName} bio={this.state.bio}/>
         </div>
-        
-
       </div>
     );
   }

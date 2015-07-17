@@ -21,10 +21,15 @@ var UserQuestions = React.createClass({
         potential: []
       },
       questionStore: [],      
-      counter: 0,
+      counter: this.props.counter,
       answerHistory: [],      
+<<<<<<< HEAD
       ratings: {},
       // ratings: {
+=======
+      attributes: this.props.ratings,
+      // attributes: {
+>>>>>>> fixing q routes
       //     dominance: 0,
       //     adaptable: 0,
       //     blunt: 0,
@@ -96,6 +101,7 @@ var UserQuestions = React.createClass({
   },
   componentDidMount: function() {
     var context = this;
+<<<<<<< HEAD
 
     function getQuestions() {
         return axios.get('/questions');
@@ -114,6 +120,15 @@ var UserQuestions = React.createClass({
               ratings: profile.data.ratings
             });
         }));
+=======
+    axios.get('/questions').
+      then(function(response) {
+        context.setState({
+          testData: response.data[context.state.counter],
+          questionStore: response.data,
+        });
+      });     
+>>>>>>> fixing q routes
   },
 
 
@@ -138,12 +153,33 @@ var UserQuestions = React.createClass({
     }    
     var count = this.state.counter + 1
     this.setState({
+<<<<<<< HEAD
       ratings: ratingUpdate,
       testData: this.state.questionStore[count],      
       counter: count
     });
         
     $.post( "/ratings", { ratings: ratingUpdate, counter: count } ); //, answerHistory: this.state.answerHistory
+=======
+      attributes: attributeUpdate,
+      testData: this.state.questionStore[this.state.counter + 1],
+      counter: this.state.counter + 1      
+    });
+
+    axios.post('/ratings', {
+           attributes: attributeUpdate,
+           counter: this.state.counter
+       })
+       .then(function(response) {
+           console.log(response);
+       })
+       .catch(function(response) {
+           console.log(response);
+       });
+
+
+
+>>>>>>> fixing q routes
 
     if (!this.state.answer) return; // check for answer
     else {
