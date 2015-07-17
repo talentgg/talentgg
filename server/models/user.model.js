@@ -56,7 +56,7 @@ var User = db.define( 'user', {
       troll: 0,
       loud: 0,
       committed: 0,
-      ambitious: 0
+      ambition: 0
     }
   }
 });

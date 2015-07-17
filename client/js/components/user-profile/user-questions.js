@@ -24,46 +24,71 @@ var UserQuestions = React.createClass({
       counter: 0,
       answerHistory: [],      
       attributes: {
-        attribute1: 0,
-        attribute2: 10,
-        attribute3: 10,
-        attribute4: 10,
-        attribute5: 10    
+          dominance: 0,
+          adaptable: 0,
+          blunt: 0,
+          collaborative: 0,
+          brute: 0,
+          aggressive: 0,
+          troll: 0,
+          loud: 0,
+          committed: 0,
+          ambition: 0
       },
       testProfile2: {
         attributes: {
-          attribute1: 10,
-          attribute2: 10,
-          attribute3: 10,
-          attribute4: 10,
-          attribute5: 10
+          dominance: 0,
+          adaptable: 0,
+          blunt: 0,
+          collaborative: 0,
+          brute: 0,
+          aggressive: 0,
+          troll: 0,
+          loud: 0,
+          committed: 0,
+          ambition: 0
         }
       },
       testProfile3: {
         attributes: {
-          attribute1: -10,
-          attribute2: -10,
-          attribute3: -10,
-          attribute4: -10,
-          attribute5: -10
+          dominance: 0,
+          adaptable: 0,
+          blunt: 0,
+          collaborative: 0,
+          brute: 0,
+          aggressive: 0,
+          troll: 0,
+          loud: 0,
+          committed: 0,
+          ambition: 0
         }
       },
       testProfile4: {
         attributes: {
-          attribute1: 4,
-          attribute2: -3,
-          attribute3: 1,
-          attribute4: 8,
-          attribute5: -5
+          dominance: 0,
+          adaptable: 0,
+          blunt: 0,
+          collaborative: 0,
+          brute: 0,
+          aggressive: 0,
+          troll: 0,
+          loud: 0,
+          committed: 0,
+          ambition: 0
         }
       },
       testProfile5: {
         attributes: {
-          attribute1: 2,
-          attribute2: -9,
-          attribute3: 4,
-          attribute4: 6,
-          attribute5: -6
+          dominance: 0,
+          adaptable: 0,
+          blunt: 0,
+          collaborative: 0,
+          brute: 0,
+          aggressive: 0,
+          troll: 0,
+          loud: 0,
+          committed: 0,
+          ambition: 0
         }
       }
     };
@@ -235,7 +260,7 @@ render: function() {
       score = calculateMatchScore(score, 20);
       MatchNodes.push(<li key={key}> {key} : {score} </li>)
     };
-    overallScore = Math.round(calculateMatchScore(overallScore, 100) * 100);
+    overallScore = Math.round(calculateMatchScore(overallScore, 200) * 100);
 
 
     return (
