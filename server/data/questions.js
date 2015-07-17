@@ -14,27 +14,38 @@ var testData = [
 //         }]
 //       },
       {
-        questionText: "Does this work?",
-        answers: [{label: "yes", value: 0, effects: [10], categories: ["attribute1"]},
-        {label: "no", value: 1, effects: [-10], categories: ["attribute1"]},
-        {label: "change attribute2 -10", value: 2, effects: [-10], categories: ["attribute2"]},
-        {label: "change attribute5 -5 and attribute3 -7", value: 3, effects: [-5, -7], categories: ["attribute5", "attribute3"]}],
-        potential: []
+        questionText: "What’s your take on trolling and trash talking?",
+        answers: [
+        {label: "It’s part of the game. It heightens the spirit of competition and throws the other team off their game.", value: 0, effects: [10, 5, 10, 10], categories: ["troll", "dominance", "loud", "blunt"]},
+        {label: "It’s part of the game, but I only respond when others initiate.", value: 1, effects: [5, 5, 5, 5], categories: ["troll", "dominance", "loud", "blunt"]},
+        {label: "It doesn’t bother me. I don’t respond.", value: 2, effects: [-5, 5, -5, -10, -10], categories: ["troll", "adaptable", "dominance", "loud", "blunt"]},
+        {label: "I'd rather not see it.", value: 3, effects: [-10, -5, -5], categories: ["troll", "adaptable", "blunt"]}
+        ],
+        potential: [{
+            categories: ["troll", "dominance", "loud", "blunt", "adaptable"],
+            values: [10, 5, 10, 10, 5]
+        }]
       },
             {
-        questionText: "Does this also work?",
-        answers: [{label: "yes", value: 0, effects: [10], categories: ["attribute1"]},
-        {label: "no", value: 1, effects: [-10], categories: ["attribute1"]},
-        {label: "change attribute2 -10", value: 2, effects: [-10], categories: ["attribute2"]},
-        {label: "change attribute5 -5 and attribute3 -7", value: 3, effects: [-5, -7], categories: ["attribute5", "attribute3"]}],
-        potential: []
+        questionText: "Which of these is closest to your feelings about lanes?",
+        answers: [
+        {label: "I have a specific role I always like to play. It’s the best use of my talents, and other roles aren’t fun for me.", value: 0, effects: [5, -10, -10], categories: ["dominance", "collaborative", "adaptable"]},
+        {label: "There are a range of roles I’m comfortable with, but one or two that I’m not. Don’t ask me to go there. Otherwise I’m flexible.", value: 1, effects: [5, 5], categories: ["adaptable", "collaborative"]},
+        {label: "I would enjoy playing extensively in any slot that makes the most sense for the team.", value: 2, effects: [10, -5, 10], categories: ["adaptable", "dominance", "collaborative"]},
+        ],
+        potential: [{
+            categories: ["adaptable", "collaborative", "dominance"],
+            values: [10, 10, 5]
+        }]
       },
             {
-        questionText: "Does this work too?",
-        answers: [{label: "yes", value: 0, effects: [10], categories: ["attribute1"]},
+        questionText: "You’re looking at several teams to apply to. The best one is looking for a support player. Does that appeal to you?",
+        answers: [
+        {label: "yes", value: 0, effects: [10], categories: ["attribute1"]},
         {label: "no", value: 1, effects: [-10], categories: ["attribute1"]},
         {label: "change attribute2 -10", value: 2, effects: [-10], categories: ["attribute2"]},
-        {label: "change attribute5 -5 and attribute3 -7", value: 3, effects: [-5, -7], categories: ["attribute5", "attribute3"]}],
+        {label: "change attribute5 -5 and attribute3 -7", value: 3, effects: [-5, -7], categories: ["attribute5", "attribute3"]}
+        ],
         potential: []
       },
             {
