@@ -42,12 +42,23 @@ var User = db.define( 'user', {
     //This is for storing the user's game data broken down into sub-objects for each game
     type: Sequelize.JSON,
     defaultValue: {}
+  },
+  ratings: {
+    //This is for storing the user's attributes
+    type: Sequelize.JSON,
+    defaultValue: {
+      dominance: 0,
+      adaptable: 0,
+      blunt: 0,
+      collaborative: 0,
+      brute: 0,
+      aggressive: 0,
+      troll: 0,
+      loud: 0,
+      committed: 0,
+      ambitious: 0
+    }
   }
-  // attributes: {
-  //   //This is for storing the user's game data broken down into sub-objects for each game
-  //   type: Sequelize.JSON,
-  //   defaultValue: {}
-  // }
 });
 
 User.sync();

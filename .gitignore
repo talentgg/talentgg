@@ -8,4 +8,5 @@ server/config/private.js
 # Loose Files
 .idea
 dist
+.DS_Store
 npm-debug.log
