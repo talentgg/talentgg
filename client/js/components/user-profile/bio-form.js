@@ -7,13 +7,13 @@ var BioForm = React.createClass({
   propTypes: {
     username: React.PropTypes.string.isRequired,
   },
-  handleSubmit: function() {
-    // todo: remove jenk
-    var router = this.context.router;
-    setTimeout(function() {
-      router.transitionTo('profile', {username: 'username'});
-    }, 100);
-  },
+  // handleSubmit: function() {
+  //   // todo: remove jenk
+  //   var router = this.context.router;
+  //   setTimeout(function() {
+  //     router.transitionTo('profile', {username: 'username'});
+  //   }, 100);
+  // },
   render: function() {
     return (
       <div className="BioForm">
@@ -49,7 +49,7 @@ var BioForm = React.createClass({
             <label>Region</label>
             <input name="region" placeholder="edit region" ref="region" />
           </li>
-          <button onClick={this.handleSubmit}>Joe Budden</button>
+          <button type="submit" className="btn btn-sml">Joe Budden</button>
         </form>
       </div>
     )

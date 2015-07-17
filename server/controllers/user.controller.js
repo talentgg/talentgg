@@ -59,6 +59,7 @@ module.exports = {
     User.findById(req.session.passport.user)
     .then(function(data){
       User.update({bio: req.body},{where: {id: req.session.passport.user}});
+      res.redirect('/#/user-profile');
     });
   },
 
@@ -67,6 +68,7 @@ module.exports = {
     User.findById(req.session.passport.user)
     .then(function(data){
       User.update({displayName: req.body.displayName}, {where: {id: req.session.passport.user}});
+      res.redirect('/#/user-profile');
     })
   }
 

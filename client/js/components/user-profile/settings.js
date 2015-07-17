@@ -3,17 +3,27 @@ var Router = require('react-router');
 
 var Settings = React.createClass({
 
-  mixins: [Router.State, Router.Navigation],
-
-  propTypes: {
-    displayName: React.PropTypes.string.isRequired,
+  getInitialState: function(){
+    return {
+      displayName: ""
+    }
   },
 
-  handleSubmit: function() {  
-    var router = this.context.router;
-    setTimeout(function() {
-      router.transitionTo('profile', {username: 'username'});
-    }, 100);
+  componentDidMount: function(){
+    $.get('/profile', function(result){
+      console.log(result);
+      if(this.isMounted()){
+        this.setState({
+          displayName: result.displayName
+        })
+      }
+    }.bind(this));
+  },
+
+  handleChange: function(e){
+    this.setState({
+      displayName: e.target.value
+    });
   },
 
   render: function(){
@@ -24,13 +34,13 @@ var Settings = React.createClass({
         <div className="form-group">
           <label className="col-sm-2 control-label">Display Name</label>
           <div className="col-sm-10">
-            <input type="text" className="form-control" name="displayName" value={this.props.displayName} onChange={this.handleChange} />
+            <input type="text" className="form-control" name="displayName" value={this.state.displayName} onChange={this.handleChange} />
           </div>
         </div>
 
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
-            <button onClick={this.handleSubmit} className="btn btn-default>">Update</button>
+            <button type="submit" className="btn btn-default>">Update</button>
           </div>
         </div>
       </form>
