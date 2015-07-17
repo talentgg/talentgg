@@ -46,7 +46,7 @@ var Header = React.createClass({
               <li><Link to="/profile"><span className="glyphicon glyphicon-user"></span> Username</Link></li>
               <li><Link to="/profile"><span className="glyphicon glyphicon-user"></span> My Profile</Link></li>
               <li className="dropdown">
-                <Link to='#' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></Link>
+                <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></Link>
                 <ul className="dropdown-menu">
                   <li><Link to="/">Action</Link></li>
                   <li><Link to="/">Another action</Link></li>
