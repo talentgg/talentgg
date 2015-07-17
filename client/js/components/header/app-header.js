@@ -37,20 +37,26 @@ var Header = React.createClass({
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-            </ul>
-            <ul className="nav navbar-nav navbar-right">
-              <li><Link to="/"><span className="glyphicon glyphicon-envelope"></span></Link></li>
-              <li><Link to="/"><span className="glyphicon glyphicon-user"></span> My Profile</Link></li>
+              <li><Link to="/"><span className="glyphicon glyphicon-search"></span> Recruitment</Link></li>
               <li className="dropdown">
-                <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></Link>
+                <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">
-                  <li><Link to="/">Action</Link></li>
-                  <li><Link to="/">Another action</Link></li>
-                  <li><Link to="/">Something else here</Link></li>
+                  <li><Link to="/">Team1 Placeholder</Link></li>
+                  <li><Link to="/">Team2 Placeholder</Link></li>
+                  <li><Link to="/">...</Link></li>
                 </ul>
               </li>
-              <li><Link to="/"><span className="glyphicon glyphicon-search"></span> Recruitment </Link></li>
-              <li><Link to="/"><span className="glyphicon glyphicon-off"></span> Sign Out</Link></li>
+            </ul>
+            <ul className="nav navbar-nav navbar-right">
+              <li><Link to="profile"><span className="glyphicon glyphicon-user"></span> My Profile</Link></li>
+              <li><Link to="/"><span className="glyphicon glyphicon-envelope"></span></Link></li>
+              <li className="dropdown">
+                <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
+                <ul className="dropdown-menu">
+                  <li><Link to="/">Settings</Link></li>
+                  <li><Link to="/">Logout</Link></li>
+                </ul>
+              </li>
             </ul>
           </div>
         </div>
