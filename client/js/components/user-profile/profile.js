@@ -53,6 +53,8 @@ var Profile = React.createClass({
 
 module.exports = Profile;
 
+
 //         <div className="col-md-12">
 //            <UserQuestions username={username} questions={this.state.userquestions} profile={this.state.ratings} counter={this.state.counter} />
 //         </div>
+
