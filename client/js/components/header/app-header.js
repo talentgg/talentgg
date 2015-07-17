@@ -34,8 +34,7 @@ var Header = React.createClass({
     }.bind(this));
   },
 
-  logout: function(e) {
-    e.preventDefault();
+  logout: function() {
     $.post('/logout', function(){
       location.reload();
     });

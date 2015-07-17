@@ -19,7 +19,7 @@ var Bio = React.createClass({
       <div className="container">
         <h3>About Me</h3>
         <ul className="list-group">
-          {<li className="list-group-item"><img src={this.props.bio.avatar_url}></img></li>}
+          {<li className="list-group-item">Picture:<img src={this.props.bio.avatar_url}></img></li>}
           {<li className="list-group-item">Name:{this.props.displayName}</li>}
           {<li className="list-group-item">Times:{this.props.bio.times}</li>}
           {<li className="list-group-item">Seeking:{this.props.bio.seeking}</li>}
