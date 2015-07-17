@@ -21,20 +21,21 @@ var UserQuestions = React.createClass({
         potential: []
       },
       questionStore: [],      
-      counter: 0,
+      counter: this.props.counter,
       answerHistory: [],      
-      attributes: {
-          dominance: 0,
-          adaptable: 0,
-          blunt: 0,
-          collaborative: 0,
-          brute: 0,
-          aggressive: 0,
-          troll: 0,
-          loud: 0,
-          committed: 0,
-          ambition: 0
-      },
+      attributes: this.props.ratings,
+      // attributes: {
+      //     dominance: 0,
+      //     adaptable: 0,
+      //     blunt: 0,
+      //     collaborative: 0,
+      //     brute: 0,
+      //     aggressive: 0,
+      //     troll: 0,
+      //     loud: 0,
+      //     committed: 0,
+      //     ambition: 0
+      // },
       testProfile2: {
         attributes: {
           dominance: 0,
@@ -99,7 +100,7 @@ var UserQuestions = React.createClass({
       then(function(response) {
         context.setState({
           testData: response.data[context.state.counter],
-          questionStore: response.data     
+          questionStore: response.data,
         });
       });     
   },
@@ -126,7 +127,22 @@ var UserQuestions = React.createClass({
       attributes: attributeUpdate,
       testData: this.state.questionStore[this.state.counter + 1],
       counter: this.state.counter + 1      
-    });    
+    });
+
+    axios.post('/ratings', {
+           attributes: attributeUpdate,
+           counter: this.state.counter
+       })
+       .then(function(response) {
+           console.log(response);
+       })
+       .catch(function(response) {
+           console.log(response);
+       });
+
+
+
+
     if (!this.state.answer) return; // check for answer
     else {
 
