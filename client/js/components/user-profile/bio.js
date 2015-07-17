@@ -17,21 +17,27 @@ var Bio = React.createClass({
   render: function() {
     return (
       <div className="container">
-        <h3>About Me</h3>
-        <ul className="list-group">
-          {<li className="list-group-item">Picture:<img src={this.props.bio.avatar_url}></img></li>}
-          {<li className="list-group-item">Name:{this.props.displayName}</li>}
-          {<li className="list-group-item">Times:{this.props.bio.times}</li>}
-          {<li className="list-group-item">Seeking:{this.props.bio.seeking}</li>}
-          {<li className="list-group-item">About:{this.props.bio.about}</li>}
-          {<li className="list-group-item">Fav:{this.props.bio.fav}</li>}
-          {<li className="list-group-item">Looking:{this.props.bio.looking}</li>}
-          {<li className="list-group-item">Summoner:{this.props.bio.summoner}</li>}
-          {<li className="list-group-item">Region:{this.props.bio.region}</li>}
-        </ul>
-        <span class="list-group-btn">
-          <button className="btn btn-default" type="button" onClick={this.handleEdit}>Joe Budden</button>
-        </span>
+        <div className="container col-md-2 pull-left">Picture:
+          <img src={this.props.bio.avatar_url}></img>
+        </div>
+          <div className="container col-md-10 pull-right list-group">
+            <h3>About Me</h3>
+              <ul className="list-group">
+                <li className="list-group-item">Name:{this.props.displayName}</li>
+                <li className="list-group-item">Times:{this.props.bio.times}</li>
+                <li className="list-group-item">Purpose:{this.props.bio.purpose}</li>
+                <li className="list-group-item">Seeking:{this.props.bio.seeking}</li>
+                <li className="list-group-item">Will Do:{this.props.bio.willdo}</li>
+                <li className="list-group-item">Wont Do:{this.props.bio.wontdo}</li>
+                <li className="list-group-item">Summoner:{this.props.bio.summoner}</li>
+                <li className="list-group-item">Region:{this.props.bio.region}</li>
+                <li className="list-group-item">Favorite Games:{this.props.bio.favorite}</li>
+                <li className="list-group-item">About:{this.props.bio.about}</li>
+              </ul>
+            <span class="list-group-btn">
+              <button className="btn btn-default" type="button" onClick={this.handleEdit}>Joe Budden</button>
+            </span>
+          </div>
       </div>
     )
   }
