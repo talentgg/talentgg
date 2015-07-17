@@ -4,10 +4,10 @@
 
 
 var React = require('react');
-var Router = require('react-router');
+var SessionActionCreators = require("../../actions/SessionActionCreators");
+var SessionStore = require('../../stores/SessionStore');
 
 var LoginPage = React.createClass({
-  mixins: [Router.State, Router.Navigation],
   getInitialState: function() {
     return { errors: [] };
   },
@@ -20,16 +20,18 @@ var LoginPage = React.createClass({
     SessionStore.removeChangeListener(this._onChange);
   },
 
+  _onChange: function() {
+    this.setState({ errors: SessionStore.getErrors() });
+  },
+
   handleSubmit: function(e) {
     e.preventDefault();
-    
-    // var username = this.refs.username.getDOMNode().value;
-    // var password = this.refs.password.getDOMNode().value;
+    this.setState({ errors: [] });
+    var username = this.refs.username.getDOMNode().value;
+    var password = this.refs.password.getDOMNode().value;
 
-    var router = this.context.router;
-    // var username = this.getParams().username;
-    router.transitionTo('user-profile', {username: 'username'});
-    
+    console.log({username: username, password: password});
+    SessionActionCreators.login(username, password);
   },
 
   render: function() {
@@ -43,7 +45,7 @@ var LoginPage = React.createClass({
           <label name="password">Password</label>
           <input type="password" name="password" ref="password"/>
 
-          <button onClick={handleSubmit}>Submit</button>
+          <button type="submit">Submit</button>
 
           </form>
       </div>
