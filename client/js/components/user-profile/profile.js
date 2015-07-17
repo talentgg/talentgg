@@ -18,7 +18,6 @@ var Profile = React.createClass({
     };
   },
   init: function() {
-    //this.setState()
     var context = this;
     Axios.get('/profile').
       then(function(response) {
@@ -36,13 +35,6 @@ var Profile = React.createClass({
   },
   componentDidMount: function() {
     this.init();
-  },
-  componentWillUnmount: function() {
-    
-  },
-  handleEditProfile: function(form) {
-    // form fields update bio on submit, can also do html form post to db than get without cache
-    this.ref.child(this.getParams().username).set(this.state.bio.concat([form]));
   },
   render: function() {
     var username = this.getParams().username;
