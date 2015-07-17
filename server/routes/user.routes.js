@@ -1,6 +1,5 @@
 var User = require('../controllers/user.controller.js');
 var passport = require('passport');
-var handle = require('./handler');
 
 module.exports = function(app) {
 
