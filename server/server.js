@@ -11,7 +11,6 @@ app.use(express.static(__dirname + '/../dist', {index: false}));
 
 // Determines which main page to render based on session status
 app.get('/', function(req, res) {
-  console.log(req.session);
   if(req.session.passport.user){
     res.sendFile('main.html', {root: 'dist'});
   } else {
