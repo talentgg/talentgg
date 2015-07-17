@@ -16,6 +16,11 @@ module.exports = function( app ) {
     Team.getProfile(req, res);
   } );
 
+   // get team profile
+  app.get( '/team/all', function( req, res ) {
+    Team.getAllProfiles(req, res);
+  } );
+
   //update team profile
   app.post( '/team/update/*', function( req, res ) {
     Team.updateProfile(req);

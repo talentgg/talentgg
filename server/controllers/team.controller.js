@@ -15,6 +15,13 @@ module.exports = {
      })
    },
 
+   getAllProfiles: function( req, res, next ){
+    Team.findAll()
+       .then(function (teamProfiles) {
+         res.json(teamProfiles)
+     })
+   },
+
   updateProfile: function( req, res, next ){
     // change this to loop over keys
     Team.update( {
