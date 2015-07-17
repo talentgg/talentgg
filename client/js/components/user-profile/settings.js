@@ -1,0 +1,52 @@
+var React = require('react');
+var Router = require('react-router');
+
+var Settings = React.createClass({
+
+  getInitialState: function(){
+    return {
+      displayName: ""
+    }
+  },
+
+  componentDidMount: function(){
+    $.get('/profile', function(result){
+      console.log(result);
+      if(this.isMounted()){
+        this.setState({
+          displayName: result.displayName
+        })
+      }
+    }.bind(this));
+  },
+
+  handleChange: function(e){
+    this.setState({
+      displayName: e.target.value
+    });
+  },
+
+  render: function(){
+    //I want to get rid of the container divs, need to implement them in the template
+    return(
+      <div className="container">
+      <form className="form-horizontal" method="POST" action="/settings">
+        <div className="form-group">
+          <label className="col-sm-2 control-label">Display Name</label>
+          <div className="col-sm-10">
+            <input type="text" className="form-control" name="displayName" value={this.state.displayName} onChange={this.handleChange} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-offset-2 col-sm-10">
+            <button type="submit" className="btn btn-default>">Update</button>
+          </div>
+        </div>
+      </form>
+      </div>
+    )
+  }
+})
+
+module.exports = Settings;

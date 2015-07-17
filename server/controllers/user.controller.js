@@ -60,6 +60,14 @@ module.exports = {
     .then(function(data){
       User.update({bio: req.body},{where: {id: req.session.passport.user}});
     });
+  },
+
+  updateSettings: function(req, res){
+    console.log(req.body);
+    User.findById(req.session.passport.user)
+    .then(function(data){
+      User.update({displayName: req.body.displayName}, {where: {id: req.session.passport.user}});
+    })
   }
 
 };

@@ -12,22 +12,35 @@ var Link = Router.Link;
 var ReactPropTypes = React.PropTypes;
 var SessionActionCreators = require('../../actions/SessionActionCreators');
 
-var list = this;
-console.log('this is the state' + JSON.stringify(list));
-
 var Header = React.createClass({
 
-  teams: ['teamA', 'teamB', 'teamC'],
-
-  propTypes: {
-    isLoggedIn: ReactPropTypes.bool,
-    email: ReactPropTypes.string,
-    teams: ReactPropTypes.array
+  getInitialState: function(){
+    return {
+      displayName: "",
+      teams: []
+      //dummy data below
+      //teams: [{id: 1, teamName: "pew pew"}, {id:2, teamName: "win factory"}, {id:3, teamName: "scrub life"}]
+    }
   },
+
+  componentDidMount: function(){
+    $.get('/profile', function(result){
+      if(this.isMounted()){
+        this.setState({
+          displayName: result.displayName,
+          teams: result.teams
+        })
+      }
+    }.bind(this));
+  },
+
   logout: function(e) {
     e.preventDefault();
-    SessionActionCreators.logout();
+    $.post('/logout', function(){
+      location.reload();
+    });
   },
+
   render: function() {
     return (
       <nav className="navbar navbar-default">
@@ -41,20 +54,18 @@ var Header = React.createClass({
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">
-                  <li><Link to="/">Team1 Placeholder</Link></li>
-                  <li><Link to="/">Team2 Placeholder</Link></li>
-                  <li><Link to="/">...</Link></li>
+                  {this.state.teams.length === 0 ? <li><Link to="/">Find Teams</Link></li> : this.state.teams.map(function(team){return <li key={team.id}><Link to="/">{team.teamName}</Link></li>})}
                 </ul>
               </li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              <li><Link to="profile"><span className="glyphicon glyphicon-user"></span> My Profile</Link></li>
+              <li><Link to="profile"><span className="glyphicon glyphicon-user"></span> {this.state.displayName}</Link></li>
               <li><Link to="/"><span className="glyphicon glyphicon-envelope"></span></Link></li>
               <li className="dropdown">
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
                 <ul className="dropdown-menu">
-                  <li><Link to="/">Settings</Link></li>
-                  <li><Link to="/">Logout</Link></li>
+                  <li><Link to="settings">Settings</Link></li>
+                  <li><Link to="/" onClick={this.logout}>Logout</Link></li>
                 </ul>
               </li>
             </ul>
@@ -64,5 +75,9 @@ var Header = React.createClass({
     );
   }
 });
+
+// React.render(
+//   <Header source="/profile" />, mountNode
+// );
 
 module.exports = Header;

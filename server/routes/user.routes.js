@@ -33,6 +33,10 @@ module.exports = function(app) {
     User.updateBio(req, res);
   });
 
+  app.post('/settings', function(req, res){
+    User.updateSettings(req, res);
+  })
+
   // External API routes
 
   // TODO: Remove these as routes and have them exist as calls within necessary functions
