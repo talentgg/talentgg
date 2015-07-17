@@ -5,6 +5,7 @@
  * HAVE A PLACE HOLDER CURRENTLY
  */
 
+
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
@@ -13,14 +14,33 @@ var SessionActionCreators = require('../../actions/SessionActionCreators');
 
 var Header = React.createClass({
 
-  propTypes: {
-    isLoggedIn: ReactPropTypes.bool,
-    email: ReactPropTypes.string
+  getInitialState: function(){
+    return {
+      displayName: "",
+      teams: []
+      //dummy data below
+      //teams: [{id: 1, teamName: "pew pew"}, {id:2, teamName: "win factory"}, {id:3, teamName: "scrub life"}]
+    }
   },
+
+  componentDidMount: function(){
+    $.get('/profile', function(result){
+      if(this.isMounted()){
+        this.setState({
+          displayName: result.displayName,
+          teams: result.teams
+        })
+      }
+    }.bind(this));
+  },
+
   logout: function(e) {
     e.preventDefault();
-    SessionActionCreators.logout();
+    $.post('/logout', function(){
+      location.reload();
+    });
   },
+
   render: function() {
     return (
       <nav className="navbar navbar-default">
@@ -30,14 +50,24 @@ var Header = React.createClass({
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              {/* These are the left-aligned navbar components */}
-              {/* I recommend this side be used for our services (my teams, browse matches, tinder-like recommender) */}
+              <li><Link to="/"><span className="glyphicon glyphicon-search"></span> Recruitment</Link></li>
+              <li className="dropdown">
+                <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Teams <span className="caret"></span></Link>
+                <ul className="dropdown-menu">
+                  {this.state.teams.length === 0 ? <li><Link to="/">Find Teams</Link></li> : this.state.teams.map(function(team){return <li key={team.id}><Link to="/">{team.teamName}</Link></li>})}
+                </ul>
+              </li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              {/* These are the right-aligned navbar components */}
-              {/* I recommend this side be used for notifications and self-referentials (my profile, my settings) */}
-              <li><Link to="/profile"><span className="glyphicon glyphicon-envelope"></span></Link></li>
-              <li><Link to="/profile"><span className="glyphicon glyphicon-user"></span> Username</Link></li>
+              <li><Link to="profile"><span className="glyphicon glyphicon-user"></span> {this.state.displayName}</Link></li>
+              <li><Link to="/"><span className="glyphicon glyphicon-envelope"></span></Link></li>
+              <li className="dropdown">
+                <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
+                <ul className="dropdown-menu">
+                  <li><Link to="settings">Settings</Link></li>
+                  <li><Link to="/" onClick={this.logout}>Logout</Link></li>
+                </ul>
+              </li>
             </ul>
           </div>
         </div>
@@ -45,5 +75,9 @@ var Header = React.createClass({
     );
   }
 });
+
+// React.render(
+//   <Header source="/profile" />, mountNode
+// );
 
 module.exports = Header;
