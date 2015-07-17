@@ -1,7 +1,5 @@
 var User = require('../controllers/user.controller.js');
 var passport = require('passport');
-var handle = require('./handler');
-var db = require('../config/db.js');
 
 module.exports = function(app) {
 
@@ -26,30 +24,33 @@ module.exports = function(app) {
   // TODO: Create a route for updating email/displayName
 
   app.get('/profile', function(req, res){ // Profile data from bio
-    User.getProfile(req, res);
+    User.getOwnProfile(req, res);
   });
 
   app.post('/profile', function(req, res){ // Update bio data
     User.updateBio(req, res);
   });
 
-  app.post('/ratings', function(req, res){ // Update ratings data        
-    User.updateRatings(req, res);
-  });
-
   app.post('/settings', function(req, res){
     User.updateSettings(req, res);
   });
 
+  app.get(/\/username\/.*/, function(req, res){ // Fetches a user by displayName, case sensitive!
+    User.profileByName(req, res, req.url.split('/')[2]);
+  });
+
+  app.get(/\/userid\/.*/, function(req, res){ // Fetches a user by id
+    User.profileById(req, res, req.url.split('/')[2]);
+  });
+
   // External API routes
 
-  // TODO: Remove these as routes and have them exist as calls within necessary functions
-
   // Gets summoner data based on summoner name
-  app.get(/\/lol\/.*\/.*\.json/, function(req, res) { //i.e. localhost:3000/lol/na/nexas.json
-    var url = req.url.split('/');
-    handle.userInfo(url[3].slice(0, -5), url[2], function(data) {
-      res.json(data);
-    });
+  app.get(/\/lol\/.*\/.*\.json/, function(req, res) { //get summoner profile info; localhost:3000/lol/na/nexas.json
+    if(!req.session.passport.user) {
+      res.sendStatus(401);
+    } else {
+      User.lolapi(req, res, req.url.split('/')[2], req.url.split('/')[3].slice(0, -5));
+    }
   });
 };
