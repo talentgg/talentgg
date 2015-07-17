@@ -1,7 +1,5 @@
 var Team = require( '../controllers/team.controller.js' );
 var passport = require( 'passport' );
-var handle = require( './handler' );
-var db = require( '../config/db.js' );
 
 // team routes here
 module.exports = function( app ) {
@@ -26,5 +24,5 @@ module.exports = function( app ) {
     Team.updateProfile(req);
   } );
 
-  
+
 };
