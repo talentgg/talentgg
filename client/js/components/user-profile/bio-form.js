@@ -8,11 +8,11 @@ var BioForm = React.createClass({
     username: React.PropTypes.string.isRequired,
   },
   handleSubmit: function() {
-    // Axios.post('/profile')
-    // finish axios post
+    // todo: remove jenk
     var router = this.context.router;
-    var username = this.getParams().username;
-    router.transitionTo('profile', {username: username});
+    setTimeout(function() {
+      router.transitionTo('profile', {username: 'username'});
+    }, 100);
   },
   render: function() {
     return (
