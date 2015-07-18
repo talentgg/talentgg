@@ -5,17 +5,8 @@ var axios = require('axios');
 
 var UserQuestions = React.createClass({
   getInitialState: function() {
-    return {
-      // testData: {
-      // // 1: {
-      //   questionText: "How do you want to change testprofile1?",
-      //   answers: [{label: "add 10 to rating1", value: 1, effects: [10], categories: ["rating1"]},
-      //   {label: "subtract 10 from rating1", value: 2, effects: [-10], categories: ["rating1"]},
-      //   {label: "change rating2 -10", value: 3, effects: [-10], categories: ["rating2"]},
-      //   {label: "change rating5 -5 and rating3 -7", value: 4, effects: [-5, -7], categories: ["rating5", "rating3"]}],
-      //   potential: []
-      // },
-      testData: {
+    return {      
+      profile: {
         questionText: "",
         answers: [],
         potential: []
@@ -96,7 +87,7 @@ var UserQuestions = React.createClass({
     axios.all([getQuestions(), getRatings()])
         .then(axios.spread(function(qs, profile) {         
             context.setState({
-              testData: qs.data[profile.data.counter],
+              profile: qs.data[profile.data.counter],
               questionStore: qs.data,
               counter: profile.data.counter,
               ratings: profile.data.ratings
@@ -115,11 +106,11 @@ var UserQuestions = React.createClass({
     }
     this.state.answerHistory[this.state.counter] = e.target.answer.value;
     var targetKey = Number(e.target.answer.value);    
-    for (var i = 0; i < this.state.testData.answers.length; i++) {            
-      if (this.state.testData.answers[i].value === targetKey) {
-        for (var x = 0; x < this.state.testData.answers[i].categories.length; x++) {
-          var category = this.state.testData.answers[i].categories[x];
-          var newVal = Number(this.state.ratings[category]) + Number(this.state.testData.answers[i].effects[x]);        
+    for (var i = 0; i < this.state.profile.answers.length; i++) {            
+      if (this.state.profile.answers[i].value === targetKey) {
+        for (var x = 0; x < this.state.profile.answers[i].categories.length; x++) {
+          var category = this.state.profile.answers[i].categories[x];
+          var newVal = Number(this.state.ratings[category]) + Number(this.state.profile.answers[i].effects[x]);        
           ratingUpdate[category] = newVal;
         }
       }
@@ -127,7 +118,7 @@ var UserQuestions = React.createClass({
     var count = this.state.counter + 1
     this.setState({
       ratings: ratingUpdate,
-      testData: this.state.questionStore[count],      
+      profile: this.state.questionStore[count],      
       counter: count
     });
         
@@ -143,8 +134,8 @@ var UserQuestions = React.createClass({
     return (      
       <div className="questionnaire">
         <form id="question" onSubmit={this.handleSubmit}>        
-          <h2>{this.state.testData.questionText}</h2>
-          <AnswersList data={this.state.testData} />       
+          <h2>{this.state.profile.questionText}</h2>
+          <AnswersList data={this.state.profile} />       
           <br /><input type="submit" value="Submit" />
         </form>
 
