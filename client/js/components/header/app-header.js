@@ -45,11 +45,17 @@ var Header = React.createClass({
       <nav className="navbar navbar-default">
         <div className="container">
           <div className="navbar-header">
+            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
             <Link className="navbar-brand" to="/">Talent.gg</Link>
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li><Link to="/"><span className="glyphicon glyphicon-search"></span> Recruitment</Link></li>
+              <li><Link to="/"><span className="glyphicon glyphicon-search"></span> Find Teams</Link></li>
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">
@@ -59,7 +65,7 @@ var Header = React.createClass({
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><Link to="profile"><span className="glyphicon glyphicon-user"></span> {this.state.displayName}</Link></li>
-              <li><Link to="/"><span className="glyphicon glyphicon-envelope"></span></Link></li>
+              <li><Link to="/" style={{fontSize: '20px'}}><span className="glyphicon glyphicon-envelope"></span></Link></li>
               <li className="dropdown">
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
                 <ul className="dropdown-menu">
@@ -75,6 +81,11 @@ var Header = React.createClass({
     );
   }
 });
+
+// React.render(
+//   <Header />,
+//   document.getElementById('root')
+// );
 
 // React.render(
 //   <Header source="/profile" />, mountNode
