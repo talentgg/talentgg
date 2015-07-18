@@ -33,13 +33,13 @@ module.exports = function(app) {
     User.updateBio(req, res);
   });
 
-  app.post('/ratings', function(req, res){ // Update bio data
+  app.post('/ratings', function(req, res){ // Update ratings data        
     User.updateRatings(req, res);
   });
 
   app.post('/settings', function(req, res){
     User.updateSettings(req, res);
-  })
+  });
 
   // External API routes
 
@@ -50,6 +50,6 @@ module.exports = function(app) {
     var url = req.url.split('/');
     handle.userInfo(url[3].slice(0, -5), url[2], function(data) {
       res.json(data);
-    })
+    });
   });
 };

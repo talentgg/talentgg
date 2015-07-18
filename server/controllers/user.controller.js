@@ -63,12 +63,18 @@ module.exports = {
     });
   },
 
-  updateRatings: function(req, res){
+  updateRatings: function(req, res){    
+    // var updates = req.body;
+    // console.log(typeof updates);
+    // console.log(updates);
+    // console.log(updates["ratings"]);        
+    // console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     User.findById(req.session.passport.user)
-    .then(function(data){
+    .then(function(data){      
       User.update({
         ratings: req.body.ratings,
-        counter: req.body.counter
+        counter: req.body.counter,
+        answerHistory: req.body.answerHistory
       },{where: {id: req.session.passport.user}});
     });
   },
