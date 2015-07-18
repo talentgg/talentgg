@@ -49,7 +49,7 @@ var Header = React.createClass({
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li><Link to="/"><span className="glyphicon glyphicon-search"></span> Recruitment</Link></li>
+              <li><Link to="/recruitment"><span className="glyphicon glyphicon-search"></span> Recruitment</Link></li>
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">
