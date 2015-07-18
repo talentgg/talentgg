@@ -47,6 +47,6 @@ var Settings = React.createClass({
       </div>
     )
   }
-})
+});
 
 module.exports = Settings;
