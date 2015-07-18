@@ -5,6 +5,7 @@ module.exports = {
 
   register: function( req, res, next ) {
     Team.create({
+      teamName: req.body.teamName
     })
   },
 

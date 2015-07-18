@@ -23,12 +23,20 @@ module.exports = function(app) {
 
   // TODO: Create a route for updating email/displayName
 
+  app.get( '/user/all', function( req, res ) {
+    User.getAllProfiles(req, res);
+  } );
+
   app.get('/profile', function(req, res){ // Profile data from bio
     User.getOwnProfile(req, res);
   });
 
   app.post('/profile', function(req, res){ // Update bio data
     User.updateBio(req, res);
+  });
+
+  app.post('/ratings', function(req, res){ // Update bio data
+    User.updateRatings(req, res);
   });
 
   app.post('/settings', function(req, res){

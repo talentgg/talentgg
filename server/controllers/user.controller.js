@@ -37,6 +37,13 @@ module.exports = {
     })
   },
 
+getAllProfiles: function( req, res, next ){
+    User.findAll()
+       .then(function (teamProfiles) {
+         res.json(teamProfiles)
+     })
+   },
+
   getOwnProfile: function(req, res){ // Retrieves own profile data
     User.findById(req.session.passport.user)
     .then(function(data){
@@ -62,6 +69,17 @@ module.exports = {
       User.update({displayName: req.body.displayName}, {where: {id: req.session.passport.user}});
       res.redirect('/#/user-profile');
     })
+  },
+
+  updateRatings: function(req, res){    
+    User.findById(req.session.passport.user)
+    .then(function(data){      
+      User.update({
+        ratings: req.body.ratings,
+        counter: req.body.counter,
+        answerHistory: req.body.answerHistory
+      },{where: {id: req.session.passport.user}});
+    });
   },
 
   // Functions that retrieve other user information - more sanitized results

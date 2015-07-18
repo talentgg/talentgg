@@ -44,6 +44,6 @@ var Settings = React.createClass({
       </form>
     )
   }
-})
+});
 
 module.exports = Settings;

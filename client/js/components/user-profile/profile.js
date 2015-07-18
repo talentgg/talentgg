@@ -12,7 +12,7 @@ var Profile = React.createClass({
     return {
       bio: {},
       userquestions: [],
-      username: '',
+      // username: '',
       displayName: ''
     };
   },
@@ -20,12 +20,10 @@ var Profile = React.createClass({
     var context = this;
     Axios.get('/profile').
       then(function(response) {
-        console.log('data:');
-        console.log(response);
         context.setState({
           bio: response.data.bio,
-          username: response.data.username,  
-          displayName: response.data.displayName  
+          displayName: response.data.displayName,
+          ratings: response.data.ratings
         });
       });  
   },
@@ -36,7 +34,7 @@ var Profile = React.createClass({
     this.init();
   },
   render: function() {
-    var username = this.getParams().username;
+    // var username = this.getParams().username;
     return (
       <div className="row">  
         <div className="col-md-12">
@@ -48,3 +46,7 @@ var Profile = React.createClass({
 });
 
 module.exports = Profile;
+
+//         <div className="col-md-12">
+//            <UserQuestions username={username} questions={this.state.userquestions} profile={this.state.ratings} counter={this.state.counter} />
+//         </div>

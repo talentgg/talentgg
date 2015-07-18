@@ -31,7 +31,10 @@ var User = db.define( 'user', {
   bio: {
     //This is for storing the user's essay data and perhaps any other person-level data
     type: Sequelize.JSON,
-    defaultValue: {}
+    defaultValue: {
+      
+      
+    }
   },
   teams: {
     //This is for storing the teams that the user is on
@@ -42,9 +45,32 @@ var User = db.define( 'user', {
     //This is for storing the user's game data broken down into sub-objects for each game
     type: Sequelize.JSON,
     defaultValue: {}
+  },
+  counter: {                  // redo this and answer history into one json object
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  // answerHistory: {
+  //   type: Sequelize.ARRAY(Sequelize.STRING),
+  //   defaultValue: []
+  // },
+  ratings: {
+    //This is for storing the user's attributes
+    type: Sequelize.JSON,
+    defaultValue: {
+      dominance: 0,
+      adaptable: 0,
+      blunt: 0,
+      collaborative: 0,
+      brute: 0,
+      aggressive: 0,
+      troll: 0,
+      loud: 0,
+      committed: 0,
+      ambition: 0
+    }
   }
-
-} );
+});
 
 User.sync();
 

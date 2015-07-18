@@ -22,10 +22,11 @@ var UserProfile = require("./components/user-profile/profile");
 var Profile = require("./components/user-profile/profile");
 var UserQuestions = require("./components/user-profile/user-questions");
 var BioForm = require("./components/user-profile/bio-form");
+var FindTeams = require("./components/recruitment/findTeams");
 var Settings = require("./components/user-profile/settings");
 var NotFound = React.createClass({
   render: function () {
-    return <h2>NOT FOUND BITCH</h2>;
+    return <h2>NOT FOUND</h2>;
   }
 });
 
@@ -36,6 +37,7 @@ module.exports = (
     <Route name="user-profile" path="/user-profile/:username" handler={UserProfile}/>
     <Route name="profile" path="/user-profile" handler={Profile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
+    <Route name="findteams" path="/findteams" handler={FindTeams}/>
     <Route name="bioform" path="/bioform" handler={BioForm}/>
     <Route name="settings" path="/settings" handler={Settings}/>
     <NotFoundRoute handler={NotFound}/>
