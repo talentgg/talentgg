@@ -64,6 +64,17 @@ module.exports = {
     })
   },
 
+  updateRatings: function(req, res){    
+    User.findById(req.session.passport.user)
+    .then(function(data){      
+      User.update({
+        ratings: req.body.ratings,
+        counter: req.body.counter,
+        answerHistory: req.body.answerHistory
+      },{where: {id: req.session.passport.user}});
+    });
+  },
+
   // Functions that retrieve other user information - more sanitized results
 
   profileByName: function(req, res, name){

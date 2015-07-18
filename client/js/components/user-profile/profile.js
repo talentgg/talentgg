@@ -25,7 +25,8 @@ var Profile = React.createClass({
         context.setState({
           bio: response.data.bio,
           username: response.data.username,  
-          displayName: response.data.displayName  
+          displayName: response.data.displayName,
+          ratings: response.data.ratings
         });
       });  
   },
@@ -48,3 +49,7 @@ var Profile = React.createClass({
 });
 
 module.exports = Profile;
+
+//         <div className="col-md-12">
+//            <UserQuestions username={username} questions={this.state.userquestions} profile={this.state.ratings} counter={this.state.counter} />
+//         </div>
