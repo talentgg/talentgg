@@ -23,6 +23,10 @@ module.exports = function(app) {
 
   // TODO: Create a route for updating email/displayName
 
+  app.get( '/user/all', function( req, res ) {
+    User.getAllProfiles(req, res);
+  } );
+
   app.get('/profile', function(req, res){ // Profile data from bio
     User.getOwnProfile(req, res);
   });
