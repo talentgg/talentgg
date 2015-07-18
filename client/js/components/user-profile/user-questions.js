@@ -23,24 +23,7 @@ var UserQuestions = React.createClass({
       questionStore: [],      
       counter: this.props.counter,
       answerHistory: [],      
-<<<<<<< HEAD
       ratings: {},
-      // ratings: {
-=======
-      attributes: this.props.ratings,
-      // attributes: {
->>>>>>> fixing q routes
-      //     dominance: 0,
-      //     adaptable: 0,
-      //     blunt: 0,
-      //     collaborative: 0,
-      //     brute: 0,
-      //     aggressive: 0,
-      //     troll: 0,
-      //     loud: 0,
-      //     committed: 0,
-      //     ambition: 0
-      // },
       testProfile2: {
         ratings: {
           dominance: 0,
@@ -154,6 +137,7 @@ var UserQuestions = React.createClass({
     var count = this.state.counter + 1
     this.setState({
 <<<<<<< HEAD
+<<<<<<< HEAD
       ratings: ratingUpdate,
       testData: this.state.questionStore[count],      
       counter: count
@@ -180,6 +164,14 @@ var UserQuestions = React.createClass({
 
 
 >>>>>>> fixing q routes
+=======
+      ratings: ratingUpdate,
+      testData: this.state.questionStore[count],      
+      counter: count
+    });
+        
+    $.post( "/ratings", { ratings: ratingUpdate, counter: count } ); //, answerHistory: this.state.answerHistory
+>>>>>>> q's write to db
 
     if (!this.state.answer) return; // check for answer
     else {

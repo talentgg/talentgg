@@ -43,7 +43,6 @@ var User = db.define( 'user', {
     type: Sequelize.JSON,
     defaultValue: {}
   },
-
   counter: {                  // redo this and answer history into one json object
     type: Sequelize.INTEGER,
     defaultValue: 0
