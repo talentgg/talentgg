@@ -5,7 +5,7 @@ var passport = require( 'passport' );
 module.exports = function( app ) {
 
   //register your team
-  app.post( '/team/register/*', function( req, res ) {
+  app.post( '/team/register', function( req, res ) {
     Team.register(req);
   } );
 
