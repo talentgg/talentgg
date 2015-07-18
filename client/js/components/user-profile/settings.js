@@ -27,9 +27,7 @@ var Settings = React.createClass({
   },
 
   render: function(){
-    //I want to get rid of the container divs, need to implement them in the template
     return(
-      <div className="container">
       <form className="form-horizontal" method="POST" action="/settings">
         <div className="form-group">
           <label className="col-sm-2 control-label">Display Name</label>
@@ -44,7 +42,6 @@ var Settings = React.createClass({
           </div>
         </div>
       </form>
-      </div>
     )
   }
 });

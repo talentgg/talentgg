@@ -43,10 +43,10 @@ var App = React.createClass({
   render: function() {
     return (
       <div className="app">
-        <Header
-          isLoggedIn={this.state.isLoggedIn}
-          email={this.state.email} />
-        <RouteHandler/>
+        <Header />
+        <div className="container">
+          <RouteHandler/>
+        </div>
       </div>
     );
   }
