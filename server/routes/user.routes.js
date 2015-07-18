@@ -1,5 +1,9 @@
 var User = require('../controllers/user.controller.js');
 var passport = require('passport');
+<<<<<<< HEAD
+=======
+var handle = require('./handler');
+>>>>>>> removed handler and moved logic into controller, refactored external api request, created routes for grabbing profiles of other users
 
 module.exports = function(app) {
 
@@ -46,6 +50,7 @@ module.exports = function(app) {
   app.get(/\/userid\/.*/, function(req, res){ // Fetches a user by id
     User.profileById(req, res, req.url.split('/')[2]);
   });
+
 
   // External API routes
 
