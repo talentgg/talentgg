@@ -25,7 +25,7 @@ var BioForm = require("./components/user-profile/bio-form");
 var Settings = require("./components/user-profile/settings");
 var NotFound = React.createClass({
   render: function () {
-    return <h2>NOT FOUND BITCH</h2>;
+    return <h2>NOT FOUND</h2>;
   }
 });
 
