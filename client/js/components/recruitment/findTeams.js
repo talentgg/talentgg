@@ -1,14 +1,21 @@
 var React = require('react');
 var axios = require('axios');
 
-var Recruitment = React.createClass({
+var FindTeams = React.createClass({
   getInitialState: function() {
     return {
-      test: "test"
+      users: []
     };
   },
   componentDidMount: function() {
     var context = this;
+    axios.get("/user/all")
+      .then(function(response){
+        console.log(response)
+        context.setState({
+          users: response.data
+        });
+      });
   },  
 
   handleSubmit: function(e) {
@@ -16,7 +23,7 @@ var Recruitment = React.createClass({
   },
   render: function() {
     return (      
-      <div className="recruitment">
+      <div className="findTeams">
         <p> I WORK! </p>
 
       </div>      
@@ -24,4 +31,4 @@ var Recruitment = React.createClass({
   }
 });
 
-module.exports = Recruitment
+module.exports = FindTeams
