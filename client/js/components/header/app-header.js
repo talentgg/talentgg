@@ -19,7 +19,7 @@ var Header = React.createClass({
       displayName: "",
       teams: []
       //dummy data below
-      //teams: [{id: 1, teamName: "pew pew"}, {id:2, teamName: "win factory"}, {id:3, teamName: "scrub life"}]
+      // teams: [{id: 1, teamName: "pew pew"}, {id:2, teamName: "win factory"}, {id:3, teamName: "scrub life"}]
     }
   },
 
@@ -27,8 +27,8 @@ var Header = React.createClass({
     $.get('/profile', function(result){
       if(this.isMounted()){
         this.setState({
-          displayName: result.displayName,
-          teams: result.teams
+          displayName: result.displayName
+          // teams: result.teams
         })
       }
     }.bind(this));
