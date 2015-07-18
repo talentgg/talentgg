@@ -37,6 +37,13 @@ module.exports = {
     })
   },
 
+getAllProfiles: function( req, res, next ){
+    User.findAll()
+       .then(function (teamProfiles) {
+         res.json(teamProfiles)
+     })
+   },
+
   getOwnProfile: function(req, res){ // Retrieves own profile data
     User.findById(req.session.passport.user)
     .then(function(data){
