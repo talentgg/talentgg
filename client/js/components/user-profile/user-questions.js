@@ -9,10 +9,10 @@ var UserQuestions = React.createClass({
       // testData: {
       // // 1: {
       //   questionText: "How do you want to change testprofile1?",
-      //   answers: [{label: "add 10 to attribute1", value: 1, effects: [10], categories: ["attribute1"]},
-      //   {label: "subtract 10 from attribute1", value: 2, effects: [-10], categories: ["attribute1"]},
-      //   {label: "change attribute2 -10", value: 3, effects: [-10], categories: ["attribute2"]},
-      //   {label: "change attribute5 -5 and attribute3 -7", value: 4, effects: [-5, -7], categories: ["attribute5", "attribute3"]}],
+      //   answers: [{label: "add 10 to rating1", value: 1, effects: [10], categories: ["rating1"]},
+      //   {label: "subtract 10 from rating1", value: 2, effects: [-10], categories: ["rating1"]},
+      //   {label: "change rating2 -10", value: 3, effects: [-10], categories: ["rating2"]},
+      //   {label: "change rating5 -5 and rating3 -7", value: 4, effects: [-5, -7], categories: ["rating5", "rating3"]}],
       //   potential: []
       // },
       testData: {
@@ -23,8 +23,8 @@ var UserQuestions = React.createClass({
       questionStore: [],      
       counter: 0,
       answerHistory: [],      
-      attributes: {},
-      // attributes: {
+      ratings: {},
+      // ratings: {
       //     dominance: 0,
       //     adaptable: 0,
       //     blunt: 0,
@@ -37,7 +37,7 @@ var UserQuestions = React.createClass({
       //     ambition: 0
       // },
       testProfile2: {
-        attributes: {
+        ratings: {
           dominance: 0,
           adaptable: 0,
           blunt: 0,
@@ -51,7 +51,7 @@ var UserQuestions = React.createClass({
         }
       },
       testProfile3: {
-        attributes: {
+        ratings: {
           dominance: 0,
           adaptable: 0,
           blunt: 0,
@@ -65,7 +65,7 @@ var UserQuestions = React.createClass({
         }
       },
       testProfile4: {
-        attributes: {
+        ratings: {
           dominance: 0,
           adaptable: 0,
           blunt: 0,
@@ -79,7 +79,7 @@ var UserQuestions = React.createClass({
         }
       },
       testProfile5: {
-        attributes: {
+        ratings: {
           dominance: 0,
           adaptable: 0,
           blunt: 0,
@@ -106,12 +106,7 @@ var UserQuestions = React.createClass({
     }
 
     axios.all([getQuestions(), getRatings()])
-        .then(axios.spread(function(qs, profile) {
-          console.log("----")
-          console.log(qs.data[0]);
-          console.log(profile);
-          console.log(profile.counter);
-          console.log(profile.ratings);
+        .then(axios.spread(function(qs, profile) {         
             context.setState({
               testData: qs.data[profile.data.counter],
               questionStore: qs.data,
@@ -126,9 +121,9 @@ var UserQuestions = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();    
-    var attributeUpdate = {};
-    for (key in this.state.attributes) {
-      attributeUpdate[key] = this.state.attributes[key];
+    var ratingUpdate = {};
+    for (key in this.state.ratings) {
+      ratingUpdate[key] = this.state.ratings[key];
     }
     this.state.answerHistory[this.state.counter] = e.target.answer.value;
     var targetKey = Number(e.target.answer.value);    
@@ -136,30 +131,19 @@ var UserQuestions = React.createClass({
       if (this.state.testData.answers[i].value === targetKey) {
         for (var x = 0; x < this.state.testData.answers[i].categories.length; x++) {
           var category = this.state.testData.answers[i].categories[x];
-          var newVal = Number(this.state.attributes[category]) + Number(this.state.testData.answers[i].effects[x]);        
-          attributeUpdate[category] = newVal;
+          var newVal = Number(this.state.ratings[category]) + Number(this.state.testData.answers[i].effects[x]);        
+          ratingUpdate[category] = newVal;
         }
       }
     }    
+    var count = this.state.counter + 1
     this.setState({
-      attributes: attributeUpdate,
-      testData: this.state.questionStore[this.state.counter + 1],
-      counter: this.state.counter + 1      
+      ratings: ratingUpdate,
+      testData: this.state.questionStore[count],      
+      counter: count
     });
-
-    axios.post('/ratings', {
-           attributes: attributeUpdate,
-           counter: this.state.counter
-       })
-       .then(function(response) {
-           console.log(response);
-       })
-       .catch(function(response) {
-           console.log(response);
-       });
-
-
-
+        
+    $.post( "/ratings", { ratings: ratingUpdate, counter: count } ); //, answerHistory: this.state.answerHistory
 
     if (!this.state.answer) return; // check for answer
     else {
@@ -182,31 +166,31 @@ var UserQuestions = React.createClass({
           <h1> Profiles </h1>
           <div>
           <h2>Profile 1</h2>
-          <RatingList data={this.state.attributes} />
+          <RatingList data={this.state.ratings} />
           <br />
           </div>     
 
           <div>
           <h2>Profile 2</h2>
-          <RatingList data={this.state.testProfile2.attributes} />
+          <RatingList data={this.state.testProfile2.ratings} />
           <br />
           </div>     
 
           <div>
           <h2>Profile 3</h2>
-          <RatingList data={this.state.testProfile3.attributes} />
+          <RatingList data={this.state.testProfile3.ratings} />
           <br />
           </div>
 
           <div>
           <h2>Profile 4</h2>
-          <RatingList data={this.state.testProfile4.attributes} />
+          <RatingList data={this.state.testProfile4.ratings} />
           <br />
           </div>     
 
           <div>
           <h2>Profile 5</h2>
-          <RatingList data={this.state.testProfile5.attributes} />
+          <RatingList data={this.state.testProfile5.ratings} />
           <br />
           </div>          
         </div>      
@@ -217,27 +201,27 @@ var UserQuestions = React.createClass({
           scores because the maximum increases based on sample size. Individual scores<br />
           are out of 20 while overall is out of 100.
           <h2>One and Two</h2>
-          <MatchList data={this.state.attributes} comp={this.state.testProfile2.attributes} />
+          <MatchList data={this.state.ratings} comp={this.state.testProfile2.ratings} />
         </div>
 
         <div>
           <h2>One and Three</h2>
-          <MatchList data={this.state.attributes} comp={this.state.testProfile3.attributes} />
+          <MatchList data={this.state.ratings} comp={this.state.testProfile3.ratings} />
         </div>
 
         <div>
           <h2>One and Four</h2>
-          <MatchList data={this.state.attributes} comp={this.state.testProfile4.attributes} />
+          <MatchList data={this.state.ratings} comp={this.state.testProfile4.ratings} />
         </div>
 
         <div>
           <h2>One and Five</h2>
-          <MatchList data={this.state.attributes} comp={this.state.testProfile5.attributes} />
+          <MatchList data={this.state.ratings} comp={this.state.testProfile5.ratings} />
         </div>
 
         <div>
           <h2>Four and Five</h2> (more realistic sample)
-          <MatchList data={this.state.testProfile4.attributes} comp={this.state.testProfile5.attributes} />
+          <MatchList data={this.state.testProfile4.ratings} comp={this.state.testProfile5.ratings} />
         </div>
 
       </div>      
