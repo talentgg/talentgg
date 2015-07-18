@@ -31,7 +31,10 @@ var User = db.define( 'user', {
   bio: {
     //This is for storing the user's essay data and perhaps any other person-level data
     type: Sequelize.JSON,
-    defaultValue: {}
+    defaultValue: {
+      
+      
+    }
   },
   teams: {
     //This is for storing the teams that the user is on

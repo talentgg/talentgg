@@ -12,7 +12,7 @@ var Profile = React.createClass({
     return {
       bio: {},
       userquestions: [],
-      username: '',
+      // username: '',
       displayName: ''
     };
   },
@@ -34,7 +34,7 @@ var Profile = React.createClass({
     this.init();
   },
   render: function() {
-    var username = this.getParams().username;
+    // var username = this.getParams().username;
     return (
       <div className="row">  
         <div className="col-md-12">
