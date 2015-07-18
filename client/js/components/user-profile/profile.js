@@ -4,7 +4,6 @@ var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var Bio = require('./bio');
 var BioForm = require('./bio-form');
-var UserQuestions = require('./user-questions');
 var Axios = require('axios');
 
 var Profile = React.createClass({
@@ -42,9 +41,6 @@ var Profile = React.createClass({
       <div className="row">  
         <div className="col-md-12">
           <Bio displayName={this.state.displayName} bio={this.state.bio}/>
-        </div>
-        <div className="col-md-12">
-          <UserQuestions username={username} questions={this.state.userquestions}/>
         </div>
       </div>
     );
