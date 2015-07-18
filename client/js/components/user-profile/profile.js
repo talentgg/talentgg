@@ -44,12 +44,13 @@ var Profile = React.createClass({
         <div className="col-md-12">
           <Bio displayName={this.state.displayName} bio={this.state.bio}/>
         </div>
-        <div className="col-md-12">
-          <UserQuestions username={username} questions={this.state.userquestions} profile={this.state.ratings} counter={this.state.counter} />
-        </div>
       </div>
     );
   }
 });
 
 module.exports = Profile;
+
+//         <div className="col-md-12">
+//            <UserQuestions username={username} questions={this.state.userquestions} profile={this.state.ratings} counter={this.state.counter} />
+//         </div>

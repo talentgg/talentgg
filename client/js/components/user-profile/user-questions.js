@@ -21,21 +21,9 @@ var UserQuestions = React.createClass({
         potential: []
       },
       questionStore: [],      
-      counter: 0,
+      counter: this.props.counter,
       answerHistory: [],      
       ratings: {},
-      // ratings: {
-      //     dominance: 0,
-      //     adaptable: 0,
-      //     blunt: 0,
-      //     collaborative: 0,
-      //     brute: 0,
-      //     aggressive: 0,
-      //     troll: 0,
-      //     loud: 0,
-      //     committed: 0,
-      //     ambition: 0
-      // },
       testProfile2: {
         ratings: {
           dominance: 0,

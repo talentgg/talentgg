@@ -64,11 +64,6 @@ module.exports = {
   },
 
   updateRatings: function(req, res){    
-    // var updates = req.body;
-    // console.log(typeof updates);
-    // console.log(updates);
-    // console.log(updates["ratings"]);        
-    // console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     User.findById(req.session.passport.user)
     .then(function(data){      
       User.update({
