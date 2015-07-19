@@ -70,6 +70,7 @@ var MatchList = React.createClass({
       overallScore = Math.round(calculateMatchScore(overallScore, 200) * 100);
       MatchNodes.push(
         <div>
+          <div> <img src={ this.props.users[i].avatar } /> </div>
           <div> { this.props.users[i].displayName } </div>
           <div> { this.props.users[i].bio.willdo } </div>
           <div> { this.props.users[i].bio.purpose } </div>    

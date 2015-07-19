@@ -28,12 +28,14 @@ var User = db.define( 'user', {
     unique: false,
     allowNull: false
   },
+   avatar: {
+    type: Sequelize.STRING,
+    defaultValue: "http://icons.iconarchive.com/icons/fazie69/league-of-legends/512/Teemo-Astronaut-icon.png"
+  },
   bio: {
     //This is for storing the user's essay data and perhaps any other person-level data
     type: Sequelize.JSON,
     defaultValue: {
-      
-      
     }
   },
   teams: {
