@@ -1,0 +1,14 @@
+# Dependencies
+node_modules
+server/public/bower
+
+# Private Files
+server/config/private.js
+
+# Loose Files
+.idea
+dist
+.DS_Store
+npm-debug.log 
+.floo
+.flooignore
