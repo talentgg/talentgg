@@ -36,8 +36,20 @@ var User = db.define( 'user', {
      seeking: "",
      purpose: "",
      region: "",
-     willdo: [],
-     wontdo: [],
+     willdo: {
+      top: false,
+      jungle: false,
+      support: false,
+      mid: false,
+      adc: false
+     },
+     wontdo: {
+      top: false,
+      jungle: false,
+      support: false,
+      mid: false,
+      adc: false
+     },
      summoner: "",
      about: "",
      favorite: ""
