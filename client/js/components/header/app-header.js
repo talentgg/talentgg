@@ -55,6 +55,7 @@ var Header = React.createClass({
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
+              <li><Link to="/userquestions">Questions</Link></li>
               <li><Link to="/findTeams"><span className="glyphicon glyphicon-search"></span> Find Teams</Link></li>
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Teams <span className="caret"></span></Link>
@@ -69,8 +70,7 @@ var Header = React.createClass({
               <li className="dropdown">
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
                 <ul className="dropdown-menu">
-                  <li><Link to="settings">Settings</Link></li>
-                  <li><Link to="userquestions">Questions</Link></li>
+                  <li><Link to="settings">Settings</Link></li>                  
                   <li><Link to="/" onClick={this.logout}>Logout</Link></li>
                 </ul>
               </li>
