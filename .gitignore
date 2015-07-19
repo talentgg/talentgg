@@ -9,4 +9,6 @@ server/config/private.js
 .idea
 dist
 .DS_Store
-npm-debug.log
+npm-debug.log 
+.floo
+.flooignore

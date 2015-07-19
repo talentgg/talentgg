@@ -6,10 +6,11 @@ var FindTeams = React.createClass({
     return {
       users: [],
       me: {},
-      filters: []
+      filters: [],
+      id: 0
     };
   },
-  componentDidMount: function() {
+  componentWillMount: function() {
     var context = this;
 
     function getThem() {
@@ -23,10 +24,12 @@ var FindTeams = React.createClass({
     axios.all([getThem(), getMe()])
         .then(axios.spread(function(them, me) { 
             console.log("-------");
-            console.log(them.data);        
+            console.log(them.data);
+            console.log("-------");
             context.setState({
               users: them.data,
-              me: me.data.ratings,              
+              me: me.data.ratings,
+              id: me.data.id             
             });
         }));
   },     
@@ -40,7 +43,7 @@ var FindTeams = React.createClass({
         <p> I WORK! </p>
 
         <h1> Matches </h1>
-        <MatchList users={this.state.users} me={this.state.me} />    
+        <MatchList users={this.state.users} me={this.state.me} id={this.state.id} />    
       </div>
       );
   }
@@ -58,28 +61,31 @@ var MatchList = React.createClass({
     };
     var MatchNodes = [];
     var overallScore = 0;
-    console.log("xxxxxxxx")
-    console.log(this.props.users)
-    console.log("xxxxxxxx")
     for (var i = 0; i < this.props.users.length; i++){
-      for (key in this.props.me) {
-        var score = 20 - Math.abs(this.props.me[key] - this.props.users[i][key]);
-        overallScore += score;
-        score = calculateMatchScore(score, 20);        
-      };
-      overallScore = Math.round(calculateMatchScore(overallScore, 200) * 100);
-      MatchNodes.push(
-        <div>
-          <div> { this.props.users[i].displayName } </div>
-          <div> { this.props.users[i].bio.willdo } </div>
-          <div> { this.props.users[i].bio.purpose } </div>    
-          <div> { this.props.users[i].bio.times } </div>
-          <div> {overallScore}% </div>
-          <br />
-          <br />
-        </div>)
-    }
-
+      if (this.props.users[i].id !== this.props.id) {
+        for (key in this.props.me) {
+          console.log("xxxxxxxx", i)
+          console.log(key);
+          console.log(this.props.me[key])
+          console.log(this.props.users[i].ratings[key])
+          console.log("xxxxxxxx", i)
+          var score = 20 - Math.abs(this.props.me[key] - this.props.users[i].ratings[key]);
+          overallScore += score;
+          score = calculateMatchScore(score, 20);        
+        };
+        overallScore = Math.round(calculateMatchScore(overallScore, 200) * 100);
+        MatchNodes.push(
+          <div>
+            <div> { this.props.users[i].displayName } </div>
+            <div> { this.props.users[i].bio.willdo } </div>
+            <div> { this.props.users[i].bio.purpose } </div>    
+            <div> { this.props.users[i].bio.times } </div>
+            <div> {overallScore}% </div>
+            <br />
+            <br />
+          </div>)
+        }
+      }
 
 
     return (
