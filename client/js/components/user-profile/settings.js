@@ -17,8 +17,6 @@ var leagueUpdate = function(){
 
 var Settings = React.createClass({
 
-  regionList: ['NA', 'KR', 'EUNE', 'EUW', 'BR', 'RU', 'LAN', 'LAS', 'OCE', 'PBE', 'TR'],
-
   getInitialState: function(){
     return {
       displayName: ""
@@ -45,22 +43,6 @@ var Settings = React.createClass({
 
   render: function(){
     return(
-      <form className="form-horizontal" method="POST" action="">
-        <div className="form-group">
-          <label className="col-sm-2 control-label">Summoner Name</label>
-          <div className="col-sm-8">
-            <input type="text" className="form-control" name="displayName" value={this.state.displayName} onChange={this.handleChange} />
-          </div>
-          <div className="col-sm-2">
-            <select>
-              {this.regionList.map(function(val){return <option value={val.toLowerCase()}>{val}</option>})}
-            </select>
-          </div>
-        </div>
-      </form>
-
-      <div></div>
-
       <form className="form-horizontal" method="POST" action="/settings">
         <div className="form-group">
           <label className="col-sm-2 control-label">Display Name</label>
