@@ -1,6 +1,20 @@
 var React = require('react');
 var Router = require('react-router');
 
+var leagueAccount;
+
+var leagueUpdate = function(){
+  if(true){
+    leagueAccount = <form>
+      <span>True</span>
+    </form>;
+  } else {
+    this.leagueAccount = <form>
+      <span>False</span>
+    </form>;
+  }
+}
+
 var Settings = React.createClass({
 
   getInitialState: function(){
@@ -17,6 +31,7 @@ var Settings = React.createClass({
           displayName: result.displayName
         })
       }
+      leagueUpdate();
     }.bind(this));
   },
 
