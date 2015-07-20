@@ -33,6 +33,8 @@ module.exports = function(app) {
 
   app.post('/profile', function(req, res){ // Update bio data
     User.updateBio(req, res);
+    console.log('data: ');
+    console.log(req.body);
   });
 
   app.post('/ratings', function(req, res){ // Update bio data
