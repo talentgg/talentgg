@@ -86,24 +86,6 @@ var MatchList = React.createClass({
           </div>)
         }
       }
-      for (key in this.props.me) {
-        var score = 20 - Math.abs(this.props.me[key] - this.props.users[i][key]);
-        overallScore += score;
-        score = calculateMatchScore(score, 20);        
-      };
-      overallScore = Math.round(calculateMatchScore(overallScore, 200) * 100);
-      MatchNodes.push(
-        <div>
-          <div> <img src={ this.props.users[i].avatar } /> </div>
-          <div> { this.props.users[i].displayName } </div>
-          <div> { this.props.users[i].bio.willdo } </div>
-          <div> { this.props.users[i].bio.purpose } </div>    
-          <div> { this.props.users[i].bio.times } </div>
-          <div> {overallScore}% </div>
-          <br />
-          <br />
-        </div>)
-    }
 
 
     return (
@@ -115,7 +97,3 @@ var MatchList = React.createClass({
     );
   }
 });
-
-
-
-
