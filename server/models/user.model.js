@@ -53,8 +53,6 @@ var User = db.define( 'user', {
      summoner: "",
      about: "",
      favorite: ""
-=======
->>>>>>> added glyphicons / avatar
     }
   },
   teams: {
