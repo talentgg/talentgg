@@ -27,7 +27,7 @@ module.exports = function(app) {
     User.getAllProfiles(req, res);
   } );
 
-  app.get('/profile', function(req, res){ // Profile data from bio
+  app.get('/profile', function(req, res){ // Personal account data
     User.getOwnProfile(req, res);
   });
 
@@ -37,12 +37,24 @@ module.exports = function(app) {
     console.log(req.body);
   });
 
-  app.post('/ratings', function(req, res){ // Update bio data
+  app.post('/ratings', function(req, res){ // Update ratings
     User.updateRatings(req, res);
   });
 
-  app.post('/settings', function(req, res){
+  app.post('/settings', function(req, res){ // Update account information
     User.updateSettings(req, res);
+  });
+
+  app.post('/setSummoner', function(req, res){ // Update summoner information
+    User.setSummoner(req, res);
+  });
+
+  app.post('/verifySummoner', function(req, res){
+    User.verifySummoner(req, res);
+  });
+
+  app.post('/updateSummoner', function(req, res){
+    User.updateSummoner(req, res);
   });
 
   app.get(/\/username\/.*/, function(req, res){ // Fetches a user by displayName, case sensitive!
@@ -63,4 +75,6 @@ module.exports = function(app) {
       User.lolapi(req, res, req.url.split('/')[2], req.url.split('/')[3].slice(0, -5));
     }
   });
+
+
 };

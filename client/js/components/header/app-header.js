@@ -19,7 +19,7 @@ var Header = React.createClass({
       displayName: "",
       teams: []
       //dummy data below
-      //teams: [{id: 1, teamName: "pew pew"}, {id:2, teamName: "win factory"}, {id:3, teamName: "scrub life"}]
+      // teams: [{id: 1, teamName: "pew pew"}, {id:2, teamName: "win factory"}, {id:3, teamName: "scrub life"}]
     }
   },
 
@@ -27,8 +27,8 @@ var Header = React.createClass({
     $.get('/profile', function(result){
       if(this.isMounted()){
         this.setState({
-          displayName: result.displayName,
-          teams: result.teams
+          displayName: result.displayName
+          // teams: result.teams
         })
       }
     }.bind(this));
@@ -55,11 +55,12 @@ var Header = React.createClass({
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li><Link to="/"><span className="glyphicon glyphicon-search"></span> Find Teams</Link></li>
+              <li><Link to="/userquestions">Questions</Link></li>
+              <li><Link to="/findTeams"><span className="glyphicon glyphicon-search"></span> Find Teams</Link></li>
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">
-                  {this.state.teams.length === 0 ? <li><Link to="/">Find Teams</Link></li> : this.state.teams.map(function(team){return <li key={team.id}><Link to="/">{team.teamName}</Link></li>})}
+                  {this.state.teams.length === 0 ? <li><Link to="/findTeams">Find Teams</Link></li> : this.state.teams.map(function(team){return <li key={team.id}><Link to="/">{team.teamName}</Link></li>})}
                 </ul>
               </li>
             </ul>
@@ -70,7 +71,6 @@ var Header = React.createClass({
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
                 <ul className="dropdown-menu">
                   <li><Link to="settings">Settings</Link></li>
-                  <li><Link to="userquestions">Questions</Link></li>
                   <li><Link to="/" onClick={this.logout}>Logout</Link></li>
                 </ul>
               </li>

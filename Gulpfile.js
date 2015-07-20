@@ -27,8 +27,8 @@ gulp.task('browserify', function() {
 gulp.task('copy',function() {
   gulp.src('client/*.*')
     .pipe(gulp.dest('dist'));
-  gulp.src('client/styles/*.*')
-    .pipe(gulp.dest('dist/styles'));
+  gulp.src('client/img/*.*')
+    .pipe(gulp.dest('dist/img'));
 });
 
 gulp.task('default',['start','browserify', 'copy'], function() {

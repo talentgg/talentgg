@@ -31,7 +31,29 @@ var User = db.define( 'user', {
   bio: {
     //This is for storing the user's essay data and perhaps any other person-level data
     type: Sequelize.JSON,
-    defaultValue: {}
+    defaultValue: {
+     times: "",
+     seeking: "",
+     purpose: "",
+     region: "",
+     willdo: {
+      top: false,
+      jungle: false,
+      support: false,
+      mid: false,
+      adc: false
+     },
+     wontdo: {
+      top: false,
+      jungle: false,
+      support: false,
+      mid: false,
+      adc: false
+     },
+     summoner: "",
+     about: "",
+     favorite: ""
+    }
   },
   teams: {
     //This is for storing the teams that the user is on
@@ -41,7 +63,7 @@ var User = db.define( 'user', {
   games: {
     //This is for storing the user's game data broken down into sub-objects for each game
     type: Sequelize.JSON,
-    defaultValue: {}
+    defaultValue: {avatar: "http://i384.photobucket.com/albums/oo288/PrincessElliebear/hello-kitty-color-150x150.gif"}
   },
   counter: {                  // redo this and answer history into one json object
     type: Sequelize.INTEGER,

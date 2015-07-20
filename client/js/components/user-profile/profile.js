@@ -12,23 +12,22 @@ var Profile = React.createClass({
     return {
       bio: {},
       userquestions: [],
-      username: '',
-      displayName: ''
+      // username: '',
+      displayName: '',
+      games: {}
     };
   },
   init: function() {
     var context = this;
     Axios.get('/profile').
       then(function(response) {
-        console.log('data:');
-        console.log(response);
         context.setState({
           bio: response.data.bio,
-          username: response.data.username,  
           displayName: response.data.displayName,
-          ratings: response.data.ratings
+          ratings: response.data.ratings,
+          games: response.data.games
         });
-      });  
+      });
   },
   componentWillMount: function() {
     this.router = this.context.router;
@@ -37,13 +36,9 @@ var Profile = React.createClass({
     this.init();
   },
   render: function() {
-    var username = this.getParams().username;
+    // var username = this.getParams().username;
     return (
-      <div className="row">  
-        <div className="col-md-12">
-          <Bio displayName={this.state.displayName} bio={this.state.bio}/>
-        </div>
-      </div>
+      <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games}/>
     );
   }
 });
