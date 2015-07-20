@@ -28,10 +28,6 @@ var User = db.define( 'user', {
     unique: false,
     allowNull: false
   },
-   avatar: {
-    type: Sequelize.STRING,
-    defaultValue: "http://icons.iconarchive.com/icons/fazie69/league-of-legends/512/Teemo-Astronaut-icon.png"
-  },
   bio: {
     //This is for storing the user's essay data and perhaps any other person-level data
     type: Sequelize.JSON,
@@ -67,7 +63,7 @@ var User = db.define( 'user', {
   games: {
     //This is for storing the user's game data broken down into sub-objects for each game
     type: Sequelize.JSON,
-    defaultValue: {}
+    defaultValue: {avatar: "http://i384.photobucket.com/albums/oo288/PrincessElliebear/hello-kitty-color-150x150.gif"}
   },
   counter: {                  // redo this and answer history into one json object
     type: Sequelize.INTEGER,

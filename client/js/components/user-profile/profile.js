@@ -13,7 +13,8 @@ var Profile = React.createClass({
       bio: {},
       userquestions: [],
       // username: '',
-      displayName: ''
+      displayName: '',
+      games: {}
     };
   },
   init: function() {
@@ -23,9 +24,10 @@ var Profile = React.createClass({
         context.setState({
           bio: response.data.bio,
           displayName: response.data.displayName,
-          ratings: response.data.ratings
+          ratings: response.data.ratings,
+          games: response.data.games
         });
-      });  
+      });
   },
   componentWillMount: function() {
     this.router = this.context.router;
@@ -36,11 +38,7 @@ var Profile = React.createClass({
   render: function() {
     // var username = this.getParams().username;
     return (
-      <div className="row">  
-        <div className="col-md-12">
-          <Bio displayName={this.state.displayName} bio={this.state.bio}/>
-        </div>
-      </div>
+      <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games}/>
     );
   }
 });

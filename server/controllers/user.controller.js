@@ -77,11 +77,11 @@ module.exports = {
     for(var i = 0; i < 20; i++){
       key += gen.charAt(Math.floor(Math.random()*62));
     }
-    relay('https://' + region + '.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + name + '?api_key=' + config.lolapi, function(er, data) {
+    relay(res, 'https://' + region + '.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + name + '?api_key=' + config.lolapi, function(er, data) {
       obj.id = JSON.parse(data)[name].id;
       obj.name = JSON.parse(data)[name].name;
       obj.level = JSON.parse(data)[name].summonerLevel;
-      obj.avatar = 'avatar.leagueoflegends.com/' + region + '/' + name + '.png';
+      obj.avatar = 'http://avatar.leagueoflegends.com/' + region + '/' + name + '.png';
       obj.region = req.body.region;
       obj.verified = false;
       obj.verifyKey = key;
@@ -97,7 +97,7 @@ module.exports = {
     User.findById(req.session.passport.user)
     .then(function(data){
       var obj = data.games;
-      relay(obj.verifyRoute, function(err, body){
+      relay(res, obj.verifyRoute, function(err, body){
         if(err) throw err;
         if(JSON.parse(body)[obj.id].pages[0].name === obj.verifyKey){
           obj.verified = true;
@@ -119,7 +119,7 @@ module.exports = {
     User.findById(req.session.passport.user)
     .then(function(info){
       user = info.games;
-      relay('https://' + user.region + '.api.pvp.net/api/lol/' + user.region + '/v1.4/summoner/' + user.id + '?api_key=' + config.lolapi, function(er, data) {
+      relay(res, 'https://' + user.region + '.api.pvp.net/api/lol/' + user.region + '/v1.4/summoner/' + user.id + '?api_key=' + config.lolapi, function(er, data) {
         user.name = JSON.parse(data)[user.id].name;
         user.level = JSON.parse(data)[user.id].summonerLevel;
         User.update({games: user}, {where: {id: req.session.passport.user}})
@@ -173,10 +173,10 @@ module.exports = {
       obj.id = JSON.parse(data)[username].id;
       obj.name = JSON.parse(data)[username].name;
       obj.level = JSON.parse(data)[username].summonerLevel;
-      obj.avatar = 'avatar.leagueoflegends.com/' + region + '/' + username + '.png';
+      obj.avatar = 'http://avatar.leagueoflegends.com/' + region + '/' + username + '.png';
       obj.region = region;
       //second api call
-      request('https://' + region + '.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + obj.id + '?api_key=' + config.lolapi, function(err, stat, body) {
+      request(res, 'https://' + region + '.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + obj.id + '?api_key=' + config.lolapi, function(err, stat, body) {
         if(err) { throw err }
         else if(stat.statusCode === 404) {
           obj.rank = "unranked";
@@ -197,7 +197,7 @@ module.exports = {
 
 };
 
-function relay(url, callback) {
+function relay(res, url, callback) {
   request(url, function(err, stat, body) {
     if(err) {
       callback(err, null);
