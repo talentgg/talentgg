@@ -28,14 +28,11 @@ var Bio = React.createClass({
                 <li className="list-group-item">Purpose:{this.props.bio.purpose}</li>
                 <li className="list-group-item">Seeking:{this.props.bio.seeking}</li>
                 <li className="list-group-item">Will Do:{this.props.bio.willdo}</li>
-                <li className="list-group-item">Wont Do:{this.props.bio.wontdo}</li>
-                <li className="list-group-item">Summoner:{this.props.bio.summoner}</li>
-                <li className="list-group-item">Region:{this.props.bio.region}</li>
                 <li className="list-group-item">Favorite Games:{this.props.bio.favorite}</li>
                 <li className="list-group-item">About:{this.props.bio.about}</li>
               </ul>
             <span class="list-group-btn">
-              <button className="btn btn-default" type="button" onClick={this.handleEdit}>Joe Budden</button>
+              <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
             </span>
           </div>
       </div>
