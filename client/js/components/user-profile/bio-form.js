@@ -100,5 +100,3 @@ var BioForm = React.createClass({
 });
 
 module.exports = BioForm;
-
-
