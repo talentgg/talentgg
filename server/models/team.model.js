@@ -39,7 +39,6 @@ var Team = db.define( 'team', {
     type: Sequelize.JSON,
     defaultValue: {}
   }
-
 } );
 
 Team.sync();
