@@ -3,7 +3,6 @@ var axios = require('axios');
 
 var ReactBtn = require('react-btn-checkbox');
 var Checkbox = ReactBtn.Checkbox;
-var Radio = ReactBtn.Radio;
 
 var belle = require('belle');
 Button = belle.Button;
@@ -23,7 +22,7 @@ var FindTeams = React.createClass({
       willdo: {
         'Tank': false,
         'Jungle': false,
-        'Support': false,
+        'Support': true,
         'Mid': false,
         'ADC': false,
         'Fill': true
@@ -112,9 +111,10 @@ var FindTeams = React.createClass({
           <form onSubmit={this.handleSubmit}>
           
             <Checkbox
-            label='Checkbox'
+            label='Will Do: '
             options={this.state.willdo}
-            onChange={this.setState.bind(this)} />
+            onChange={this.setState.bind(this)}
+            bootstrap />
 
             <Button primary type="submit" value="Submit">Submit</Button>
           </form>
@@ -171,11 +171,11 @@ var MatchList = React.createClass({
     };
 
     var filteredUsers = new LinkedList(this.props.users[0]);
-    while () {
-      if (this.state.times === "any" || this.state.times === this.props.users[i].bio.times) {
-        filteredUsers.addToTail(this.props.users[i]);
-      }
-    }
+    // while () {
+    //   if (this.state.times === "any" || this.state.times === this.props.users[i].bio.times) {
+    //     filteredUsers.addToTail(this.props.users[i]);
+    //   }
+    // }
 
 
     for (var i = 0; i < this.props.users.length; i++){
