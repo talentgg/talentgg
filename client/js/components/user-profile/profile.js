@@ -12,7 +12,6 @@ var Profile = React.createClass({
     return {
       bio: {},
       userquestions: [],
-      // username: '',
       displayName: '',
       games: {}
     };
@@ -36,7 +35,6 @@ var Profile = React.createClass({
     this.init();
   },
   render: function() {
-    // var username = this.getParams().username;
     return (
       <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games}/>
     );
