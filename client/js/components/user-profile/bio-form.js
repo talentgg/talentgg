@@ -69,19 +69,19 @@ var BioForm = React.createClass({
               <input type="checkbox" name="willdo" value="tank " onChange={this.handleChange} />Tank
             </label>  
             <label className="checkbox inline no_indent">
-              <input type="checkbox" name="willdo" value=" jungle" onChange={this.handleChange} />Jungle
+              <input type="checkbox" name="willdo" value="jungle" onChange={this.handleChange} />Jungle
             </label>  
             <label className="checkbox inline no_indent">
-              <input type="checkbox" name="willdo" value=" support" onChange={this.handleChange} />Support
+              <input type="checkbox" name="willdo" value="support" onChange={this.handleChange} />Support
             </label>
             <label className="checkbox inline no_indent"> 
-              <input type="checkbox" name="willdo" value=" mid" onChange={this.handleChange} />Mid
+              <input type="checkbox" name="willdo" value="mid" onChange={this.handleChange} />Mid
             </label>
             <label className="checkbox inline no_indent">  
-              <input type="checkbox" name="willdo" value=" adc" onChange={this.handleChange} />ADC
+              <input type="checkbox" name="willdo" value="adc" onChange={this.handleChange} />ADC
             </label>
             <label className="checkbox inline no_indent">  
-              <input type="checkbox" name="willdo" value=" fill" onChange={this.handleChange} />Fill
+              <input type="checkbox" name="willdo" value="fill" onChange={this.handleChange} />Fill
             </label>
           </li>
           <li>
