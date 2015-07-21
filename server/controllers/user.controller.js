@@ -49,9 +49,7 @@ module.exports = {
     User.findById(req.session.passport.user)
     .then(function(data){
       var obj = data;
-
-      // Masking private information
-      obj.hash = false;
+      obj.hash = false; // this prevents retrieval of hashed password
       res.json(obj);
     });
   },
@@ -59,16 +57,20 @@ module.exports = {
   updateBio: function(req, res){ // Updates bio data
     User.findById(req.session.passport.user)
     .then(function(data){
-      User.update({bio: req.body},{where: {id: req.session.passport.user}});
-      res.redirect('/#/user-profile');
+      User.update({bio: req.body},{where: {id: req.session.passport.user}})
+      .then(function(){
+        res.redirect('/#/user-profile');
+      })
     });
   },
 
   updateSettings: function(req, res){ // Updates account data
     User.findById(req.session.passport.user)
     .then(function(data){
-      User.update({displayName: req.body.displayName}, {where: {id: req.session.passport.user}});
-      res.redirect('/#/user-profile');
+      User.update({displayName: req.body.displayName}, {where: {id: req.session.passport.user}})
+      .then(function(){
+        res.redirect('/#/user-profile');
+      })
     })
   },
 
@@ -105,7 +107,7 @@ module.exports = {
           obj.verifyRoute = false;
           User.update({games: obj}, {where: {id: req.session.passport.user}})
           .then(function(){
-            res.redirect('/#/profile');
+            res.redirect('/#/user-profile');
           });
         } else {
           res.send("Verification failed. Check to see that the name of your first rune page is: " + obj.verifyKey);
@@ -146,10 +148,9 @@ module.exports = {
   profileByName: function(req, res, name){
     User.findOne({where: {displayName: name}})
     .then(function(data){
-      console.log('received: ' + data);
       var obj = data;
-      obj.username = false;
-      obj.hash = false;
+      obj.username = false; // hides user's email
+      obj.hash = false; // hide's user's hashed password
       res.json(obj);
     })
   },
@@ -158,8 +159,8 @@ module.exports = {
     User.findById(id)
     .then(function(data){
       var obj = data;
-      obj.username = false;
-      obj.hash = false;
+      obj.username = false; // hides user's email
+      obj.hash = false; // hide's user's hashed password
       res.json(obj);
     })
   },

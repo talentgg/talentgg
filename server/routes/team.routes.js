@@ -5,25 +5,24 @@ var passport = require( 'passport' );
 module.exports = function( app ) {
 
   //register your team
-  app.post( '/team/register', function( req, res ) {
-    console.log(req);
-    Team.register(req);
-  } );
+  app.post('/team/register', function(req, res){
+    Team.register(req, res);
+  });
 
   // get team profile
-  app.get( '/team/profile/*', function( req, res ) {
+  app.get('/team/*', function(req, res){
     Team.getProfile(req, res);
-  } );
+  });
 
    // get team profile
-  app.get( '/team/all', function( req, res ) {
+  app.get('/team/all', function(req, res){
     Team.getAllProfiles(req, res);
-  } );
+  });
 
   //update team profile
-  app.post( '/team/update/*', function( req, res ) {
-    Team.updateProfile(req);
-  } );
+  app.post('/team/update/*', function(req, res){
+    Team.updateProfile(req, res);
+  });
 
 
 };

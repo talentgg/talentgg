@@ -1,12 +1,32 @@
-var Team = require( '../models/team.model' );
-var passport = require( 'passport' );
+var Team = require('../models/team.model');
+var User = require('../models/user.model');
+var passport = require('passport');
 
 module.exports = {
 
   register: function( req, res, next ) {
-    Team.create({
-      teamName: req.body.teamName
-    });
+    var user, team;
+    User.findOne({where: {id: req.session.passport.user}})
+    .then(function(userData){
+      user = userData;
+    })
+    .then(function(){
+      Team.create({
+        teamName: req.body.teamName,
+        data: {times: req.body.times, about: req.body.about},
+        members: {id: user.id, name: user.displayName, isAdmin: true}
+      })
+      .then(function(teamData){
+        team = teamData;
+        user.teams.push({id: team.id, teamName: team.teamName});
+      })
+      .then(function(){
+        User.update({teams: user.teams}, {where: {id: req.session.passport.user}});
+      })
+      .then(function(){
+        res.redirect('/#/user-profile');
+      })
+    })
   },
 
   getProfile: function( req, res, next ){
@@ -35,4 +55,3 @@ module.exports = {
   }
 
 };
-
