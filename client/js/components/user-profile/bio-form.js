@@ -11,16 +11,13 @@ var BioForm = React.createClass({
       seeking: "",
       purpose: "",
       about: "",
-      summoner: "",
       favorite: "",
-      willdo: {
-        tanks: "",
-        jungle: "",
-        support: "",
-        mid: "",
-        adc: "",
-        fill: ""
-      }
+      tanks: "",
+      jungle: "",
+      support: "",
+      mid: "",
+      adc: "",
+      fill: ""
     };
   },
   componentWillMount: function() {
@@ -31,8 +28,6 @@ var BioForm = React.createClass({
           bio: response.data.bio.times,
           seeking: response.data.bio.seeking,
           purpose: response.data.bio.purpose,
-          summoner: response.data.bio.name,
-          region: response.data.bio.region,
           about: response.data.bio.about,
           favorite: response.data.bio.favorite,
           tank: response.data.bio.willdo.tank,
@@ -84,31 +79,6 @@ var BioForm = React.createClass({
           </div>
 
           <div className="form-group">
-            <label className="col-sm-2 control-label">Summoner ID</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" name="name" valueLink={this.linkState('name')} />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Region</label>
-            <div className="col-sm-10">
-              <select className="form-control" name="region" valueLink={this.linkState('region')}>
-                <option value="NA" selected>NA</option>
-                <option value="EUW">EUW</option>
-                <option value="EUNE">EUNE</option>
-                <option value="KR">KR</option>
-                <option value="BR">BR</option>
-                <option value="LAN">LAN</option>
-                <option value="LAS">LAS</option>
-                <option value="OCE">OCE</option>
-                <option value="RU">RU</option>
-                <option value="TR">TR</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="form-group">
             <label className="col-sm-2 control-label">About Me:</label>
             <div className="col-sm-10">
               <textarea type="text" name="about" className="form-control" valueLink={this.linkState('about')}></textarea>
@@ -123,48 +93,48 @@ var BioForm = React.createClass({
           </div>
 
           <div className="form-group">
-            <label className="col-sm-2 control-label">Will Do:</label>
+            <label className="control-label">Will Do: (choose atleast 1)</label>
           </div> 
 
           <div className="form-group">
             <label className="col-sm-2 control-label">Tank</label>
             <div className="checkbox inline col-sm-10">
-                <input type="checkbox" name="willdo" value="tank" checkedLink={this.linkState('tank')} />
+                <input type="checkbox" name="willdo" value="tank " checkedLink={this.linkState('tank')} />
             </div>
           </div>
 
           <div className="form-group">
             <label className="col-sm-2 control-label">Jungle</label>
             <div className="checkbox inline col-sm-10">
-                <input type="checkbox" name="willdo" value="jungle" checkedLink={this.linkState('jungle')} />
+                <input type="checkbox" name="willdo" value=" jungle" checkedLink={this.linkState('jungle')} />
             </div>
           </div>
 
           <div className="form-group">
             <label className="col-sm-2 control-label">Support</label>
             <div className="checkbox inline col-sm-10">
-                <input type="checkbox" name="willdo" value="support" checkedLink={this.linkState('support')} />
+                <input type="checkbox" name="willdo" value=" support" checkedLink={this.linkState('support')} />
             </div>
           </div>
 
           <div className="form-group">
             <label className="col-sm-2 control-label">Mid</label>
             <div className="checkbox inline col-sm-10">
-                <input type="checkbox" name="willdo" value="mid" checkedLink={this.linkState('mid')} />
+                <input type="checkbox" name="willdo" value=" mid" checkedLink={this.linkState('mid')} />
             </div>
           </div>
 
           <div className="form-group">
             <label className="col-sm-2 control-label">ADC</label>
             <div className="checkbox inline col-sm-10">
-                <input type="checkbox" name="willdo" value="adc" checkedLink={this.linkState('adc')} />
+                <input type="checkbox" name="willdo" value=" adc" checkedLink={this.linkState('adc')} />
             </div>
           </div>
 
           <div className="form-group">
             <label className="col-sm-2 control-label">Fill</label>
             <div className="checkbox inline col-sm-10">
-                <input type="checkbox" name="willdo" value="fill" checkedLink={this.linkState('fill')} />
+                <input type="checkbox" name="willdo" value=" fill" checkedLink={this.linkState('fill')} />
             </div>
           </div>
         
