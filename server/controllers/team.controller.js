@@ -6,21 +6,21 @@ module.exports = {
   register: function( req, res, next ) {
     Team.create({
       teamName: req.body.teamName
-    })
+    });
   },
 
   getProfile: function( req, res, next ){
     Team.findOne({where: {teamName: req.url.split('/')[3]}})
        .then(function (teamProfile) {
-         res.json(teamProfile)
-     })
+         res.json(teamProfile);
+     });
    },
 
    getAllProfiles: function( req, res, next ){
     Team.findAll()
        .then(function (teamProfiles) {
-         res.json(teamProfiles)
-     })
+         res.json(teamProfiles);
+     });
    },
 
   updateProfile: function( req, res, next ){
@@ -31,8 +31,8 @@ module.exports = {
         where: {
           username: req.body.username
         }
-      } )
+      });
   }
 
-}
+};
 

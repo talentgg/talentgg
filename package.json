@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.5.4",
     "bcryptjs": "^2.2.0",
+    "belle": "^1.0.1",
     "body-parser": "^1.13.2",
     "browser-sync": "^2.7.13",
     "browserify": "^10.2.4",
@@ -31,7 +32,11 @@
     "promise.prototype.finally": "^1.0.1",
     "react": "^0.13.3",
     "react-async": "^2.1.0",
+<<<<<<< HEAD
     "react-btn-checkbox": "0.0.2",
+=======
+    "react-btn-checkbox": "^0.0.2",
+>>>>>>> ab37cfdd721263146925337a98cc36480f4acc7c
     "react-router": "^0.13.3",
     "reactify": "^1.1.1",
     "request": "^2.58.0",

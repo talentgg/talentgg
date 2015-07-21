@@ -6,6 +6,7 @@ module.exports = function( app ) {
 
   //register your team
   app.post( '/team/register', function( req, res ) {
+    console.log(req);
     Team.register(req);
   } );
 
