@@ -1,8 +1,8 @@
-var React = require('react/addons');
+var React = require('react');
 var Router = require('react-router');
 var Axios = require('axios');
 
-var lolSearch = React.createClass({
+var LolUpdate = React.createClass({
   mixins: [React.addons.LinkedStateMixin, Router.Navigation, Router.State],
   getInitialState: function() {
     return {
@@ -21,7 +21,7 @@ var lolSearch = React.createClass({
         });
       });  
   },
-  handleSearch: function() {
+  handleUpdate: function() {
     // return json object to user
     // hide search component
     // transition to verify
@@ -57,7 +57,7 @@ var lolSearch = React.createClass({
 
           <div className="form-group">
             <div className="col-sm-offset-2 col-sm-10">
-              <button type="submit" className="btn btn-default>" onclick={this.handleSearch}>Search</button>
+              <button type="submit" className="btn btn-default>" onclick={this.handleUpdate}>fUpdate</button>
             </div>
           </div>
         </form>
@@ -66,4 +66,4 @@ var lolSearch = React.createClass({
     }
 });
 
-module.exports = lolSearch;
+module.exports = LolUpdate;
