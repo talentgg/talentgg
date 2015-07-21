@@ -26,8 +26,8 @@ var Header = React.createClass({
     $.get('/profile', function(result){
       if(this.isMounted()){
         this.setState({
-          displayName: result.displayName
-          // teams: result.teams
+          displayName: result.displayName,
+          teams: result.teams
         })
       }
     }.bind(this));
@@ -59,7 +59,7 @@ var Header = React.createClass({
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">
-                  {this.state.teams.length === 0 ? <li><Link to="/teamregistration"> Create a Team </Link></li> : this.state.teams.map(function(team){return <li key={team.id}><Link to="/">{team.teamName}</Link></li>})}
+                  {this.state.teams.length === 0 ? <li><Link to="/teamregistration"> Create a Team </Link></li> : this.state.teams.map(function(team){return <li key={team.id}><Link to={"/team/"+team.teamName}>{team.teamName}</Link></li>})}
                 </ul>
               </li>
             </ul>

@@ -14,15 +14,6 @@ var Team = db.define( 'team', {
     unique: true,
     allowNull: false
   },
-  createdAt: {
-    type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW
-  },
-  updatedAt: {
-    type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW
-  },
-
   //Team-specific schema
   data: {
     //This is for storing team-level data, similar to bio

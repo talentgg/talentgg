@@ -107,7 +107,7 @@ module.exports = {
           obj.verifyRoute = false;
           User.update({games: obj}, {where: {id: req.session.passport.user}})
           .then(function(){
-            res.redirect('/#/profile');
+            res.redirect('/#/user-profile');
           });
         } else {
           res.send("Verification failed. Check to see that the name of your first rune page is: " + obj.verifyKey);
@@ -148,7 +148,6 @@ module.exports = {
   profileByName: function(req, res, name){
     User.findOne({where: {displayName: name}})
     .then(function(data){
-      console.log('received: ' + data);
       var obj = data;
       obj.username = false; // hides user's email
       obj.hash = false; // hide's user's hashed password

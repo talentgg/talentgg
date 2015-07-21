@@ -33,8 +33,6 @@ module.exports = function(app) {
 
   app.post('/profile', function(req, res){ // Update bio data
     User.updateBio(req, res);
-    console.log('data: ');
-    console.log(req.body);
   });
 
   app.post('/ratings', function(req, res){ // Update ratings
@@ -57,12 +55,12 @@ module.exports = function(app) {
     User.updateSummoner(req, res);
   });
 
-  app.get(/\/username\/.*/, function(req, res){ // Fetches a user by displayName, case sensitive!
+  app.get('/user/*', function(req, res){ // Fetches a user by displayName, case sensitive!
     User.profileByName(req, res, req.url.split('/')[2]);
   });
 
-  app.get(/\/userid\/.*/, function(req, res){ // Fetches a user by id
-    User.profileById(req, res, req.url.split('/')[2]);
+  app.get('/user/id/*', function(req, res){ // Fetches a user by id
+    User.profileById(req, res, req.url.split('/')[3]);
   });
 
   // External API routes
