@@ -11,7 +11,6 @@ var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var NotFoundRoute = Router.NotFoundRoute;
 
-
 /* COMPONENTS TO RENDER DEPENDING ON THE REQUESTED ROUTE */
 
 var App = require("./components/app");
@@ -24,6 +23,7 @@ var UserQuestions = require("./components/user-profile/user-questions");
 var BioForm = require("./components/user-profile/bio-form");
 var FindTeams = require("./components/recruitment/findTeams");
 var Settings = require("./components/user-profile/settings");
+var TeamRegistration = require("./components/team/team-registration");
 var NotFound = React.createClass({
   render: function () {
     return <h2>NOT FOUND</h2>;
@@ -40,6 +40,7 @@ module.exports = (
     <Route name="findteams" path="/findteams" handler={FindTeams}/>
     <Route name="bioform" path="/bioform" handler={BioForm}/>
     <Route name="settings" path="/settings" handler={Settings}/>
+    <Route name="teamregistration" path="/teamregistration" handler={TeamRegistration}/>
     <NotFoundRoute handler={NotFound}/>
   </Route>
 
