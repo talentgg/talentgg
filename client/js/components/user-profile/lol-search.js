@@ -2,7 +2,7 @@ var React = require('react/addons');
 var Router = require('react-router');
 var Axios = require('axios');
 
-var lolSearch = React.createClass({
+var LolSearch = React.createClass({
   mixins: [React.addons.LinkedStateMixin, Router.Navigation, Router.State],
   getInitialState: function() {
     return {
@@ -12,8 +12,8 @@ var lolSearch = React.createClass({
   },
   componentDidMount: function() {
     var context = this;
-    Axios.get('/profile').
-      then(function(response) {
+    Axios.get('/profile')
+      .then(function(response) {
         context.setState({
           bio: response.data.bio,
           name: response.data.games.name,
@@ -66,4 +66,4 @@ var lolSearch = React.createClass({
     }
 });
 
-module.exports = lolSearch;
+module.exports = LolSearch;

@@ -65,6 +65,8 @@ var BioForm = React.createClass({
     var bio = this.state;
     console.log(bio)
     $.post("/profile", bio);
+
+    this.transitionTo('profile', {username: 'username'});
   },
   render: function() {
 
