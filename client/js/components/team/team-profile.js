@@ -39,8 +39,11 @@ var TeamProfile = React.createClass({
     return (
       <div>
         <div className="row" style={whiteBox}>
+          <div className="col-sm-offset-1 col-sm-2">
+            <img className="img-circle center-block" width="128" height="128" src="/img/tier-diamond.png" />
+          </div>
           <div className="col-sm-4">
-            <h3>{this.state.teamName}</h3>
+            <h3>Team: {this.state.teamName}</h3>
             <p>{this.state.about}</p>
           </div>
           <div className="col-sm-2">
@@ -50,9 +53,7 @@ var TeamProfile = React.createClass({
             <img className="center-block" width="128" height="128" src="/img/role-support.png"/>
           </div>
         </div>
-
         <br/>
-        
         <div className="row">
           <div className="col-sm-6">
             <div className="panel panel-default" style={whiteBox}>
@@ -64,7 +65,6 @@ var TeamProfile = React.createClass({
               </div>
             </div>
           </div>
-
           <div className="col-sm-6">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
@@ -72,19 +72,17 @@ var TeamProfile = React.createClass({
               </div>
             </div>
           </div>
-
-          <br/>
-          <div className="row">
-            <div className="col-sm-10">
-              <div className="panel panel-default" >
-                <div className="panel-body">
-                  <h3 className="text-center">Current Members</h3>
-                  <p><b>individual ninjas</b>: {this.state.members} </p>
-                </div>
+        </div>
+        <br/>
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="panel panel-default" >
+              <div className="panel-body">
+                <h3 className="text-center">Current Members</h3>
+                <p><b>individual ninjas</b>: {this.state.members} </p>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     )
