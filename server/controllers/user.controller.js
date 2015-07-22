@@ -70,9 +70,27 @@ module.exports = {
   updateSettings: function(req, res){ // Updates account data
     User.findById(req.session.passport.user)
     .then(function(data){
-      User.update({displayName: req.body.displayName}, {where: {id: req.session.passport.user}})
-      .then(function(){
-        res.redirect('/#/user-profile');
+      bcrypt.compare(req.body.confirm, data.hash, function(err, verified){
+        if(verified){
+          if(req.body.email.length > 0){
+            User.update({username: req.body.email}, {where: {id: data.id}});
+          }
+          if(req.body.pass1.length > 0){
+            bcrypt.genSalt(10, function(err, salt){
+              bcrypt.hash(req.body.pass1, salt, function(err, hash){
+                User.update({hash: hash}, {where: {id: data.id}});
+              })
+            })
+          }
+        } else {
+          res.send("You supplied the incorrect password");
+        }
+      })
+    })
+    .then(function(){
+      res.clearCookie('connect.sid');
+      req.session.destroy(function(err){
+        res.redirect('/');
       })
     })
   },
@@ -91,9 +109,9 @@ module.exports = {
       obj.verified = false;
       obj.verifyKey = key;
       obj.verifyRoute = "https://" + obj.region + ".api.pvp.net/api/lol/" + obj.region + "/v1.4/summoner/" + obj.id + "/runes?api_key=" + config.lolapi;
-      User.update({games: obj}, {where: {id: req.session.passport.user}})
+      User.update({displayName: obj.name, games: obj}, {where: {id: req.session.passport.user}})
       .then(function(){
-        res.redirect('/#/settings');
+        res.redirect('/#/account-link');
       })
     })
   },
@@ -210,7 +228,7 @@ function relay(res, url, callback) {
   });
 }
 
-var deepBoolean = function(obj){
+function deepBoolean(obj){
   if(typeof obj !== 'object') {
     if(obj === 'true' || obj === 'false'){
       return obj === 'true';

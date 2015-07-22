@@ -10,14 +10,15 @@ var Bio = React.createClass({
   propTypes: {
     displayName: React.PropTypes.string.isRequired,
     bio: React.PropTypes.object.isRequired,
-    games: React.PropTypes.object.isRequired
+    games: React.PropTypes.object.isRequired,
+    temp: React.PropTypes.object.isRequired
   },
   handleEdit: function() {
     var router = this.context.router;
     router.transitionTo('bioform', {username: 'username'});
   },
   render: function() {
-    
+
     var arrayToString = function(obj) {
       var string = [];
       for (var key in obj) {
@@ -43,7 +44,7 @@ var Bio = React.createClass({
             <p>{this.props.bio.about}</p>
           </div>
           <div className="col-sm-2">
-            <img className="center-block" width="128" height="128" src="/img/tier-silver.png"/>
+            <img className="center-block" width="128" height="128" src={"/img/tier-" + this.props.temp.rank + ".png"} />
           </div>
           <div className="col-sm-2">
             <img className="center-block" width="128" height="128" src="/img/role-support.png"/>

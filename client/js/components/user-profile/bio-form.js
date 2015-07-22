@@ -46,15 +46,15 @@ var BioForm = React.createClass({
   componentDidMount: function() {
     var context = this;
     Axios.get('/profile').
-      then(function(words) {
-        console.log(words)
+      then(function(response) {
+        console.log(response)
         context.setState({
-          times: words.data.bio.times,
-          purpose: words.data.bio.purpose,
-          about: words.data.bio.about,
-          favorite: words.data.bio.favorite,
-          willdo: words.data.bio.willdo,
-          wontdo: words.data.bio.wontdo,
+          times: response.data.bio.times,
+          purpose: response.data.bio.purpose,
+          about: response.data.bio.about,
+          favorite: response.data.bio.favorite,
+          willdo: response.data.bio.willdo,
+          wontdo: response.data.bio.wontdo,
         });
       });
   },

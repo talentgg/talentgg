@@ -26,7 +26,8 @@ var Header = React.createClass({
       if(this.isMounted()){
         this.setState({
           displayName: result.displayName,
-          teams: result.teams
+          teams: result.teams,
+          image: result.games.avatar
         })
       }
     }.bind(this));
@@ -64,12 +65,14 @@ var Header = React.createClass({
               </li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              <li><Link to="profile"><span className="glyphicon glyphicon-user"></span> {this.state.displayName}</Link></li>
+              <li><Link to="profile"><image className="img-rounded" height="20px" width="20px" src={this.state.image} /> {this.state.displayName}</Link></li>
               <li><Link to="/" style={{fontSize: '20px'}}><span className="glyphicon glyphicon-envelope"></span></Link></li>
               <li className="dropdown">
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
                 <ul className="dropdown-menu">
+                  <li><Link to="accountLink">Account Link</Link></li>
                   <li><Link to="settings">Settings</Link></li>
+                  <li role="separator" className="divider"></li>
                   <li><Link to="/" onClick={this.logout}>Logout</Link></li>
                 </ul>
               </li>
@@ -80,14 +83,5 @@ var Header = React.createClass({
     );
   }
 });
-
-// React.render(
-//   <Header />,
-//   document.getElementById('root')
-// );
-
-// React.render(
-//   <Header source="/profile" />, mountNode
-// );
 
 module.exports = Header;
