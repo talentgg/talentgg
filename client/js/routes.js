@@ -38,7 +38,7 @@ module.exports = (
     <Route name="bioform" path="/bioform" handler={BioForm}/>
     <Route name="settings" path="/settings" handler={Settings}/>
     <Route name="teamregistration" path="/teamregistration" handler={TeamRegistration}/>
-    <Route name="teamprofile" path="/teamprofile" handler={TeamProfile}/>
+    <Route name="teamprofile" path="/team/:teamname" handler={TeamProfile}/>
     <NotFoundRoute handler={NotFound}/>
   </Route>
 

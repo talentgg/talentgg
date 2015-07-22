@@ -23,7 +23,7 @@ var TeamProfile = React.createClass({
       });
   },
   render: function () {
-
+    
     var arrayToString = function(obj) {
     var string = [];
     for (var key in obj) {
@@ -95,3 +95,4 @@ var TeamProfile = React.createClass({
 });
 
 module.exports = TeamProfile;
+
