@@ -1,6 +1,8 @@
 var React = require('react');
 var axios = require('axios');
 
+var _ = require('lodash');
+
 var ReactBtn = require('react-btn-checkbox');
 var Checkbox = ReactBtn.Checkbox;
 
@@ -16,16 +18,25 @@ var FindPlayers = React.createClass({
   getInitialState: function() {
     return {
       users: [],
+      filteredUsers: [],
       me: {},      
-      times: "any",
-      purpose: "any",
+      times: {
+        "weekdays": false,
+        "weeknights": false,
+        "weekends": false
+      },
+      purpose: {
+        "3x3 Casual": false,
+        "5x5 Casual": false,
+        "5x5 Ranked": false
+      },
       willdo: {
         'Tank': false,
         'Jungle': false,
-        'Support': true,
+        'Support': false,
         'Mid': false,
         'ADC': false,
-        'Fill': true
+        'Fill': false
       },
       id: 0
     };
@@ -45,6 +56,7 @@ var FindPlayers = React.createClass({
         .then(axios.spread(function(them, me) { 
             context.setState({
               users: them.data,
+              filteredUsers: them.data,
               me: me.data.ratings,
               id: me.data.id             
             });
@@ -53,36 +65,48 @@ var FindPlayers = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    for (key in this.state) {
-      console.log("key", key);
-      console.log(this.state[key]);
+    var checkIfChecked = function(obj) {            
+      return !(_.every(obj, function(elm) {
+        return elm === false;
+      }) || _.every(obj, function(elm) {
+        return elm === true;
+      }));      
+    };
+
+    var filterByProperty = function(userList, property, context) {
+      var filters = [];
+
+      for (var key in context.state[property]) {
+        if (context.state[property][key] === true) filters.push(key);        
+      }
+      return _.filter(userList, function(user) {
+        var filterTest = false;
+        _.map(filters, function(elm) {          
+          if (user.bio[property][elm] === true) {
+            filterTest = true;
+          }
+        });        
+        return filterTest;
+      });      
+    };
+
+    var userSubset = this.state.users;
+
+    if (checkIfChecked(this.state.times) === true) {
+      userSubset = filterByProperty(userSubset, "times", this);
     }
-  },
 
-  handleChange: function(e) {
-    switch (e.target.name) {
-      case "times":
-        this.setState({
-          times: e.target.value      
-        });
-        break;
-
-      case "purpose":
-        this.setState({
-          purpose: e.target.value      
-        });
-        break;
-
-      // case "willdo":
-      //   this.setState({
-      //     willdo: e.target.value
-      //   });
-      //   break;
-
-      default:
-        console.log(e.target.name);
-        break;
+    if (checkIfChecked(this.state.purpose) === true) {
+      userSubset = filterByProperty(userSubset, "purpose", this);
     }
+
+    if (checkIfChecked(this.state.willdo) === true) {
+      userSubset = filterByProperty(userSubset, "willdo", this);
+    }
+
+    this.setState({
+      filteredUsers: userSubset
+    });
   },
   render: function() {
 
@@ -90,39 +114,35 @@ var FindPlayers = React.createClass({
       <div className="findPlayers">
         <h1> Matches </h1>
         <h2> Filters </h2>
-          <li>
-              <label>Times Available:</label>
-              <select className="form-control" value={this.state.times} onChange={this.handleChange} name="times">
-                <option value="weekdays" defaultValue>Weekdays</option>
-                <option value="weeknights">Weeknights</option>
-                <option value="weekends">Weekends</option>
-              </select>
-          </li>
-          <li>
-            <label>Purpose:</label>
-            <select className="form-control" value={this.state.purpose} onChange={this.handleChange}  name="purpose">
-              <option value="2v2 ranked" defaultValue>2v2 Ranked</option>
-              <option value="3v3 casual">3v3 Casual</option>
-              <option value="5v5 casual">5v5 Casual</option>
-              <option value="5v5 ranked">5v5 Ranked</option>
-            </select> 
-          </li>
-
+       
           <form onSubmit={this.handleSubmit}>
           
+            <Checkbox
+            label='Times: '
+            options={this.state.times}
+            onChange={this.setState.bind(this)}
+            bootstrap />
+
+            <Checkbox
+            label='Purpose: '
+            options={this.state.purpose}
+            onChange={this.setState.bind(this)}
+            bootstrap />
+
             <Checkbox
             label='Will Do: '
             options={this.state.willdo}
             onChange={this.setState.bind(this)}
             bootstrap />
-
+            
             <Button primary type="submit" value="Submit">Submit</Button>
+
           </form>
 
           
 
 
-        <MatchList users={this.state.users} me={this.state.me} id={this.state.id} filters={this.state.filters} />    
+        <MatchList users={this.state.filteredUsers} me={this.state.me} id={this.state.id} />    
       </div>
       );
   }
@@ -131,54 +151,30 @@ var FindPlayers = React.createClass({
 module.exports = FindPlayers
 
 var MatchList = React.createClass({  
+
   render: function() {
+    var arrayToString = function(obj) {
+      var string = [];
+      for (var key in obj) {
+        if (obj[key] === true) {
+          string.push(key);
+        }
+      }
+      return string.toString();
+    };
+
     var calculateMatchScore =  function(pos, n) {
       var z, phat;      
-      z = 1.96;
+      z = 1.56;  // 1.96 = 95%
       phat = 1 * pos / n;
       return (phat + z*z/(2*n) - z * Math.sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n); 
     };
     var MatchNodes = [];
-    var overallScore = 0;
-
-    var LinkedList = function() {
-      var list = {};
-      list.head = null;
-      list.tail = null;
-      list.addToTail = function(value) {
-          var newNode = new Node(value);
-          newNode.previous = list.tail;
-          list.tail = newNode;
-          if (list.head === null) {
-              list.head = newNode;
-          } else {
-              var current = list.head;
-              while (current.next) {
-                  current = current.next;
-              }
-              current.next = newNode;
-          }
-          list.counter++
-      };
-      
-      var Node = function(value) {
-          var node = {};
-          node.value = value;
-          node.next = null;
-          node.previous = null;
-          return node;
-      }
-    };
-
-    var filteredUsers = new LinkedList(this.props.users[0]);
-    // while () {
-    //   if (this.state.times === "any" || this.state.times === this.props.users[i].bio.times) {
-    //     filteredUsers.addToTail(this.props.users[i]);
-    //   }
-    // }
-
-
+    var matchOrder = [];
+    var overallScore;
+    
     for (var i = 0; i < this.props.users.length; i++){
+      overallScore = 0;
       if (this.props.users[i].id !== this.props.id) {
         for (key in this.props.me) {          
           var score = 20 - Math.abs(this.props.me[key] - this.props.users[i].ratings[key]);
@@ -186,25 +182,41 @@ var MatchList = React.createClass({
           score = calculateMatchScore(score, 20);        
         };
         overallScore = Math.round(calculateMatchScore(overallScore, 200) * 100);
-        MatchNodes.push(
-          <div className="row" style={whiteBox}>
+        this.props.users[i].overallScore = overallScore;        
+        matchOrder.push(this.props.users[i]);
+      }
+    }
+    _.map(matchOrder, function(user) {
+      if (isNaN(user.overallScore)) {
+        console.log("NaN error")
+        console.log(user);
+        user.overallScore = 0;
+      }
+    });
+    matchOrder = _.sortBy(matchOrder, function(user) {      
+      return user.overallScore;
+    }).reverse();
+
+    _.map(matchOrder, function(user) {
+      MatchNodes.push(
+        <div className="row" style={whiteBox}>
             <div className="row" style={headshot}>
-              <img className="img-circle center-block" src={this.props.users[i].games.avatar}/>
-              <div align="center"> { this.props.users[i].displayName } </div>
-              <div> {overallScore}% </div>
+              <img className="img-circle center-block" src={user.games.avatar}/>
+              <div align="center"> { user.displayName } </div>
+              <div> {user.overallScore}% </div>
             </div>
             <div className="row" style={stats}>
-              <div> { this.props.users[i].bio.willdo } </div>
-              <div> { this.props.users[i].bio.purpose } </div>    
-              <div> { this.props.users[i].bio.times } </div>
+              <div> does this work? </div>
+              <div> { arrayToString(user.bio.willdo) } </div>
+              <div> { arrayToString(user.bio.purpose) } </div>    
+              <div> { arrayToString(user.bio.times) } </div>
               <br />
               <br />
             </div>
-          </div>)
-        }
-      }
-
-
+        </div>
+      )
+    })
+    
     return (
       <div>
         <ul className="MatchList">
@@ -214,28 +226,3 @@ var MatchList = React.createClass({
     );
   }
 });
-
-
-// <li className="form-group checkbox inline no_indent" value={this.state.willdo} onChange={this.handleChange} >
-            
-          //   <label>Will Do:</label>
-          //   <label className="checkbox inline no_indent">
-          //     <input type="checkbox" name="willdo" value="tank" ref="willdo" />Tank
-          //   </label>  
-          //   <label className="checkbox inline no_indent">
-          //     <input type="checkbox" name="willdo" value="jungle" ref="willdo"/>Jungle
-          //   </label>  
-          //   <label className="checkbox inline no_indent">
-          //     <input type="checkbox" name="willdo" value="support" ref="willdo"/>Support
-          //   </label>
-          //   <label className="checkbox inline no_indent"> 
-          //     <input type="checkbox" name="willdo" value="mid" ref="willdo"/>Mid
-          //   </label>
-          //   <label className="checkbox inline no_indent">  
-          //     <input type="checkbox" name="willdo" value="adc" ref="willdo"/>ADC
-          //   </label>
-          //   <label className="checkbox inline no_indent">  
-          //     <input type="checkbox" name="willdo" value="fill" ref="willdo"/>Fill
-          //   </label>
-
-          // </li>
