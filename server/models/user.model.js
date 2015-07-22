@@ -34,25 +34,25 @@ var User = db.define( 'user', {
     defaultValue: {
      times: {
       "weekdays": false,
-      "weeknights": true,
+      "weeknights": false,
       "weekends": false
      },     
      purpose: {
       "3x3 Casual": false,
       "5x5 Casual": false,
-      "5x5 Ranked": true
+      "5x5 Ranked": false
      },
      region: "NA",
      willdo: {
       "top": false,
       "jungle": false,
       "support": false,
-      "mid": true,
+      "mid": false,
       "adc": false
      },
      wontdo: {
       "top": false,
-      "jungle": true,
+      "jungle": false,
       "support": false,
       "mid": false,
       "adc": false
