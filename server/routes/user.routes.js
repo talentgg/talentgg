@@ -43,9 +43,13 @@ module.exports = function(app) {
     User.updateRatings(req, res);
   });
 
-  // app.post('/settings', function(req, res){ // Update account information
-  //   User.updateSettings(req, res);
-  // });
+  app.post('/settings', function(req, res){ // Update account information
+    if(req.body.pass1 === req.body.pass2){
+      User.updateSettings(req, res);
+    } else {
+      res.send('Your password and confirmation password did not match, please try again.');
+    }
+  });
 
   app.post('/setSummoner', function(req, res){ // Update summoner information
     User.setSummoner(req, res);

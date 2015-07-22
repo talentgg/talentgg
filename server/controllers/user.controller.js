@@ -68,13 +68,31 @@ module.exports = {
   },
 
   updateSettings: function(req, res){ // Updates account data
-    // User.findById(req.session.passport.user)
-    // .then(function(data){
-    //   User.update({displayName: req.body.displayName}, {where: {id: req.session.passport.user}})
-    //   .then(function(){
-    //     res.redirect('/#/user-profile');
-    //   })
-    // })
+    User.findById(req.session.passport.user)
+    .then(function(data){
+      bcrypt.compare(req.body.confirm, data.hash, function(err, verified){
+        if(verified){
+          if(req.body.email.length > 0){
+            User.update({username: req.body.email}, {where: {id: data.id}});
+          }
+          if(req.body.pass1.length > 0){
+            bcrypt.genSalt(10, function(err, salt){
+              bcrypt.hash(req.body.pass1, salt, function(err, hash){
+                User.update({hash: hash}, {where: {id: data.id}});
+              })
+            })
+          }
+        } else {
+          res.send("You supplied the incorrect password");
+        }
+      })
+    })
+    .then(function(){
+      res.clearCookie('connect.sid');
+      req.session.destroy(function(err){
+        res.redirect('/');
+      })
+    })
   },
 
   setSummoner: function(req, res){

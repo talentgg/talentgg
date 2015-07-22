@@ -101,8 +101,8 @@ var User = db.define( 'user', {
   temp: {
     type: Sequelize.JSON,
     defaultValue: {
-      updatedAt: Date.now(),
-      rank: 'unranked'
+      rank: 'unranked',
+      matches: []
     }
   }
 });

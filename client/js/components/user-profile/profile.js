@@ -51,8 +51,6 @@ var Profile = React.createClass({
     var context = this;
     Axios.get('/profile').
       then(function(response) {
-        console.log(response.data.games);
-        console.log(response.data.temp);
         context.setState({
           bio: response.data.bio,
           displayName: response.data.displayName,
