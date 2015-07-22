@@ -18,8 +18,6 @@ var UserQuestions = require("./components/user-profile/user-questions");
 var BioForm = require("./components/user-profile/bio-form");
 var FindPlayers = require("./components/recruitment/findPlayers");
 var AccountLink = require("./components/user-profile/accountLink");
-var FindTeams = require("./components/recruitment/findTeams");
-var Settings = require("./components/user-profile/settings");
 var TeamRegistration = require("./components/team/team-registration");
 var TeamProfile = require("./components/team/team-profile");
 var TeamUpdateForm = require("./components/team/team-update-form");
@@ -41,7 +39,6 @@ module.exports = (
     <Route name="profile" path="/user-profile" handler={Profile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
     <Route name="findplayers" path="/findplayers" handler={FindPlayers}/>
-    <Route name="findteams" path="/findteams" handler={FindTeams}/>
     <Route name="bioform" path="/bioform" handler={BioForm}/>
     <Route name="accountLink" path="/account-link" handler={AccountLink}/>
     <Route name="teamregistration" path="/teamregistration" handler={TeamRegistration}/>
@@ -55,3 +52,5 @@ module.exports = (
   </Route>
 
 );
+Status API Training Shop Blog About Help
+© 2015 GitHub, Inc. Terms Privacy Security Contact
