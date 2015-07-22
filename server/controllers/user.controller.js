@@ -91,7 +91,7 @@ module.exports = {
       obj.verified = false;
       obj.verifyKey = key;
       obj.verifyRoute = "https://" + obj.region + ".api.pvp.net/api/lol/" + obj.region + "/v1.4/summoner/" + obj.id + "/runes?api_key=" + config.lolapi;
-      User.update({games: obj}, {where: {id: req.session.passport.user}})
+      User.update({displayName: obj.name, games: obj}, {where: {id: req.session.passport.user}})
       .then(function(){
         res.redirect('/#/settings');
       })
