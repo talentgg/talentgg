@@ -36,35 +36,34 @@ var Profile = React.createClass({
           "support": false,
           "mid": false,
           "adc": false
-        },    
+        },
       },
       userquestions: [],
       displayName: '',
-      games: {}
+      games: {},
+      temp: {}
     };
   },
-  init: function() {
-    
-  },
-  componentWillMount: function() {
+  componentDidMount: function() {
     var context = this;
     Axios.get('/profile').
       then(function(response) {
+        console.log(response.data.games);
+        console.log(response.data.temp);
         context.setState({
           bio: response.data.bio,
           displayName: response.data.displayName,
           ratings: response.data.ratings,
-          games: response.data.games
+          games: response.data.games,
+          temp: response.data.temp
         });
       });
     // this.router = this.context.router;
   },
-  componentDidMount: function() {
-    // this.init();
-  },
+
   render: function() {
     return (
-      <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} />
+      <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} temp={this.state.temp} />
     );
   }
 });

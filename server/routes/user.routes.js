@@ -31,6 +31,10 @@ module.exports = function(app) {
     User.getOwnProfile(req, res);
   });
 
+  app.get('/profile/teams', function(req, res){ // Personal account data
+    User.getOwnProfile(req, res);
+  });
+
   app.get('/profile/games', function(req, res){ // Personal account data
     User.getOwnProfile(req, res);
   });

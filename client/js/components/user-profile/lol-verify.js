@@ -25,7 +25,9 @@ var LolVerify = React.createClass({
       });
   },
   handleVerify: function() {
-
+    $.get('/team/*', function(result){
+      console.log(result);
+    });
   },
   render: function() {
     return (

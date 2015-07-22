@@ -27,6 +27,7 @@ var Bio = React.createClass({
       }
       return string.toString();
     };
+    
     var available = arrayToString(this.props.bio.times);
     var will = arrayToString(this.props.bio.willdo);
     var seeking = arrayToString(this.props.bio.purpose);

@@ -8,22 +8,33 @@ var TeamProfile = React.createClass({
   mixins: [ Router.Navigation, Router.State ],
   getInitialState: function () {
     return {
-      teams: {},
+      team: {
+        about: "",
+        times: "",
+        willdo: []
+      },
       games: {}
     };
   },
   componentDidMount: function () {
-    var context = this;
-    $.get('/team/*')
+    var teamToGet = '/team/' + window.location.hash.split('/')[2];
+
+    Axios.get(teamToGet)
       .then(function(response) {
-        context.setState({
-          team: response.data.team,
-          games: response.data.games
-        });
+          console.log(response);   
+          context.setState({
+            times: response.data.teamBio.times,
+            willdo: response.data.teamBio.willdo,
+            members: response.data.members
+          });
+          console.log(team);
       });
   },
+  handleApply: function() {
+
+  },
   render: function () {
-    
+
     var arrayToString = function(obj) {
     var string = [];
     for (var key in obj) {
@@ -34,21 +45,19 @@ var TeamProfile = React.createClass({
     return string.toString();
     };
 
-    var available = arrayToString(this.props.data.times);
-    var will = arrayToString(this.props.data.willdo);
-    var seeking = arrayToString(this.props.data.purpose);
+    // var available = arrayToString(this.props.times);
+    var will = arrayToString(this.props.willdo);
     var members = arrayToString(this.props.members);
 
     return (
-
       <div>
         <div className="row" style={whiteBox}>
           <div className="col-sm-offset-1 col-sm-2">
-            <img className="img-circle center-block" src={this.props.games.avatar} />
+            
           </div>
           <div className="col-sm-4">
             <h3>{this.props.teamName}</h3>
-            <p>{this.props.data.about}</p>
+            <p>{this.props.about}</p>
           </div>
           <div className="col-sm-2">
             <img className="center-block" width="128" height="128" src="/img/tier-silver.png"/>
@@ -57,22 +66,22 @@ var TeamProfile = React.createClass({
             <img className="center-block" width="128" height="128" src="/img/role-support.png"/>
           </div>
         </div>
+
         <br/>
+        
         <div className="row">
           <div className="col-sm-6">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <h3 className="text-center">Team Profile </h3>
                 <p><b>Plays</b>: {will}</p>
-                <p><b>Available</b>: {available} </p>
-                <p><b>Purpose</b>: {seeking} </p>
-                <p><b>Captain</b>: {this.props.data.captain} </p>
-                <p><b>About Us</b>: {this.props.data.about} </p>
-                <p><b>Style</b>: {this.props.data.style} </p>
-                <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
+                <p><b>Available</b>: {this.props.times} </p>
+                <p><b>About Us</b>: {this.props.about} </p>
+                <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
               </div>
             </div>
           </div>
+
           <div className="col-sm-6">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
@@ -80,6 +89,9 @@ var TeamProfile = React.createClass({
               </div>
             </div>
           </div>
+
+          <br/>
+
           <div className="col-sm-12">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
@@ -88,11 +100,11 @@ var TeamProfile = React.createClass({
               </div>
             </div>
           </div>
+
         </div>
       </div>
     )
   }
-});
-
+});  
+    
 module.exports = TeamProfile;
-

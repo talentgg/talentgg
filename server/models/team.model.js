@@ -15,7 +15,7 @@ var Team = db.define( 'team', {
     allowNull: false
   },
   //Team-specific schema
-  data: {
+  teamBio: {
     //This is for storing team-level data, similar to bio
     type: Sequelize.JSON,
     defaultValue: {}
