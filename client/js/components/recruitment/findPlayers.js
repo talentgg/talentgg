@@ -73,55 +73,38 @@ var FindPlayers = React.createClass({
       }));      
     };
 
+    var filterByProperty = function(userList, property, context) {
+      var filters = [];
+
+      for (var key in context.state[property]) {
+        if (context.state[property][key] === true) filters.push(key);        
+      }
+      return _.filter(userList, function(user) {
+        var filterTest = false;
+        _.map(filters, function(elm) {
+          console.log(elm)
+          if (user.bio[property][elm] === true) {
+            filterTest = true;
+          }
+        });        
+        return filterTest;
+      });      
+    };
+
     var userSubset = this.state.users;
 
     if (checkIfChecked(this.state.times) === true) {
-      var filteredTimes = [];
-      for (key in this.state.times) {
-        if (this.state.times[key] === true) filteredTimes.push(key);
-      }      
-      userSubset = _.filter(userSubset, function(user) {
-        var filterTest = false;        
-        _.map(filteredTimes, function(time){ 
-          if (user.bio.times[time] === true) {
-            filterTest = true;
-          }
-        })
-        return filterTest;
-      });      
+      userSubset = filterByProperty(userSubset, "times", this);
     }
 
     if (checkIfChecked(this.state.purpose) === true) {
-      var filteredPurpose = [];
-      for (key in this.state.purpose) {
-        if (this.state.purpose[key] === true) filteredPurpose.push(key);
-      }      
-      userSubset = _.filter(userSubset, function(user) {
-        var filterTest = false;        
-        _.map(filteredPurpose, function(time){ 
-          if (user.bio.purpose[time] === true) {
-            filterTest = true;
-          }
-        })
-        return filterTest;
-      });      
+      userSubset = filterByProperty(userSubset, "purpose", this);
     }
 
     if (checkIfChecked(this.state.willdo) === true) {
-      var filteredWillDo = [];
-      for (key in this.state.willdo) {
-        if (this.state.willdo[key] === true) filteredWillDo.push(key);
-      }      
-      userSubset = _.filter(userSubset, function(user) {
-        var filterTest = false;        
-        _.map(filteredWillDo, function(time){ 
-          if (user.bio.willdo[time] === true) {
-            filterTest = true;
-          }
-        })
-        return filterTest;
-      });      
+      userSubset = filterByProperty(userSubset, "willdo", this);
     }
+
     this.setState({
       filteredUsers: userSubset
     });
