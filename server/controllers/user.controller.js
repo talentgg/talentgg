@@ -57,11 +57,14 @@ module.exports = {
   updateBio: function(req, res){ // Updates bio data
     User.findById(req.session.passport.user)
     .then(function(data){
+      deepBoolean(req.body);
+    })
+    .then(function(){
       User.update({bio: req.body},{where: {id: req.session.passport.user}})
-      .then(function(){
-        res.redirect('/#/user-profile');
-      })
-    });
+    })
+    .then(function(){
+      res.redirect('/#/user-profile');
+    })
   },
 
   updateSettings: function(req, res){ // Updates account data
@@ -192,10 +195,6 @@ module.exports = {
     });
   }
 
-
-
-
-
 };
 
 function relay(res, url, callback) {
@@ -210,3 +209,21 @@ function relay(res, url, callback) {
     }
   });
 }
+
+var deepBoolean = function(obj){
+  if(typeof obj !== 'object') {
+    if(obj === 'true' || obj === 'false'){
+      return obj === 'true';
+    }
+  }
+  if (Array.isArray(obj)) {
+    obj.forEach(function(val){
+      return deepBoolean(val);
+    });
+  } else if (typeof obj === 'object') {
+    for (var key in obj){
+      obj[key] = deepBoolean(obj[key]);
+    }
+  }
+  return obj;
+};
