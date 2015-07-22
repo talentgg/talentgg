@@ -20,17 +20,17 @@ var Bio = React.createClass({
   render: function() {
 
     var arrayToString = function(obj) {
-      var string = [];
+      var arr = [];
       for (var key in obj) {
         if (obj[key] === true) {
-          string.push(key);
+          arr.push(key);
         }
       }
-      return string.toString();
+      return arr.join(', ');
     };
     var available = arrayToString(this.props.bio.times);
     var will = arrayToString(this.props.bio.willdo);
-    var seeking = arrayToString(this.props.bio.purpose);
+    var style = arrayToString(this.props.bio.purpose);
 
     return (
       <div>
@@ -57,7 +57,8 @@ var Bio = React.createClass({
                 <h3 className="text-center">Profile</h3>
                 <p><b>Plays</b>: {will}</p>
                 <p><b>Available</b>: {available}</p>
-                <p><b>Purpose</b>: {seeking}</p>
+                <p><b>Purpose</b>: {style}</p>
+                <p><b>Seeking</b>: {this.props.bio.seeking}</p>
                 <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
               </div>
             </div>
