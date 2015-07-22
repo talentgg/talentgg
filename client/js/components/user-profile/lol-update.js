@@ -12,8 +12,8 @@ var LolUpdate = React.createClass({
   },
   componentDidMount: function() {
     var context = this;
-    Axios.get('/profile').
-      then(function(response) {
+    Axios.get('/profile')
+      .then(function(response) {
         context.setState({
           bio: response.data.bio,
           name: response.data.games.name,
