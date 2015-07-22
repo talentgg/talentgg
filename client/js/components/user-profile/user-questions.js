@@ -81,7 +81,6 @@ var UserQuestions = React.createClass({
 
 var AnswersList = React.createClass({
 render: function() {
-    console.log("answerlist");
     var answerNodes = [];
     for (var i = 0; i < this.props.data.answers.length; i++) {      
       answerNodes.push(

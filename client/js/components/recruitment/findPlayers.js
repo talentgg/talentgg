@@ -63,8 +63,8 @@ var FindPlayers = React.createClass({
         }));
   },
 
-  handleSubmit: function() {
-
+  handleSubmit: function(e) {
+    e.preventDefault();
     var checkIfChecked = function(obj) {            
       return !(_.every(obj, function(elm) {
         return elm === false;
@@ -165,7 +165,7 @@ var MatchList = React.createClass({
 
     var calculateMatchScore =  function(pos, n) {
       var z, phat;      
-      z = 1.26;  // 1.96 = 95%
+      z = 1.56;  // 1.96 = 95%
       phat = 1 * pos / n;
       return (phat + z*z/(2*n) - z * Math.sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n); 
     };
@@ -200,7 +200,6 @@ var MatchList = React.createClass({
     _.map(matchOrder, function(user) {
       MatchNodes.push(
         <div className="row" style={whiteBox}>
-        test
             <div className="row" style={headshot}>
               <img className="img-circle center-block" src={user.games.avatar}/>
               <div align="center"> { user.displayName } </div>
