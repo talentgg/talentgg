@@ -20,6 +20,7 @@ var BioForm = require("./components/user-profile/bio-form");
 var FindPlayers = require("./components/recruitment/findPlayers");
 var AccountLink = require("./components/user-profile/accountLink");
 var TeamRegistration = require("./components/team/team-registration");
+var TeamProfile = require("./components/team/team-profile");
 var Settings = require("./components/user-profile/settings");
 var NotFound = React.createClass({
   render: function () {
@@ -38,6 +39,7 @@ module.exports = (
     <Route name="bioform" path="/bioform" handler={BioForm}/>
     <Route name="accountLink" path="/account-link" handler={AccountLink}/>
     <Route name="teamregistration" path="/teamregistration" handler={TeamRegistration}/>
+    <Route name="teamprofile" path="/team/:teamname" handler={TeamProfile}/>
     <Route name="settings" path="/settings" handler={Settings}/>
     <NotFoundRoute handler={NotFound}/>
   </Route>

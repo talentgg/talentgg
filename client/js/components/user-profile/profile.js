@@ -47,13 +47,12 @@ var Profile = React.createClass({
       }
     };
   },
-  init: function() {
-
-  },
-  componentWillMount: function() {
+  componentDidMount: function() {
     var context = this;
     Axios.get('/profile').
       then(function(response) {
+        console.log(response.data.games);
+        console.log(response.data.temp);
         context.setState({
           bio: response.data.bio,
           displayName: response.data.displayName,
@@ -64,9 +63,7 @@ var Profile = React.createClass({
       });
     // this.router = this.context.router;
   },
-  componentDidMount: function() {
-    // this.init();
-  },
+
   render: function() {
     return (
       <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} temp={this.state.temp} />

@@ -28,6 +28,7 @@ var Bio = React.createClass({
       }
       return arr.join(', ');
     };
+    
     var available = arrayToString(this.props.bio.times);
     var will = arrayToString(this.props.bio.willdo);
     var style = arrayToString(this.props.bio.purpose);

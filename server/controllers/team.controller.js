@@ -13,8 +13,8 @@ module.exports = {
     .then(function(){
       Team.create({
         teamName: req.body.teamName,
-        data: {times: req.body.times, about: req.body.about},
-        members: [{id: user.id, name: user.displayName, isAdmin: true}]
+        teamBio: {times: req.body.times, about: req.body.about},
+        members: {id: user.id, name: user.displayName, isAdmin: true}
       })
       .then(function(teamData){
         team = teamData;
@@ -30,7 +30,7 @@ module.exports = {
   },
 
   getProfile: function( req, res, next ){
-    Team.findOne({where: {teamName: req.url.split('/')[3]}})
+    Team.findOne({where: {teamName: req.url.split('/')[2]}})
        .then(function (teamProfile) {
          res.json(teamProfile);
      });
