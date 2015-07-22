@@ -54,8 +54,8 @@ var Bio = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <h3 className="text-center">Profile </h3>
-                <p><b>Summoner</b>: {this.props.bio.summoner} </p>
-                <p><b>Region</b>: {this.props.bio.region} </p>
+                <p><b>Summoner</b>: {this.props.games.name} </p>
+                <p><b>Region</b>: {this.props.games.region} </p>
                 <p><b>Plays</b>: {will}</p>
                 <p><b>Available</b>: {available} </p>
                 <p><b>Purpose</b>: {seeking} </p>
