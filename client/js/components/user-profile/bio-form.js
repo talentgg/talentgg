@@ -17,12 +17,12 @@ var BioForm = React.createClass({
     return {
       times: {
         "weekdays": false,
-        "weeknights": true,
+        "weeknights": false,
         "weekends": false
       },
       purpose: {
         "3x3 Casual": false,
-        "5x5 Casual": true,
+        "5x5 Casual": false,
         "5x5 Ranked": false
       },
       about: "",
@@ -30,14 +30,14 @@ var BioForm = React.createClass({
       willdo: {
         "top": false,
         "jungle": false,
-        "support": true,
+        "support": false,
         "mid": false,
         "adc": false
       },
       wontdo: {
         "top": false,
         "jungle": false,
-        "support": true,
+        "support": false,
         "mid": false,
         "adc": false
       },

@@ -10,13 +10,43 @@ var Profile = React.createClass({
   mixins: [Router.State],
   getInitialState: function() {
     return {
-      bio: {},
+      bio: {
+        times: {
+        "weekdays": false,
+        "weeknights": false,
+        "weekends": false
+        },
+        purpose: {
+          "3x3 Casual": false,
+          "5x5 Casual": false,
+          "5x5 Ranked": false
+        },
+        about: "",
+        favorite: "",
+        willdo: {
+          "top": false,
+          "jungle": false,
+          "support": false,
+          "mid": false,
+          "adc": false
+        },
+        wontdo: {
+          "top": false,
+          "jungle": false,
+          "support": false,
+          "mid": false,
+          "adc": false
+        },    
+      },
       userquestions: [],
       displayName: '',
       games: {}
     };
   },
   init: function() {
+    
+  },
+  componentWillMount: function() {
     var context = this;
     Axios.get('/profile').
       then(function(response) {
@@ -27,16 +57,14 @@ var Profile = React.createClass({
           games: response.data.games
         });
       });
-  },
-  componentWillMount: function() {
-    this.router = this.context.router;
+    // this.router = this.context.router;
   },
   componentDidMount: function() {
-    this.init();
+    // this.init();
   },
   render: function() {
     return (
-      <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games}/>
+      <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} />
     );
   }
 });

@@ -17,11 +17,25 @@ var Bio = React.createClass({
     router.transitionTo('bioform', {username: 'username'});
   },
   render: function() {
+    
+    var arrayToString = function(obj) {
+      var string = [];
+      for (var key in obj) {
+        if (obj[key] === true) {
+          string.push(key);
+        }
+      }
+      return string.toString();
+    };
+    var available = arrayToString(this.props.bio.times);
+    var will = arrayToString(this.props.bio.willdo);
+    var seeking = arrayToString(this.props.bio.purpose);
+
     return (
       <div>
         <div className="row" style={whiteBox}>
           <div className="col-sm-offset-1 col-sm-2">
-            <img className="img-circle center-block" src={this.props.games.avatar}/>
+            <img className="img-circle center-block" src={this.props.games.avatar} />
           </div>
           <div className="col-sm-4">
             <h3>{this.props.displayName}</h3>
@@ -39,13 +53,14 @@ var Bio = React.createClass({
           <div className="col-sm-6">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
-                <h3 className="text-center">Profile</h3>
-                <p><b>Summoner</b>: {this.props.games.name}</p>
-                <p><b>Region</b>: {this.props.games.region}</p>
-                <p><b>Plays</b>: {this.props.bio.willdo}</p>
-                <p><b>Available</b>: {this.props.bio.times}</p>
-                <p><b>Purpose</b>: {this.props.bio.purpose}</p>
-                <p><b>Seeking</b>: {this.props.bio.seeking}</p>
+                <h3 className="text-center">Profile </h3>
+                <p><b>Summoner</b>: {this.props.bio.summoner} </p>
+                <p><b>Region</b>: {this.props.bio.region} </p>
+                <p><b>Plays</b>: {will}</p>
+                <p><b>Available</b>: {available} </p>
+                <p><b>Purpose</b>: {seeking} </p>
+                <p><b>About Me</b>: {this.props.bio.about} </p>
+                <p><b>Favorite Games</b>: {this.props.bio.favorite}</p>
                 <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
               </div>
             </div>
