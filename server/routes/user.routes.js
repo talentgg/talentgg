@@ -31,6 +31,10 @@ module.exports = function(app) {
     User.getOwnProfile(req, res);
   });
 
+  app.get('/profile/games', function(req, res){ // Personal account data
+    User.getOwnProfile(req, res);
+  });
+
   app.post('/profile', function(req, res){ // Update bio data
     User.updateBio(req, res);
     console.log('data: ');
