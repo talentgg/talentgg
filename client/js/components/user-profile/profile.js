@@ -41,7 +41,10 @@ var Profile = React.createClass({
       userquestions: [],
       displayName: '',
       games: {},
-      temp: {}
+      temp: {
+        rank: "unranked",
+        matches: []
+      }
     };
   },
   init: function() {

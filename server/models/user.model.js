@@ -66,7 +66,7 @@ var User = db.define( 'user', {
     defaultValue: []
   },
   games: {
-    //This is for storing the user's game data broken down into sub-objects for each game
+    //This is for storing the user's game-related data
     type: Sequelize.JSON,
     defaultValue: {
       avatar: "http://i384.photobucket.com/albums/oo288/PrincessElliebear/hello-kitty-color-150x150.gif",

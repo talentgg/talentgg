@@ -4,9 +4,7 @@ var Axios = require('axios');
 
 var TeamRegistration = React.createClass({
   mixins: [Router.State, Router.Navigation],
-  propTypes: {
-    teamName: React.PropTypes.string.isRequired,
-  },
+  propTypes: {},
   getInitialState: function() {
     return {};
   },
@@ -21,30 +19,30 @@ var TeamRegistration = React.createClass({
           </li>
           <li>
             <label>Times Available:</label>
-            <select className="form-control" name="times">
-              <option value="weekdays" selected>Weekdays</option>
+            <select className="form-control" name="times" value="weekends">
+              <option value="weekdays">Weekdays</option>
               <option value="weeknights">Weeknights</option>
               <option value="weekends">Weekends</option>
-            </select> 
+            </select>
           </li>
           <li className="form-group checkbox inline no_indent">
             <label> Looking For: </label>
             <label className="checkbox inline no_indent">
               <input type="checkbox" name="willdo" value="tank "/>Tank
-            </label>  
+            </label>
             <label className="checkbox inline no_indent">
               <input type="checkbox" name="willdo" value="jungle"/>Jungle
-            </label>  
+            </label>
             <label className="checkbox inline no_indent">
               <input type="checkbox" name="willdo" value="support"/>Support
             </label>
-            <label className="checkbox inline no_indent"> 
+            <label className="checkbox inline no_indent">
               <input type="checkbox" name="willdo" value="mid"/>Mid
             </label>
-            <label className="checkbox inline no_indent">  
+            <label className="checkbox inline no_indent">
               <input type="checkbox" name="willdo" value="adc"/>ADC
             </label>
-            <label className="checkbox inline no_indent">  
+            <label className="checkbox inline no_indent">
               <input type="checkbox" name="willdo" value="fill"/>Fill
             </label>
           </li>

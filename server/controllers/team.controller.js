@@ -14,7 +14,7 @@ module.exports = {
       Team.create({
         teamName: req.body.teamName,
         data: {times: req.body.times, about: req.body.about},
-        members: {id: user.id, name: user.displayName, isAdmin: true}
+        members: [{id: user.id, name: user.displayName, isAdmin: true}]
       })
       .then(function(teamData){
         team = teamData;
