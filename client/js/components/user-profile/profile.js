@@ -44,14 +44,7 @@ var Profile = React.createClass({
       temp: {}
     };
   },
-<<<<<<< HEAD
   componentDidMount: function() {
-=======
-  init: function() {
-
-  },
-  componentWillMount: function() {
->>>>>>> e6984a1c0e0824288c62ac6f0e87ad53120f4ae8
     var context = this;
     Axios.get('/profile').
       then(function(response) {

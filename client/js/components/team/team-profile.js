@@ -61,14 +61,14 @@ var TeamProfile = React.createClass({
                 <h3 className="text-center">Team Profile </h3>
                 <p><b>Available</b>: {this.state.times} </p>
                 <p><b>About Us</b>: {this.state.about} </p>
-                <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
               </div>
             </div>
           </div>
           <div className="col-sm-6">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
-                <h3 className="text-center">Recent Games</h3>
+                <h3 className="text-center">Current Members</h3>
+                <p><b>individual ninjas</b>: {this.state.members} </p>
               </div>
             </div>
           </div>
@@ -78,8 +78,8 @@ var TeamProfile = React.createClass({
           <div className="col-sm-12">
             <div className="panel panel-default" >
               <div className="panel-body">
-                <h3 className="text-center">Current Members</h3>
-                <p><b>individual ninjas</b>: {this.state.members} </p>
+                <h3 className="text-center">Apply</h3>
+                <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
               </div>
             </div>
           </div>
