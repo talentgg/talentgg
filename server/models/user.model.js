@@ -78,10 +78,10 @@ var User = db.define( 'user', {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },
-  // answerHistory: {
-  //   type: Sequelize.ARRAY(Sequelize.STRING),
-  //   defaultValue: []
-  // },
+  answerHistory: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+    defaultValue: []
+  },
   ratings: {
     //This is for storing the user's attributes
     type: Sequelize.JSON,

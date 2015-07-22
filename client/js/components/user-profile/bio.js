@@ -55,10 +55,9 @@ var Bio = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <h3 className="text-center">Profile</h3>
-                <p><b>Plays</b>: {this.props.bio.willdo}</p>
-                <p><b>Available</b>: {this.props.bio.times}</p>
-                <p><b>Purpose</b>: {this.props.bio.purpose}</p>
-                <p><b>Seeking</b>: {this.props.bio.seeking}</p>
+                <p><b>Plays</b>: {will}</p>
+                <p><b>Available</b>: {available}</p>
+                <p><b>Purpose</b>: {seeking}</p>
                 <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
               </div>
             </div>

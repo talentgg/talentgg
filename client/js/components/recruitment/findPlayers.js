@@ -81,8 +81,7 @@ var FindPlayers = React.createClass({
       }
       return _.filter(userList, function(user) {
         var filterTest = false;
-        _.map(filters, function(elm) {
-          console.log(elm)
+        _.map(filters, function(elm) {          
           if (user.bio[property][elm] === true) {
             filterTest = true;
           }
@@ -171,6 +170,7 @@ var MatchList = React.createClass({
       return (phat + z*z/(2*n) - z * Math.sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n); 
     };
     var MatchNodes = [];
+    var matchOrder = [];
     var overallScore;
     
     for (var i = 0; i < this.props.users.length; i++){
@@ -182,34 +182,42 @@ var MatchList = React.createClass({
           score = calculateMatchScore(score, 20);        
         };
         overallScore = Math.round(calculateMatchScore(overallScore, 200) * 100);
-        this.props.users[i].overallScore = overallScore;
-        MatchNodes.push(
-          <div className="row" style={whiteBox}>
-            <div className="row" style={headshot}>
-              <img className="img-circle center-block" src={this.props.users[i].games.avatar}/>
-              <div align="center"> { this.props.users[i].displayName } </div>
-              <div> {overallScore}% </div>
-            </div>
-            <div className="row" style={stats}>
-              <div> does this work? </div>
-              <div> { arrayToString(this.props.users[i].bio.willdo) } </div>
-              <div> { arrayToString(this.props.users[i].bio.purpose) } </div>    
-              <div> { arrayToString(this.props.users[i].bio.times) } </div>
-              <br />
-              <br />
-            </div>
-          </div>
-        )
+        this.props.users[i].overallScore = overallScore;        
+        matchOrder.push(this.props.users[i]);
       }
     }
-    _.map(MatchNodes, function(node) {
-      if (node.overallScore === NaN) node.overallScore = 0;
+    _.map(matchOrder, function(user) {
+      if (isNaN(user.overallScore)) {
+        console.log("NaN error")
+        console.log(user);
+        user.overallScore = 0;
+      }
     });
-    MatchNodes = _.sortBy(MatchNodes, function(user) {
+    matchOrder = _.sortBy(matchOrder, function(user) {      
       return user.overallScore;
     }).reverse();
 
-
+    _.map(matchOrder, function(user) {
+      MatchNodes.push(
+        <div className="row" style={whiteBox}>
+        test
+            <div className="row" style={headshot}>
+              <img className="img-circle center-block" src={user.games.avatar}/>
+              <div align="center"> { user.displayName } </div>
+              <div> {user.overallScore}% </div>
+            </div>
+            <div className="row" style={stats}>
+              <div> does this work? </div>
+              <div> { arrayToString(user.bio.willdo) } </div>
+              <div> { arrayToString(user.bio.purpose) } </div>    
+              <div> { arrayToString(user.bio.times) } </div>
+              <br />
+              <br />
+            </div>
+        </div>
+      )
+    })
+    
     return (
       <div>
         <ul className="MatchList">
