@@ -36,13 +36,12 @@ var User = db.define( 'user', {
       "weekdays": false,
       "weeknights": false,
       "weekends": false
-     },     
+     },
      purpose: {
       "3x3 Casual": false,
       "5x5 Casual": false,
       "5x5 Ranked": false
      },
-     region: "NA",
      willdo: {
       "top": false,
       "jungle": false,
@@ -57,7 +56,6 @@ var User = db.define( 'user', {
       "mid": false,
       "adc": false
      },
-     summoner: "",
      about: "I haven't filled this out yet.",
      favorite: "I haven't filled this out yet."
     }
@@ -70,7 +68,11 @@ var User = db.define( 'user', {
   games: {
     //This is for storing the user's game data broken down into sub-objects for each game
     type: Sequelize.JSON,
-    defaultValue: {avatar: "http://i384.photobucket.com/albums/oo288/PrincessElliebear/hello-kitty-color-150x150.gif"}
+    defaultValue: {
+      avatar: "http://i384.photobucket.com/albums/oo288/PrincessElliebear/hello-kitty-color-150x150.gif",
+      verified: false,
+      verifyKey: false
+    }
   },
   counter: {                  // redo this and answer history into one json object
     type: Sequelize.INTEGER,
@@ -94,6 +96,13 @@ var User = db.define( 'user', {
       loud: 0,
       committed: 0,
       ambition: 0
+    }
+  },
+  temp: {
+    type: Sequelize.JSON,
+    defaultValue: {
+      updatedAt: Date.now(),
+      rank: 'unranked'
     }
   }
 });

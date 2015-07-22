@@ -68,13 +68,13 @@ module.exports = {
   },
 
   updateSettings: function(req, res){ // Updates account data
-    User.findById(req.session.passport.user)
-    .then(function(data){
-      User.update({displayName: req.body.displayName}, {where: {id: req.session.passport.user}})
-      .then(function(){
-        res.redirect('/#/user-profile');
-      })
-    })
+    // User.findById(req.session.passport.user)
+    // .then(function(data){
+    //   User.update({displayName: req.body.displayName}, {where: {id: req.session.passport.user}})
+    //   .then(function(){
+    //     res.redirect('/#/user-profile');
+    //   })
+    // })
   },
 
   setSummoner: function(req, res){
@@ -91,9 +91,9 @@ module.exports = {
       obj.verified = false;
       obj.verifyKey = key;
       obj.verifyRoute = "https://" + obj.region + ".api.pvp.net/api/lol/" + obj.region + "/v1.4/summoner/" + obj.id + "/runes?api_key=" + config.lolapi;
-      User.update({games: obj}, {where: {id: req.session.passport.user}})
+      User.update({displayName: obj.name, games: obj}, {where: {id: req.session.passport.user}})
       .then(function(){
-        res.redirect('/#/settings');
+        res.redirect('/#/account-link');
       })
     })
   },
@@ -210,7 +210,7 @@ function relay(res, url, callback) {
   });
 }
 
-var deepBoolean = function(obj){
+function deepBoolean(obj){
   if(typeof obj !== 'object') {
     if(obj === 'true' || obj === 'false'){
       return obj === 'true';
