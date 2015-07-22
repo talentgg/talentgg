@@ -9,7 +9,6 @@ var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
 var ReactPropTypes = React.PropTypes;
-var SessionActionCreators = require('../../actions/SessionActionCreators');
 
 var Header = React.createClass({
 
