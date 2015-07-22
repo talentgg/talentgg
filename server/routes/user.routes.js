@@ -43,9 +43,9 @@ module.exports = function(app) {
     User.updateRatings(req, res);
   });
 
-  app.post('/settings', function(req, res){ // Update account information
-    User.updateSettings(req, res);
-  });
+  // app.post('/settings', function(req, res){ // Update account information
+  //   User.updateSettings(req, res);
+  // });
 
   app.post('/setSummoner', function(req, res){ // Update summoner information
     User.setSummoner(req, res);

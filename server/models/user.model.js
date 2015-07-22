@@ -42,7 +42,6 @@ var User = db.define( 'user', {
       "5x5 Casual": false,
       "5x5 Ranked": false
      },
-     region: "NA",
      willdo: {
       "top": false,
       "jungle": false,
@@ -57,7 +56,6 @@ var User = db.define( 'user', {
       "mid": false,
       "adc": false
      },
-     summoner: "",
      about: "I haven't filled this out yet.",
      favorite: "I haven't filled this out yet."
     }
@@ -98,6 +96,13 @@ var User = db.define( 'user', {
       loud: 0,
       committed: 0,
       ambition: 0
+    }
+  },
+  temp: {
+    type: Sequelize.JSON,
+    defaultValue: {
+      updatedAt: Date.now(),
+      rank: 'unranked'
     }
   }
 });
