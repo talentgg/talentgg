@@ -19,7 +19,7 @@ var BioForm = React.createClass({
         "weekdays": false,
         "weeknights": true,
         "weekends": false
-      },      
+      },
       purpose: {
         "3x3 Casual": false,
         "5x5 Casual": true,
@@ -46,7 +46,7 @@ var BioForm = React.createClass({
   componentDidMount: function() {
     var context = this;
     Axios.get('/profile').
-      then(function(words) {       
+      then(function(words) {
         console.log(words)
         context.setState({
           times: words.data.bio.times,
@@ -56,22 +56,22 @@ var BioForm = React.createClass({
           willdo: words.data.bio.willdo,
           wontdo: words.data.bio.wontdo,
         });
-      }); 
-  },  
+      });
+  },
   handleSubmit: function(e) {
-    e.preventDefault();    
+    e.preventDefault();
     for (key in this.state) {
     }
     var bio = this.state;
     console.log(bio)
-    $.post("/profile", bio, "json");
+    $.post("/profile", bio);
   },
   render: function() {
-    
-    return (      
+
+    return (
       <div className="container">
-        <form id="bioform" onSubmit={this.handleSubmit}>        
-      
+        <form id="bioform" onSubmit={this.handleSubmit}>
+
           <Checkbox
           label='Times Available: '
           options={this.state.times}
@@ -95,7 +95,7 @@ var BioForm = React.createClass({
           options={this.state.wontdo}
           onChange={this.setState.bind(this)}
           bootstrap />
-          
+
           About Me: <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
            allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
 
