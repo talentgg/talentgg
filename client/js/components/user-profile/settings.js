@@ -2,6 +2,7 @@ var React = require('react');
 var Router = require('react-router');
 var LolSearch = require('./lol-search');
 var LolUpdate = require('./lol-update');
+var LolVerify = require('./lol-verify');
 
 var leagueAccount;
 
@@ -62,10 +63,13 @@ var Settings = React.createClass({
         </form>
 
         <div>
-          {!this.state.name && <LolSearch name={this.state.name} region={this.state.region} />}
+          {<LolSearch name={this.state.name} region={this.state.region} />}
         </div>
         <div>
-          {this.state.name && <LolUpdate name={this.state.name} region={this.state.region} />}
+          {<LolUpdate name={this.state.name} region={this.state.region} />}
+        </div>
+        <div>
+          {<LolVerify name={this.state.name} region={this.state.region} verifyKey={this.state.verifyKey} />}
         </div>
 
       </div>
