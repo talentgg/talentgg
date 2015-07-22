@@ -12,7 +12,7 @@ var headshot = {backgroundColor: 'white', padding: '10', border: 'solid red 2px'
 var stats = {backgroundColor: 'white', padding: '25', border: 'solid blue 2px', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
 
 
-var FindTeams = React.createClass({
+var FindPlayers = React.createClass({
   getInitialState: function() {
     return {
       users: [],
@@ -87,7 +87,7 @@ var FindTeams = React.createClass({
   render: function() {
 
     return (     
-      <div className="findTeams">
+      <div className="findPlayers">
         <h1> Matches </h1>
         <h2> Filters </h2>
           <li>
@@ -128,7 +128,7 @@ var FindTeams = React.createClass({
   }
 });
 
-module.exports = FindTeams
+module.exports = FindPlayers
 
 var MatchList = React.createClass({  
   render: function() {

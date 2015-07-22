@@ -54,10 +54,11 @@ var Header = React.createClass({
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li><Link to="/userquestions">Questions</Link></li>
-              <li><Link to="/findTeams"><span className="glyphicon glyphicon-search"></span> Find Teams</Link></li>
+              <li><Link to="/userquestions"> <i className="fa fa-question" /> Questions</Link></li>
+              <li><Link to="/findPlayers"><i className="fa fa-user-plus" /> Find Players </Link></li>
+              <li><Link to="/findTeams"><span className="glyphicon glyphicon-search"></span> Find Teams </Link></li>
               <li className="dropdown">
-                <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Teams <span className="caret"></span></Link>
+                <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i className="fa fa-users" /> My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">
                   {this.state.teams.length === 0 ? <li><Link to="/teamregistration"> Create a Team </Link></li> : this.state.teams.map(function(team){return <li key={team.id}><Link to={"/team/"+team.teamName}>{team.teamName}</Link></li>})}
                 </ul>

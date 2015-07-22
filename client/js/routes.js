@@ -21,7 +21,7 @@ var UserProfile = require("./components/user-profile/profile");
 var Profile = require("./components/user-profile/profile");
 var UserQuestions = require("./components/user-profile/user-questions");
 var BioForm = require("./components/user-profile/bio-form");
-var FindTeams = require("./components/recruitment/findTeams");
+var FindPlayers = require("./components/recruitment/findPlayers");
 var Settings = require("./components/user-profile/settings");
 var TeamRegistration = require("./components/team/team-registration");
 var NotFound = React.createClass({
@@ -37,7 +37,7 @@ module.exports = (
     <Route name="user-profile" path="/user-profile/:username" handler={UserProfile}/>
     <Route name="profile" path="/user-profile" handler={Profile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
-    <Route name="findteams" path="/findteams" handler={FindTeams}/>
+    <Route name="findplayers" path="/findplayers" handler={FindPlayers}/>
     <Route name="bioform" path="/bioform" handler={BioForm}/>
     <Route name="settings" path="/settings" handler={Settings}/>
     <Route name="teamregistration" path="/teamregistration" handler={TeamRegistration}/>
