@@ -30,13 +30,19 @@ var FindPlayers = React.createClass({
         "5x5 Casual": false,
         "5x5 Ranked": false
       },
-      willdo: {
-        'Tank': false,
-        'Jungle': false,
-        'Support': false,
-        'Mid': false,
-        'ADC': false,
-        'Fill': false
+      lanes: {
+          "top": false,
+          "mid": false,
+          "bot": false,
+          "jungle": false
+      },
+      roles: {
+        "assassin": false,
+        "mage": false,
+        "marksman": false,
+        "bruiser": false,
+        "support": false,
+        "tank": false
       },
       id: 0
     };
@@ -100,8 +106,12 @@ var FindPlayers = React.createClass({
       userSubset = filterByProperty(userSubset, "purpose", this);
     }
 
-    if (checkIfChecked(this.state.willdo) === true) {
-      userSubset = filterByProperty(userSubset, "willdo", this);
+    if (checkIfChecked(this.state.roles) === true) {
+      userSubset = filterByProperty(userSubset, "roles", this);
+    }
+
+    if (checkIfChecked(this.state.lanes) === true) {
+      userSubset = filterByProperty(userSubset, "lanes", this);
     }
 
     this.setState({
@@ -124,14 +134,20 @@ var FindPlayers = React.createClass({
             bootstrap />
 
             <Checkbox
-            label='Purpose: '
+            label='Roles: '
             options={this.state.purpose}
             onChange={this.setState.bind(this)}
             bootstrap />
 
             <Checkbox
-            label='Will Do: '
-            options={this.state.willdo}
+            label='Roles: '
+            options={this.state.roles}
+            onChange={this.setState.bind(this)}
+            bootstrap />
+
+            <Checkbox
+            label='Lanes: '
+            options={this.state.lanes}
             onChange={this.setState.bind(this)}
             bootstrap />
             
