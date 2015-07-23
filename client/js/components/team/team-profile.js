@@ -14,7 +14,6 @@ var TeamProfile = React.createClass({
   },
   getInitialState: function () {
     return {};
-      
   },
   componentDidMount: function () {
     var teamToGet = '/team/' + window.location.hash.split('/')[2];
