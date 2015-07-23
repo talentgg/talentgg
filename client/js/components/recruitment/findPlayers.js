@@ -299,9 +299,13 @@ var MatchList = React.createClass({
         </div>
       )
     })
+<<<<<<< HEAD
 
 
 
+=======
+    
+>>>>>>> findplayers
     return (
       <div>
         <ul className="MatchList">
