@@ -1,56 +1,96 @@
-var React = require('react');
+var React = require('react/addons');
 var Router = require('react-router');
 var Axios = require('axios');
 
+var ReactBtn = require('react-btn-checkbox');
+var Checkbox = ReactBtn.Checkbox;
+
+var belle = require('belle');
+Button = belle.Button;
+TextInput = belle.TextInput;
+
 var TeamRegistration = React.createClass({
-  mixins: [Router.State, Router.Navigation],
-  propTypes: {},
+  mixins: [Router.State, Router.Navigation, React.addons.LinkedStateMixin],
   getInitialState: function() {
-    return {};
+    return {
+      teamName: "",
+      about: "",
+      profile: {
+        times: {
+          "weekdays": false,
+          "weeknights": false,
+          "weekends": false
+        },
+        purpose: {
+          "3x3 Casual": false,
+          "5x5 Casual": false,
+          "5x5 Ranked": false
+        },        
+        lanes: {
+          top: false,
+          mid: false,
+          bot: false,
+          jungle: false
+        },
+        roles: {
+          assassin: false,
+          mage: false,
+          marksman: false,
+          bruiser: false,
+          support: false,
+          tank: false
+        }
+     }
+  };
+
   },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var teamBio = this.state;
+    $.post("/team/register", teamBio);
+    this.transitionTo('profile', {username: 'username'});
+  },  
   render: function() {
+    var teamName = this.state.teamName,
+     about = this.state.about;
     return (
       <div className="container">
-        <h1> Team Settings </h1>
-        <form method="POST" action="/team/register">
-          <li>
-            <label> Team Name: </label>
-            <input name="teamName" className="form-control" placeholder="enter a team name" type="text" />
-          </li>
-          <li>
-            <label>Times Available:</label>
-            <select className="form-control" name="times" value="weekends">
-              <option value="weekdays">Weekdays</option>
-              <option value="weeknights">Weeknights</option>
-              <option value="weekends">Weekends</option>
-            </select>
-          </li>
-          <li className="form-group checkbox inline no_indent">
-            <label> Looking For: </label>
-            <label className="checkbox inline no_indent">
-              <input type="checkbox" name="willdo" value="tank "/>Tank
-            </label>
-            <label className="checkbox inline no_indent">
-              <input type="checkbox" name="willdo" value="jungle"/>Jungle
-            </label>
-            <label className="checkbox inline no_indent">
-              <input type="checkbox" name="willdo" value="support"/>Support
-            </label>
-            <label className="checkbox inline no_indent">
-              <input type="checkbox" name="willdo" value="mid"/>Mid
-            </label>
-            <label className="checkbox inline no_indent">
-              <input type="checkbox" name="willdo" value="adc"/>ADC
-            </label>
-            <label className="checkbox inline no_indent">
-              <input type="checkbox" name="willdo" value="fill"/>Fill
-            </label>
-          </li>
-          <li>
-            <label>About Us:</label>
-            <textarea name="about" className="form-control" placeholder="Enter team description" ref="about" value={this.state.about}></textarea>
-          </li>
-          <button type="submit" className="btn btn-sml">Submit</button>
+        <form id="teamform" onSubmit={this.handleSubmit}>
+          <h1> Team Settings </h1>
+
+          <label> Team Name: </label><TextInput defaultValue=""
+           allowNewLine={ false } maxLength="16" name="teamName"  valueLink={this.linkState('teamName')} />
+
+          <label>About Us: </label> <TextInput defaultValue="We haven't filled this out yet." 
+           allowNewLine={ true } name="about"  valueLink={this.linkState('about')} />
+
+          <Checkbox
+          label='Times Available: '
+          options={this.state.profile.times}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <Checkbox
+          label='Purpose: '
+          options={this.state.profile.purpose}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <h2> Needs </h2>
+          <Checkbox
+          label='lanes: '
+          options={this.state.profile.lanes}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <Checkbox
+          label='roles: '
+          options={this.state.profile.roles}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <Button primary type="submit" value="Submit">Submit</Button>
+        
         </form>
       </div>
     )
