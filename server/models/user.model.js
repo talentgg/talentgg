@@ -42,20 +42,20 @@ var User = db.define( 'user', {
       "5x5 Casual": false,
       "5x5 Ranked": false
      },
-     willdo: {
+     lanes: {
       "top": false,
-      "jungle": false,
-      "support": false,
       "mid": false,
-      "adc": false
-     },
-     wontdo: {
-      "top": false,
-      "jungle": false,
-      "support": false,
-      "mid": false,
-      "adc": false
-     },
+      "bot": false,
+      "jungle": false
+      },
+      roles: {
+        "assassin": false,
+        "mage": false,
+        "marksman": false,
+        "bruiser": false,
+        "support": false,
+        "tank": false
+      },
      about: "I haven't filled this out yet.",
      favorite: "I haven't filled this out yet."
     }

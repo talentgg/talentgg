@@ -23,20 +23,20 @@ var Profile = React.createClass({
         },
         about: "",
         favorite: "",
-        willdo: {
+        lanes: {
           "top": false,
-          "jungle": false,
-          "support": false,
           "mid": false,
-          "adc": false
+          "bot": false,
+          "jungle": false
         },
-        wontdo: {
-          "top": false,
-          "jungle": false,
+        roles: {
+          "assassin": false,
+          "mage": false,
+          "marksman": false,
+          "bruiser": false,
           "support": false,
-          "mid": false,
-          "adc": false
-        },
+          "tank": false
+        }
       },
       userquestions: [],
       displayName: '',
