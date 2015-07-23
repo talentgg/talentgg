@@ -30,8 +30,9 @@ var Bio = React.createClass({
     };
     
     var available = arrayToString(this.props.bio.times);
-    var will = arrayToString(this.props.bio.willdo);
-    var style = arrayToString(this.props.bio.purpose);
+    var gameTypes = arrayToString(this.props.bio.purpose);
+    var roleArray = arrayToString(this.props.bio.roles);
+    var laneArray = arrayToString(this.props.bio.lanes);
 
     return (
       <div>
@@ -55,11 +56,11 @@ var Bio = React.createClass({
           <div className="col-sm-6">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
-                <h3 className="text-center">Profile</h3>
-                <p><b>Plays</b>: {will}</p>
+                <h3 className="text-center">Profile</h3>                
                 <p><b>Available</b>: {available}</p>
-                <p><b>Purpose</b>: {style}</p>
-                <p><b>Seeking</b>: {this.props.bio.seeking}</p>
+                <p><b>Game Types</b>: {gameTypes}</p>
+                <p><b>Roles</b>: {roleArray}</p>
+                <p><b>Lanes</b>: {laneArray}</p>
                 <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
               </div>
             </div>
