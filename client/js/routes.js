@@ -36,7 +36,7 @@ module.exports = (
   <Route name="app" path="/" handler={App}>
     <DefaultRoute handler={Profile} />
     <Route name="profile" path="/profile" handler={Profile}/>
-    <Route name="user-profile" path="/user-profile/:username" handler={UserProfile}/>
+    <Route name="user-profile" path="/user/:username" handler={UserProfile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
     <Route name="findplayers" path="/findplayers" handler={FindPlayers}/>
     <Route name="bioform" path="/bioform" handler={BioForm}/>

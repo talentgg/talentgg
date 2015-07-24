@@ -49,7 +49,7 @@ var viewProfile = React.createClass({
   },
   componentDidMount: function() {
     var context = this;
-    var pathname = window.location.href.split('user-profile/')[1];
+    var pathname = window.location.href.split('user/')[1];
     console.log(pathname);
     Axios.get('/user/' + pathname).
       then(function(response) {
