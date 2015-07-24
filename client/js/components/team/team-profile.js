@@ -7,12 +7,12 @@ var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10',
 
 var TeamProfile = React.createClass({
   mixins: [Router.State, Router.Navigation],
-  // propTypes: {
-  //   game: React.PropTypes.object.isRequired,
-  //   members: React.PropTypes.object.isRequired,
-  //   teamBio: React.PropTypes.object.isRequired,
-  //   teamName: React.PropTypes.string.isRequired
-  // },
+  propTypes: {
+    game: React.PropTypes.object.isRequired,
+    members: React.PropTypes.object.isRequired,
+    teamBio: React.PropTypes.object.isRequired,
+    teamName: React.PropTypes.string.isRequired,
+  },
   getInitialState: function () {
     return {
       profile: {
@@ -80,6 +80,10 @@ var TeamProfile = React.createClass({
   handleApply: function() {
 
   },
+  handleEdit: function() {
+    var router = this.context.router;
+    router.transitionTo('teamupdateform', {username: 'username'});
+  },
   render: function () {
     console.log("times");
     console.log(this.state.profile.times);
@@ -136,7 +140,17 @@ var TeamProfile = React.createClass({
         </div>
         <br/>
         <div className="row">
-          <div className="col-sm-3">
+          <div className="col-sm-2">
+            <div className="panel panel-default" style={whiteBox}>
+              <div className="panel-body">
+                <img className="center-block" width="64" height="64" src="/img/role-marksman.png"/>
+                <p><b>Lane</b>: Bot </p>
+                <p><b>Role</b>: Captain </p>
+                
+              </div>
+            </div>
+          </div>
+          <div className="col-sm-2">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <img className="center-block" width="64" height="64" src="/img/role-assassin.png"/>
@@ -146,7 +160,7 @@ var TeamProfile = React.createClass({
               </div>
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-2">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <img className="center-block" width="64" height="64" src="/img/role-tank.png"/>
@@ -156,7 +170,7 @@ var TeamProfile = React.createClass({
               </div>
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-2">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
@@ -166,7 +180,7 @@ var TeamProfile = React.createClass({
               </div>
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-2">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <img className="center-block" width="64" height="64" src="/img/role-marksman.png"/>
@@ -175,6 +189,21 @@ var TeamProfile = React.createClass({
                 <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
               </div>
             </div>
+          </div>
+          <div className="col-sm-2">
+            <div className="panel panel-default" style={whiteBox}>
+              <div className="panel-body">
+                <img className="center-block" width="64" height="64" src="/img/role-marksman.png"/>
+                <p><b>Lane</b>: Fill </p>
+                <p><b>Role</b>: Fill </p>
+                <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className={this.state.captain.name ? this.state.displayName : "invisible"}>
+            <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
           </div>
         </div>
       </div>
