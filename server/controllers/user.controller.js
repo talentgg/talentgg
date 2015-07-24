@@ -54,9 +54,13 @@ module.exports = {
       if((data.temp.updatedAt + (1000 * 60 * 5)) < Date.now() && data.games.verified) { //5 minute timer between api call pairs
         obj.temp.updatedAt = Date.now();
         relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.2/matchhistory/' + data.games.id + '?api_key=' + config.lolapi, function(err, history){
-          JSON.parse(history).matches.forEach(function(val, i){
-            obj.temp.matches[i] = {champ: val.participants[0].championId, win: val.participants[0].stats.winner};
-          });
+          if(history && JSON.stringify(history).length === 4){
+            obj.temp.matches = [];
+          } else if (history) {
+            JSON.parse(history).matches.forEach(function(val, i){
+              obj.temp.matches[i] = {champ: val.participants[0].championId, win: val.participants[0].stats.winner};
+            });
+          }
           relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.5/league/by-summoner/' + data.games.id + '?api_key=' + config.lolapi, function(err, league){
             if(league){
               obj.temp.rank = JSON.parse(league)[data.games.id][0].tier;
@@ -158,7 +162,7 @@ module.exports = {
             res.redirect('/#/account-link');
           });
         } else {
-          res.send("Verification failed. Check to see that the name of your first rune page is: " + obj.verifyKey);
+          res.send("Verification failed. It may take a moment for Riot to update their servers,\n but please check to see that the name of your first rune page is: " + obj.verifyKey);
         }
       })
     })
@@ -227,15 +231,13 @@ module.exports = {
 };
 
 function relay(url, callback) {
-  console.log('---API CALL---')
+  console.log('---API CALL---') //to keep track of api calls in dev environment
   request(url, function(err, stat, body) {
     if(err) {
-      console.log(url);
-      console.log(err);
       callback(err, null);
     } else if(stat.statusCode < 200 || stat.statusCode >= 400) {
-      console.log("Status Code: " + stat.statusCode);
-      if(stat.statusCode === 404){ callback(null, false) } //handles requests for info that doesn't exist if that happens
+      console.log("Status Code: " + stat.statusCode + " at: " + url);
+      if(stat.statusCode === 404 || stat.statusCode >= 500){ callback(null, false) } //handles requests for info that doesn't exist if that happens
     } else {
       callback(null, body);
     }

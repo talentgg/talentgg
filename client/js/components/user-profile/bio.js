@@ -92,7 +92,7 @@ var Bio = React.createClass({
           <div className="col-sm-6">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
-                <h3 className="text-center">Recent Games</h3>
+                <h3 className="text-center">Ranked Games</h3>
                 <br/>
                 <div className="row">
                   <div className="col-sm-1"></div>
