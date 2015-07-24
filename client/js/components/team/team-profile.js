@@ -31,6 +31,10 @@ var TeamProfile = React.createClass({
           });
       });
   },
+  handleEdit: function() {
+    var router = this.context.router;
+    router.transitionTo('bioform', {username: 'username'});
+  },
   handleApply: function() {
 
   },
@@ -50,6 +54,9 @@ var TeamProfile = React.createClass({
           </div>
           <div className="col-sm-2">
             <img className="center-block" width="128" height="128" src="/img/role-support.png"/>
+          </div>
+          <div className={this.state.admin ? "" : "invisible"}>
+            <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
           </div>
         </div>
         <br/>
