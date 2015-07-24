@@ -12,8 +12,6 @@ var NotFoundRoute = Router.NotFoundRoute;
 /* COMPONENTS TO RENDER DEPENDING ON THE REQUESTED ROUTE */
 
 var App = require("./components/app");
-var UserProfile = require("./components/user-profile/profile");
-var About = require("./components/about/app-about");
 var UserProfile = require("./components/user-profile/viewProfile");
 var Profile = require("./components/user-profile/profile");
 var UserQuestions = require("./components/user-profile/user-questions");
