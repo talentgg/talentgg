@@ -23,6 +23,10 @@ module.exports = function(app) {
     User.getOwnProfile(req, res);
   });
 
+  app.get('/profile/teams', function(req, res){ // Personal account data
+    User.getTeamsOwned(req, res);
+  });
+
   app.post('/profile', function(req, res){ // Update bio data
     User.updateBio(req, res);
   });
