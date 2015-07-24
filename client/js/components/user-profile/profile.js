@@ -81,7 +81,7 @@ var Profile = React.createClass({
     return (
       <div>
         <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} temp={this.state.temp} />
-        
+
         <Ratings stats={this.state.ratings} />
       </div>
     );
@@ -89,4 +89,3 @@ var Profile = React.createClass({
 });
 
 module.exports = Profile;
-
