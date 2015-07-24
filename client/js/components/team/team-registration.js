@@ -11,53 +11,50 @@ TextInput = belle.TextInput;
 
 var TeamRegistration = React.createClass({
   mixins: [Router.State, Router.Navigation, React.addons.LinkedStateMixin],
-  propTypes: {
-    profile: React.PropTypes.object.isRequired,
-  },
   getInitialState: function() {
     return {
-      profile: {
-        teamName: "", 
-        times: {
-          "weekdays": false,
-          "weeknights": false,
-          "weekends": false
-        },
-        purpose: {
-          "3x3 Casual": false,
-          "5x5 Casual": false,
-          "5x5 Ranked": false
-        }, 
-        lanes: {
-        "top": false,
-        "mid": false,
-        "bot": false,
-        "jungle": false
-        },
-        roles: {
-          "assassin": false,
-          "mage": false,
-          "marksman": false,
-          "bruiser": false,
-          "support": false,
-          "tank": false
-        },
-        about: ""
-      }
+      teamName: "",
+      about: "",      
+      times: {
+        "weekdays": false,
+        "weeknights": false,
+        "weekends": false
+      },
+      purpose: {
+        "3x3 Casual": false,
+        "5x5 Casual": false,
+        "5x5 Ranked": false
+      },        
+      lanes: {
+        top: false,
+        mid: false,
+        bot: false,
+        jungle: false
+      },
+      roles: {
+        assassin: false,
+        mage: false,
+        marksman: false,
+        bruiser: false,
+        support: false,
+        tank: false
+      }     
     };
   },
-  // handleSubmit: function(e) {
-  //   e.preventDefault();
-  //   var profile = this.state;
-  //   $.post("/team/register", profile);
-  //   this.transitionTo('teamprofile', {teamname: 'teamname'});
-  // },  
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var teamBio = this.state;
+    
+    
+    $.post("/team/register", teamBio);
+    this.transitionTo('profile', {username: 'username'});
+  },  
   render: function() {
     var teamName = this.state.teamName,
-    about = this.state.about;
+     about = this.state.about;
     return (
       <div className="container">
-        <form method="POST" action="/team/register">
+        <form id="teamform" onSubmit={this.handleSubmit}>
           <h1> Team Settings </h1>
 
           <label> Team Name: </label><TextInput defaultValue=""
@@ -68,30 +65,30 @@ var TeamRegistration = React.createClass({
 
           <Checkbox
           label='Times Available: '
-          options={this.state.profile.times}
+          options={this.state.times}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <Checkbox
           label='Purpose: '
-          options={this.state.profile.purpose}
+          options={this.state.purpose}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <h2> Needs </h2>
           <Checkbox
           label='lanes: '
-          options={this.state.profile.lanes}
+          options={this.state.lanes}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <Checkbox
           label='roles: '
-          options={this.state.profile.roles}
+          options={this.state.roles}
           onChange={this.setState.bind(this)}
           bootstrap />
 
-          <button type="submit" className="btn btn-sml">Submit</button>
+          <Button primary type="submit" value="Submit">Submit</Button>
         
         </form>
       </div>
