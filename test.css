@@ -1,0 +1,19 @@
+body{
+  font-family: "Helvetica Neue"
+  color: red;
+  background-color: #DDD;
+}
+.rd3-linechart-yaxis {  
+  opacity: 0
+
+}
+.rd3-linechart-xaxis {
+  opacity: 0
+}
+circle {
+  color: red;
+  r: 0px;
+}
+#me {
+  color: red;
+}
