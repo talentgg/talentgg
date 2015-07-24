@@ -10,12 +10,14 @@ var TeamProfile = React.createClass({
     game: React.PropTypes.object.isRequired,
     members: React.PropTypes.object.isRequired,
     profile: React.PropTypes.object.isRequired,
-    teamName: React.PropTypes.string.isRequired
+    teamName: React.PropTypes.string.isRequired,
+
   },
   getInitialState: function () {
     return {
       game: {},
       members: {},
+      teamCaptian: "",
       profile: {
         teamName: "", 
         times: {
@@ -55,6 +57,7 @@ var TeamProfile = React.createClass({
           context.setState({
             game: response.data.game,
             members: response.data.members,
+            teamCaptain: response.data.teamCaptain,
             teamName: response.data.profile.teamName,
             times: response.data.profile.times,
             purpose: response.data.profile.purpose,
@@ -191,7 +194,7 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <div className="row">
-        <div className={this.state.members.isAdmin ? "" : "invisible"}>
+        <div className={this.state.teamCaptian ? "" : "invisible"}>
           <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
         </div>
         </div>
