@@ -1,4 +1,5 @@
 var User = require( '../models/user.model' );
+var Team = require('../models/team.model');
 var passport = require( 'passport' );
 var bcrypt = require('bcryptjs');
 var request = require('request');
@@ -45,15 +46,58 @@ module.exports = {
     })
   },
 
-  getOwnProfile: function(req, res){ // Retrieves own profile data
+  getOwnProfile: function(req, res){
     User.findById(req.session.passport.user)
     .then(function(data){
       var obj = data;
-      obj.hash = false; // this prevents retrieval of hashed password
-      res.json(obj);
-    });
+      obj.username = "";
+      obj.hash = "";
+      if((data.temp.updatedAt + (1000 * 60 * 5)) < Date.now() && data.games.verified) { //5 minute timer between api call pairs
+        obj.temp.updatedAt = Date.now();
+        relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.2/matchhistory/' + data.games.id + '?api_key=' + config.lolapi, function(err, history){
+          if(history && JSON.stringify(history).length === 4){
+            obj.temp.matches = [];
+          } else if (history) {
+            JSON.parse(history).matches.forEach(function(val, i){
+              obj.temp.matches[i] = {champ: val.participants[0].championId, win: val.participants[0].stats.winner};
+            });
+          }
+          relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.5/league/by-summoner/' + data.games.id + '?api_key=' + config.lolapi, function(err, league){
+            if(league){
+              obj.temp.rank = JSON.parse(league)[data.games.id][0].tier;
+              User.update({temp: obj.temp}, {where: {id: req.session.passport.user}})
+              .then(function(one, two){
+                res.json(obj);
+              })
+            } else {
+              obj.temp.rank = "unranked";
+              User.update({temp: obj.temp}, {where: {id: req.session.passport.user}})
+              .then(function(one, two){
+                res.json(obj);
+              })
+            }
+          })
+        })
+      } else {
+        res.json(obj);
+      }
+    })
   },
 
+  getTeamsOwned: function(req, res){ // sends profiles of teams they captain    
+    var myTeams = [];
+    User.findById(req.session.passport.user)
+    .then(function(data){      
+      var teamsArray = data.teams;
+      Team.findAll({
+        where: {
+          teamCaptain: req.session.passport.user
+        }
+      }).then(function(data){
+        res.json(data);
+      });
+    });
+  },
   updateBio: function(req, res){ // Updates bio data
     User.findById(req.session.passport.user)
     .then(function(data){
@@ -100,16 +144,16 @@ module.exports = {
     for(var i = 0; i < 20; i++){
       key += gen.charAt(Math.floor(Math.random()*62));
     }
-    relay(res, 'https://' + region + '.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + name + '?api_key=' + config.lolapi, function(er, data) {
+    relay('https://' + region + '.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + name + '?api_key=' + config.lolapi, function(er, data) {
       obj.id = JSON.parse(data)[name].id;
       obj.name = JSON.parse(data)[name].name;
       obj.level = JSON.parse(data)[name].summonerLevel;
       obj.avatar = 'http://avatar.leagueoflegends.com/' + region + '/' + name + '.png';
-      obj.region = req.body.region;
+      obj.region = req.body.region.toLowerCase();
       obj.verified = false;
       obj.verifyKey = key;
       obj.verifyRoute = "https://" + obj.region + ".api.pvp.net/api/lol/" + obj.region + "/v1.4/summoner/" + obj.id + "/runes?api_key=" + config.lolapi;
-      User.update({displayName: obj.name, games: obj}, {where: {id: req.session.passport.user}})
+      User.update({displayName: obj.name + ' (unverified)', games: obj}, {where: {id: req.session.passport.user}})
       .then(function(){
         res.redirect('/#/account-link');
       })
@@ -120,18 +164,20 @@ module.exports = {
     User.findById(req.session.passport.user)
     .then(function(data){
       var obj = data.games;
-      relay(res, obj.verifyRoute, function(err, body){
-        if(err) throw err;
-        if(JSON.parse(body)[obj.id].pages[0].name === obj.verifyKey){
+      var name = data.displayName.split(' (')[0];
+      var temp = data.temp;
+      temp.updatedAt = 0;
+      relay(obj.verifyRoute, function(err, body){
+        if(JSON.parse(body)[obj.id].pages[0].name === obj.verifyKey || config.autoauth){ //TODO: Remove autoauth
           obj.verified = true;
           obj.verifyKey = false;
           obj.verifyRoute = false;
-          User.update({games: obj}, {where: {id: req.session.passport.user}})
+          User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
           .then(function(){
-            res.redirect('/#/user-profile');
+            res.redirect('/#/account-link');
           });
         } else {
-          res.send("Verification failed. Check to see that the name of your first rune page is: " + obj.verifyKey);
+          res.send("Verification failed. It may take a moment for Riot to update their servers,\n but please check to see that the name of your first rune page is: " + obj.verifyKey);
         }
       })
     })
@@ -142,7 +188,7 @@ module.exports = {
     User.findById(req.session.passport.user)
     .then(function(info){
       user = info.games;
-      relay(res, 'https://' + user.region + '.api.pvp.net/api/lol/' + user.region + '/v1.4/summoner/' + user.id + '?api_key=' + config.lolapi, function(er, data) {
+      relay('https://' + user.region + '.api.pvp.net/api/lol/' + user.region + '/v1.4/summoner/' + user.id + '?api_key=' + config.lolapi, function(er, data) {
         user.name = JSON.parse(data)[user.id].name;
         user.level = JSON.parse(data)[user.id].summonerLevel;
         User.update({games: user}, {where: {id: req.session.passport.user}})
@@ -186,42 +232,27 @@ module.exports = {
     })
   },
 
-  // Functions that call to external APIs
-
-  lolapi: function(req, res, region, username){
-    var obj = {}
-      //first api call
-    relay('https://' + region + '.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + username + '?api_key=' + config.lolapi, function(er, data) {
-      obj.id = JSON.parse(data)[username].id;
-      obj.name = JSON.parse(data)[username].name;
-      obj.level = JSON.parse(data)[username].summonerLevel;
-      obj.avatar = 'http://avatar.leagueoflegends.com/' + region + '/' + username + '.png';
-      obj.region = region;
-      //second api call
-      request(res, 'https://' + region + '.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + obj.id + '?api_key=' + config.lolapi, function(err, stat, body) {
-        if(err) { throw err }
-        else if(stat.statusCode === 404) {
-          obj.rank = "unranked";
-          res.json(obj);
-        } else if(stat.statusCode < 200 || stat.statusCode >= 400) {
-          console.log("Status Code: " + stat.statusCode);
-        } else {
-          obj.rank = JSON.parse(body)[obj.id][0].tier;
-          res.json(obj);
-        }
-      });
-    });
+  getChampList: function(req, res, cb){
+    relay('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=' + config.lolapi, function(err, list){
+      var obj = {};
+      list = JSON.parse(list).data;
+      for(var champ in list){
+        obj[champ.id] = champ;
+      }
+      cb(obj);
+    })
   }
 
 };
 
-function relay(res, url, callback) {
+function relay(url, callback) {
+  console.log('---API CALL---') //to keep track of api calls in dev environment
   request(url, function(err, stat, body) {
     if(err) {
       callback(err, null);
     } else if(stat.statusCode < 200 || stat.statusCode >= 400) {
-      console.log("Status Code: " + stat.statusCode);
-      res.send("It appears someone at Riot tripped over the power cord. Please try again soon =p");
+      console.log("Status Code: " + stat.statusCode + " at: " + url);
+      if(stat.statusCode === 404 || stat.statusCode >= 500){ callback(null, false) } //handles requests for info that doesn't exist if that happens
     } else {
       callback(null, body);
     }

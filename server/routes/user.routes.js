@@ -17,26 +17,18 @@ module.exports = function(app) {
     User.logout(req, res, next);
   });
 
-  app.post('/password', function(req, res, next) { // Changes password
-    User.changePassword(req, res, next);
-  });
-
   // TODO: Create a route for updating email/displayName
 
   app.get( '/user/all', function( req, res ) {
     User.getAllProfiles(req, res);
-  } );
+  });
 
   app.get('/profile', function(req, res){ // Personal account data
     User.getOwnProfile(req, res);
   });
 
   app.get('/profile/teams', function(req, res){ // Personal account data
-    User.getOwnProfile(req, res);
-  });
-
-  app.get('/profile/games', function(req, res){ // Personal account data
-    User.getOwnProfile(req, res);
+    User.getTeamsOwned(req, res);
   });
 
   app.post('/profile', function(req, res){ // Update bio data
@@ -67,6 +59,12 @@ module.exports = function(app) {
     User.updateSummoner(req, res);
   });
 
+  // Calls to other users
+
+  app.get( '/user/all', function( req, res ) {
+    User.getAllProfiles(req, res);
+  } );
+
   app.get('/user/*', function(req, res){ // Fetches a user by displayName, case sensitive!
     User.profileByName(req, res, req.url.split('/')[2]);
   });
@@ -78,12 +76,8 @@ module.exports = function(app) {
   // External API routes
 
   // Gets summoner data based on summoner name
-  app.get(/\/lol\/.*\/.*\.json/, function(req, res) { //get summoner profile info; localhost:3000/lol/na/nexas.json
-    if(!req.session.passport.user) {
-      res.sendStatus(401);
-    } else {
-      User.lolapi(req, res, req.url.split('/')[2], req.url.split('/')[3].slice(0, -5));
-    }
+  app.get('/champlist/*', function(req, res) { //get summoner profile info; localhost:3000/lol/na/nexas.json
+    res.json(champList[req.url.split('/')[2]])
   });
 
 

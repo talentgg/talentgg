@@ -61,7 +61,6 @@ var TeamProfile = React.createClass({
             lanes: response.data.profile.lanes,
             roles: response.data.profile.roles,
             about: response.data.profile.about,
-            shat: response.data.profile.shat,
           });
       });
   },

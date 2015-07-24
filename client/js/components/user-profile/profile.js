@@ -5,6 +5,10 @@ var DefaultRoute = Router.DefaultRoute;
 var Bio = require('./bio');
 var BioForm = require('./bio-form');
 var Axios = require('axios');
+var Ratings = require('./ratings.js')
+
+var rd3 = require('react-d3');
+var BarChart = rd3.BarChart;
 
 var Profile = React.createClass({
   mixins: [Router.State],
@@ -44,6 +48,18 @@ var Profile = React.createClass({
       temp: {
         rank: "unranked",
         matches: []
+      },
+      ratings: {
+        dominance: 0,
+        adaptable: 0,
+        blunt: 0,
+        collaborative: 0,
+        brute: 0,
+        aggressive: 0,
+        troll: 0,
+        loud: 0,
+        committed: 0,
+        ambition: 0
       }
     };
   },
@@ -51,8 +67,6 @@ var Profile = React.createClass({
     var context = this;
     Axios.get('/profile').
       then(function(response) {
-        console.log(response.data.games);
-        console.log(response.data.temp);
         context.setState({
           bio: response.data.bio,
           displayName: response.data.displayName,
@@ -61,18 +75,18 @@ var Profile = React.createClass({
           temp: response.data.temp
         });
       });
-    // this.router = this.context.router;
   },
 
   render: function() {
     return (
-      <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} temp={this.state.temp} />
+      <div>
+        <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} temp={this.state.temp} />
+        
+        <Ratings stats={this.state.ratings} />
+      </div>
     );
   }
 });
 
 module.exports = Profile;
 
-//         <div className="col-md-12">
-//            <UserQuestions username={username} questions={this.state.userquestions} profile={this.state.ratings} counter={this.state.counter} />
-//         </div>
