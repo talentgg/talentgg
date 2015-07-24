@@ -11,5 +11,5 @@ var router = Router.create({
 });
 
 router.run(function (Handler, state) {
-  React.render(<Handler/>, document.getElementById('content'));
+  React.render(<Handler/>, document.body);
 });

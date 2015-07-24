@@ -1,6 +1,3 @@
-// todo: fix post routing & deep boolean to server routing
-  //  add function to add apply divs through update form.
-
 var React = require('react/addons');
 var Router = require('react-router');
 var Axios = require('axios');
@@ -18,34 +15,33 @@ var TeamUpdateForm = React.createClass({
   mixins: [React.addons.LinkedStateMixin, Router.State, Router.Navigation],
   getInitialState: function() {
     return {
-      profile: {
-        times: {
-          "weekdays": false,
-          "weeknights": false,
-          "weekends": false
-        },
-        purpose: {
-          "3x3 Casual": false,
-          "5x5 Casual": false,
-          "5x5 Ranked": false
-        }, 
-        lanes: {
-        "top": false,
-        "mid": false,
-        "bot": false,
-        "jungle": false
-        },
-        roles: {
-          "assassin": false,
-          "mage": false,
-          "marksman": false,
-          "bruiser": false,
-          "support": false,
-          "tank": false
-        },
-        about: ""
-      }
-    }
+      teamName: "",
+      about: "",      
+      times: {
+        "weekdays": false,
+        "weeknights": false,
+        "weekends": false
+      },
+      purpose: {
+        "3x3 Casual": false,
+        "5x5 Casual": false,
+        "5x5 Ranked": false
+      },        
+      lanes: {
+        top: false,
+        mid: false,
+        bot: false,
+        jungle: false
+      },
+      roles: {
+        assassin: false,
+        mage: false,
+        marksman: false,
+        bruiser: false,
+        support: false,
+        tank: false
+      }     
+    };
   },
   componentDidMount: function() {
     var teamToGet = '/team/' + window.location.hash.split('/')[2];
@@ -69,17 +65,6 @@ var TeamUpdateForm = React.createClass({
     var teamname = this.state.teamName;
     this.transitionTo('teamprofile', {teamname});
   },
-  // handleSubmit: function(e) {
-  //   e.preventDefault();
-  //   var team = '/team/update/' + window.location.hash.split('/')[2];
-  //   for (key in this.state) {
-  //   }
-  //   var profile = this.state;
-  //   console.log(profile)
-  //   $.post(team, profile);
-
-  //   this.transitionTo('teamprofile', {teamName: 'teamName'});
-  // },
   render: function() {
     var teamsName = '/team/update/' + window.location.hash.split('/')[2];
     // this.state.teamName

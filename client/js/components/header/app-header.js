@@ -1,10 +1,3 @@
-/* OUR HEADER INHERITS PROPS FROM OUR MAIN APP COMPONENT
- * THIS LETS IT ACCESS THE SESSIONSTORE TO CHECK IF SOMEONE IS LOGGED IN.
- * IF THEY ARE NOT LOGGED IN WE DISPLAY LOGIN OR SIGNUP.
- * IF THEY ARE LOGGED IN WE WOULD DISPLAY SOMETHING CUSTOM,
- * HAVE A PLACE HOLDER CURRENTLY
- */
-
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
@@ -12,25 +5,10 @@ var ReactPropTypes = React.PropTypes;
 
 var Header = React.createClass({
 
-  getInitialState: function(){
-    return {
-      displayName: "",
-      teams: []
-      //dummy data below
-      // teams: [{id: 1, teamName: "pew pew"}, {id:2, teamName: "win factory"}, {id:3, teamName: "scrub life"}]
-    }
-  },
-
-  componentDidMount: function(){
-    $.get('/profile', function(result){
-      if(this.isMounted()){
-        this.setState({
-          displayName: result.displayName,
-          teams: result.teams,
-          image: result.games.avatar
-        })
-      }
-    }.bind(this));
+  propTypes: {
+    displayName: React.PropTypes.string.isRequired,
+    avatar: React.PropTypes.string.isRequired,
+    teams: React.PropTypes.array.isRequired
   },
 
   logout: function() {
@@ -60,13 +38,13 @@ var Header = React.createClass({
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i className="fa fa-users" /> My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">
-                  { this.state.teams.map(function(team){ return <li key={team.id}><Link to={"/team/" + team.profile.teamName} > {team.profile.teamName} </Link></li> })}
-                  { this.state.teams.length < 3 ? (<li><Link to="/teamregistration"> Create a Team </Link></li>) : null }
+                  { this.props.teams.map(function(team){ return <li key={team.id}><Link to={"/team/" + team.teamName} > {team.teamName} </Link></li> })}
+                  { this.props.teams.length < 3 ? (<li><Link to="/teamregistration"> Create a Team </Link></li>) : null }
                 </ul>
               </li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              <li><Link to="profile"><image className="img-rounded" height="20px" width="20px" src={this.state.image} /> {this.state.displayName}</Link></li>
+              <li><Link to="profile"><image className="img-rounded" height="20px" width="20px" src={this.props.avatar} /> {this.props.displayName}</Link></li>
               <li><Link to="/" style={{fontSize: '20px'}}><span className="glyphicon glyphicon-envelope"></span></Link></li>
               <li className="dropdown">
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>

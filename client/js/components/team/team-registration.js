@@ -14,7 +14,7 @@ var TeamRegistration = React.createClass({
   getInitialState: function() {
     return {
       teamName: "",
-      about: "",      
+      about: "",
       times: {
         "weekdays": false,
         "weeknights": false,
@@ -24,7 +24,7 @@ var TeamRegistration = React.createClass({
         "3x3 Casual": false,
         "5x5 Casual": false,
         "5x5 Ranked": false
-      },        
+      },
       lanes: {
         top: false,
         mid: false,
@@ -38,17 +38,17 @@ var TeamRegistration = React.createClass({
         bruiser: false,
         support: false,
         tank: false
-      }     
+      }
     };
   },
   handleSubmit: function(e) {
     e.preventDefault();
     var teamBio = this.state;
-    
-    
-    $.post("/team/register", teamBio);
-    this.transitionTo('profile', {username: 'username'});
-  },  
+    $.post("/team/register", teamBio, function(){
+      location.href='/#/';
+      location.reload();
+    })
+  },
   render: function() {
     var teamName = this.state.teamName,
      about = this.state.about;
@@ -60,7 +60,7 @@ var TeamRegistration = React.createClass({
           <label> Team Name: </label><TextInput defaultValue=""
            allowNewLine={ false } maxLength="16" name="teamName"  valueLink={this.linkState('teamName')} />
 
-          <label>About Us: </label> <TextInput defaultValue="We haven't filled this out yet." 
+          <label>About Us: </label> <TextInput defaultValue="We haven't filled this out yet."
            allowNewLine={ true } name="about"  valueLink={this.linkState('about')} />
 
           <Checkbox
@@ -89,7 +89,7 @@ var TeamRegistration = React.createClass({
           bootstrap />
 
           <Button primary type="submit" value="Submit">Submit</Button>
-        
+
         </form>
       </div>
     )
