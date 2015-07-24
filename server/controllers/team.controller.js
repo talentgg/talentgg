@@ -11,7 +11,7 @@ module.exports = {
       user = userData;
     })
     .then(function(){
-      Team.create({        
+      Team.create({
         profile: req.body,
         teamCaptain: user.id,  // redundant, but this gets checked a lot and saves having to iterate over keys every time
         members: [{id: user.id, name: user.displayName, isAdmin: true}]
@@ -29,6 +29,10 @@ module.exports = {
     });
   },
 
+  updateProfile: function( req, res, next ){
+
+  },
+
   getProfile: function( req, res, next ){
     var getName = req.url.split('/')[3];
     console.log(getName);
@@ -37,27 +41,17 @@ module.exports = {
         teamName: getName
       }
     }})
-       .then(function (teamProfile) {        
+       .then(function (teamProfile) {
          res.json(teamProfile);
      });
    },
 
-   getAllProfiles: function( req, res, next ){
-    Team.findAll()
-       .then(function (teamProfiles) {
-         res.json(teamProfiles);
-     });
-   },
 
-  updateProfile: function( req, res, next ){
-    // change this to loop over keys
-    Team.update( {
-        activationKey: req.body.password
-      }, {
-        where: {
-          username: req.body.username
-        }
-      });
+  getAllProfiles: function( req, res, next ){
+    Team.findAll()
+    .then(function (teamProfiles) {
+      res.json(teamProfiles);
+    });
   }
 
 };
