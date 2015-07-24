@@ -14,7 +14,7 @@ module.exports = {
       Team.create({        
         profile: req.body,
         teamCaptain: user.id,  // redundant, but this gets checked a lot and saves having to iterate over keys every time
-        members: {id: user.id, name: user.displayName, isAdmin: true}
+        members: [{id: user.id, name: user.displayName, isAdmin: true}]
       })
       .then(function(teamData){
         team = teamData;
@@ -30,8 +30,14 @@ module.exports = {
   },
 
   getProfile: function( req, res, next ){
-    Team.findOne({where: {teamName: req.url.split('/')[2]}})
-       .then(function (teamProfile) {
+    var getName = req.url.split('/')[3];
+    console.log(getName);
+    Team.findOne({where: {
+      profile: {
+        teamName: getName
+      }
+    }})
+       .then(function (teamProfile) {        
          res.json(teamProfile);
      });
    },

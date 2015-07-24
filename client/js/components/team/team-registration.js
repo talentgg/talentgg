@@ -14,35 +14,32 @@ var TeamRegistration = React.createClass({
   getInitialState: function() {
     return {
       teamName: "",
-      about: "",
-      profile: {
-        times: {
-          "weekdays": false,
-          "weeknights": false,
-          "weekends": false
-        },
-        purpose: {
-          "3x3 Casual": false,
-          "5x5 Casual": false,
-          "5x5 Ranked": false
-        },        
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
-     }
-  };
-
+      about: "",      
+      times: {
+        "weekdays": false,
+        "weeknights": false,
+        "weekends": false
+      },
+      purpose: {
+        "3x3 Casual": false,
+        "5x5 Casual": false,
+        "5x5 Ranked": false
+      },        
+      lanes: {
+        top: false,
+        mid: false,
+        bot: false,
+        jungle: false
+      },
+      roles: {
+        assassin: false,
+        mage: false,
+        marksman: false,
+        bruiser: false,
+        support: false,
+        tank: false
+      }     
+    };
   },
   handleSubmit: function(e) {
     e.preventDefault();
@@ -68,26 +65,26 @@ var TeamRegistration = React.createClass({
 
           <Checkbox
           label='Times Available: '
-          options={this.state.profile.times}
+          options={this.state.times}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <Checkbox
           label='Purpose: '
-          options={this.state.profile.purpose}
+          options={this.state.purpose}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <h2> Needs </h2>
           <Checkbox
           label='lanes: '
-          options={this.state.profile.lanes}
+          options={this.state.lanes}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <Checkbox
           label='roles: '
-          options={this.state.profile.roles}
+          options={this.state.roles}
           onChange={this.setState.bind(this)}
           bootstrap />
 

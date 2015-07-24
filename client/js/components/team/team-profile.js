@@ -1,39 +1,101 @@
 var React = require('react');
 var Router = require('react-router');
 var Axios = require('axios');
+var _ = require('lodash');
 
 var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10', margin:'0', border: 'none'};
 
 var TeamProfile = React.createClass({
   mixins: [Router.State, Router.Navigation],
-  propTypes: {
-    game: React.PropTypes.object.isRequired,
-    members: React.PropTypes.object.isRequired,
-    teamBio: React.PropTypes.object.isRequired,
-    teamName: React.PropTypes.string.isRequired
-  },
+  // propTypes: {
+  //   game: React.PropTypes.object.isRequired,
+  //   members: React.PropTypes.object.isRequired,
+  //   teamBio: React.PropTypes.object.isRequired,
+  //   teamName: React.PropTypes.string.isRequired
+  // },
   getInitialState: function () {
-    return {};
+    return {
+      profile: {
+        teamName: "",
+        times: {
+          "weekdays": false,
+          "weeknights": false,
+          "weekends": false
+        },
+        purpose: {
+          "3x3 Casual": false,
+          "5x5 Casual": false,
+          "5x5 Ranked": false
+        },
+        about: "",
+        lanes: {
+          "top": false,
+          "mid": false,
+          "bot": false,
+          "jungle": false
+        },
+        roles: {
+          "assassin": false,
+          "mage": false,
+          "marksman": false,
+          "bruiser": false,
+          "support": false,
+          "tank": false
+        }     
+      },
+      game: {},
+      members: {},
+      captain: {
+        displayName: ""
+      },
+
+    };
   },
-  componentDidMount: function () {
-    var teamToGet = '/team/' + window.location.hash.split('/')[2];
+  componentWillMount: function () {
+    var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
+    console.log(teamToGet);
     var context = this;
     Axios.get(teamToGet)
       .then(function(response) {
-          console.log(response.data);   
+          var cap = null;
+          var mems = [];
+          console.log(response.data);
+          _.map(response.data.members, function(member) {
+            console.log(member);
+            console.log(member.isAdmin);
+            if (member.isAdmin === true) {
+              cap = member;
+            } else mems.push(member) 
+          });
+
           context.setState({
             game: response.data.game,
-            members: response.data.members,
-            about: response.data.profile.about,
-            times: response.data.profile.times,
-            teamName: response.data.profile.teamName,
+            members: mems,
+            profile: response.data.profile,
+            captain: cap
           });
+
       });
   },
   handleApply: function() {
 
   },
   render: function () {
+    console.log("times");
+    console.log(this.state.profile.times);
+    console.log(this.state.profile);
+    var arrayToString = function(obj) {
+      var arr = [];
+      for (var key in obj) {
+        if (obj[key] === "true") {
+          arr.push(key);
+        }
+      }
+      return arr.join(', ');
+    };
+
+    var available = arrayToString(this.state.profile.times);
+
     return (
       <div>
         <div className="row" style={whiteBox}>
@@ -41,8 +103,8 @@ var TeamProfile = React.createClass({
             <img className="img-circle center-block" width="128" height="128" src={"http://cdn.cutestpaw.com/wp-content/uploads/2012/09/sss.jpg"} />
           </div>
           <div className="col-sm-4">
-            <h3>Team: {this.state.teamName}</h3>
-            <p>{this.state.about}</p>
+            <h3>Team: {this.state.profile.teamName}</h3>
+            <p>{this.state.profile.about}</p>
           </div>
           <div className="col-sm-2">
             <img className="center-block" width="128" height="128" src="/img/tier-silver.png"/>
@@ -57,8 +119,8 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <h3 className="text-center">Team Profile </h3>
-                <p><b>Available</b>: {this.state.times} </p>
-                <p><b>About Us</b>: {this.state.about} </p>
+                <p><b>Available</b>: {available} </p>
+                <p><b>About Us</b>: {this.state.profile.about} </p>
               </div>
             </div>
           </div>
@@ -66,8 +128,8 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <h3 className="text-center">Current Members</h3>
-                <p><b>Admin</b>: Mocking Bird Killa </p>
-                <p><b>individual ninjas</b>: {this.state.members} </p>
+                <p><b>Captain</b>: {this.state.captain.name} </p>
+                <p><b>Members</b>: {this.state.members.name} </p>
               </div>
             </div>
           </div>
