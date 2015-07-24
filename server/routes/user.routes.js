@@ -19,6 +19,13 @@ module.exports = function(app) {
 
   // TODO: Create a route for updating email/displayName
 
+<<<<<<< HEAD
+=======
+  app.get( '/user/all', function( req, res ) {
+    User.getAllProfiles(req, res);
+  });
+
+>>>>>>> data visualization on profile, recruitment
   app.get('/profile', function(req, res){ // Personal account data
     User.getOwnProfile(req, res);
   });
