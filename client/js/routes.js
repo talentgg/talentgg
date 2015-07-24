@@ -20,6 +20,7 @@ var FindPlayers = require("./components/recruitment/findPlayers");
 var AccountLink = require("./components/user-profile/accountLink");
 var TeamRegistration = require("./components/team/team-registration");
 var TeamProfile = require("./components/team/team-profile");
+var TeamUpdateForm = require("./components/team/team-update-form");
 var Settings = require("./components/user-profile/settings");
 
 var Test = require("./components/user-profile/test");
@@ -42,6 +43,7 @@ module.exports = (
     <Route name="accountLink" path="/account-link" handler={AccountLink}/>
     <Route name="teamregistration" path="/teamregistration" handler={TeamRegistration}/>
     <Route name="teamprofile" path="/team/:teamname" handler={TeamProfile}/>
+    <Route name="teamupdateform" path="/teamupdate" handler={TeamUpdateForm}/>
     <Route name="settings" path="/settings" handler={Settings}/>
 
     <Route name="test" path="/test" handler={Test}/>

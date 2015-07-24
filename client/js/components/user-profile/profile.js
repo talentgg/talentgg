@@ -67,6 +67,8 @@ var Profile = React.createClass({
     var context = this;
     Axios.get('/profile').
       then(function(response) {
+          console.log("Router-state ->");
+          console.log(Router.State);
         context.setState({
           bio: response.data.bio,
           displayName: response.data.displayName,
