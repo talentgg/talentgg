@@ -11,9 +11,9 @@ var ratingVisualization = React.createClass({
 
     var w = 500;
     var h = 1500;
-    var barPadding = 1; 
-    
-    console.log(this.props.stats);
+    var barPadding = 1;
+
+    // console.log(this.props.stats);
 
     var dataset = [];
     dataset.push(Number(this.props.stats.dominance));
@@ -106,7 +106,7 @@ var ratingVisualization = React.createClass({
       .attr("font-family", "Courier New")
       .attr("font-size", "11px")
       .attr("fill", "black");
-  
+
     return (
       <div className="ratingViz" style={whiteBox}> </div>
     )

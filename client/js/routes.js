@@ -21,6 +21,9 @@ var AccountLink = require("./components/user-profile/accountLink");
 var TeamRegistration = require("./components/team/team-registration");
 var TeamProfile = require("./components/team/team-profile");
 var Settings = require("./components/user-profile/settings");
+
+var Test = require("./components/user-profile/test");
+
 var NotFound = React.createClass({
   render: function () {
     return <h2>NOT FOUND</h2>;
@@ -30,7 +33,7 @@ var NotFound = React.createClass({
 module.exports = (
 
   <Route name="app" path="/" handler={App}>
-    <DefaultRoute handler={UserProfile} />
+    <DefaultRoute handler={Profile} />
     <Route name="user-profile" path="/user-profile/:username" handler={UserProfile}/>
     <Route name="profile" path="/user-profile" handler={Profile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
@@ -40,6 +43,9 @@ module.exports = (
     <Route name="teamregistration" path="/teamregistration" handler={TeamRegistration}/>
     <Route name="teamprofile" path="/team/:teamname" handler={TeamProfile}/>
     <Route name="settings" path="/settings" handler={Settings}/>
+
+    <Route name="test" path="/test" handler={Test}/>
+
     <NotFoundRoute handler={NotFound}/>
   </Route>
 
