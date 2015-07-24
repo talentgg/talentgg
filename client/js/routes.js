@@ -12,7 +12,12 @@ var NotFoundRoute = Router.NotFoundRoute;
 /* COMPONENTS TO RENDER DEPENDING ON THE REQUESTED ROUTE */
 
 var App = require("./components/app");
+<<<<<<< HEAD
 var UserProfile = require("./components/user-profile/profile");
+=======
+var About = require("./components/about/app-about");
+var UserProfile = require("./components/user-profile/viewProfile");
+>>>>>>> can now view individual profiles
 var Profile = require("./components/user-profile/profile");
 var UserQuestions = require("./components/user-profile/user-questions");
 var BioForm = require("./components/user-profile/bio-form");
@@ -36,8 +41,11 @@ module.exports = (
 
   <Route name="app" path="/" handler={App}>
     <DefaultRoute handler={Profile} />
+<<<<<<< HEAD
+=======
+    <Route name="profile" path="/profile" handler={Profile}/>
+>>>>>>> can now view individual profiles
     <Route name="user-profile" path="/user-profile/:username" handler={UserProfile}/>
-    <Route name="profile" path="/user-profile" handler={Profile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
     <Route name="findplayers" path="/findplayers" handler={FindPlayers}/>
     <Route name="findteams" path="/findteams" handler={FindTeams}/>
