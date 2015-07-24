@@ -24,7 +24,7 @@ module.exports = {
         User.update({teams: user.teams}, {where: {id: req.session.passport.user}});
       })
       .then(function(){
-        res.redirect('/#/user-profile');
+        res.redirect('/#/');
       });
     });
   },
