@@ -16,8 +16,8 @@ var TeamProfile = React.createClass({
     return {
       game: {},
       members: {},
-      teamName: "", 
       profile: {
+        teamName: "", 
         times: {
           "weekdays": false,
           "weeknights": false,
@@ -55,7 +55,7 @@ var TeamProfile = React.createClass({
           context.setState({
             game: response.data.game,
             members: response.data.members,
-            teamName: response.data.teamName,
+            teamName: response.data.profile.teamName,
             times: response.data.profile.times,
             purpose: response.data.profile.purpose,
             lanes: response.data.profile.lanes,

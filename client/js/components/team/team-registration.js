@@ -13,12 +13,11 @@ var TeamRegistration = React.createClass({
   mixins: [Router.State, Router.Navigation, React.addons.LinkedStateMixin],
   propTypes: {
     profile: React.PropTypes.object.isRequired,
-    teamName: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
     return {
-      teamName: "", 
       profile: {
+        teamName: "", 
         times: {
           "weekdays": false,
           "weeknights": false,
