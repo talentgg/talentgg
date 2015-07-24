@@ -41,7 +41,7 @@ module.exports = (
     <Route name="accountLink" path="/account-link" handler={AccountLink}/>
     <Route name="teamregistration" path="/teamregistration" handler={TeamRegistration}/>
     <Route name="teamprofile" path="/team/:teamname" handler={TeamProfile}/>
-    <Route name="teamupdateform" path="/teamupdate" handler={TeamRegistration}/>
+    <Route name="teamupdateform" path="/teamupdate" handler={TeamUpdateForm}/>
     <Route name="settings" path="/settings" handler={Settings}/>
     <NotFoundRoute handler={NotFound}/>
   </Route>

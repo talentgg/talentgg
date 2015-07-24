@@ -1,3 +1,6 @@
+// todo: fix post routing & deep boolean to server routing
+  //  add function to add apply divs through update form.
+
 var React = require('react/addons');
 var Router = require('react-router');
 var Axios = require('axios');
@@ -15,63 +18,75 @@ var TeamUpdateForm = React.createClass({
   mixins: [React.addons.LinkedStateMixin, Router.State, Router.Navigation],
   getInitialState: function() {
     return {
-      times: {
-        "weekdays": false,
-        "weeknights": false,
-        "weekends": false
-      },
-      purpose: {
-        "3x3 Casual": false,
-        "5x5 Casual": false,
-        "5x5 Ranked": false
-      },
-      about: "",
-      favorite: "",
-      willdo: {
+      profile: {
+        times: {
+          "weekdays": false,
+          "weeknights": false,
+          "weekends": false
+        },
+        purpose: {
+          "3x3 Casual": false,
+          "5x5 Casual": false,
+          "5x5 Ranked": false
+        }, 
+        lanes: {
         "top": false,
-        "jungle": false,
-        "support": false,
         "mid": false,
-        "adc": false
-      },
-      wontdo: {
-        "top": false,
-        "jungle": false,
-        "support": false,
-        "mid": false,
-        "adc": false
-      },
-    };
+        "bot": false,
+        "jungle": false
+        },
+        roles: {
+          "assassin": false,
+          "mage": false,
+          "marksman": false,
+          "bruiser": false,
+          "support": false,
+          "tank": false
+        },
+        about: ""
+      }
+    }
   },
   componentDidMount: function() {
+    var teamToGet = '/team/' + window.location.hash.split('/')[2];
     var context = this;
-    Axios.get('/team-profile').
-      then(function(response) {
-        context.setState({
-          times: response.data.bio.times,
-          purpose: response.data.bio.purpose,
-          about: response.data.bio.about,
-          favorite: response.data.bio.favorite,
-          willdo: response.data.bio.willdo,
-          wontdo: response.data.bio.wontdo,
-        });
+    Axios.get(teamToGet)
+      .then(function(response) {
+          console.log(response.data);   
+          context.setState({
+            game: response.data.game,
+            members: response.data.members,
+            teamName: response.data.teamName,
+            times: response.data.profile.times,
+            purpose: response.data.profile.purpose,
+            lanes: response.data.profile.lanes,
+            roles: response.data.profile.roles,
+            about: response.data.profile.about,
+          });
       });
   },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    for (key in this.state) {
-    }
-    var teamBio = this.state;
-    console.log(teamBio)
-    $.post("/team-profile", teamBio);
-
-    this.transitionTo('team-profile', {teamName: 'teamName'});
+  handleEdit: function() {
+    this.transitionTo('profile', {username: 'username'});
   },
-  render: function() {
+  // handleSubmit: function(e) {
+  //   e.preventDefault();
+  //   var team = '/team/update/' + window.location.hash.split('/')[2];
+  //   for (key in this.state) {
+  //   }
+  //   var profile = this.state;
+  //   console.log(profile)
+  //   $.post(team, profile);
 
+  //   this.transitionTo('teamprofile', {teamName: 'teamName'});
+  // },
+  render: function() {
+    var teamName = this.state.teamName
     return (
       <div className="container">
-        <form id="teamupdateform" onSubmit={this.handleSubmit}>
+        <form method="POST" action={"/team/update/" + teamName}>
+
+          About Us: <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
+          allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
 
           <Checkbox
           label='Times Available: '
@@ -85,25 +100,20 @@ var TeamUpdateForm = React.createClass({
           onChange={this.setState.bind(this)}
           bootstrap />
 
+          <h2> Needs </h2>
           <Checkbox
-          label='Will Do: '
-          options={this.state.willdo}
+          label='lanes: '
+          options={this.state.profile.lanes}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <Checkbox
-          label='Will not: '
-          options={this.state.wontdo}
+          label='roles: '
+          options={this.state.profile.roles}
           onChange={this.setState.bind(this)}
           bootstrap />
 
-          About Us: <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
-           allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
-
-          Favorite Games: <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
-           allowNewLine={ true } name="favorite" valueLink={this.linkState('favorite')} />
-
-          <Button primary type="submit" value="Submit">Submit</Button>
+          <Button primary type="submit" onClick={this.handleEdit}>Submit</Button>
 
         </form>
       </div>

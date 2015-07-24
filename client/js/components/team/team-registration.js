@@ -13,8 +13,7 @@ var TeamRegistration = React.createClass({
   mixins: [Router.State, Router.Navigation, React.addons.LinkedStateMixin],
   getInitialState: function() {
     return {
-      teamName: "",
-      about: "",
+      teamName: "", 
       profile: {
         times: {
           "weekdays": false,
@@ -25,37 +24,38 @@ var TeamRegistration = React.createClass({
           "3x3 Casual": false,
           "5x5 Casual": false,
           "5x5 Ranked": false
-        },        
+        }, 
         lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
+        "top": false,
+        "mid": false,
+        "bot": false,
+        "jungle": false
         },
         roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
+          "assassin": false,
+          "mage": false,
+          "marksman": false,
+          "bruiser": false,
+          "support": false,
+          "tank": false
+        },
+        about: ""
      }
   };
-
+    // onSubmit={this.handleSubmit}
   },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var teamBio = this.state;
-    $.post("/team/register", teamBio);
-    this.transitionTo('profile', {username: 'username'});
-  },  
+  // handleSubmit: function(e) {
+  //   e.preventDefault();
+  //   var profile = this.state;
+  //   $.post("/team/register", profile);
+  //   this.transitionTo('teamprofile', {teamname: 'teamname'});
+  // },  
   render: function() {
     var teamName = this.state.teamName,
      about = this.state.about;
     return (
       <div className="container">
-        <form id="teamform" onSubmit={this.handleSubmit}>
+        <form method="POST" action="/team/register">
           <h1> Team Settings </h1>
 
           <label> Team Name: </label><TextInput defaultValue=""
@@ -63,7 +63,7 @@ var TeamRegistration = React.createClass({
 
           <label>About Us: </label> <TextInput defaultValue="We haven't filled this out yet." 
            allowNewLine={ true } name="about"  valueLink={this.linkState('about')} />
-
+           
           <Checkbox
           label='Times Available: '
           options={this.state.profile.times}
@@ -89,7 +89,7 @@ var TeamRegistration = React.createClass({
           onChange={this.setState.bind(this)}
           bootstrap />
 
-          <Button primary type="submit" value="Submit">Submit</Button>
+          <button type="submit" className="btn btn-sml">Submit</button>
         
         </form>
       </div>

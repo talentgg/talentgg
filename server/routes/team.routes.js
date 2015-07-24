@@ -7,6 +7,8 @@ module.exports = function( app ) {
   //register your team
   app.post('/team/register', function(req, res){
     Team.register(req, res);
+    console.log('<----logs----->');
+    console.log(req.body);
   });
 
   // get team profile

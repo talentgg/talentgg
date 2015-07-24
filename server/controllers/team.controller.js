@@ -13,7 +13,7 @@ module.exports = {
     .then(function(){
       Team.create({
         teamName: req.body.teamName,
-        teamBio: {times: req.body.times, about: req.body.about},
+        profile: {times: req.body.times, purpose: req.body.purpose, lanes: req.body.lanes, roles: req.body.roles, about: req.body.about},
         members: {id: user.id, name: user.displayName, isAdmin: true}
       })
       .then(function(teamData){
