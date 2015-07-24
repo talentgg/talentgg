@@ -33,8 +33,7 @@ var Header = React.createClass({
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
               <li><Link to="/userquestions"> <i className="fa fa-question" /> Questions</Link></li>
-              <li><Link to="/findPlayers"><i className="fa fa-user-plus" /> Find Players </Link></li>
-              <li><Link to="/findTeams"><span className="glyphicon glyphicon-search"></span> Find Teams </Link></li>
+              <li><Link to="/findPlayers"><i className="fa fa-user-plus" /> Recruitment </Link></li>
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i className="fa fa-users" /> My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">

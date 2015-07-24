@@ -12,7 +12,7 @@ var NotFoundRoute = Router.NotFoundRoute;
 /* COMPONENTS TO RENDER DEPENDING ON THE REQUESTED ROUTE */
 
 var App = require("./components/app");
-var UserProfile = require("./components/user-profile/profile");
+var UserProfile = require("./components/user-profile/viewProfile");
 var Profile = require("./components/user-profile/profile");
 var UserQuestions = require("./components/user-profile/user-questions");
 var BioForm = require("./components/user-profile/bio-form");
@@ -35,8 +35,8 @@ module.exports = (
 
   <Route name="app" path="/" handler={App}>
     <DefaultRoute handler={Profile} />
-    <Route name="user-profile" path="/user-profile/:username" handler={UserProfile}/>
-    <Route name="profile" path="/user-profile" handler={Profile}/>
+    <Route name="profile" path="/profile" handler={Profile}/>
+    <Route name="user-profile" path="/user/:username" handler={UserProfile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
     <Route name="findplayers" path="/findplayers" handler={FindPlayers}/>
     <Route name="bioform" path="/bioform" handler={BioForm}/>

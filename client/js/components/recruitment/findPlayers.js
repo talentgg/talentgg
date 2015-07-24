@@ -19,6 +19,9 @@ var whiteBox = {backgroundColor: 'white', padding: '25', margin:'25', border: 's
 var headshot = {backgroundColor: 'white', padding: '10', border: 'solid red 2px', height: '200', width: '200', float: 'left', textAlign: 'center'};
 var stats = {backgroundColor: 'white', padding: '25', border: 'solid blue 2px', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
 var chart = {backgroundColor: 'white', padding: '25', border: 'solid blue 2px', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
+var whiteBox = {backgroundColor: 'white', padding: '25', margin:'25', border: 'solid black 2px', height: '250', width: '450', display: 'inline-block'};
+var headshot = {backgroundColor: 'white', padding: '10', height: '200', width: '200', float: 'left', textAlign: 'center'};
+var stats = {backgroundColor: 'white', padding: '25', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
 
 
 var FindPlayers = React.createClass({
@@ -278,7 +281,7 @@ var MatchList = React.createClass({
         <div className="row" style={whiteBox}>
             <div className="row" style={headshot}>
               <img className="img-circle center-block" src={user.games.avatar}/>
-              <div align="center"> { user.displayName } </div>
+              <a href={'/#/user/' + user.displayName}> <div align="center"> { user.displayName } </div> </a>
               <div> {user.overallScore}% </div>
             </div>
             <div className="row" style={stats}>
@@ -299,8 +302,6 @@ var MatchList = React.createClass({
         </div>
       )
     })
-
-
 
     return (
       <div>
