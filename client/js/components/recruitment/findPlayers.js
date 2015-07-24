@@ -281,7 +281,7 @@ var MatchList = React.createClass({
         <div className="row" style={whiteBox}>
             <div className="row" style={headshot}>
               <img className="img-circle center-block" src={user.games.avatar}/>
-              <Link to={'user/:' + user.displayName}> <div align="center"> { user.displayName } </div> </Link>
+              <a href={'/#/user/' + user.displayName}> <div align="center"> { user.displayName } </div> </a>
               <div> {user.overallScore}% </div>
             </div>
             <div className="row" style={stats}>
