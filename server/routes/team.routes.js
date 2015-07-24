@@ -10,7 +10,7 @@ module.exports = function( app ) {
   });
 
   // get team profile
-  app.get('/team/*', function(req, res){
+  app.get('/team/profile/*', function(req, res){
     Team.getProfile(req, res);
   });
 
