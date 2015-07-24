@@ -15,10 +15,36 @@ var Team = db.define( 'team', {
     allowNull: false
   },
   //Team-specific schema
-  teamBio: {
+  profile: {
     //This is for storing team-level data, similar to bio
     type: Sequelize.JSON,
-    defaultValue: {}
+    defaultValue: {
+      times: {
+        "weekdays": false,
+        "weeknights": false,
+        "weekends": false
+      },
+      purpose: {
+        "3x3 Casual": false,
+        "5x5 Casual": false,
+        "5x5 Ranked": false
+      },
+      about: "",
+      lanes: {
+        top: false,
+        mid: false,
+        bot: false,
+        jungle: false
+      },
+      roles: {
+        assassin: false,
+        mage: false,
+        marksman: false,
+        bruiser: false,
+        support: false,
+        tank: false
+      }     
+    }
   },
   members: {
     //This is for storing the members that are part of the team

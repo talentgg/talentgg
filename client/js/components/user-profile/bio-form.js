@@ -27,20 +27,20 @@ var BioForm = React.createClass({
       },
       about: "",
       favorite: "",
-      willdo: {
+      lanes: {
         "top": false,
-        "jungle": false,
-        "support": false,
         "mid": false,
-        "adc": false
+        "bot": false,
+        "jungle": false
       },
-      wontdo: {
-        "top": false,
-        "jungle": false,
+      roles: {
+        "assassin": false,
+        "mage": false,
+        "marksman": false,
+        "bruiser": false,
         "support": false,
-        "mid": false,
-        "adc": false
-      },
+        "tank": false
+      }
     };
   },
   componentDidMount: function() {
@@ -52,17 +52,14 @@ var BioForm = React.createClass({
           purpose: response.data.bio.purpose,
           about: response.data.bio.about,
           favorite: response.data.bio.favorite,
-          willdo: response.data.bio.willdo,
-          wontdo: response.data.bio.wontdo,
+          lanes: response.data.bio.lanes,
+          roles: response.data.bio.roles,
         });
       });
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    for (key in this.state) {
-    }
     var bio = this.state;
-    console.log(bio)
     $.post("/profile", bio);
 
     this.transitionTo('profile', {username: 'username'});
@@ -86,14 +83,14 @@ var BioForm = React.createClass({
           bootstrap />
 
           <Checkbox
-          label='Will Do: '
-          options={this.state.willdo}
+          label='Preferred Lanes: '
+          options={this.state.lanes}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <Checkbox
-          label='Will not: '
-          options={this.state.wontdo}
+          label='Preferred Roles: '
+          options={this.state.roles}
           onChange={this.setState.bind(this)}
           bootstrap />
 
