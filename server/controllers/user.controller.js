@@ -109,7 +109,7 @@ module.exports = {
       obj.verified = false;
       obj.verifyKey = key;
       obj.verifyRoute = "https://" + obj.region + ".api.pvp.net/api/lol/" + obj.region + "/v1.4/summoner/" + obj.id + "/runes?api_key=" + config.lolapi;
-      User.update({displayName: obj.name, games: obj}, {where: {id: req.session.passport.user}})
+      User.update({displayName: obj.name + ' (unverified)', games: obj}, {where: {id: req.session.passport.user}})
       .then(function(){
         res.redirect('/#/account-link');
       })
@@ -120,13 +120,14 @@ module.exports = {
     User.findById(req.session.passport.user)
     .then(function(data){
       var obj = data.games;
+      var name = data.displayName.split(' (')[0];
       relay(res, obj.verifyRoute, function(err, body){
         if(err) throw err;
         if(JSON.parse(body)[obj.id].pages[0].name === obj.verifyKey){
           obj.verified = true;
           obj.verifyKey = false;
           obj.verifyRoute = false;
-          User.update({games: obj}, {where: {id: req.session.passport.user}})
+          User.update({displayName: name, games: obj}, {where: {id: req.session.passport.user}})
           .then(function(){
             res.redirect('/#/user-profile');
           });
