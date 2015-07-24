@@ -11,6 +11,10 @@ TextInput = belle.TextInput;
 
 var TeamRegistration = React.createClass({
   mixins: [Router.State, Router.Navigation, React.addons.LinkedStateMixin],
+  propTypes: {
+    profile: React.PropTypes.object.isRequired,
+    teamName: React.PropTypes.string.isRequired
+  },
   getInitialState: function() {
     return {
       teamName: "", 
@@ -40,9 +44,8 @@ var TeamRegistration = React.createClass({
           "tank": false
         },
         about: ""
-     }
-  };
-    // onSubmit={this.handleSubmit}
+      }
+    };
   },
   // handleSubmit: function(e) {
   //   e.preventDefault();
@@ -52,7 +55,7 @@ var TeamRegistration = React.createClass({
   // },  
   render: function() {
     var teamName = this.state.teamName,
-     about = this.state.about;
+    about = this.state.about;
     return (
       <div className="container">
         <form method="POST" action="/team/register">
@@ -63,7 +66,7 @@ var TeamRegistration = React.createClass({
 
           <label>About Us: </label> <TextInput defaultValue="We haven't filled this out yet." 
            allowNewLine={ true } name="about"  valueLink={this.linkState('about')} />
-           
+
           <Checkbox
           label='Times Available: '
           options={this.state.profile.times}

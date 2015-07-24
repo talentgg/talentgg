@@ -66,7 +66,8 @@ var TeamUpdateForm = React.createClass({
       });
   },
   handleEdit: function() {
-    this.transitionTo('profile', {username: 'username'});
+    var teamname = this.state.teamName;
+    this.transitionTo('teamprofile', {teamname});
   },
   // handleSubmit: function(e) {
   //   e.preventDefault();
@@ -80,23 +81,24 @@ var TeamUpdateForm = React.createClass({
   //   this.transitionTo('teamprofile', {teamName: 'teamName'});
   // },
   render: function() {
-    var teamName = this.state.teamName
+    var teamsName = '/team/update/' + window.location.hash.split('/')[2];
+    // this.state.teamName
     return (
       <div className="container">
-        <form method="POST" action={"/team/update/" + teamName}>
+        <form method="POST" action={teamsName}>
 
           About Us: <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
           allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
 
           <Checkbox
           label='Times Available: '
-          options={this.state.times}
+          options={this.state.profile.times}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <Checkbox
           label='Purpose: '
-          options={this.state.purpose}
+          options={this.state.profile.purpose}
           onChange={this.setState.bind(this)}
           bootstrap />
 
