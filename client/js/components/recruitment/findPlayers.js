@@ -155,8 +155,7 @@ var FindPlayers = React.createClass({
 
     return (     
       <div className="findPlayers">
-        <h1> Matches </h1>
-        <h2> Filters </h2>
+        <h1> Filters </h1>
        
           <form onSubmit={this.handleSubmit}>
 
