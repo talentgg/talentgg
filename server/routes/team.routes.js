@@ -25,4 +25,16 @@ module.exports = function( app ) {
   });
 
 
+  app.post('/team/invite', function(req, res){
+    Team.invite(req, res);
+  });
+
+  app.post('/team/applytoteam',function(req, res){
+    Team.applyToTeam(req, res);
+  });
+
+  app.post('/team/addtoteam', function(req, res){
+    Team.addtoteam(req, res);
+  }); 
+
 };

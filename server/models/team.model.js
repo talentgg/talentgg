@@ -54,6 +54,10 @@ var Team = db.define( 'team', {
     type: Sequelize.JSON,
     defaultValue: []
   },
+  applicants: {
+    type: Sequelize.JSON,
+    defaultValue: []
+  },
   game: {
     //This is for storing the team's game data, should only be one game
     type: Sequelize.JSON,
