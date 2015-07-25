@@ -1,7 +1,7 @@
 var React = require('react');
 var Router = require("react-router");
 var Route = Router.Route;
-var shared = ('../../shared');
+var Ratings = require('./ratings.js')
 
 var champList = {"1":"Annie","2":"Olaf","3":"Galio","4":"TwistedFate","5":"XinZhao","6":"Urgot","7":"Leblanc","8":"Vladimir",
 "9":"FiddleSticks","10":"Kayle","11":"MasterYi","12":"Alistar","13":"Ryze","14":"Sion","15":"Sivir","16":"Soraka","17":"Teemo",
@@ -25,7 +25,8 @@ var Test = React.createClass({
     avatar: React.PropTypes.string.isRequired,
     bio: React.PropTypes.object.isRequired,
     games: React.PropTypes.object.isRequired,
-    temp: React.PropTypes.object.isRequired
+    temp: React.PropTypes.object.isRequired,
+    ratings: React.PropTypes.object.isRequired
   },
 
 
@@ -100,12 +101,12 @@ var Test = React.createClass({
                     <br/>
                     <div className="row">
                       <div className="col-sm-1"></div>
-                      {recentTop.map(function(val){ return <div className="col-sm-2"><img className="img-circle" style={fitting} src={'http://ddragon.leagueoflegends.com/cdn/5.13.1/img/champion/' + champList[val.champ] + '.png'} /></div> })}
+                      {recentTop.map(function(val, i){ return <div key={i} className="col-sm-2"><img className="img-circle" style={fitting} src={'http://ddragon.leagueoflegends.com/cdn/5.13.1/img/champion/' + champList[val.champ] + '.png'} /></div> })}
                     </div>
                     <br/>
                     <div className="row">
                       <div className="col-sm-1"></div>
-                      {recentBot.map(function(val){ return <div className="col-sm-2"><img className="img-circle" style={fitting} src={'http://ddragon.leagueoflegends.com/cdn/5.13.1/img/champion/' + champList[val.champ] + '.png'} /></div> })}
+                      {recentBot.map(function(val, i){ return <div key={i} className="col-sm-2"><img className="img-circle" style={fitting} src={'http://ddragon.leagueoflegends.com/cdn/5.13.1/img/champion/' + champList[val.champ] + '.png'} /></div> })}
                     </div>
                   </div>
                 </div>
@@ -119,7 +120,7 @@ var Test = React.createClass({
             <h2>Questions</h2>
           </div>
           <div role="tabpanel" className="tab-pane" id="chart">
-            <h2>Chart</h2>
+            <Ratings stats={this.props.ratings} />
           </div>
         </div>
       </div>
