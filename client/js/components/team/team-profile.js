@@ -30,7 +30,10 @@ var TeamProfile = React.createClass({
           "5x5 Ranked": false
         },
         about: "",
-        ads: [{          // test ad    
+          
+        game: {},        
+      },
+      ads: [{          // test ad    
           lanes: {
             top: false,
             mid: false,
@@ -46,9 +49,7 @@ var TeamProfile = React.createClass({
             tank: false
           },
           adCopy: "we need a jungler like tarzan."
-        }],        
-        game: {},        
-      },
+      }],
       members: {},
       captain: {
         name: "",
@@ -62,10 +63,9 @@ var TeamProfile = React.createClass({
     Axios.get(teamToGet)
       .then(function(response) {
           var cap = null;
-          var mems = [];          
+          var mems = [];     
+          console.log(response);     
           _.map(response.data.members, function(member) {
-            console.log(member);
-            console.log(member.isAdmin);
             if (member.isAdmin === true) {
               cap = member;
             } else mems.push(member);
@@ -75,7 +75,8 @@ var TeamProfile = React.createClass({
             game: response.data.game,
             members: mems,
             profile: response.data.profile,
-            captain: cap
+            captain: cap,
+            ads: response.data.ads
           });
 
       });
@@ -149,7 +150,7 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <br/>
-    
+        <AdList ads={this.state.ads} />     
         <div>
         { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
         </div>
@@ -159,20 +160,41 @@ var TeamProfile = React.createClass({
     )
   }
 });  
-    // <AdList ads={this.state.profile.ads} />     
+    
 module.exports = TeamProfile;
 
 var AdList = React.createClass({
 render: function() {
+
+    var arrayToString = function(obj) {
+      var arr = [];
+      for (var key in obj) {
+        if (obj[key] === true) {
+          console.log(key);
+          arr.push(key);
+        }
+      }
+      return arr.join(', ');
+    };
+
+
     var adNodes = [];
-    for (var i = 0; i < this.props.ads.length; i++) {      
+    for (var i = 0; i < this.props.ads.length; i++) {
+      console.log(this.props.ads[i]["lanes"])
+      console.log(this.props.ads[i]["roles"])
+      var adLanes = arrayToString(this.props.ads[i]["lanes"])
+      var adRoles = arrayToString(this.props.ads[i]["roles"])
+      console.log(adLanes);
+      console.log(adRoles);
+      
       adNodes.push(
          <div className="col-sm-2">
           <div className="panel panel-default" style={whiteBox}>
             <div className="panel-body">
               <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
-              <p><b>Lane</b>: {this.props.ads[i]["lane"]} </p>
-              <p><b>Role</b>: {this.props.ads[i]["role"]} </p>
+              <p><b>Lane</b>: {adLanes} </p>
+              <p><b>Role</b>: {adRoles} </p>
+              <p>{this.props.ads[i]["adCopy"]}</p>
               <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
             </div>
           </div>

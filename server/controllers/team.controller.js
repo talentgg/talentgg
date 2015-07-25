@@ -31,7 +31,6 @@ module.exports = {
 
   updateProfile: function(req, res, next) {
       var getName = req.url.split('/')[3];
-      console.log(getName);
       Team.findOne({
           where: {
             profile: {
@@ -41,9 +40,7 @@ module.exports = {
         })
         .then(function(teamProfile) {
             var profile = req.body;
-            profile["teamName"] = getName;
-            console.log("profile")
-            console.log(profile);
+            profile.teamName = getName;
             Team.update({
                 profile: profile
               }, {
@@ -52,26 +49,23 @@ module.exports = {
                 }
               })
               .then(function() {
-                console.log("something happened")
-                res.redirect('/#/')
-              })
-          })
+                res.redirect('/#/');
+              });
+          });
       },
       
 
 
   getProfile: function( req, res, next ){
     var getName = req.url.split('/')[3];
-    console.log(getName);
     Team.findOne({where: {
       profile: {
         teamName: getName
       }
     }})
        .then(function (teamProfile) {        
-        console.log('>>>>>>')
-        console.log(teamProfile.profile);
         deepBoolean(teamProfile.profile);
+        deepBoolean(teamProfile.ads);
         res.json(teamProfile);
      });
    },
@@ -84,9 +78,20 @@ module.exports = {
     });
   },
   addAd: function(req, res, next) {
-    Team.findById(req.body.id)
-    .then(function(team){
-      console.log(team);
+    var getName = req.url.split('/')[3];
+    Team.findOne({where: {
+      profile: {
+        teamName: getName
+      }
+    }})
+    .then(function(teamProfile){
+      var newAds = teamProfile.ads;
+      newAds.push(req.body);
+      Team.update({
+        ads: newAds
+      }, {where: {
+        id: teamProfile.id
+      }});
     });
   },
 
