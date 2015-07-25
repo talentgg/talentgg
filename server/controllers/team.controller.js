@@ -52,6 +52,32 @@ module.exports = {
     .then(function (teamProfiles) {
       res.json(teamProfiles);
     });
-  }
+  },
+  invite: function(req, res, next){
 
+  },
+  applytoteam: function(req, res, next){
+    User.findOne({where: {id: req.session.passport.user}})
+    .then(function(userData){
+      user = userData;
+      
+
+    })    
+  },
+  addtoteam: function(req, res, next){
+    User.findOne({where: {id: req.body.userid}})
+    .then(function(userData){
+      Team.findById(req.body.teamid).then(function(teamData){
+        team.members.push({id: user.id, name: user.displayName, isAdmin: true});
+      });      
+    });
+  }
 };
+
+
+
+
+
+
+
+

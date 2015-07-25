@@ -41,70 +41,6 @@ var TeamRegistration = React.createClass({
           support: false,
           tank: false
         }
-      },
-      role2: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
-      },
-      role3: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
-      },
-      role4: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
-      },
-      role5: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
       }        
     };
   },
@@ -152,58 +88,6 @@ var TeamRegistration = React.createClass({
           <Checkbox
           label='roles: '
           options={this.state.role1.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <h3> Role 2 </h3>
-          <Radio
-          label='lanes: '
-          options={this.state.role2.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <Checkbox
-          label='roles: '
-          options={this.state.role2.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <h3> Role 3 </h3>
-          <Radio
-          label='lanes: '
-          options={this.state.role3.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <Checkbox
-          label='roles: '
-          options={this.state.role3.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <h3> Role 4 </h3>
-          <Radio
-          label='lanes: '
-          options={this.state.role4.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <Checkbox
-          label='roles: '
-          options={this.state.role4.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <h3> Role 5 </h3>
-          <Radio
-          label='lanes: '
-          options={this.state.role5.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <Checkbox
-          label='roles: '
-          options={this.state.role5.roles}
           onChange={this.setState.bind(this)}
           bootstrap />
 

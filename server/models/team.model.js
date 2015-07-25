@@ -43,7 +43,11 @@ var Team = db.define( 'team', {
         "support": false,
         "tank": false
       },
-      about: "You haven't filled this out yet"   
+      about: "You haven't filled this out yet",
+      ads: {
+        type: Sequelize.JSON,
+        defaultValue: []
+      }
     }
   },
   teamCaptain: {
@@ -51,6 +55,10 @@ var Team = db.define( 'team', {
   },
   members: {
     //This is for storing the members that are part of the team
+    type: Sequelize.JSON,
+    defaultValue: []
+  },
+  applicants: {
     type: Sequelize.JSON,
     defaultValue: []
   },

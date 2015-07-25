@@ -6,6 +6,9 @@ var ratingVisualization = React.createClass({
 
   render: function() {
 
+    // add counter to check if any questions answered
+
+
     var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10', margin:'0', border: 'none'};
 
 
@@ -26,6 +29,9 @@ var ratingVisualization = React.createClass({
     dataset.push(Number(this.props.stats.loud));
     dataset.push(Number(this.props.stats.committed));
     dataset.push(Number(this.props.stats.ambition));
+
+    console.log("RATINGS")
+    console.log(dataset);
 
     var dataDesc = [
       ["more empathetic", "more dominant"],
