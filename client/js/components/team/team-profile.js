@@ -28,28 +28,93 @@ var TeamProfile = React.createClass({
           "5x5 Ranked": false
         },
         about: "",
-        lanes: {
-          "top": false,
-          "mid": false,
-          "bot": false,
-          "jungle": false
+        role1: {       
+          lanes: {
+            top: false,
+            mid: false,
+            bot: false,
+            jungle: false
+          },
+          roles: {
+            assassin: false,
+            mage: false,
+            marksman: false,
+            bruiser: false,
+            support: false,
+            tank: false
+          }
         },
-        roles: {
-          "assassin": false,
-          "mage": false,
-          "marksman": false,
-          "bruiser": false,
-          "support": false,
-          "tank": false
-        }     
-      },
-      game: {},
-      members: {},
-      captain: {
-        displayName: ""
-      },
-
-    };
+        role2: {       
+          lanes: {
+            top: false,
+            mid: false,
+            bot: false,
+            jungle: false
+          },
+          roles: {
+            assassin: false,
+            mage: false,
+            marksman: false,
+            bruiser: false,
+            support: false,
+            tank: false
+          }
+        },
+        role3: {       
+          lanes: {
+            top: false,
+            mid: false,
+            bot: false,
+            jungle: false
+          },
+          roles: {
+            assassin: false,
+            mage: false,
+            marksman: false,
+            bruiser: false,
+            support: false,
+            tank: false
+          }
+        },
+        role4: {       
+          lanes: {
+            top: false,
+            mid: false,
+            bot: false,
+            jungle: false
+          },
+          roles: {
+            assassin: false,
+            mage: false,
+            marksman: false,
+            bruiser: false,
+            support: false,
+            tank: false
+          }
+        },
+        role5: {       
+          lanes: {
+            top: false,
+            mid: false,
+            bot: false,
+            jungle: false
+          },
+          roles: {
+            assassin: false,
+            mage: false,
+            marksman: false,
+            bruiser: false,
+            support: false,
+            tank: false
+          }
+        },
+        game: {},
+        members: {},
+        captain: {
+          displayName: ""
+        }
+      }
+    }
   },
   componentWillMount: function () {
     var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
@@ -99,6 +164,16 @@ var TeamProfile = React.createClass({
     };
 
     var available = arrayToString(this.state.profile.times);
+    var lane1Array = arrayToString(this.state.profile.role1.lanes);
+    var role1Array = arrayToString(this.state.profile.role1.roles);
+    var lane2Array = arrayToString(this.state.profile.role1.lanes);
+    var role2Array = arrayToString(this.state.profile.role1.roles);
+    var lane3Array = arrayToString(this.state.profile.role1.lanes);
+    var role3Array = arrayToString(this.state.profile.role1.roles);
+    var lane4Array = arrayToString(this.state.profile.role1.lanes);
+    var role4Array = arrayToString(this.state.profile.role1.roles);
+    var lane5Array = arrayToString(this.state.profile.role1.lanes);
+    var role5Array = arrayToString(this.state.profile.role1.roles);
 
     return (
       <div>
@@ -140,13 +215,14 @@ var TeamProfile = React.createClass({
         </div>
         <br/>
         <div className="row">
+          <div className="col-sm-1"></div>
           <div className="col-sm-2">
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <img className="center-block" width="64" height="64" src="/img/role-marksman.png"/>
-                <p><b>Lane</b>: Bot </p>
-                <p><b>Role</b>: Captain </p>
-                
+                <p><b>Lane</b>: {role1Array === "" ? 'any' : roleArray} </p>
+                <p><b>Role</b>: {lane1Array === "" ? 'any' : laneArray} </p>
+                <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
               </div>
             </div>
           </div>
@@ -154,8 +230,8 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <img className="center-block" width="64" height="64" src="/img/role-assassin.png"/>
-                <p><b>Lane</b>: Mid </p>
-                <p><b>Role</b>: Assassin </p>
+                <p><b>Lane</b>: {role2Array === "" ? 'any' : roleArray} </p>
+                <p><b>Role</b>: {lane2Array === "" ? 'any' : laneArray} </p>
                 <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
               </div>
             </div>
@@ -164,8 +240,8 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <img className="center-block" width="64" height="64" src="/img/role-tank.png"/>
-                <p><b>Lane</b>: Front </p>
-                <p><b>Role</b>: Tank </p>
+                <p><b>Lane</b>: {role3Array === "" ? 'any' : roleArray} </p>
+                <p><b>Role</b>: {lane3Array === "" ? 'any' : laneArray} </p>
                 <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
               </div>
             </div>
@@ -174,8 +250,8 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
-                <p><b>Lane</b>: Jungle </p>
-                <p><b>Role</b>: Mage </p>
+                <p><b>Lane</b>: {role4Array === "" ? 'any' : roleArray} </p>
+                <p><b>Role</b>: {lane4Array === "" ? 'any' : laneArray} </p>
                 <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
               </div>
             </div>
@@ -184,18 +260,8 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <img className="center-block" width="64" height="64" src="/img/role-marksman.png"/>
-                <p><b>Lane</b>: Bot </p>
-                <p><b>Role</b>: Marksman </p>
-                <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-2">
-            <div className="panel panel-default" style={whiteBox}>
-              <div className="panel-body">
-                <img className="center-block" width="64" height="64" src="/img/role-marksman.png"/>
-                <p><b>Lane</b>: Fill </p>
-                <p><b>Role</b>: Fill </p>
+                <p><b>Lane</b>: {role5Array === "" ? 'any' : roleArray} </p>
+                <p><b>Role</b>: {lane5Array === "" ? 'any' : laneArray} </p>
                 <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
               </div>
             </div>

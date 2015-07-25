@@ -4,6 +4,7 @@ var Axios = require('axios');
 
 var ReactBtn = require('react-btn-checkbox');
 var Checkbox = ReactBtn.Checkbox;
+var Radio = ReactBtn.Radio;
 
 var belle = require('belle');
 Button = belle.Button;
@@ -25,20 +26,86 @@ var TeamRegistration = React.createClass({
         "5x5 Casual": false,
         "5x5 Ranked": false
       },
-      lanes: {
-        top: false,
-        mid: false,
-        bot: false,
-        jungle: false
+      role1: {       
+        lanes: {
+          top: false,
+          mid: false,
+          bot: false,
+          jungle: false
+        },
+        roles: {
+          assassin: false,
+          mage: false,
+          marksman: false,
+          bruiser: false,
+          support: false,
+          tank: false
+        }
       },
-      roles: {
-        assassin: false,
-        mage: false,
-        marksman: false,
-        bruiser: false,
-        support: false,
-        tank: false
-      }
+      role2: {       
+        lanes: {
+          top: false,
+          mid: false,
+          bot: false,
+          jungle: false
+        },
+        roles: {
+          assassin: false,
+          mage: false,
+          marksman: false,
+          bruiser: false,
+          support: false,
+          tank: false
+        }
+      },
+      role3: {       
+        lanes: {
+          top: false,
+          mid: false,
+          bot: false,
+          jungle: false
+        },
+        roles: {
+          assassin: false,
+          mage: false,
+          marksman: false,
+          bruiser: false,
+          support: false,
+          tank: false
+        }
+      },
+      role4: {       
+        lanes: {
+          top: false,
+          mid: false,
+          bot: false,
+          jungle: false
+        },
+        roles: {
+          assassin: false,
+          mage: false,
+          marksman: false,
+          bruiser: false,
+          support: false,
+          tank: false
+        }
+      },
+      role5: {       
+        lanes: {
+          top: false,
+          mid: false,
+          bot: false,
+          jungle: false
+        },
+        roles: {
+          assassin: false,
+          mage: false,
+          marksman: false,
+          bruiser: false,
+          support: false,
+          tank: false
+        }
+      }        
     };
   },
   handleSubmit: function(e) {
@@ -75,16 +142,68 @@ var TeamRegistration = React.createClass({
           onChange={this.setState.bind(this)}
           bootstrap />
 
-          <h2> Needs </h2>
-          <Checkbox
+          <h3> Role 1 </h3>
+          <Radio
           label='lanes: '
-          options={this.state.lanes}
+          options={this.state.role1.lanes}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <Checkbox
           label='roles: '
-          options={this.state.roles}
+          options={this.state.role1.roles}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <h3> Role 2 </h3>
+          <Radio
+          label='lanes: '
+          options={this.state.role2.lanes}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <Checkbox
+          label='roles: '
+          options={this.state.role2.roles}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <h3> Role 3 </h3>
+          <Radio
+          label='lanes: '
+          options={this.state.role3.lanes}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <Checkbox
+          label='roles: '
+          options={this.state.role3.roles}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <h3> Role 4 </h3>
+          <Radio
+          label='lanes: '
+          options={this.state.role4.lanes}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <Checkbox
+          label='roles: '
+          options={this.state.role4.roles}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <h3> Role 5 </h3>
+          <Radio
+          label='lanes: '
+          options={this.state.role5.lanes}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <Checkbox
+          label='roles: '
+          options={this.state.role5.roles}
           onChange={this.setState.bind(this)}
           bootstrap />
 
