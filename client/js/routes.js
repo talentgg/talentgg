@@ -34,7 +34,7 @@ var NotFound = React.createClass({
 module.exports = (
 
   <Route name="app" path="/" handler={App}>
-    <DefaultRoute handler={Profile} />
+    <DefaultRoute handler={Test} />
     <Route name="profile" path="/profile" handler={Profile}/>
     <Route name="user-profile" path="/user/:username" handler={UserProfile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>

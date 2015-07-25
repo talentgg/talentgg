@@ -19,7 +19,7 @@ var Header = React.createClass({
 
   render: function() {
     return (
-      <nav className="navbar navbar-default">
+      <nav id="mainNav" className="navbar navbar-fixed-top navbar-default">
         <div className="container">
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -28,7 +28,7 @@ var Header = React.createClass({
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <Link className="navbar-brand" to="/">Talent.gg</Link>
+            <Link className="navbar-brand" to="/"><object type="image/svg+xml" data="img/tgglogo.svg"></object></Link>
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
