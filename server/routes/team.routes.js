@@ -34,7 +34,7 @@ module.exports = function( app ) {
   });
 
   app.post('/team/applytoteam',function(req, res){
-    Team.applyToTeam(req, res);
+    Team.applytoteam(req, res);
   });
 
   app.post('/team/addtoteam', function(req, res){

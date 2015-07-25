@@ -71,7 +71,7 @@ var TeamUpdateForm = React.createClass({
     e.preventDefault();
     var router = this.context.router;
     var name = router.getCurrentQuery().teamname;
-    console.log("submit")
+    console.log("submit");
     console.log(name);
     console.log(this.state.teamName);
 

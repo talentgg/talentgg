@@ -99,10 +99,18 @@ module.exports = {
 
   },
   applytoteam: function(req, res, next){
+    var obj;
     User.findOne({where: {id: req.session.passport.user}})
-    .then(function(userData){
-      user = userData;
-    });
+      .then(function(userData){
+        user = userData;
+        Team.findById(req.body.teamid).then(function(teamData){
+          obj = teamData;
+          obj.applicants.push({id: user.id, name: user.displayName});
+        })
+          .then(function(){
+            Team.update({applicants: obj.applicants}, {where: {id: req.body.teamid}});
+          })
+      });
   },
   addtoteam: function(req, res, next){
     User.findOne({where: {id: req.body.userid}})
