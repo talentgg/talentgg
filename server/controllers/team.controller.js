@@ -29,9 +29,36 @@ module.exports = {
     });
   },
 
-  updateProfile: function( req, res, next ){
+  updateProfile: function(req, res, next) {
+      var getName = req.url.split('/')[3];
+      console.log(getName);
+      Team.findOne({
+          where: {
+            profile: {
+              teamName: getName
+            }
+          }
+        })
+        .then(function(teamProfile) {
+            var profile = req.body;
+            profile["teamName"] = getName;
+            console.log("profile")
+            console.log(profile);
+            Team.update({
+                profile: profile
+              }, {
+                where: {
+                  id: teamProfile.id
+                }
+              })
+              .then(function() {
+                console.log("something happened")
+                res.redirect('/#/')
+              })
+          })
+      },
+      
 
-  },
 
   getProfile: function( req, res, next ){
     var getName = req.url.split('/')[3];
@@ -41,8 +68,11 @@ module.exports = {
         teamName: getName
       }
     }})
-       .then(function (teamProfile) {
-         res.json(teamProfile);
+       .then(function (teamProfile) {        
+        console.log('>>>>>>')
+        console.log(teamProfile.profile);
+        deepBoolean(teamProfile.profile);
+        res.json(teamProfile);
      });
    },
 
@@ -53,6 +83,13 @@ module.exports = {
       res.json(teamProfiles);
     });
   },
+  addAd: function(req, res, next) {
+    Team.findById(req.body.id)
+    .then(function(team){
+      console.log(team);
+    });
+  },
+
   invite: function(req, res, next){
 
   },
@@ -60,9 +97,7 @@ module.exports = {
     User.findOne({where: {id: req.session.passport.user}})
     .then(function(userData){
       user = userData;
-      
-
-    })    
+    });
   },
   addtoteam: function(req, res, next){
     User.findOne({where: {id: req.body.userid}})
@@ -75,9 +110,20 @@ module.exports = {
 };
 
 
-
-
-
-
-
-
+function deepBoolean(obj){
+  if(typeof obj !== 'object') {
+    if(obj === 'true' || obj === 'false'){
+      return obj === 'true';
+    }
+  }
+  if (Array.isArray(obj)) {
+    obj.forEach(function(val){
+      return deepBoolean(val);
+    });
+  } else if (typeof obj === 'object') {
+    for (var key in obj){
+      obj[key] = deepBoolean(obj[key]);
+    }
+  }
+  return obj;
+};

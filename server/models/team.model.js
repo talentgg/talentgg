@@ -29,26 +29,12 @@ var Team = db.define( 'team', {
         "5x5 Casual": false,
         "5x5 Ranked": false
       },
-      lanes: {
-        "top": false,
-        "mid": false,
-        "bot": false,
-        "jungle": false
-      },
-      roles: {
-        "assassin": false,
-        "mage": false,
-        "marksman": false,
-        "bruiser": false,
-        "support": false,
-        "tank": false
-      },
       about: "You haven't filled this out yet",
-      ads: {
-        type: Sequelize.JSON,
-        defaultValue: []
-      }
-    }
+    }    
+  },
+  ads: {
+    type: Sequelize.JSON,
+    defaultValue: []
   },
   teamCaptain: {
     type: Sequelize.INTEGER
