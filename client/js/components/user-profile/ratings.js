@@ -13,10 +13,8 @@ var ratingVisualization = React.createClass({
 
 
     var w = 500;
-    var h = 600;
+    var h = window.innerHeight*.6;
     var barPadding = 1;
-
-    // console.log(this.props.stats);
 
     var dataset = [];
     dataset.push(Number(this.props.stats.dominance));
@@ -29,9 +27,6 @@ var ratingVisualization = React.createClass({
     dataset.push(Number(this.props.stats.loud));
     dataset.push(Number(this.props.stats.committed));
     dataset.push(Number(this.props.stats.ambition));
-
-    console.log("RATINGS")
-    console.log(dataset);
 
     var dataDesc = [
       ["more empathetic", "more dominant"],

@@ -61,8 +61,7 @@ var BioForm = React.createClass({
     e.preventDefault();
     var bio = this.state;
     $.post("/profile", bio);
-
-    this.transitionTo('profile', {username: 'username'});
+    location.reload();
   },
   render: function() {
 

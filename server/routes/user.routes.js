@@ -17,9 +17,7 @@ module.exports = function(app) {
     User.logout(req, res, next);
   });
 
-  // TODO: Create a route for updating email/displayName
-
-  app.get( '/user/all', function( req, res ) {
+  app.get('/user/all', function(req, res) {
     User.getAllProfiles(req, res);
   });
 

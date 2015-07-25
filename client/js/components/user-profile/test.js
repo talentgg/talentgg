@@ -1,7 +1,9 @@
 var React = require('react');
 var Router = require("react-router");
 var Route = Router.Route;
-var Ratings = require('./ratings.js')
+var Ratings = require('./ratings');
+var Questions = require('./user-questions');
+var Edit = require('./bio-form')
 
 var champList = {"1":"Annie","2":"Olaf","3":"Galio","4":"TwistedFate","5":"XinZhao","6":"Urgot","7":"Leblanc","8":"Vladimir",
 "9":"FiddleSticks","10":"Kayle","11":"MasterYi","12":"Alistar","13":"Ryze","14":"Sion","15":"Sivir","16":"Soraka","17":"Teemo",
@@ -18,7 +20,6 @@ var champList = {"1":"Annie","2":"Olaf","3":"Galio","4":"TwistedFate","5":"XinZh
 "154":"Zac","157":"Yasuo","161":"Velkoz","201":"Braum","222":"Jinx","236":"Lucian","238":"Zed","245":"Ekko","254":"Vi","266":"Aatrox",
 "267":"Nami","268":"Azir","412":"Thresh","421":"RekSai","429":"Kalista","432":"Bard","223":"TahmKench"};
 
-
 var Test = React.createClass({
   propTypes: {
     displayName: React.PropTypes.string.isRequired,
@@ -29,13 +30,9 @@ var Test = React.createClass({
     ratings: React.PropTypes.object.isRequired
   },
 
-
-
   render: function() {
     var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10', margin:'0', border: 'none'};
     var fitting = {height: 'auto', width: '100%'};
-    var marginal = {marginTop: '20', marginBottom: '20'}
-    var lovehandles = {marginLeft: '15', marginRight: '15'}
 
     var arrayToString = function(obj) {
       var arr = [];
@@ -73,11 +70,11 @@ var Test = React.createClass({
           </div>
         </div>
         <div className="row">
-          <ul className="nav nav-pills nav-justified" role="tablist" style={marginal}>
-            <li role="presentation" className="active"><a style={lovehandles} href="#profile" aria-controls="profile" role="tab" data-toggle="pill">Profile</a></li>
-            <li role="presentation"><a href="#edit" style={lovehandles} aria-controls="edit" role="tab" data-toggle="pill">Edit</a></li>
-            <li role="presentation"><a href="#questions" style={lovehandles} aria-controls="questions" role="tab" data-toggle="pill">Questions</a></li>
-            <li role="presentation"><a href="#chart" style={lovehandles} aria-controls="chart" role="tab" data-toggle="pill">Chart</a></li>
+          <ul className="nav nav-pills nav-justified" role="tablist">
+            <li role="presentation" className="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="pill">Profile</a></li>
+            <li role="presentation"><a href="#edit" aria-controls="edit" role="tab" data-toggle="pill">Edit</a></li>
+            <li role="presentation"><a href="#questions" aria-controls="questions" role="tab" data-toggle="pill">Questions</a></li>
+            <li role="presentation"><a href="#chart" aria-controls="chart" role="tab" data-toggle="pill">Chart</a></li>
           </ul>
         </div>
         <div className="tab-content">
@@ -114,10 +111,10 @@ var Test = React.createClass({
             </div>
           </div>
           <div role="tabpanel" className="tab-pane" id="edit">
-            <h2>Edit</h2>
+            <Edit />
           </div>
           <div role="tabpanel" className="tab-pane" id="questions">
-            <h2>Questions</h2>
+            <Questions />
           </div>
           <div role="tabpanel" className="tab-pane" id="chart">
             <Ratings stats={this.props.ratings} />

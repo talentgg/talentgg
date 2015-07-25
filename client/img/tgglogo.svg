@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="40px" height="40px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
     <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
-    <title>Rectangle 1 + Path 1 + Path 1 Copy</title>
+    <title>tgglogo</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="Rectangle-1-+-Path-1-+-Path-1-Copy" sketch:type="MSLayerGroup">
-            <rect id="Rectangle-1" fill-opacity="0.5" fill="#FFFFFF" sketch:type="MSShapeGroup" x="0" y="0" width="100" height="100"></rect>
-            <path d="M67.4688773,7.54439229 L11,58.4556077 L57.6870101,58.4556077 L57.6870101,46.2537443" id="Path-1" stroke="#F6A623" stroke-width="5" sketch:type="MSShapeGroup"></path>
-            <path d="M90.4688773,40 L34,90.9112154 L80.6870101,90.9112154 L80.6870101,78.709352" id="Path-1-Copy" stroke="#F6A623" stroke-width="5" sketch:type="MSShapeGroup" transform="translate(62.234439, 65.455608) scale(-1, -1) translate(-62.234439, -65.455608) "></path>
+        <g id="tgglogo" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-1" fill="#FFFFFF" sketch:type="MSShapeGroup" x="0" y="0" width="100" height="100" rx="15"></rect>
+            <path d="M67.4688773,7.54439229 L11,58.4556077 L57.6870101,58.4556077 L57.6870101,46.2537443" id="Path-1" stroke="#F05F40" stroke-width="5" sketch:type="MSShapeGroup"></path>
+            <path d="M90.468878,40.0000006 L34.0000007,90.911216 L80.6870108,90.911216 L80.6870108,78.7093526" id="Path-1-Copy" stroke="#F05F40" stroke-width="5" sketch:type="MSShapeGroup" transform="translate(62.234439, 65.455608) scale(-1, -1) translate(-62.234439, -65.455608) "></path>
         </g>
     </g>
 </svg>

@@ -67,7 +67,6 @@ var Settings = React.createClass({
             <button type="submit" className="btn btn-default btn-block">Update</button>
           </div>
         </div>
-        <p className={this.state.verified ? "text-danger" : "invisible"}>Performing a lookup will unset your current summoner profile!</p>
       </form>
     )
   }

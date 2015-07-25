@@ -35,7 +35,7 @@ module.exports = (
 
   <Route name="app" path="/" handler={App}>
     <DefaultRoute handler={Test} />
-    <Route name="profile" path="/profile" handler={Profile}/>
+    <Route name="profile" path="/profile" handler={Test}/>
     <Route name="user-profile" path="/user/:username" handler={UserProfile}/>
     <Route name="userquestions" path="/userquestions" source="/questions" handler={UserQuestions}/>
     <Route name="findplayers" path="/findplayers" handler={FindPlayers}/>
@@ -45,9 +45,7 @@ module.exports = (
     <Route name="teamprofile" path="/team/:teamname" handler={TeamProfile}/>
     <Route name="teamupdateform" path="/teamupdate" handler={TeamUpdateForm}/>
     <Route name="settings" path="/settings" handler={Settings}/>
-
     <Route name="test" path="/test" handler={Test}/>
-
     <NotFoundRoute handler={NotFound}/>
   </Route>
 
