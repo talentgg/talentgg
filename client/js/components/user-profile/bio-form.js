@@ -61,46 +61,71 @@ var BioForm = React.createClass({
     e.preventDefault();
     var bio = this.state;
     $.post("/profile", bio);
-
-    this.transitionTo('profile', {username: 'username'});
+    location.reload();
   },
   render: function() {
 
     return (
       <div className="container">
-        <form id="bioform" onSubmit={this.handleSubmit}>
+        <form className="form-horizontal" id="bioform" onSubmit={this.handleSubmit}>
 
-          <Checkbox
-          label='Times Available: '
-          options={this.state.times}
-          onChange={this.setState.bind(this)}
-          bootstrap />
+          <div className="form-group">
+            <label className="control-label col-sm-3 col-md-2">Times Available</label>
+            <div className="col-sm-9 col-md-10">
+              <Checkbox
+              label = ""
+              options={this.state.times}
+              onChange={this.setState.bind(this)}
+              bootstrap />
+            </div>
+          </div>
 
-          <Checkbox
-          label='Purpose: '
-          options={this.state.purpose}
-          onChange={this.setState.bind(this)}
-          bootstrap />
+          <div className="form-group">
+            <label className="control-label col-sm-3 col-md-2">Playstyle</label>
+            <div className="col-sm-9 col-md-10">
+              <Checkbox
+              label = ""
+              options={this.state.purpose}
+              onChange={this.setState.bind(this)}
+              bootstrap />
+            </div>
+          </div>
 
-          <Checkbox
-          label='Preferred Lanes: '
-          options={this.state.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
+          <div className="form-group">
+            <label className="control-label col-sm-3 col-md-2">Lanes</label>
+            <div className="col-sm-9 col-md-10">
+              <Checkbox
+              label = ""
+              options={this.state.lanes}
+              onChange={this.setState.bind(this)}
+              bootstrap />
+            </div>
+          </div>
 
-          <Checkbox
-          label='Preferred Roles: '
-          options={this.state.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
+          <div className="form-group">
+            <label className="control-label col-sm-3 col-md-2">Roles</label>
+            <div className="col-sm-9 col-md-10">
+              <Checkbox
+              label = ""
+              options={this.state.roles}
+              onChange={this.setState.bind(this)}
+              bootstrap />
+            </div>
+          </div>
 
-          About Me: <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
-           allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
+          <div className="form-group">
+            <label className="control-label col-sm-3 col-md-2">About Me</label>
+            <div className="col-sm-offset-3 col-md-offset-2">
+              <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
+               allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
+            </div>
+          </div>
 
-          Favorite Games: <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
-           allowNewLine={ true } name="favorite" valueLink={this.linkState('favorite')} />
-
-          <Button primary type="submit" value="Submit">Submit</Button>
+          <div className="form-group">
+            <div className="col-sm-offset-5 col-sm-2">
+              <Button primary type="submit" value="Submit">Submit</Button>
+            </div>
+          </div>
 
         </form>
       </div>

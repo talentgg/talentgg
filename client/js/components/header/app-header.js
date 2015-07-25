@@ -19,7 +19,7 @@ var Header = React.createClass({
 
   render: function() {
     return (
-      <nav className="navbar navbar-default">
+      <nav id="mainNav" className="navbar navbar-fixed-top navbar-default">
         <div className="container">
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -28,11 +28,10 @@ var Header = React.createClass({
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <Link className="navbar-brand" to="/">Talent.gg</Link>
+            <Link className="navbar-brand" to="/"><object type="image/svg+xml" data="img/tgglogo.svg"></object></Link>
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li><Link to="/userquestions"> <i className="fa fa-question" /> Questions</Link></li>
               <li><Link to="/findPlayers"><i className="fa fa-user-plus" /> Recruitment </Link></li>
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i className="fa fa-users" /> My Teams <span className="caret"></span></Link>
@@ -44,7 +43,7 @@ var Header = React.createClass({
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><Link to="profile"><image className="img-rounded" height="20px" width="20px" src={this.props.avatar} /> {this.props.displayName}</Link></li>
-              <li><Link to="/" style={{fontSize: '20px'}}><span className="glyphicon glyphicon-envelope"></span></Link></li>
+              <li><Link to="/" style={{fontSize: '20px'}}><i className="fa fa-envelope" /></Link></li>
               <li className="dropdown">
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
                 <ul className="dropdown-menu">

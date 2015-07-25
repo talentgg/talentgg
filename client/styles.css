@@ -8,5 +8,51 @@ li {
 }
 
 .navbar-nav>li>a {
+  color: #333333 !important;
+  font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+  font-weight: 700;
+}
+
+/* Brand Color Styling */
+
+.fa, .glyphicon {
   color: #f05f40;
+}
+button {
+  background-color: #f05f40 !important;
+  border: none !important;
+  color: white !important;
+}
+.nav-pills>li>a:hover, a {
+  color: #f05f40;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+  background-color: #f05f40;
+}
+
+
+
+/* Sean's CSS */
+
+.nav-justified {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.nav-justified > li > a {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+object {
+  pointer-events: none;
+}
+.navbar-default {
+  background-color: #ffffff;
+  border-color: none;
+}
+#whitebox {
+  background-color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0px;
+  border: none;
 }

@@ -3,8 +3,6 @@ var Router = require('react-router');
 var Axios = require('axios');
 var _ = require('lodash');
 
-var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10', margin:'0', border: 'none'};
-
 var TeamProfile = React.createClass({
   mixins: [Router.State, Router.Navigation],
   propTypes: {
@@ -17,7 +15,7 @@ var TeamProfile = React.createClass({
   getInitialState: function () {
     return {
       id: null,
-      profile: {        
+      profile: {
         teamName: "",
         times: {
           "weekdays": false,
@@ -30,10 +28,10 @@ var TeamProfile = React.createClass({
           "5x5 Ranked": false
         },
         about: "",
-          
-        game: {},        
+
+        game: {},
       },
-      ads: [{          // test ad    
+      ads: [{          // test ad
           lanes: {
             top: false,
             mid: false,
@@ -58,13 +56,13 @@ var TeamProfile = React.createClass({
     };
   },
   componentWillMount: function () {
-    var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];    
+    var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
     var context = this;
     Axios.get(teamToGet)
       .then(function(response) {
           var cap = null;
-          var mems = [];     
-          console.log(response);     
+          var mems = [];
+          console.log(response);
           _.map(response.data.members, function(member) {
             if (member.isAdmin === true) {
               cap = member;
@@ -92,7 +90,7 @@ var TeamProfile = React.createClass({
 
     var captainName = this.state.captain.name;
     var isCaptain = this.state.captain.id === this.props.userId ? true : false;
-    
+
     var arrayToString = function(obj) {
       var arr = [];
       for (var key in obj) {
@@ -113,7 +111,7 @@ var TeamProfile = React.createClass({
 
     return (
       <div>
-        <div className="row" style={whiteBox}>
+        <div className="row" id="whitebox">
           <div className="col-sm-offset-1 col-sm-2">
             <img className="img-circle center-block" width="128" height="128" src={"http://cdn.cutestpaw.com/wp-content/uploads/2012/09/sss.jpg"} />
           </div>
@@ -131,7 +129,7 @@ var TeamProfile = React.createClass({
         <br/>
         <div className="row">
           <div className="col-sm-6">
-            <div className="panel panel-default" style={whiteBox}>
+            <div className="panel panel-default" id="whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Team Profile </h3>
                 <p><b>Available</b>: {available} </p>
@@ -140,7 +138,7 @@ var TeamProfile = React.createClass({
             </div>
           </div>
           <div className="col-sm-6">
-            <div className="panel panel-default" style={whiteBox}>
+            <div className="panel panel-default" id="whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Current Members</h3>
                 <p><b>Captain</b>: <a href={'/#/user/id/' + this.state.captain.id}> { captainName } </a></p>
@@ -150,7 +148,7 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <br/>
-        <AdList ads={this.state.ads} />     
+        <AdList ads={this.state.ads} />
         <div>
         { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
         </div>
@@ -159,8 +157,8 @@ var TeamProfile = React.createClass({
       </div>
     )
   }
-});  
-    
+});
+
 module.exports = TeamProfile;
 
 var AdList = React.createClass({
@@ -186,10 +184,10 @@ render: function() {
       var adRoles = arrayToString(this.props.ads[i]["roles"])
       console.log(adLanes);
       console.log(adRoles);
-      
+
       adNodes.push(
          <div className="col-sm-2">
-          <div className="panel panel-default" style={whiteBox}>
+          <div className="panel panel-default" id="whitebox">
             <div className="panel-body">
               <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
               <p><b>Lane</b>: {adLanes} </p>
@@ -199,7 +197,7 @@ render: function() {
             </div>
           </div>
         </div>
-      )    
+      )
     };
     return (
       <div className="answersList">

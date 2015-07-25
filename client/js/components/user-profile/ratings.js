@@ -8,15 +8,9 @@ var ratingVisualization = React.createClass({
 
     // add counter to check if any questions answered
 
-
-    var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10', margin:'0', border: 'none'};
-
-
     var w = 500;
-    var h = 600;
+    var h = window.innerHeight*.6;
     var barPadding = 1;
-
-    // console.log(this.props.stats);
 
     var dataset = [];
     dataset.push(Number(this.props.stats.dominance));
@@ -29,9 +23,6 @@ var ratingVisualization = React.createClass({
     dataset.push(Number(this.props.stats.loud));
     dataset.push(Number(this.props.stats.committed));
     dataset.push(Number(this.props.stats.ambition));
-
-    console.log("RATINGS")
-    console.log(dataset);
 
     var dataDesc = [
       ["more empathetic", "more dominant"],
@@ -114,7 +105,7 @@ var ratingVisualization = React.createClass({
       .attr("fill", "black");
 
     return (
-      <div className="ratingViz" style={whiteBox}> </div>
+      <div className="ratingViz" id="whitebox"> </div>
     )
   }
 })

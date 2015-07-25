@@ -84,10 +84,10 @@ module.exports = {
     })
   },
 
-  getTeamsOwned: function(req, res){ // sends profiles of teams they captain    
+  getTeamsOwned: function(req, res){ // sends profiles of teams they captain
     var myTeams = [];
     User.findById(req.session.passport.user)
-    .then(function(data){      
+    .then(function(data){
       var teamsArray = data.teams;
       Team.findAll({
         where: {
@@ -98,6 +98,7 @@ module.exports = {
       });
     });
   },
+
   updateBio: function(req, res){ // Updates bio data
     User.findById(req.session.passport.user)
     .then(function(data){
@@ -107,7 +108,7 @@ module.exports = {
       User.update({bio: req.body},{where: {id: req.session.passport.user}})
     })
     .then(function(){
-      res.redirect('/#/user-profile');
+      res.redirect('/');
     })
   },
 
@@ -193,7 +194,7 @@ module.exports = {
         user.level = JSON.parse(data)[user.id].summonerLevel;
         User.update({games: user}, {where: {id: req.session.passport.user}})
         .then(function(){
-          res.redirect('/#/profile');
+          res.redirect('/#/account-link');
         })
       })
     })

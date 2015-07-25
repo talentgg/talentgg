@@ -9,13 +9,21 @@ var App = React.createClass({
       userId: 0,
       displayName: "",
       avatar: "",
-      bio: {},
+      bio: {
+        times: [],
+        purpose: [],
+        roles: [],
+        lanes: []
+      },
       teams: [],
       games: {},
       counter: 0,
       answerHistory: [],
       ratings: {},
-      temp: {}
+      temp: {
+        rank: "unranked",
+        matches: []
+      }
     };
   },
 
