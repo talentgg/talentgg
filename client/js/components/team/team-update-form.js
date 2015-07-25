@@ -14,6 +14,10 @@ TextInput = belle.TextInput;
 
 var TeamUpdateForm = React.createClass({
   mixins: [React.addons.LinkedStateMixin, Router.State, Router.Navigation],
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   getInitialState: function() {
     return {
       teamName: "",
@@ -28,121 +32,72 @@ var TeamUpdateForm = React.createClass({
         "5x5 Casual": false,
         "5x5 Ranked": false
       }, 
-      role1: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
+      lanes: {
+        "top": false,
+        "mid": false,
+        "bot": false,
+        "jungle": false
       },
-      role2: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
+      roles: {
+        "assassin": false,
+        "mage": false,
+        "marksman": false,
+        "bruiser": false,
+        "support": false,
+        "tank": false
       },
-      role3: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
-      },
-      role4: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
-      },
-      role5: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
-      }        
-    }
+      adCopy: "Help Wanted"
+    };
   },
-  componentDidMount: function() {
-    var teamToGet = '/team/' + window.location.hash.split('/')[2];
+  componentWillMount: function() {
+    var router = this.context.router;
+    var name = router.getCurrentQuery().teamname;
+    console.log(name);
     var context = this;
-    Axios.get(teamToGet)
-      .then(function(response) {
-          console.log(response.data);   
+    Axios.get('/team/profile/' + name)
+      .then(function(response) {   
+          console.log(name);       
           context.setState({
-            game: response.data.game,
+            // game: response.data.game, // what's this do here?
             members: response.data.members,
-            teamName: response.data.teamName,
+            teamName: name,
             times: response.data.profile.times,
             purpose: response.data.profile.purpose,
-            role1: response.data.profile.role1,
-            role2: response.data.profile.role2,
-            role3: response.data.profile.role3,
-            role4: response.data.profile.role4,
-            role5: response.data.profile.role5,
             about: response.data.profile.about,
           });
       });
   },
-  handleEdit: function() {
-    var teamname = this.state.teamName;
-    this.transitionTo('teamprofile', {teamname});
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var router = this.context.router;
+    var name = router.getCurrentQuery().teamname;
+    console.log("submit")
+    console.log(name);
+    console.log(this.state.teamName);
+
+    var profileUpload = {
+      about: this.state.about,
+      times: this.state.times,
+      purpose: this.state.purpose
+    };
+    $.post('/team/update/' + this.state.teamName, profileUpload);
+  },
+  handleAd: function(e) {
+    e.preventDefault();
+    var newAd = {
+      lanes: this.state.lanes,
+      roles: this.state.roles,
+      adCopy: this.state.adCopy
+    }
+    var adPath = '/team/addad/' + this.state.teamName;
+    $.post(adPath, newAd);
   },
   render: function() {
-    var teamsName = '/team/update/' + window.location.hash.split('/')[2];
-    // this.state.teamName
+    
     return (
       <div className="container">
-        <form method="POST" action={teamsName}>
-
-          About Us: <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
+        <form>
+          About Us: <TextInput placeholder="update your description here"
           allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
 
           <Checkbox
@@ -157,72 +112,24 @@ var TeamUpdateForm = React.createClass({
           onChange={this.setState.bind(this)}
           bootstrap />
 
-          <h3> Role 1 </h3>
-          <Radio
+          <Button type="submit" onClick={this.handleSubmit} >Submit Changes</Button>
+
+          <h3> Create New Ad </h3>
+          <Checkbox
           label='lanes: '
-          options={this.state.role1.lanes}
+          options={this.state.lanes}
           onChange={this.setState.bind(this)}
           bootstrap />
 
           <Checkbox
           label='roles: '
-          options={this.state.role1.roles}
+          options={this.state.roles}
           onChange={this.setState.bind(this)}
           bootstrap />
 
-          <h3> Role 2 </h3>
-          <Radio
-          label='lanes: '
-          options={this.state.role2.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
+          <TextInput placeholder="Add notes here." allowNewLine={true} name="adCopy" valueLink={this.linkState('adCopy')} />
 
-          <Checkbox
-          label='roles: '
-          options={this.state.role2.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <h3> Role 3 </h3>
-          <Radio
-          label='lanes: '
-          options={this.state.role3.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <Checkbox
-          label='roles: '
-          options={this.state.role3.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <h3> Role 4 </h3>
-          <Radio
-          label='lanes: '
-          options={this.state.role4.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <Checkbox
-          label='roles: '
-          options={this.state.role4.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <h3> Role 5 </h3>
-          <Radio
-          label='lanes: '
-          options={this.state.role5.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <Checkbox
-          label='roles: '
-          options={this.state.role5.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <Button primary type="submit" onClick={this.handleEdit}>Submit</Button>
+          <Button primary type="submit" onClick={this.handleAd} >Post New Ad</Button>
 
         </form>
       </div>

@@ -12,10 +12,12 @@ var TeamProfile = React.createClass({
     members: React.PropTypes.object.isRequired,
     teamBio: React.PropTypes.object.isRequired,
     teamName: React.PropTypes.string.isRequired,
+    userId: React.PropTypes.number.isRequired
   },
   getInitialState: function () {
     return {
-      profile: {
+      id: null,
+      profile: {        
         teamName: "",
         times: {
           "weekdays": false,
@@ -28,7 +30,10 @@ var TeamProfile = React.createClass({
           "5x5 Ranked": false
         },
         about: "",
-        ads: [{          // test ad    
+          
+        game: {},        
+      },
+      ads: [{          // test ad    
           lanes: {
             top: false,
             mid: false,
@@ -44,9 +49,7 @@ var TeamProfile = React.createClass({
             tank: false
           },
           adCopy: "we need a jungler like tarzan."
-        }],        
-        game: {},        
-      },
+      }],
       members: {},
       captain: {
         name: "",
@@ -55,29 +58,25 @@ var TeamProfile = React.createClass({
     };
   },
   componentWillMount: function () {
-    var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
-    console.log(teamToGet);
+    var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];    
     var context = this;
     Axios.get(teamToGet)
       .then(function(response) {
           var cap = null;
-          var mems = [];
-          console.log(response.data);
+          var mems = [];     
+          console.log(response);     
           _.map(response.data.members, function(member) {
-            console.log(member);
-            console.log(member.isAdmin);
             if (member.isAdmin === true) {
-              console.log("CAP");
-              console.log(member);
               cap = member;
             } else mems.push(member);
           });
-
           context.setState({
+            id: response.data.id,
             game: response.data.game,
             members: mems,
             profile: response.data.profile,
-            captain: cap
+            captain: cap,
+            ads: response.data.ads
           });
 
       });
@@ -87,16 +86,17 @@ var TeamProfile = React.createClass({
   },
   handleEdit: function() {
     var router = this.context.router;
-    router.transitionTo('teamupdateform', {username: 'username'});
+    this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
   render: function () {
-    console.log("name");
-    console.log(this.state.captain.name);
+
     var captainName = this.state.captain.name;
+    var isCaptain = this.state.captain.id === this.props.userId ? true : false;
+    
     var arrayToString = function(obj) {
       var arr = [];
       for (var key in obj) {
-        if (obj[key] === "true") {
+        if (obj[key] === true) {
           arr.push(key);
         }
       }
@@ -150,12 +150,12 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <br/>
-        <AdList ads={this.state.profile.ads} />
-        <div className="row">
-          <div className={this.state.captain.name ? this.state.displayName : "invisible"}>
-            <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
-          </div>
+        <AdList ads={this.state.ads} />     
+        <div>
+        { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
         </div>
+
+
       </div>
     )
   }
@@ -165,15 +165,36 @@ module.exports = TeamProfile;
 
 var AdList = React.createClass({
 render: function() {
+
+    var arrayToString = function(obj) {
+      var arr = [];
+      for (var key in obj) {
+        if (obj[key] === true) {
+          console.log(key);
+          arr.push(key);
+        }
+      }
+      return arr.join(', ');
+    };
+
+
     var adNodes = [];
-    for (var i = 0; i < this.props.ads.length; i++) {      
-      adNodes.push(      
+    for (var i = 0; i < this.props.ads.length; i++) {
+      console.log(this.props.ads[i]["lanes"])
+      console.log(this.props.ads[i]["roles"])
+      var adLanes = arrayToString(this.props.ads[i]["lanes"])
+      var adRoles = arrayToString(this.props.ads[i]["roles"])
+      console.log(adLanes);
+      console.log(adRoles);
+      
+      adNodes.push(
          <div className="col-sm-2">
           <div className="panel panel-default" style={whiteBox}>
             <div className="panel-body">
               <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
-              <p><b>Lane</b>: {this.props.ads[i]["lane"]} </p>
-              <p><b>Role</b>: {this.props.ads[i]["role"]} </p>
+              <p><b>Lane</b>: {adLanes} </p>
+              <p><b>Role</b>: {adRoles} </p>
+              <p>{this.props.ads[i]["adCopy"]}</p>
               <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
             </div>
           </div>
