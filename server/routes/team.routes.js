@@ -24,6 +24,10 @@ module.exports = function( app ) {
     Team.updateProfile(req, res);
   });
 
+  app.post('/team/addad/*', function(req, res){
+    Team.addAd(req, res);
+  });
+
 
   app.post('/team/invite', function(req, res){
     Team.invite(req, res);
