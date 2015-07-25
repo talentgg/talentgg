@@ -55,6 +55,7 @@ var OtherBio = React.createClass({
     console.log("THIS PROPS");
     console.log(this.props);
 
+    
     return (
       <div>
         <div className="row" style={whiteBox}>
