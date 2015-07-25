@@ -73,6 +73,7 @@ var BioForm = React.createClass({
             <label className="control-label col-sm-3 col-md-2">Times Available</label>
             <div className="col-sm-9 col-md-10">
               <Checkbox
+              label = ""
               options={this.state.times}
               onChange={this.setState.bind(this)}
               bootstrap />
@@ -83,6 +84,7 @@ var BioForm = React.createClass({
             <label className="control-label col-sm-3 col-md-2">Playstyle</label>
             <div className="col-sm-9 col-md-10">
               <Checkbox
+              label = ""
               options={this.state.purpose}
               onChange={this.setState.bind(this)}
               bootstrap />
@@ -93,6 +95,7 @@ var BioForm = React.createClass({
             <label className="control-label col-sm-3 col-md-2">Lanes</label>
             <div className="col-sm-9 col-md-10">
               <Checkbox
+              label = ""
               options={this.state.lanes}
               onChange={this.setState.bind(this)}
               bootstrap />
@@ -103,6 +106,7 @@ var BioForm = React.createClass({
             <label className="control-label col-sm-3 col-md-2">Roles</label>
             <div className="col-sm-9 col-md-10">
               <Checkbox
+              label = ""
               options={this.state.roles}
               onChange={this.setState.bind(this)}
               bootstrap />

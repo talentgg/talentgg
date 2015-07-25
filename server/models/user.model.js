@@ -69,7 +69,7 @@ var User = db.define( 'user', {
     //This is for storing the user's game-related data
     type: Sequelize.JSON,
     defaultValue: {
-      avatar: "https://pbs.twimg.com/profile_images/378800000822867536/3f5a00acf72df93528b6bb7cd0a4fd0c.jpeg",
+      avatar: "http://33.media.tumblr.com/avatar_8ae248e55917_128.png",
       verified: false,
       verifyKey: false
     }

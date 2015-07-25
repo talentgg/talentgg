@@ -55,7 +55,7 @@ var Test = React.createClass({
       <div>
         <div className="row" id="whitebox">
           <div className="col-sm-offset-1 col-sm-2">
-            <img className="img-circle center-block" src={this.props.avatar} />
+            <img className="img-circle center-block" width="128" height="128" src={this.props.avatar} />
           </div>
           <div className="col-sm-4">
             <h3>{this.props.displayName}</h3>
