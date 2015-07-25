@@ -31,7 +31,6 @@ var Test = React.createClass({
   },
 
   render: function() {
-    var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10', margin:'0', border: 'none'};
     var fitting = {height: 'auto', width: '100%'};
 
     var arrayToString = function(obj) {
@@ -54,7 +53,7 @@ var Test = React.createClass({
 
     return(
       <div>
-        <div className="row" style={whiteBox}>
+        <div className="row" id="whitebox">
           <div className="col-sm-offset-1 col-sm-2">
             <img className="img-circle center-block" src={this.props.avatar} />
           </div>
@@ -81,7 +80,7 @@ var Test = React.createClass({
           <div role="tabpanel" className="tab-pane active" id="profile">
             <div className="row">
               <div className="col-sm-6">
-                <div className="panel panel-default" style={whiteBox}>
+                <div className="panel panel-default" id="whitebox">
                   <div className="panel-body">
                     <h3 className="text-center">Profile</h3>
                     <p><b>Available</b>: { available === "" ? 'Not available' : available}</p>
@@ -92,7 +91,7 @@ var Test = React.createClass({
                 </div>
               </div>
               <div className="col-sm-6">
-                <div className="panel panel-default" style={whiteBox}>
+                <div className="panel panel-default" id="whitebox">
                   <div className="panel-body">
                     <h3 className="text-center">Ranked Games</h3>
                     <br/>

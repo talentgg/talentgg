@@ -8,10 +8,6 @@ var ratingVisualization = React.createClass({
 
     // add counter to check if any questions answered
 
-
-    var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10', margin:'0', border: 'none'};
-
-
     var w = 500;
     var h = window.innerHeight*.6;
     var barPadding = 1;
@@ -109,7 +105,7 @@ var ratingVisualization = React.createClass({
       .attr("fill", "black");
 
     return (
-      <div className="ratingViz" style={whiteBox}> </div>
+      <div className="ratingViz" id="whitebox"> </div>
     )
   }
 })

@@ -3,7 +3,6 @@ var Axios = require('axios');
 var Router = require('react-router');
 var BioForm = require('./bio-form');
 
-var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10', margin:'0', border: 'none'};
 var fitting = {height: 'auto', width: '100%'};
 
 var champList = {"1":"Annie","2":"Olaf","3":"Galio","4":"TwistedFate","5":"XinZhao","6":"Urgot","7":"Leblanc",
@@ -60,7 +59,7 @@ var Bio = React.createClass({
 
     return (
       <div>
-        <div className="row" style={whiteBox}>
+        <div className="row" id="whitebox">
           <div className="col-sm-offset-1 col-sm-2">
             <img className="img-circle center-block" src={this.props.games.avatar} />
           </div>
@@ -78,7 +77,7 @@ var Bio = React.createClass({
         <br/>
         <div className="row">
           <div className="col-sm-6">
-            <div className="panel panel-default" style={whiteBox}>
+            <div className="panel panel-default" id="whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Profile</h3>
                 <p><b>Available</b>: { available === "" ? 'Not available' : available}</p>
@@ -90,7 +89,7 @@ var Bio = React.createClass({
             </div>
           </div>
           <div className="col-sm-6">
-            <div className="panel panel-default" style={whiteBox}>
+            <div className="panel panel-default" id="whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Ranked Games</h3>
                 <br/>
