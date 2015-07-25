@@ -13,7 +13,7 @@ var ratingVisualization = React.createClass({
 
 
     var w = 500;
-    var h = 1500;
+    var h = 600;
     var barPadding = 1;
 
     // console.log(this.props.stats);
@@ -109,8 +109,8 @@ var ratingVisualization = React.createClass({
       .attr("y", function(d, i) {
         return i * ((h / 4) / dataset.length) + (h / 4) / dataset.length - barPadding - 5;
       })
-      .attr("font-family", "Courier New")
-      .attr("font-size", "11px")
+      .attr("font-family", "Helvetica Neue")
+      .attr("font-size", "14px")
       .attr("fill", "black");
 
     return (
