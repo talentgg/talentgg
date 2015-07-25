@@ -7,12 +7,12 @@ var whiteBox = {backgroundColor: 'white', paddingTop: '10', paddingBottom: '10',
 
 var TeamProfile = React.createClass({
   mixins: [Router.State, Router.Navigation],
-  propTypes: {
-    game: React.PropTypes.object.isRequired,
-    members: React.PropTypes.object.isRequired,
-    teamBio: React.PropTypes.object.isRequired,
-    teamName: React.PropTypes.string.isRequired,
-  },
+  // propTypes: {
+  //   game: React.PropTypes.object.isRequired,
+  //   members: React.PropTypes.object.isRequired,
+  //   teamBio: React.PropTypes.object.isRequired,
+  //   teamName: React.PropTypes.string.isRequired,
+  // },
   getInitialState: function () {
     return {
       profile: {
@@ -207,7 +207,7 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <h3 className="text-center">Current Members</h3>
-                <p><b>Captain</b>: {this.state.captain.name} </p>
+                <p><b>Captain</b>: {this.state.members[0][name]} </p>
                 <p><b>Members</b>: {this.state.members.name} </p>
               </div>
             </div>
