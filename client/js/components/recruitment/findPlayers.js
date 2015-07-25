@@ -15,13 +15,10 @@ Separator = belle.Separator;
 var rd3 = require('react-d3');
 var LineChart = rd3.LineChart;
 
-var whiteBox = {backgroundColor: 'white', padding: '25', margin:'25', border: 'solid black 2px', height: '250', width: '700', display: 'inline-block'};
-var headshot = {backgroundColor: 'white', padding: '10', border: 'solid red 2px', height: '200', width: '200', float: 'left', textAlign: 'center'};
-var stats = {backgroundColor: 'white', padding: '25', border: 'solid blue 2px', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
-var chart = {backgroundColor: 'white', padding: '25', border: 'solid blue 2px', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
-var whiteBox = {backgroundColor: 'white', padding: '25', margin:'25', border: 'solid black 2px', height: '250', width: '450', display: 'inline-block'};
+var whiteBox = {backgroundColor: 'white', padding: '25', margin:'25', border: 'solid black 1px', height: '250', width: '700', display: 'inline-block'};
 var headshot = {backgroundColor: 'white', padding: '10', height: '200', width: '200', float: 'left', textAlign: 'center'};
 var stats = {backgroundColor: 'white', padding: '25', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
+var chart = {backgroundColor: 'white', padding: '25', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
 
 
 var FindPlayers = React.createClass({
@@ -73,6 +70,10 @@ var FindPlayers = React.createClass({
 
     function getMyTeams() {
         return axios.get('/profile/teams');
+    }
+
+    function getAllTeams() {
+
     }
 
     axios.all([getThem(), getMe(), getMyTeams()])
@@ -285,20 +286,21 @@ var MatchList = React.createClass({
               <div> {user.overallScore}% </div>
             </div>
             <div className="row" style={stats}>
-              <div> does this work? </div>
               <div> { arrayToString(user.bio.willdo) } </div>
               <div> { arrayToString(user.bio.purpose) } </div>    
               <div> { arrayToString(user.bio.times) } </div>
               <br />
               <br />
             </div>
-            <LineChart className="row" style={chart}
-              legend={false}
-              data={lineData}
-              width={250}
-              height={200}
-              title=""
-            />     
+            <div className="row">
+              <LineChart className="row" style={chart}
+                legend={false}
+                data={lineData}
+                width={250}
+                height={200}
+                title=""
+              />
+            </div>
         </div>
       )
     })
