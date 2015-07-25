@@ -207,8 +207,8 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default" style={whiteBox}>
               <div className="panel-body">
                 <h3 className="text-center">Current Members</h3>
-                <p><b>Captain</b>: {this.state.members[0][name]} </p>
-                <p><b>Members</b>: {this.state.members.name} </p>
+                <p><b>Captain</b>: {this.state.captain} </p>
+                <p><b>Members</b>: {this.state.members} </p>
               </div>
             </div>
           </div>
@@ -268,7 +268,7 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <div className="row">
-          <div className={this.state.captain.name ? this.state.displayName : "invisible"}>
+          <div className={this.state.captain ? this.state.displayName : "invisible"}>
             <button className="btn btn-default" type="button" onClick={this.handleEdit}>Edit</button>
           </div>
         </div>
