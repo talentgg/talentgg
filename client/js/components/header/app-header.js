@@ -43,7 +43,7 @@ var Header = React.createClass({
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><Link to="profile"><image className="img-rounded" height="20px" width="20px" src={this.props.avatar} /> {this.props.displayName}</Link></li>
-              <li><Link to="/" style={{fontSize: '20px'}}><span className="glyphicon glyphicon-envelope"></span></Link></li>
+              <li><Link to="/" style={{fontSize: '20px'}}><i className="fa fa-envelope" /></Link></li>
               <li className="dropdown">
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
                 <ul className="dropdown-menu">

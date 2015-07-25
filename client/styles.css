@@ -21,6 +21,7 @@ li {
 button {
   background-color: #f05f40 !important;
   border: none !important;
+  color: white !important;
 }
 .nav-pills>li>a:hover, a {
   color: #f05f40;
