@@ -43,7 +43,11 @@ var Team = db.define( 'team', {
         "support": false,
         "tank": false
       },
-      about: "You haven't filled this out yet"   
+      about: "You haven't filled this out yet",
+      ads: {
+        type: Sequelize.JSON,
+        defaultValue: []
+      }
     }
   },
   teamCaptain: {
