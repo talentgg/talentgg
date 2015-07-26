@@ -41,6 +41,7 @@
     "reactify": "^1.1.1",
     "request": "^2.58.0",
     "sequelize": "^3.3.2",
+    "serve-favicon": "^2.3.0",
     "superagent": "^1.2.0",
     "util": "^0.10.3",
     "vinyl-source-stream": "^1.1.0"

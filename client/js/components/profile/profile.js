@@ -36,7 +36,7 @@ var Test = React.createClass({
     var arrayToString = function(obj) {
       var arr = [];
       for (var key in obj) {
-        if (obj[key] === true) {
+        if (obj[key]) {
           arr.push(key);
         }
       }
