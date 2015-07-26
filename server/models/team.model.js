@@ -42,7 +42,7 @@ var Team = db.define( 'team', {
       collaborative: 0,
       brute: 0,
       aggressive: 0,
-      troll: 0,
+      boundaries: 0,
       loud: 0,
       committed: 0,
       ambition: 0
