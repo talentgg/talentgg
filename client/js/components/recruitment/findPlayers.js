@@ -20,13 +20,13 @@ var headshot = {backgroundColor: 'white', padding: '10', height: '200', width: '
 var stats = {backgroundColor: 'white', padding: '25', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
 var chart = {backgroundColor: 'white', padding: '25', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
 
-
 var FindPlayers = React.createClass({
   getInitialState: function() {
     return {
       users: [],
       teamIDs: [],
-      teams: [],
+      myTeams: [],
+      allTeams: [],
       filteredUsers: [],
       me: {},   
       displayName: "solo",   
@@ -54,88 +54,46 @@ var FindPlayers = React.createClass({
         "support": false,
         "tank": false
       },
-      id: 0
+      id: 0,
+      searchAs: "solo"
     };
   },
   componentWillMount: function() {
     var context = this;
 
     function getThem() {
-        return axios.get('/user/all');
+      return axios.get('/user/all');
     }
 
     function getMe() {
-        return axios.get('/profile');
+      return axios.get('/profile');
     }
 
     function getMyTeams() {
-        return axios.get('/profile/teams');
+      return axios.get('/profile/teams');
     }
 
     function getAllTeams() {
-
+      return axios.get('/team/all');
     }
 
-    axios.all([getThem(), getMe(), getMyTeams()])
-        .then(axios.spread(function(them, me, myTeams) {           
+    axios.all([getThem(), getMe(), getMyTeams(), getAllTeams()])
+        .then(axios.spread(function(them, me, myTeams, allTeams) {           
             context.setState({
               users: them.data,
               filteredUsers: them.data,
               me: me.data.ratings,
               id: me.data.id,
-              teams: myTeams.data,
-              displayName: me.data.displayName
-            })        
+              myTeams: myTeams.data,
+              displayName: me.data.displayName,
+              allTeams: allTeams.data
+            });
         }));
   },
 
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var checkIfChecked = function(obj) {            
-      return !(_.every(obj, function(elm) {
-        return elm === false;
-      }) || _.every(obj, function(elm) {
-        return elm === true;
-      }));      
-    };
-
-    var filterByProperty = function(userList, property, context) {
-      var filters = [];
-
-      for (var key in context.state[property]) {
-        if (context.state[property][key] === true) filters.push(key);        
-      }
-      return _.filter(userList, function(user) {
-        var filterTest = false;
-        _.map(filters, function(elm) {          
-          if (user.bio[property][elm] === true) {
-            filterTest = true;
-          }
-        });        
-        return filterTest;
-      });      
-    };
-
-    var userSubset = this.state.users;
-
-    if (checkIfChecked(this.state.times) === true) {
-      userSubset = filterByProperty(userSubset, "times", this);
-    }
-
-    if (checkIfChecked(this.state.purpose) === true) {
-      userSubset = filterByProperty(userSubset, "purpose", this);
-    }
-
-    if (checkIfChecked(this.state.roles) === true) {
-      userSubset = filterByProperty(userSubset, "roles", this);
-    }
-
-    if (checkIfChecked(this.state.lanes) === true) {
-      userSubset = filterByProperty(userSubset, "lanes", this);
-    }
-
+  handleChange: function(e) {    
     this.setState({
-      filteredUsers: userSubset
+      searchAs: e.value
     });
   },
   render: function() {
@@ -143,10 +101,10 @@ var FindPlayers = React.createClass({
     var teamsCaptained = (function() {
       var teamNodes = [];
 
-      for (var i = 0; i < context.state.teams.length; i++) {
-        if (context.state.teams[i].teamCaptain === context.state.id) {          
+      for (var i = 0; i < context.state.myTeams.length; i++) {
+        if (context.state.myTeams[i].teamCaptain === context.state.id) {          
           teamNodes.push(
-            <Option value={context.state.teams[i].profile.teamName} key={i + 1}>{context.state.teams[i].profile.teamName}</Option>
+            <Option value={context.state.myTeams[i].profile.teamName}>{context.state.myTeams[i].profile.teamName}</Option>
           )
         }
       }
@@ -155,12 +113,13 @@ var FindPlayers = React.createClass({
 
     return (     
       <div className="findPlayers">
-        <h1> Filters </h1>
+      <link href='../test.css' rel='stylesheet' type='text/css' />
        
           <form onSubmit={this.handleSubmit}>
 
-            <Select>              
-              <Option value="solo">{this.state.displayName}</Option>
+            <Select onUpdate={this.handleChange} >              
+              <Option value="solo">search individuals as myself</Option>
+              <Option value="team">search teams as myself</Option>              
               <Separator>Teams You Captain</Separator>
               {teamsCaptained}
             </Select>            
@@ -187,16 +146,13 @@ var FindPlayers = React.createClass({
             label='Lanes: '
             options={this.state.lanes}
             onChange={this.setState.bind(this)}
-            bootstrap />
-            
-            <Button primary type="submit" value="Submit">Submit</Button>
+            bootstrap />          
 
           </form>
 
-          
-
-
-        <MatchList users={this.state.filteredUsers} me={this.state.me} id={this.state.id} />    
+        <MatchList users={this.state.users} teams={this.state.allTeams} me={this.state.me}
+        id={this.state.id} searchAs={this.state.searchAs} times={this.state.times} purpose={this.state.purpose}
+        roles={this.state.roles} lanes={this.state.lanes} />    
       </div>
       );
   }
@@ -207,6 +163,38 @@ module.exports = FindPlayers;
 var MatchList = React.createClass({  
 
   render: function() {
+
+    var checkIfChecked = function(obj) {
+      return !(_.every(obj, function(elm) {
+        return elm === false;
+      }) || _.every(obj, function(elm) {
+        return elm === true;
+      }));
+    };
+
+    var filterByProperty = function(userList, property, context) {
+      var filters = [];
+
+      for (var key in context.props[property]) {
+        if (context.props[property][key] === true) filters.push(key);
+      }
+      return _.filter(userList, function(user) {
+        var filterTest = false;
+        _.map(filters, function(elm) {
+          if (user.bio[property][elm] === true) {
+            filterTest = true;
+          }
+        });
+        return filterTest;
+      });
+    }
+    
+    var userSubset = this.props.users;
+    userSubset = checkIfChecked(this.props.times) ? filterByProperty(userSubset, "times", this) : userSubset;
+    userSubset = checkIfChecked(this.props.purpose) ? filterByProperty(userSubset, "purpose", this) : userSubset;
+    userSubset = checkIfChecked(this.props.roles) ? filterByProperty(userSubset, "roles", this) : userSubset;
+    userSubset = checkIfChecked(this.props.lanes) ? filterByProperty(userSubset, "lanes", this) : userSubset;
+
     var context = this;
     var arrayToString = function(obj) {
       var string = [];
@@ -218,52 +206,65 @@ var MatchList = React.createClass({
       return string.toString();
     };
 
-    var calculateMatchScore =  function(pos, n) {
-
-      var z, phat;      
-      z = 1.56;  // 1.96 = 95%
-      phat = 1 * pos / n;
+    var calculateMatchScore = function(pos, n) {
+        var z, phat;
+        z = 1.56; // 1.96 = 95%
+        phat = 1 * pos / n;
       return (phat + z*z/(2*n) - z * Math.sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n); 
     };
     var MatchNodes = [];
     var matchOrder = [];
     var overallScore;
-    
-    for (var i = 0; i < this.props.users.length; i++){
+    var matchData;
+
+    console.log(this.props.teams);
+    matchData = this.props.searchAs === "solo" ? userSubset : this.props.teams;
+    console.log(matchData);
+
+    // do the same for myratings if they pick a team
+
+    for (var i = 0; i < matchData.length; i++){
       overallScore = 0;
-      if (this.props.users[i].id !== this.props.id) {
+      if (matchData[i].id !== this.props.id) {
         for (key in this.props.me) {          
-          var score = 20 - Math.abs(this.props.me[key] - this.props.users[i].ratings[key]);
+          var score = 20 - Math.abs(this.props.me[key] - matchData[i].ratings[key]);
           overallScore += score;
           score = calculateMatchScore(score, 20);        
         }
         overallScore = Math.round(calculateMatchScore(overallScore, 200) * 100);
-        this.props.users[i].overallScore = overallScore;        
-        matchOrder.push(this.props.users[i]);
+        matchData[i].overallScore = overallScore;        
+        matchOrder.push(matchData[i]);
       }
     }
-    _.map(matchOrder, function(user) {
-      if (isNaN(user.overallScore)) {
-        console.log("NaN error");
-        console.log(user);
-        user.overallScore = 0;
-      }
-    });
-    matchOrder = _.sortBy(matchOrder, function(user) {      
-      return user.overallScore;
-    }).reverse();
 
-    _.map(matchOrder, function(user) {
+    _.map(matchOrder, function(match) {
+      match.link = '/#/user/' + match.displayName
+      if (!match.games) {        
+        match.games = {
+          avatar: "http://sener.is/hat.jpg"
+        }
+        match.bio = match.profile
+        match.displayName = match.profile.teamName
+        match.link = '/#/team/' + match.displayName
+      }
+
+      if (isNaN(match.overallScore)) {
+        console.log("NaN error")
+        console.log(match);
+        match.overallScore = 0;
+        }
+      });
+      matchOrder = _.sortBy(matchOrder, function(match) {
+        return match.overallScore;
+      }).reverse();
+      _.map(matchOrder, function(match) {
       var lineData = [{
         name: "me",
         values: []
-
-      },
-      {
+      }, {
         name: "them",
         values: []
-      }
-      ];
+      }];
       var counter = 0;
       for (var key in context.props.me) {
         lineData[0].values.push({
@@ -272,22 +273,22 @@ var MatchList = React.createClass({
         });
         lineData[1].values.push({
           x: counter,
-          y: Number(user.ratings[key])
+          y: Number(match.ratings[key])
         });
         counter++;
       }
-      console.log(lineData);
       MatchNodes.push(
         <div className="row" style={whiteBox}>
             <div className="row" style={headshot}>
-              <img className="img-circle center-block" src={user.games.avatar}/>
-              <a href={'/#/user/' + user.displayName}> <div align="center"> { user.displayName } </div> </a>
-              <div> {user.overallScore}% </div>
+              <img className="img-circle center-block" src={match.games.avatar}/>
+              <a href={match.link}> <div align="center"> { match.displayName } </div> </a>              
+              <div> {match.overallScore}% </div>
             </div>
             <div className="row" style={stats}>
-              <div> { arrayToString(user.bio.willdo) } </div>
-              <div> { arrayToString(user.bio.purpose) } </div>    
-              <div> { arrayToString(user.bio.times) } </div>
+              <div> { arrayToString(match.bio.purpose) } </div>    
+              <div> { arrayToString(match.bio.times) } </div>
+              <div> { arrayToString(match.bio.roles) } </div>
+              <div> { arrayToString(match.bio.lanes) } </div>              
               <br />
               <br />
             </div>
