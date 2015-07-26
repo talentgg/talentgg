@@ -133,7 +133,138 @@ module.exports = {
                 categories: ["ambition", "committed"],
                 values: [10, 10]
             }]
-        }];
+           }, {   ///////// 6
+            questionText: "It’s a close game late in the laning phase. Your enemies have left your lane, but you’re low on vision. How do you decide what to do next?",
+            answers: [{
+                label: "Push my lane – force them to come back or lose objectives.",
+                value: 0,
+                effects: [10],
+                categories: ["aggressive"]
+            }, {
+                label: "Advance only as far as I can ward. Don't want to get ganked.",
+                value: 1,
+                effects: [-2],
+                categories: ["aggressive"]
+            }, {
+                label: "First priority is to see if my teammates need help in neighboring lanes.",
+                value: 2,
+                effects: [-10],
+                categories: ["aggressive"]
+            }],
+            potential: [{
+                categories: ["aggressive"],
+                values: [10]
+            }]
+           }, {
+            questionText: "In which of these styles do you feel most effective?",
+            answers: [{
+                label: "Picking off enemies with powerful, focused attacks.",
+                value: 0,
+                effects: [10, 10],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "Wiping out crowds with area-of-effect abilities.",
+                value: 1,
+                effects: [1, -1],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "Snaring and displacing enemies with pulls and knockbacks.",
+                value: 2,
+                effects: [-10, -10],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "Controlling the map with wards and traps.",
+                value: 3,
+                effects: [-10, -10],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "Supporting allies with heals and buffs.",
+                value: 3,
+                effects: [-10, -10],
+                categories: ["ambition", "committed"]
+            }],
+            potential: [{
+                categories: ["ambition", "committed"],
+                values: [10, 10]
+            }]
+        }, {
+            questionText: "I ward...",
+            answers: [{
+                label: "constantly.",
+                value: 0,
+                effects: [10, 10],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "when I remember / when I'm warned.",
+                value: 1,
+                effects: [1, -1],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "maybe once or twice, but it's not that important.",
+                value: 2,
+                effects: [-10, -10],
+                categories: ["ambition", "committed"]
+            }],
+            potential: [{
+                categories: ["ambition", "committed"],
+                values: [10, 10]
+            }]
+           }, {
+            questionText: "What’s the most difficult part of being on a team?",
+            answers: [{
+                label: "Finding teammates who are good at the game.",
+                value: 0,
+                effects: [10, 10],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "Finding likable teammates with good attitudes.",
+                value: 1,
+                effects: [1, -1],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "Coordinating roles and responsibilities.",
+                value: 1,
+                effects: [1, -1],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "Coordinating schedules.",
+                value: 2,
+                effects: [-10, -10],
+                categories: ["ambition", "committed"]
+            }],
+            potential: [{
+                categories: ["ambition", "committed"],
+                values: [10, 10]
+            }]
+           }, {
+            questionText: "What are your goals as a player?",
+            answers: [{
+                label: "To go professional. I schedule playing time every day and voluntarily sacrifice other activities to improve.",
+                value: 0,
+                effects: [10, 10],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "To get really good. I’m already a pretty good player, and if it ever looks like I’d have a chance to go pro, I’d rearrange other aspects of my life to make that happen.",
+                value: 1,
+                effects: [1, -1],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "If someone wants to pay me to play, I’m not gonna turn them down, but realistically those people who make a career out of it are younger, better, and/or have more time and resources than I can manage. Let’s just have fun.",
+                value: 2,
+                effects: [-10, -10],
+                categories: ["ambition", "committed"]
+            }],
+            potential: [{
+                categories: ["ambition", "committed"],
+                values: [10, 10]
+            }]
+        }
+
+
+
+
+
+        ];
 
 
 
