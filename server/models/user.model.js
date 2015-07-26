@@ -56,8 +56,7 @@ var User = db.define( 'user', {
         "support": false,
         "tank": false
       },
-     about: "I haven't filled this out yet.",
-     favorite: "I haven't filled this out yet."
+     about: ""
     }
   },
   teams: {

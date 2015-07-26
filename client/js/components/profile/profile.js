@@ -59,7 +59,7 @@ var Test = React.createClass({
           </div>
           <div className="col-sm-4">
             <h3>{this.props.displayName}</h3>
-            <p>{this.props.bio.about}</p>
+            <p>{this.props.bio.about === "" ? 'I haven\'t filled this out yet' : this.props.bio.about}</p>
           </div>
           <div className="col-sm-2">
             <img className="center-block" width="128" height="128" src={"/img/tier-" + this.props.temp.rank + ".png"} />
