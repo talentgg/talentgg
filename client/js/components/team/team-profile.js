@@ -48,6 +48,7 @@ var TeamProfile = React.createClass({
           },
           adCopy: "we need a jungler like tarzan."
       }],
+      applicants: [],
       members: {},
       captain: {
         name: "",
@@ -79,9 +80,7 @@ var TeamProfile = React.createClass({
 
       });
   },
-  handleApply: function() {
-
-  },
+  
   handleEdit: function() {
     var router = this.context.router;
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
@@ -162,47 +161,45 @@ var TeamProfile = React.createClass({
 module.exports = TeamProfile;
 
 var AdList = React.createClass({
-render: function() {
+  
+  render: function() {
 
-    var arrayToString = function(obj) {
-      var arr = [];
-      for (var key in obj) {
-        if (obj[key] === true) {
-          console.log(key);
-          arr.push(key);
+      var arrayToString = function(obj) {
+        var arr = [];
+        for (var key in obj) {
+          if (obj[key] === true) {
+            console.log(key);
+            arr.push(key);
+          }
         }
-      }
-      return arr.join(', ');
-    };
+        return arr.join(', ');
+      };
 
 
-    var adNodes = [];
-    for (var i = 0; i < this.props.ads.length; i++) {
-      console.log(this.props.ads[i]["lanes"])
-      console.log(this.props.ads[i]["roles"])
-      var adLanes = arrayToString(this.props.ads[i]["lanes"])
-      var adRoles = arrayToString(this.props.ads[i]["roles"])
-      console.log(adLanes);
-      console.log(adRoles);
+      var adNodes = [];
+      for (var i = 0; i < this.props.ads.length; i++) {
+        var adLanes = arrayToString(this.props.ads[i]["lanes"])
+        var adRoles = arrayToString(this.props.ads[i]["roles"])
 
-      adNodes.push(
-         <div className="col-sm-2">
-          <div className="panel panel-default" id="whitebox">
-            <div className="panel-body">
-              <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
-              <p><b>Lane</b>: {adLanes} </p>
-              <p><b>Role</b>: {adRoles} </p>
-              <p>{this.props.ads[i]["adCopy"]}</p>
-              <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
+        adNodes.push(
+           <div className="col-sm-2">
+            <div className="panel panel-default" id="whitebox">
+              <div className="panel-body">
+                <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
+                <p><b>Lane</b>: {adLanes} </p>
+                <p><b>Role</b>: {adRoles} </p>
+                <p>{this.props.ads[i]["adCopy"]}</p>
+                <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
+              </div>
             </div>
           </div>
+        )
+      };
+      return (
+        <div className="answersList">
+          {adNodes}
         </div>
-      )
-    };
-    return (
-      <div className="answersList">
-        {adNodes}
-      </div>
-    );
-  }
+      );
+    }
 });
+  

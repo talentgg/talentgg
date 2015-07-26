@@ -102,6 +102,8 @@ module.exports = {
     User.findOne({where: {id: req.session.passport.user}})
     .then(function(userData){
       user = userData;
+      console.log('-----user---->');
+      console.log(user);
     });
   },
   addtoteam: function(req, res, next){

@@ -298,8 +298,7 @@ var MatchList = React.createClass({
                 data={lineData}
                 width={250}
                 height={200}
-                title=""
-              />
+                title=""/>
             </div>
         </div>
       )
