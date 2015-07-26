@@ -53,7 +53,7 @@ module.exports = {
               });
           });
       },
-
+      
 
 
   getProfile: function( req, res, next ){
@@ -65,7 +65,7 @@ module.exports = {
       }
     }})
        .then(function(teamProfile) {
-       console.log(teamProfile);
+       console.log(teamProfile);       
         deepBoolean(teamProfile.profile);
         deepBoolean(teamProfile.ads);
         res.json(teamProfile);
@@ -81,7 +81,7 @@ module.exports = {
       }
     }})
        .then(function(teamProfile) {
-       console.log(teamProfile);
+       console.log(teamProfile);       
         deepBoolean(teamProfile.profile);
         deepBoolean(teamProfile.ads);
         res.json(teamProfile);
@@ -105,6 +105,7 @@ module.exports = {
     .then(function(teamProfile){
       var newAds = teamProfile.ads;
       newAds.push(req.body);
+
       Team.update({
         ads: newAds
       }, {where: {
@@ -117,18 +118,23 @@ module.exports = {
 
   },
   applytoteam: function(req, res, next){
+    console.log(req.body);
     var obj;
-    User.findOne({where: {id: req.session.passport.user}})
-      .then(function(userData){
-        user = userData;
-        Team.findById(req.body.teamid).then(function(teamData){
+    // just use the id
+
+    // User.findOne({where: {id: req.session.passport.user}})
+    //   .then(function(userData){
+    //     user = userData;
+    Team.findById(req.body.teamid).then(function(teamData){
           obj = teamData;
-          obj.applicants.push({id: user.id, name: user.displayName});
+          var adUpdate = obj.profile.ads;
+          
+          obj.applicants.push({id: req.session.passport.user, name: req.body.name});
         })
           .then(function(){
             Team.update({applicants: obj.applicants}, {where: {id: req.body.teamid}});
-          })
-      });
+          });
+      // });
   },
   addtoteam: function(req, res, next){
     User.findOne({where: {id: req.body.userid}})

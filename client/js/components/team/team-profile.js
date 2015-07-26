@@ -2,10 +2,15 @@ var React = require('react');
 var Router = require('react-router');
 var Axios = require('axios');
 var _ = require('lodash');
+var belle = require('belle');
+Button = belle.Button;
+
+var RecUtil = require('../../utils/recUtil.js');
 
 var TeamProfile = React.createClass({
   mixins: [Router.State, Router.Navigation],
   propTypes: {
+    userId: React.PropTypes.number.isRequired,
     displayName: React.PropTypes.string.isRequired
   },
   getInitialState: function () {
@@ -19,9 +24,10 @@ var TeamProfile = React.createClass({
           "weekends": false
         },
         purpose: {
-          "3x3 Casual": false,
-          "5x5 Casual": false,
-          "5x5 Ranked": false
+          "Casual": false,
+          "Ranked": false,
+          "3v3": false,
+          "5v5": false
         },
         about: "",
 
@@ -58,7 +64,6 @@ var TeamProfile = React.createClass({
       .then(function(response) {
           var cap = null;
           var mems = [];
-          console.log(response);
           _.map(response.data.members, function(member) {
             if (member.isAdmin === true) {
               cap = member;
@@ -70,7 +75,7 @@ var TeamProfile = React.createClass({
             members: mems,
             profile: response.data.profile,
             captain: cap,
-            ads: response.data.ads
+            ads: response.data.ads.data
           });
       });
   },
@@ -102,21 +107,9 @@ var TeamProfile = React.createClass({
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
   render: function () {
-    console.log(this.props);
     var captainName = this.state.captain.name;
     var isCaptain = this.state.captain.id === this.props.userId ? true : false;
-
-    var arrayToString = function(obj) {
-      var arr = [];
-      for (var key in obj) {
-        if (obj[key] === true) {
-          arr.push(key);
-        }
-      }
-      return arr.join(', ');
-    };
-
-    var available = arrayToString(this.state.profile.times);
+    var available = RecUtil.arrayToString(this.state.profile.times);
     var memberNames = [];
     _.map(this.state.members, function(member) {
       memberNames.push(
@@ -163,7 +156,7 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <br/>
-        <AdList ads={this.state.ads} displayName={this.props.displayName} teamId={this.state.id} />
+        <AdList ads={this.state.ads} displayName={this.props.displayName} teamId={this.state.id} user={this.props.userId} captain={this.state.captain.id} />
         <div>
         { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
         </div>
@@ -175,40 +168,36 @@ var TeamProfile = React.createClass({
 module.exports = TeamProfile;
 
 var AdList = React.createClass({
-  handleApply: function() {
-    console.log(this.props.teamId);
-    $.post('/team/applytoteam', {teamid: this.props.teamId});
+  handleApply: function(e) {
+    e.preventDefault();
+    $.post('/team/applytoteam', {teamid: this.props.teamId, name: this.props.displayName, adIndex: e.target.value});
+
   },
 
   render: function() {
-  var arrayToString = function(obj) {
-      var arr = [];
-      for (var key in obj) {
-        if (obj[key] === true) {
-          console.log(key);
-          arr.push(key);
-        }
-      }
-      return arr.join(', ');
-    };
-
-
     var adNodes = [];
     for (var i = 0; i < this.props.ads.length; i++) {
-      var adLanes = arrayToString(this.props.ads[i]["lanes"])
-      var adRoles = arrayToString(this.props.ads[i]["roles"])
+      var adLanes = RecUtil.arrayToString(this.props.ads[i]["lanes"])
+      var adRoles = RecUtil.arrayToString(this.props.ads[i]["roles"])
 
-      adNodes.push(
-         <div className="col-sm-2">
-          <div className="panel panel-default" id="whitebox">
-            <div className="panel-body">
-              <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
-              <p><b>Lane</b>: {adLanes} </p>
-              <p><b>Role</b>: {adRoles} </p>
-              <p>{this.props.ads[i]["adCopy"]}</p>
-              <button className="btn btn-default" type="button" onClick={this.handleApply}>Apply</button>
-            </div>
-          </div>
+// need a way to track if the user's applied and disable the button
+      var disableCheck = false;
+      var context = this;
+    
+    _.map(context.props.ads, function(ad){
+      if ((ad.applicants && ad.applicants.indexOf(context.props.user) > -1) || context.props.captain === context.props.user) {          
+          ad.applicants.indexOf(context.props.user)
+          disableCheck = true;
+      }
+    })
+      adNodes.push(         
+        <div className="col-sm-2 panel panel-default panel-body" id="whitebox">
+            <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
+            <p><b>Lane</b>: {adLanes} </p>
+            <p><b>Role</b>: {adRoles} </p>
+            <p>{context.props.ads[i]["adCopy"]}</p>
+            { disableCheck ? (<Button primary onClick={this.viewApplicants}>View Applicants</Button>) :
+            (<Button disabled={disableCheck} value={i} secondary={disableCheck} onClick={this.handleApply}>Apply</Button>)}
         </div>
       )
     };
@@ -219,3 +208,10 @@ var AdList = React.createClass({
     );
   }
 });
+
+var ApplicantList = React.createClass({
+  render: function() {
+
+  }
+
+})
