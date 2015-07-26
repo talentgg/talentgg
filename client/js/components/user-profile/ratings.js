@@ -19,7 +19,7 @@ var ratingVisualization = React.createClass({
     dataset.push(Number(this.props.stats.collaborative));
     dataset.push(Number(this.props.stats.brute));
     dataset.push(Number(this.props.stats.aggressive));
-    dataset.push(Number(this.props.stats.troll));
+    dataset.push(Number(this.props.stats.boundaries));
     dataset.push(Number(this.props.stats.loud));
     dataset.push(Number(this.props.stats.committed));
     dataset.push(Number(this.props.stats.ambition));
