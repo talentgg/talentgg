@@ -134,7 +134,7 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default" id="whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Current Members</h3>
-                <p><b>Captain</b>: <a href={'/#/user/id/' + this.state.captain.id}> { captainName } </a></p>
+                <p><b>Captain</b>: <a href={'/#/user/' + captainName}> { captainName } </a></p>
                 <p><b>Members</b>: {memberNames} </p>
               </div>
             </div>
@@ -145,8 +145,6 @@ var TeamProfile = React.createClass({
         <div>
         { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
         </div>
-
-
       </div>
     )
   }
@@ -178,12 +176,8 @@ var AdList = React.createClass({
 
     var adNodes = [];
     for (var i = 0; i < this.props.ads.length; i++) {
-      console.log(this.props.ads[i]["lanes"])
-      console.log(this.props.ads[i]["roles"])
       var adLanes = arrayToString(this.props.ads[i]["lanes"])
       var adRoles = arrayToString(this.props.ads[i]["roles"])
-      console.log(adLanes);
-      console.log(adRoles);
 
       adNodes.push(
          <div className="col-sm-2">

@@ -36,13 +36,13 @@ var User = db.define( 'user', {
         "weekdays": false,
         "weeknights": false,
         "weekends": false
-     },
-     purpose: {
+      },
+      purpose: {
         "3x3 Casual": false,
         "5x5 Casual": false,
         "5x5 Ranked": false
-     },
-     lanes: {
+      },
+      lanes: {
         "top": false,
         "mid": false,
         "bot": false,

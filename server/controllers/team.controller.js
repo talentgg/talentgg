@@ -58,12 +58,30 @@ module.exports = {
 
   getProfile: function( req, res, next ){
     var getName = req.url.split('/')[3];
+    console.log(getName);
     Team.findOne({where: {
       profile: {
         teamName: getName
       }
     }})
-       .then(function (teamProfile) {        
+       .then(function(teamProfile) {
+       console.log(teamProfile);       
+        deepBoolean(teamProfile.profile);
+        deepBoolean(teamProfile.ads);
+        res.json(teamProfile);
+     });
+   },
+
+  getById: function( req, res, next ){
+    var getName = req.url.split('/')[3];
+    console.log(getName);
+    Team.findOne({where: {
+      id: {
+        teamName: getName
+      }
+    }})
+       .then(function(teamProfile) {
+       console.log(teamProfile);       
         deepBoolean(teamProfile.profile);
         deepBoolean(teamProfile.ads);
         res.json(teamProfile);

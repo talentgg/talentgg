@@ -14,6 +14,11 @@ module.exports = function( app ) {
     Team.getProfile(req, res);
   });
 
+  app.get('/team/id/*', function(req, res){
+    Team.getById(req, res);
+  });
+
+
    // get team profile
   app.get('/team/all', function(req, res){
     Team.getAllProfiles(req, res);

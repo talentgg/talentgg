@@ -22,28 +22,28 @@ module.exports = {
         .then(function(data){
           passport.authenticate('local')(req, res, function(){
             res.redirect('/');
-          })
+          });
         })
         .catch(function(err){
           console.log(err);
-          res.send("Something went wrong when trying to create your account.\nPlease try again.")
+          res.send("Something went wrong when trying to create your account.\nPlease try again.");
         });
-      })
-    })
+      });
+    });
   },
 
   logout: function( req, res ) { // Destroys session
     res.clearCookie('connect.sid');
     req.session.destroy(function(err){
       res.redirect('/');
-    })
+    });
   },
 
   getAllProfiles: function( req, res, next ){
     User.findAll()
     .then(function (teamProfiles) {
-      res.json(teamProfiles)
-    })
+      res.json(teamProfiles);
+    });
   },
 
   getOwnProfile: function(req, res){
@@ -68,20 +68,20 @@ module.exports = {
               User.update({temp: obj.temp}, {where: {id: req.session.passport.user}})
               .then(function(one, two){
                 res.json(obj);
-              })
+              });
             } else {
               obj.temp.rank = "unranked";
               User.update({temp: obj.temp}, {where: {id: req.session.passport.user}})
               .then(function(one, two){
                 res.json(obj);
-              })
+              });
             }
-          })
-        })
+          });
+        });
       } else {
         res.json(obj);
       }
-    })
+    });
   },
 
   getTeamsOwned: function(req, res){ // sends profiles of teams they captain
@@ -105,11 +105,11 @@ module.exports = {
       deepBoolean(req.body);
     })
     .then(function(){
-      User.update({bio: req.body},{where: {id: req.session.passport.user}})
+      User.update({bio: req.body},{where: {id: req.session.passport.user}});
     })
     .then(function(){
       res.redirect('/');
-    })
+    });
   },
 
   updateSettings: function(req, res){ // Updates account data
@@ -124,20 +124,20 @@ module.exports = {
             bcrypt.genSalt(10, function(err, salt){
               bcrypt.hash(req.body.pass1, salt, function(err, hash){
                 User.update({hash: hash}, {where: {id: data.id}});
-              })
-            })
+              });
+            });
           }
         } else {
           res.send("You supplied the incorrect password");
         }
-      })
+      });
     })
     .then(function(){
       res.clearCookie('connect.sid');
       req.session.destroy(function(err){
         res.redirect('/');
-      })
-    })
+      });
+    });
   },
 
   setSummoner: function(req, res){
@@ -157,8 +157,8 @@ module.exports = {
       User.update({displayName: obj.name + ' (unverified)', games: obj}, {where: {id: req.session.passport.user}})
       .then(function(){
         res.redirect('/#/account-link');
-      })
-    })
+      });
+    });
   },
 
   verifySummoner: function(req, res){
@@ -180,8 +180,8 @@ module.exports = {
         } else {
           res.send("Verification failed. It may take a moment for Riot to update their servers,\n but please check to see that the name of your first rune page is: " + obj.verifyKey);
         }
-      })
-    })
+      });
+    });
   },
 
   updateSummoner: function(req, res){ // Updates game data
@@ -195,9 +195,9 @@ module.exports = {
         User.update({games: user}, {where: {id: req.session.passport.user}})
         .then(function(){
           res.redirect('/#/account-link');
-        })
-      })
-    })
+        });
+      });
+    });
   },
 
   updateRatings: function(req, res){ // Updates ratings data
@@ -220,7 +220,7 @@ module.exports = {
       obj.username = false; // hides user's email
       obj.hash = false; // hide's user's hashed password
       res.json(obj);
-    })
+    });
   },
 
   profileById: function(req, res, id){
@@ -230,7 +230,7 @@ module.exports = {
       obj.username = false; // hides user's email
       obj.hash = false; // hide's user's hashed password
       res.json(obj);
-    })
+    });
   },
 
   getChampList: function(req, res, cb){
@@ -241,19 +241,20 @@ module.exports = {
         obj[champ.id] = champ;
       }
       cb(obj);
-    })
+    });
   }
-
 };
 
 function relay(url, callback) {
-  console.log('---API CALL---') //to keep track of api calls in dev environment
+  console.log('---API CALL---'); //to keep track of api calls in dev environment
   request(url, function(err, stat, body) {
     if(err) {
       callback(err, null);
     } else if(stat.statusCode < 200 || stat.statusCode >= 400) {
       console.log("Status Code: " + stat.statusCode + " at: " + url);
-      if(stat.statusCode === 404 || stat.statusCode >= 500){ callback(null, false) } //handles requests for info that doesn't exist if that happens
+      if(stat.statusCode === 404 || stat.statusCode >= 500){ 
+        callback(null, false);
+      } //handles requests for info that doesn't exist if that happens
     } else {
       callback(null, body);
     }
@@ -276,4 +277,4 @@ function deepBoolean(obj){
     }
   }
   return obj;
-};
+}

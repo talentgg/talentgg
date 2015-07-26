@@ -1,4 +1,4 @@
-# Talent.gg
+# Lea.gg
 Please see the [PRESS RELEASE](https://github.com/talentgg/talentgg/_PRESS-RELEASE.md) for more information!
 
 ## Team
@@ -30,10 +30,10 @@ Please see the [PRESS RELEASE](https://github.com/talentgg/talentgg/_PRESS-RELEA
 
 ## Installing Dependencies
 - `npm install`
-- ensure you have a psql database named 'talentgg'
+- ensure you have a psql database named 'leagg'
   - download and install from [PostgresApp](postgresapp.com)
   - be sure to [configure the CLI tool](http://postgresapp.com/documentation/cli-tools.html)
-  - `createdb talentgg`
+  - `createdb leagg`
 
 ## Tasks
 - placeholder
@@ -42,4 +42,4 @@ Please see the [PRESS RELEASE](https://github.com/talentgg/talentgg/_PRESS-RELEA
 - placeholder
 
 ## Contributing
-Please see [CONTRIBUTING](https://github.com/talentgg/talentgg/_CONTRIBUTING.md) and [STYLE GUIDE](https://github.com/talentgg/talentgg/_STYLE_GUIDE.md) before contributing.
+Please see [CONTRIBUTING](https://github.com/leagg/leagg/_CONTRIBUTING.md) and [STYLE GUIDE](https://github.com/leagg/leagg/_STYLE_GUIDE.md) before contributing.
