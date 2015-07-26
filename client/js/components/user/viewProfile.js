@@ -16,9 +16,10 @@ var viewProfile = React.createClass({
         "weekends": false
         },
         purpose: {
-          "3x3 Casual": false,
-          "5x5 Casual": false,
-          "5x5 Ranked": false
+          "Casual": false,
+          "Ranked": false,
+          "3v3": false,
+          "5v5": false
         },
         about: "",
         favorite: "",

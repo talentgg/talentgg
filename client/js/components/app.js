@@ -10,10 +10,11 @@ var App = React.createClass({
       displayName: "",
       avatar: "",
       bio: {
-        times: [],
-        purpose: [],
-        roles: [],
-        lanes: []
+        times: {},
+        purpose: {},
+        roles: {},
+        lanes: {},
+        about: ""
       },
       teams: [],
       games: {},

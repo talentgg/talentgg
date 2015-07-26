@@ -110,7 +110,7 @@ var Test = React.createClass({
             </div>
           </div>
           <div role="tabpanel" className="tab-pane" id="edit">
-            <Edit />
+            <Edit initialBio={this.props.bio} />
           </div>
           <div role="tabpanel" className="tab-pane" id="questions">
             <Questions />
