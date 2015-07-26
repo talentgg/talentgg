@@ -29,7 +29,7 @@ var Team = db.define( 'team', {
         "5x5 Casual": false,
         "5x5 Ranked": false
       },
-      about: "You haven't filled this out yet",
+      about: "You haven't filled this out yet"
     }    
   },
   ads: {

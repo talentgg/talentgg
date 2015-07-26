@@ -151,12 +151,11 @@ var FindPlayers = React.createClass({
         }
       }
       return teamNodes
-    })()    
+    })();
 
     return (     
       <div className="findPlayers">
-        <h1> Matches </h1>
-        <h2> Filters </h2>
+        <h1> Filters </h1>
        
           <form onSubmit={this.handleSubmit}>
 
@@ -203,7 +202,7 @@ var FindPlayers = React.createClass({
   }
 });
 
-module.exports = FindPlayers
+module.exports = FindPlayers;
 
 var MatchList = React.createClass({  
 
@@ -237,7 +236,7 @@ var MatchList = React.createClass({
           var score = 20 - Math.abs(this.props.me[key] - this.props.users[i].ratings[key]);
           overallScore += score;
           score = calculateMatchScore(score, 20);        
-        };
+        }
         overallScore = Math.round(calculateMatchScore(overallScore, 200) * 100);
         this.props.users[i].overallScore = overallScore;        
         matchOrder.push(this.props.users[i]);
@@ -245,7 +244,7 @@ var MatchList = React.createClass({
     }
     _.map(matchOrder, function(user) {
       if (isNaN(user.overallScore)) {
-        console.log("NaN error")
+        console.log("NaN error");
         console.log(user);
         user.overallScore = 0;
       }
@@ -264,7 +263,7 @@ var MatchList = React.createClass({
         name: "them",
         values: []
       }
-      ]
+      ];
       var counter = 0;
       for (var key in context.props.me) {
         lineData[0].values.push({
@@ -277,7 +276,7 @@ var MatchList = React.createClass({
         });
         counter++;
       }
-      console.log(lineData)
+      console.log(lineData);
       MatchNodes.push(
         <div className="row" style={whiteBox}>
             <div className="row" style={headshot}>
@@ -302,7 +301,7 @@ var MatchList = React.createClass({
             </div>
         </div>
       )
-    })
+    });
 
     return (
       <div>

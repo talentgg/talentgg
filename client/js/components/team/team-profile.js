@@ -2,15 +2,12 @@ var React = require('react');
 var Router = require('react-router');
 var Axios = require('axios');
 var _ = require('lodash');
+var TeamMembers = require('./team-members');
 
 var TeamProfile = React.createClass({
   mixins: [Router.State, Router.Navigation],
   propTypes: {
-    game: React.PropTypes.object.isRequired,
-    members: React.PropTypes.object.isRequired,
-    teamBio: React.PropTypes.object.isRequired,
-    teamName: React.PropTypes.string.isRequired,
-    userId: React.PropTypes.number.isRequired
+    displayName: React.PropTypes.string.isRequired
   },
   getInitialState: function () {
     return {
@@ -80,13 +77,12 @@ var TeamProfile = React.createClass({
 
       });
   },
-  
   handleEdit: function() {
     var router = this.context.router;
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
   render: function () {
-
+    console.log(this.props);
     var captainName = this.state.captain.name;
     var isCaptain = this.state.captain.id === this.props.userId ? true : false;
 
@@ -106,7 +102,7 @@ var TeamProfile = React.createClass({
       memberNames.push(
         <a href={'/#/user/id/' + member.id}><div align="center">{member.name}</div></a>
       )
-    })
+    });
 
     return (
       <div>
@@ -147,12 +143,13 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <br/>
-        <AdList ads={this.state.ads} />
+        <div className="row">
+          <TeamMembers team={this.props.team} />
+        </div>
+        <AdList ads={this.state.ads} displayName={this.props.displayName} teamId={this.state.id} />
         <div>
         { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
         </div>
-
-
       </div>
     )
   }
@@ -161,20 +158,23 @@ var TeamProfile = React.createClass({
 module.exports = TeamProfile;
 
 var AdList = React.createClass({
-  
+
+  handleApply: function() {
+    console.log(this.props.teamId);
+    $.post('/team/applytoteam', {teamid: this.props.teamId});
+  },
+
   render: function() {
 
-      var arrayToString = function(obj) {
-        var arr = [];
-        for (var key in obj) {
-          if (obj[key] === true) {
-            console.log(key);
-            arr.push(key);
-          }
+  var arrayToString = function(obj) {
+      var arr = [];
+      for (var key in obj) {
+        if (obj[key] === true) {
+          console.log(key);
+          arr.push(key);
         }
         return arr.join(', ');
       };
-
 
       var adNodes = [];
       for (var i = 0; i < this.props.ads.length; i++) {

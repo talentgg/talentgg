@@ -25,23 +25,7 @@ var TeamRegistration = React.createClass({
         "3x3 Casual": false,
         "5x5 Casual": false,
         "5x5 Ranked": false
-      },
-      role1: {       
-        lanes: {
-          top: false,
-          mid: false,
-          bot: false,
-          jungle: false
-        },
-        roles: {
-          assassin: false,
-          mage: false,
-          marksman: false,
-          bruiser: false,
-          support: false,
-          tank: false
-        }
-      }        
+      }
     };
   },
   handleSubmit: function(e) {
@@ -75,19 +59,6 @@ var TeamRegistration = React.createClass({
           <Checkbox
           label='Purpose: '
           options={this.state.purpose}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <h3> Role 1 </h3>
-          <Radio
-          label='lanes: '
-          options={this.state.role1.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <Checkbox
-          label='roles: '
-          options={this.state.role1.roles}
           onChange={this.setState.bind(this)}
           bootstrap />
 
