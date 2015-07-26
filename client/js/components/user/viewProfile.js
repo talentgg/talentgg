@@ -2,15 +2,10 @@ var React = require('react');
 var Router = require("react-router");
 var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
-var Bio = require('./bio');
-var BioForm = require('./bio-form');
+var OtherBio = require('./otherBio');
 var Axios = require('axios');
-var Ratings = require('./ratings.js')
 
-var rd3 = require('react-d3');
-var BarChart = rd3.BarChart;
-
-var Profile = React.createClass({
+var viewProfile = React.createClass({
   mixins: [Router.State],
   getInitialState: function() {
     return {
@@ -21,9 +16,10 @@ var Profile = React.createClass({
         "weekends": false
         },
         purpose: {
-          "3x3 Casual": false,
-          "5x5 Casual": false,
-          "5x5 Ranked": false
+          "Casual": false,
+          "Ranked": false,
+          "3v3": false,
+          "5v5": false
         },
         about: "",
         favorite: "",
@@ -40,33 +36,25 @@ var Profile = React.createClass({
           "bruiser": false,
           "support": false,
           "tank": false
-        }
+        },
       },
       userquestions: [],
       displayName: '',
+      id: null,
       games: {},
       temp: {
         rank: "unranked",
         matches: []
-      },
-      ratings: {
-        dominance: 0,
-        adaptable: 0,
-        blunt: 0,
-        collaborative: 0,
-        brute: 0,
-        aggressive: 0,
-        boundaries: 0,
-        loud: 0,
-        committed: 0,
-        ambition: 0
       }
     };
   },
   componentDidMount: function() {
     var context = this;
-    Axios.get('/profile').
+    var pathname = window.location.href.split('user/')[1];
+    console.log(pathname);
+    Axios.get('/user/' + pathname).
       then(function(response) {
+        console.log(response.data.displayName);
         context.setState({
           bio: response.data.bio,
           displayName: response.data.displayName,
@@ -75,17 +63,19 @@ var Profile = React.createClass({
           temp: response.data.temp
         });
       });
+    this.router = this.context.router;
   },
 
   render: function() {
+    console.log("VIEW PROFILE START");
     return (
-      <div>
-        <Bio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} temp={this.state.temp} />
-
-        <Ratings stats={this.state.ratings} />
-      </div>
+      <OtherBio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} temp={this.state.temp} id={this.state.id} />
     );
   }
 });
 
-module.exports = Profile;
+module.exports = viewProfile;
+
+//         <div className="col-md-12">
+//            <UserQuestions username={username} questions={this.state.userquestions} profile={this.state.ratings} counter={this.state.counter} />
+//         </div>

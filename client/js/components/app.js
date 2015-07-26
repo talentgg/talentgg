@@ -10,10 +10,11 @@ var App = React.createClass({
       displayName: "",
       avatar: "",
       bio: {
-        times: [],
-        purpose: [],
-        roles: [],
-        lanes: []
+        times: {},
+        purpose: {},
+        roles: {},
+        lanes: {},
+        about: ""
       },
       teams: [],
       games: {},
@@ -48,7 +49,7 @@ var App = React.createClass({
 
   render: function() {
     return (
-      <div className="app">
+      <div className="app" id="application">
         <Header displayName={this.state.displayName} avatar={this.state.avatar} teams={this.state.teams} />
         <div className="container">
           <RouteHandler
