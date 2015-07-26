@@ -68,3 +68,7 @@ object {
 h3 {
   font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }
+#text-bottom{
+  margin-bottom: 0px;
+  vertical-align: bottom;
+}
