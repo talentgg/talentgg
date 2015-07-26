@@ -27,7 +27,7 @@ var RecUtil = {
     }));
   },
 
-  filterByProperty: function(userList, property, context) {
+  propFilter: function(userList, property, context) {
     var filters = [];
 
     for (var key in context.props[property]) {
@@ -44,18 +44,57 @@ var RecUtil = {
     });
   },
 
-   teamsCaptained: (function(teams, id) {
+  teamsCaptained: function(teams, id) {
     var teamNodes = [];
     _.map(teams, function(myTeam) {
-        if (myTeam.captain === id) {
-          teamNodes.push(
-            <Option value={myTeam[i].profile.teamName}>{myTeam[i].profile.teamName}</Option>
-          )
-        }
-      })
-            
+      if (myTeam.captain === id) {
+        teamNodes.push( < Option value = {
+          myTeam[i].profile.teamName
+        } > {
+          myTeam[i].profile.teamName
+        } < /Option>)
+      }
+    })
+
     return teamNodes
-  })
+  },
+
+  whiteBox: {
+    backgroundColor: 'white',
+    padding: '25',
+    margin: '25',
+    border: 'solid black 1px',
+    height: '250',
+    width: '700',
+    display: 'inline-block'
+  },
+  headshot: {
+    backgroundColor: 'white',
+    padding: '10',
+    height: '200',
+    width: '200',
+    float: 'left',
+    textAlign: 'center'
+  },
+  stats: {
+    backgroundColor: 'white',
+    padding: '25',
+    height: '200',
+    width: '200',
+    display: 'block',
+    float: 'right',
+    textAlign: 'center'
+  },
+  chart: {
+    backgroundColor: 'white',
+    padding: '25',
+    height: '200',
+    width: '200',
+    display: 'block',
+    float: 'right',
+    textAlign: 'center'
+  }
+
 
 };
 

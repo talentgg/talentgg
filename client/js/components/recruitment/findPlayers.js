@@ -1,9 +1,6 @@
 var React = require('react');
 var axios = require('axios');
-
 var _ = require('lodash');
-
-var RecUtil = require('../../utils/recUtil.js');
 
 var ReactBtn = require('react-btn-checkbox');
 var Checkbox = ReactBtn.Checkbox;
@@ -17,10 +14,8 @@ Separator = belle.Separator;
 var rd3 = require('react-d3');
 var LineChart = rd3.LineChart;
 
-var whiteBox = {backgroundColor: 'white', padding: '25', margin:'25', border: 'solid black 1px', height: '250', width: '700', display: 'inline-block'};
-var headshot = {backgroundColor: 'white', padding: '10', height: '200', width: '200', float: 'left', textAlign: 'center'};
-var stats = {backgroundColor: 'white', padding: '25', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
-var chart = {backgroundColor: 'white', padding: '25', height: '200', width: '200', display: 'block', float: 'right', textAlign: 'center'};
+var RecUtil = require('../../utils/recUtil.js');
+
 
 var FindPlayers = React.createClass({
   getInitialState: function() {
@@ -139,10 +134,10 @@ var MatchList = React.createClass({
   render: function() {
     
     var userSubset = this.props.users;
-    userSubset = RecUtil.checkIfChecked(this.props.times) ? RecUtil.filterByProperty(userSubset, "times", this) : userSubset;
-    userSubset = RecUtil.checkIfChecked(this.props.purpose) ? RecUtil.filterByProperty(userSubset, "purpose", this) : userSubset;
-    userSubset = RecUtil.checkIfChecked(this.props.roles) ? RecUtil.filterByProperty(userSubset, "roles", this) : userSubset;
-    userSubset = RecUtil.checkIfChecked(this.props.lanes) ? RecUtil.filterByProperty(userSubset, "lanes", this) : userSubset;
+    userSubset = RecUtil.checkIfChecked(this.props.times) ? RecUtil.propFilter(userSubset, "times", this) : userSubset;
+    userSubset = RecUtil.checkIfChecked(this.props.purpose) ? RecUtil.propFilter(userSubset, "purpose", this) : userSubset;
+    userSubset = RecUtil.checkIfChecked(this.props.roles) ? RecUtil.propFilter(userSubset, "roles", this) : userSubset;
+    userSubset = RecUtil.checkIfChecked(this.props.lanes) ? RecUtil.propFilter(userSubset, "lanes", this) : userSubset;
 
     var context = this;
 
@@ -213,13 +208,13 @@ var MatchList = React.createClass({
       }
 
       MatchNodes.push(
-        <div className="row" style={whiteBox}>
-            <div className="row" style={headshot}>
+        <div className="row" style={RecUtil.whiteBox}>
+            <div className="row" style={RecUtil.headshot}>
               <img className="img-circle center-block" src={match.games.avatar}/>
               <a href={match.link}> <div align="center"> { match.displayName } </div> </a>              
               <div> {match.overallScore}% </div>
             </div>
-            <div className="row" style={stats}>
+            <div className="row" style={RecUtil.stats}>
               <div> { RecUtil.arrayToString(match.bio.purpose) } </div>    
               <div> { RecUtil.arrayToString(match.bio.times) } </div>
               <div> { RecUtil.arrayToString(match.bio.roles) } </div>
@@ -228,7 +223,7 @@ var MatchList = React.createClass({
               <br />
             </div>
             <div className="row">
-              <LineChart className="row" style={chart}
+              <LineChart className="row" style={RecUtil.chart}
                 legend={false}
                 data={lineData}
                 width={250}
