@@ -174,8 +174,6 @@ module.exports = TeamProfile;
 var AdList = React.createClass({
   handleApply: function(e) {
     e.preventDefault();
-    console.log("RATINGS");
-    console.log(this.props.myRatings);
     var application = {
       teamid: this.props.teamId,
       name: this.props.displayName,
@@ -189,6 +187,11 @@ var AdList = React.createClass({
     e.preventDefault();
     // $.post('/team/removead', {adIndex: e.target.value});     // <-- make this
   },
+  approve: function(e){
+    e.preventDefault();
+    console.log(e.target.value);
+  },
+  reject: function(e){},
 
   render: function() {
     var adNodes = [];
@@ -217,6 +220,8 @@ var AdList = React.createClass({
         applicantNodes.push(
           <div>
             <a href={"/#/user/" + applicant.name}>{applicant.name}</a> 50%
+            <Button disabled={disableCheck} value={applicant.name} secondary={disableCheck} onClick={this.approve}>approve</Button>
+            <Button disabled={disableCheck} value={applicant.name} secondary={disableCheck} onClick={this.reject}>reject</Button>
           </div>
           )
       })
