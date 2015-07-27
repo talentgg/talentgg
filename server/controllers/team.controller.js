@@ -122,9 +122,9 @@ module.exports = {
   },
   applytoteam: function(req, res, next){
     var adUpdate;
-    Team.findById(req.body.teamid).then(function(teamData){          
+    Team.findById(req.body.teamid).then(function(teamData){                              
           adUpdate = teamData.ads.data;
-          adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name});
+          adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name, ratings: req.body.ratings});
         })
           .then(function(){
             Team.update({ads: {data: adUpdate}}, {where: {id: req.body.teamid}});

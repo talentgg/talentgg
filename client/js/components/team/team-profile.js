@@ -11,9 +11,11 @@ var TeamProfile = React.createClass({
   mixins: [Router.State, Router.Navigation],
   propTypes: {
     userId: React.PropTypes.number.isRequired,
-    displayName: React.PropTypes.string.isRequired
+    displayName: React.PropTypes.string.isRequired,
+    ratings: React.PropTypes.object.isRequired,
+    counter: React.PropTypes.number.isRequired
   },
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       id: null,
       profile: {
@@ -50,13 +52,14 @@ var TeamProfile = React.createClass({
           adCopy: "we need a jungler like tarzan."
       }],
       members: {},
+      teamRatings: {},
       captain: {
         name: "",
         id: null
       }
     };
   },
-  componentDidMount: function () {
+  componentDidMount: function() {
     var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
     var context = this;
     Axios.get(teamToGet)
@@ -74,18 +77,18 @@ var TeamProfile = React.createClass({
             members: mems,
             profile: response.data.profile,
             captain: cap,
+            teamRatings: response.data.ratings,
             ads: response.data.ads.data
           });
       });
   },
-  componentWillReceiveProps: function () {
+  componentWillReceiveProps: function() {
     var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
     var context = this;
     Axios.get(teamToGet)
       .then(function(response) {
         var cap = null;
         var mems = [];
-        console.log(response);
         _.map(response.data.members, function(member) {
           if (member.isAdmin === true) {
             cap = member;
@@ -101,13 +104,15 @@ var TeamProfile = React.createClass({
         });
       });
   },
-  
+
   handleEdit: function() {
     var router = this.context.router;
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
 
   render: function() {
+    console.log("ratings");
+    console.log(this.props.ratings)
     var captainName = this.state.captain.name;
     var isCaptain = this.state.captain.id === this.props.userId ? true : false;
     var available = RecUtil.arrayToString(this.state.profile.times);
@@ -132,7 +137,7 @@ var TeamProfile = React.createClass({
             <img className="center-block" width="128" height="128" src="/img/tier-silver.png"/>
           </div>
           <div className="col-sm-2">
-            <img className="center-block" width="128" height="128" src="/img/role-support.png"/>
+            { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
           </div>
         </div>
         <br/>
@@ -157,10 +162,8 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <br/>
-        <AdList ads={this.state.ads} displayName={this.props.displayName} teamId={this.state.id} user={this.props.userId} captain={this.state.captain.id} />
-        <div>
-        { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
-        </div>
+        <AdList ads={this.state.ads} displayName={this.props.displayName} teamRatings={this.state.teamRatings}
+        teamId={this.state.id} user={this.props.userId} captain={this.state.captain.id} myRatings={this.props.ratings} />                
       </div>
     )
   }
@@ -171,12 +174,25 @@ module.exports = TeamProfile;
 var AdList = React.createClass({
   handleApply: function(e) {
     e.preventDefault();
-    $.post('/team/applytoteam', {teamid: this.props.teamId, name: this.props.displayName, adIndex: e.target.value});
+    console.log("RATINGS");
+    console.log(this.props.myRatings);
+    var application = {
+      teamid: this.props.teamId,
+      name: this.props.displayName,
+      adIndex: e.target.value,
+      ratings: this.props.myRatings
+    }
+    $.post('/team/applytoteam', application);
 
+  },
+  removeAd: function(e){
+    e.preventDefault();
+    // $.post('/team/removead', {adIndex: e.target.value});     // <-- make this
   },
 
   render: function() {
     var adNodes = [];
+    console.log("start")
     for (var i = 0; i < this.props.ads.length; i++) {
       var adLanes = RecUtil.arrayToString(this.props.ads[i]["lanes"])
       var adRoles = RecUtil.arrayToString(this.props.ads[i]["roles"])
@@ -185,23 +201,40 @@ var AdList = React.createClass({
       var disableCheck = false;
       var context = this;
     
-    _.map(context.props.ads, function(ad){
-      if ((ad.applicants && ad.applicants.indexOf(context.props.user) > -1) || context.props.captain === context.props.user) {          
-          ad.applicants.indexOf(context.props.user)
-          disableCheck = true;
-      }
-    })
+      _.map(context.props.ads, function(ad){
+        // if ((ad.applicants && ad.applicants.indexOf(context.props.user) > -1) || context.props.captain === context.props.user) {          
+          if (context.props.captain === context.props.user) {          
+            ad.applicants.indexOf(context.props.user)
+            disableCheck = true;
+        }
+      })
+
+      // var matchScore = RecUtil.calculateMatchScore(applicant.ratings, this.props.teamRatings)
+
+      var applicantNodes = [];
+      _.map(this.props.ads[i].applicants, function(applicant) {
+        console.log(applicant);
+        applicantNodes.push(
+          <div>
+            <a href={"/#/user/" + applicant.name}>{applicant.name}</a> 50%
+          </div>
+          )
+      })
+      console.log("adNode")
+
       adNodes.push(         
-        <div className="col-sm-2 panel panel-default panel-body" id="whitebox">
+        <div className="col-sm-6 panel panel-default panel-body" id="whitebox">
             <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
             <p><b>Lane</b>: {adLanes} </p>
             <p><b>Role</b>: {adRoles} </p>
             <p>{context.props.ads[i]["adCopy"]}</p>
-            { disableCheck ? (<Button primary onClick={this.viewApplicants}>View Applicants</Button>) :
+            {applicantNodes}
+            { disableCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
             (<Button disabled={disableCheck} value={i} secondary={disableCheck} onClick={this.handleApply}>Apply</Button>)}
         </div>
       )
     };
+    console.log("render")
     return (
       <div className="answersList">
         {adNodes}
@@ -210,10 +243,4 @@ var AdList = React.createClass({
   }
 });
 
-var ApplicantList = React.createClass({
-  render: function() {
-
-  }
-
-})
 

@@ -29,7 +29,7 @@ var TeamRegistration = React.createClass({
     $.post("/team/register", teamBio, function(){
       location.href='/#/';
       location.reload();
-    })
+    });
   },
   render: function() {
     var teamName = this.state.teamName,
