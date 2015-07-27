@@ -131,12 +131,14 @@ module.exports = {
           });
   },
   addtoteam: function(req, res, next){
-    User.findOne({where: {id: req.body.userid}})
-    .then(function(userData){
-      Team.findById(req.body.teamid).then(function(teamData){
-        team.members.push({id: user.id, name: user.displayName, isAdmin: true});
-      });
-    });
+    Team.findById(Number(req.body.teamId))
+      .then(function(teamData){
+        var updatedAds = teamData.ads.data;
+        updatedAds.splice(req.body.ad, 1);
+        var updatedMembers = teamData.members;
+        updatedMembers.push({id: req.body.userid, name: req.body.displayName, isAdmin: false});
+        Team.update({ads: {data: updatedAds}, members: updatedMembers}, {where: {id: req.body.teamId}});
+      });    
   }
 };
 
