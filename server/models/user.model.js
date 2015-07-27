@@ -71,7 +71,8 @@ var User = db.define( 'user', {
     defaultValue: {
       avatar: "http://33.media.tumblr.com/avatar_8ae248e55917_128.png",
       verified: false,
-      verifyKey: false
+      verifyKey: '',
+      region: 'na'
     }
   },
   counter: {                  // redo this and answer history into one json object

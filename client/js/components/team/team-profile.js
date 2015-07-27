@@ -92,8 +92,8 @@ var TeamProfile = React.createClass({
     var context = this;
     Axios.get(teamToGet)
       .then(function(response) {
-        console.log("TEAM ID")
-        console.log(response.body.id)
+        // console.log("TEAM ID")
+        // console.log(response.body.id)
         var cap = null;
         var mems = [];
         _.map(response.data.members, function(member) {
@@ -117,8 +117,8 @@ var TeamProfile = React.createClass({
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
   render: function() {
-    console.log("ratings");
-    console.log(this.props.ratings)
+    // console.log("ratings");
+    // console.log(this.props.ratings)
     var captainName = this.state.captain.name;
     var isCaptain = this.state.captain.id === this.props.userId ? true : false;
     var available = RecUtil.arrayToString(this.state.profile.times);
@@ -131,7 +131,7 @@ var TeamProfile = React.createClass({
 
     return (
       <div>
-        <div className="row" id="whitebox">
+        <div className="row whitebox">
           <div className="col-sm-offset-1 col-sm-2">
             <img className="img-circle center-block" width="128" height="128" src={"http://cdn.cutestpaw.com/wp-content/uploads/2012/09/sss.jpg"} />
           </div>
@@ -147,6 +147,7 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <br/>
+
         <div className="row" id="whitebox">
           <div className="col-sm-12">
                 <h3 className="text-center">Team Profile </h3>
@@ -154,6 +155,9 @@ var TeamProfile = React.createClass({
                 <p><b>About Us</b>: {this.state.profile.about} </p>
               </div>
             </div>
+
+          <br/>  
+
           <div className="row" id="whitebox">
             <div className="col-sm-12">
                 <h3 className="text-center">Current Members</h3>
@@ -164,6 +168,7 @@ var TeamProfile = React.createClass({
           
         
         <br/>
+
         <div className="row">
           
         </div>
