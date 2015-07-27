@@ -51,7 +51,7 @@ var TeamProfile = React.createClass({
       }
     };
   },
-  componentWillMount: function () {
+  componentWillReceiveProps: function () {
     var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
     var context = this;
     Axios.get(teamToGet)
@@ -159,9 +159,6 @@ var AdList = React.createClass({
   },
 
   render: function() {
-
-
-
   var arrayToString = function(obj) {
       var arr = [];
       for (var key in obj) {
