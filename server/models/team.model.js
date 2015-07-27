@@ -50,7 +50,9 @@ var Team = db.define( 'team', {
   },
   ads: {
     type: Sequelize.JSON,
-    defaultValue: []
+    defaultValue: {
+      data: []
+    }
   },
   teamCaptain: {
     type: Sequelize.INTEGER

@@ -92,7 +92,7 @@ var TeamUpdateForm = React.createClass({
     }
     var adPath = '/team/addad/' + this.state.teamName;
     $.post(adPath, newAd);
-    this.transitionTo('team/' + this.state.teamName, {username: 'username'});
+    this.transitionTo('/team/' + this.state.teamName, {username: 'username'});
   },
   render: function() {
     

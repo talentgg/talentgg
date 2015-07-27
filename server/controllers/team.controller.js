@@ -96,21 +96,31 @@ module.exports = {
     });
   },
   addAd: function(req, res, next) {
-    var getName = req.url.split('/')[3];
-    Team.findOne({where: {
-      profile: {
-        teamName: getName
+  var getName = req.url.split('/')[3];
+  Team.findOne({
+      where: {
+        profile: {
+          teamName: getName
+        }
       }
-    }})
-    .then(function(teamProfile){
-      var newAds = teamProfile.ads;
-      newAds.push(req.body);
-
+    })
+    .then(function(teamProfile) {
+      console.log("TEAM PROFILE _________>>>>>>>>>")
+      console.log("ADS _________>>>>>>>>>")
+      console.log(teamProfile.ads.data)
+      var newAds = teamProfile.ads.data;
+      var newAd = req.body;
+      newAd.applicants = [];
+      newAds.push(newAd);
       Team.update({
-        ads: newAds
-      }, {where: {
-        id: teamProfile.id
-      }});
+        ads: {
+          data: newAds
+        }
+      }, {
+        where: {
+          id: teamProfile.id
+        }
+      });
     });
   },
 
@@ -119,22 +129,21 @@ module.exports = {
   },
   applytoteam: function(req, res, next){
     console.log(req.body);
-    var obj;
-    // just use the id
-
-    // User.findOne({where: {id: req.session.passport.user}})
-    //   .then(function(userData){
-    //     user = userData;
-    Team.findById(req.body.teamid).then(function(teamData){
-          obj = teamData;
-          var adUpdate = obj.profile.ads;
-          
-          obj.applicants.push({id: req.session.passport.user, name: req.body.name});
+    var adUpdate;
+    Team.findById(req.body.teamid).then(function(teamData){          
+          adUpdate = teamData.ads.data;
+          console.log("1--------->")
+          console.log(adUpdate);          
+          console.log("2--------^>")
+          console.log(adUpdate[req.body.adIndex]);
+          console.log("3--------^>")
+          console.log(adUpdate[req.body.adIndex].applicants);
+          console.log("4--------^>")
+          adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name});
         })
           .then(function(){
-            Team.update({applicants: obj.applicants}, {where: {id: req.body.teamid}});
+            Team.update({ads: {data: adUpdate}}, {where: {id: req.body.teamid}});
           });
-      // });
   },
   addtoteam: function(req, res, next){
     User.findOne({where: {id: req.body.userid}})

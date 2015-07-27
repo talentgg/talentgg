@@ -12,6 +12,7 @@ TextInput = belle.TextInput;
 
 
 var BioForm = React.createClass({
+  mixins: [React.addons.LinkedStateMixin],
   propTypes: {
     initialBio: React.PropTypes.object.isRequired
   },
@@ -68,10 +69,19 @@ var BioForm = React.createClass({
     });
   },
   render: function() {
-    console.log(this.state);
+    
     return (
       <div className="container">
         <form className="form-horizontal" id="bioform" onSubmit={this.handleSubmit}>
+
+        <div className="form-group">
+          <label className="control-label col-sm-3 col-md-2">Tagline</label>
+            <div className="col-sm-offset-3 col-md-offset-2">
+              <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
+               allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
+            </div>
+          </div>
+
 
           <div className="form-group">
             <label className="control-label col-sm-3 col-md-2">Times Available</label>
@@ -132,13 +142,3 @@ var BioForm = React.createClass({
 });
 
 module.exports = BioForm;
-
-/*
-<div className="form-group">
-  <label className="control-label col-sm-3 col-md-2">Tagline</label>
-  <div className="col-sm-offset-3 col-md-offset-2">
-    <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
-     allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
-  </div>
-</div>
-*/

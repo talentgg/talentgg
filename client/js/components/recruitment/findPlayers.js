@@ -174,11 +174,10 @@ var MatchList = React.createClass({
         match.bio = match.profile
         match.displayName = match.profile.teamName
         match.link = '/#/team/' + match.displayName
-        console.log(match);
       }
 
       if (isNaN(match.overallScore)) {
-        console.log("NaN error")
+        console.log("NaN error") //keep these
         console.log(match);
         match.overallScore = 0;
         }

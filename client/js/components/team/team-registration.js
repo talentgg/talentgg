@@ -20,12 +20,7 @@ var TeamRegistration = React.createClass({
         "weekdays": false,
         "weeknights": false,
         "weekends": false
-      },
-      purpose: {
-        "3x3 Casual": false,
-        "5x5 Casual": false,
-        "5x5 Ranked": false
-      }
+      }      
     };
   },
   handleSubmit: function(e) {
@@ -55,13 +50,7 @@ var TeamRegistration = React.createClass({
           options={this.state.times}
           onChange={this.setState.bind(this)}
           bootstrap />
-
-          <Checkbox
-          label='Purpose: '
-          options={this.state.purpose}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
+          
           <Button primary type="submit" value="Submit">Submit</Button>
 
         </form>
