@@ -57,7 +57,7 @@ var OtherBio = React.createClass({
 
     return (
       <div>
-        <div className="row" id="whitebox">
+        <div className="row whitebox">
           <div className="col-sm-offset-1 col-sm-2">
             <img className="img-circle center-block" src={this.props.games.avatar} />
           </div>
@@ -75,7 +75,7 @@ var OtherBio = React.createClass({
         <br/>
         <div className="row">
           <div className="col-sm-6">
-            <div className="panel panel-default" id="whitebox">
+            <div className="panel panel-default whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Profile</h3>
                 <p><b>Available</b>: { available === "" ? 'Not available' : available}</p>
@@ -86,7 +86,7 @@ var OtherBio = React.createClass({
             </div>
           </div>
           <div className="col-sm-6">
-            <div className="panel panel-default" id="whitebox">
+            <div className="panel panel-default whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Recent Games</h3>
                 <br/>

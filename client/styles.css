@@ -41,7 +41,6 @@ button {
 
 
 /* Sean's CSS */
-
 .nav-justified {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -60,7 +59,7 @@ object {
   background-color: #ffffff;
   border-color: none;
 }
-#whitebox {
+.whitebox {
   background-color: #fff;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -69,6 +68,14 @@ object {
   border-radius: 10px;
   box-shadow:1px 1px 2px rgba(0,0,0,0.08);
 }
-h3 {
-  font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+.progress-bar, .progress-bar-right {
+  background-color: #f05f40;
+}
+.progress-bar-right {
+  display: block;
+  float: right;
+}
+.img-fit{
+  width: 100%;
+  height: auto;
 }

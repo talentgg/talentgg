@@ -108,7 +108,7 @@ module.exports = {
       User.update({bio: req.body},{where: {id: req.session.passport.user}});
     })
     .then(function(){
-      res.redirect('/');
+      res.json({bio: req.body});
     });
   },
 
@@ -141,7 +141,7 @@ module.exports = {
   },
 
   setSummoner: function(req, res){
-    var key = "", obj = {}, region = req.body.region.toLowerCase(), name = req.body.name.toLowerCase().replace(' ', '');
+    var key = "", obj = {}, region = req.body.region, name = req.body.displayName.toLowerCase().replace(' ', '');
     for(var i = 0; i < 20; i++){
       key += gen.charAt(Math.floor(Math.random()*62));
     }
@@ -156,7 +156,7 @@ module.exports = {
       obj.verifyRoute = "https://" + obj.region + ".api.pvp.net/api/lol/" + obj.region + "/v1.4/summoner/" + obj.id + "/runes?api_key=" + config.lolapi;
       User.update({displayName: obj.name + ' (unverified)', games: obj}, {where: {id: req.session.passport.user}})
       .then(function(){
-        res.redirect('/#/account-link');
+        res.json({displayName: obj.name + ' (unverified)', games: obj, avatar: 'http://avatar.leagueoflegends.com/' + obj.region + '/' + obj.name + '.png'});
       });
     });
   },
@@ -167,16 +167,42 @@ module.exports = {
       var obj = data.games;
       var name = data.displayName.split(' (')[0];
       var temp = data.temp;
-      temp.updatedAt = 0;
       relay(obj.verifyRoute, function(err, body){
         if(JSON.parse(body)[obj.id].pages[0].name === obj.verifyKey || config.environment === 'development'){
           obj.verified = true;
           obj.verifyKey = false;
           obj.verifyRoute = false;
-          User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
-          .then(function(){
-            res.redirect('/#/account-link');
+          temp.updatedAt = Date.now();
+          relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.2/matchhistory/' + data.games.id + '?api_key=' + config.lolapi, function(err, history){
+            if(history && JSON.stringify(history).length === 4){
+              temp.matches = [];
+              temp.updatedAt = 0;
+            } else if (history) {
+              JSON.parse(history).matches.forEach(function(val, i){
+                temp.matches[i] = {champ: val.participants[0].championId, win: val.participants[0].stats.winner};
+              });
+            }
+            relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.5/league/by-summoner/' + data.games.id + '?api_key=' + config.lolapi, function(err, league){
+              if(league){
+                temp.rank = JSON.parse(league)[data.games.id][0].tier;
+                User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
+                .then(function(one, two){
+                  res.json({displayName: name, games: obj, temp: temp});
+                });
+              } else {
+                temp.rank = "unranked";
+                User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
+                .then(function(one, two){
+                  res.json({displayName: name, games: obj, temp: temp});
+                });
+              }
+            });
           });
+
+          // User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
+          // .then(function(){
+          //   res.json({displayName: name, games: obj, temp: temp});
+          // });
         } else {
           res.send("Verification failed. It may take a moment for Riot to update their servers,\n but please check to see that the name of your first rune page is: " + obj.verifyKey);
         }
@@ -208,7 +234,10 @@ module.exports = {
         counter: req.body.counter,
         answerHistory: req.body.answerHistory
       },{where: {id: req.session.passport.user}});
-    });
+    })
+    .then(function(){
+      res.json(req.body);
+    })
   },
 
   // Functions that retrieve other user information - more sanitized results

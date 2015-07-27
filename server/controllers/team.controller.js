@@ -24,7 +24,7 @@ module.exports = {
         User.update({teams: user.teams}, {where: {id: req.session.passport.user}});
       })
       .then(function(){
-        res.redirect('/#/');
+        res.json({teams: user.teams});
       });
     });
   },
@@ -53,7 +53,7 @@ module.exports = {
               });
           });
       },
-      
+
 
 
   getProfile: function( req, res, next ){
@@ -63,7 +63,7 @@ module.exports = {
         teamName: getName
       }
     }})
-      .then(function(teamProfile) {    
+      .then(function(teamProfile) {
         deepBoolean(teamProfile.profile);
         deepBoolean(teamProfile.ads);
         res.json(teamProfile);
@@ -122,7 +122,7 @@ module.exports = {
   },
   applytoteam: function(req, res, next){
     var adUpdate;
-    Team.findById(req.body.teamid).then(function(teamData){                              
+    Team.findById(req.body.teamid).then(function(teamData){
           adUpdate = teamData.ads.data;
           adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name, ratings: req.body.ratings});
         })
@@ -138,7 +138,7 @@ module.exports = {
         var updatedMembers = teamData.members;
         updatedMembers.push({id: req.body.userid, name: req.body.displayName, isAdmin: false});
         Team.update({ads: {data: updatedAds}, members: updatedMembers}, {where: {id: req.body.teamId}});
-      });    
+      });
   }
 };
 

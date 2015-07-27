@@ -20,15 +20,16 @@ var TeamRegistration = React.createClass({
         "weekdays": false,
         "weeknights": false,
         "weekends": false
-      }      
+      }
     };
   },
   handleSubmit: function(e) {
+    var self = this;
     e.preventDefault();
     var teamBio = this.state;
-    $.post("/team/register", teamBio, function(){
-      location.href='/#/';
-      location.reload();
+    $.post("/team/register", teamBio, function(data){
+      self.props.updateState(data);
+      self.transitionTo('/team/' + teamBio.teamName)
     });
   },
   render: function() {
@@ -50,7 +51,7 @@ var TeamRegistration = React.createClass({
           options={this.state.times}
           onChange={this.setState.bind(this)}
           bootstrap />
-          
+
           <Button primary type="submit" value="Submit">Submit</Button>
 
         </form>
