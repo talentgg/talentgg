@@ -16,7 +16,7 @@ var Header = React.createClass({
       location.reload();
     });
   },
-  
+
   render: function() {
     return (
       <nav id="mainNav" className="navbar navbar-fixed-top navbar-default">
