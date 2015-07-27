@@ -1,5 +1,6 @@
- body {
-   background-color: white;
+body {
+   background-color: #f4f4f4; /*f4f4f4*/
+   margin-top: 70px;
 }
 
 li {
@@ -52,6 +53,9 @@ button {
 object {
   pointer-events: none;
 }
+.navbar-brand {
+  margin-top: -10px;
+}
 .navbar-default {
   background-color: #ffffff;
   border-color: none;
@@ -64,7 +68,7 @@ object {
   border: none;
   border-radius: 10px;
   box-shadow:1px 1px 2px rgba(0,0,0,0.08);
-
+}
 h3 {
   font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }

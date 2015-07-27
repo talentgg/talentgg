@@ -237,36 +237,11 @@ module.exports = {
                 values: [10, 10]
             }]
            }, {
-            questionText: "What are your goals as a player?",
-            answers: [{
-                label: "To go professional. I schedule playing time every day and voluntarily sacrifice other activities to improve.",
-                value: 0,
-                effects: [10, 10],
-                categories: ["ambition", "committed"]
-            }, {
-                label: "To get really good. I’m already a pretty good player, and if it ever looks like I’d have a chance to go pro, I’d rearrange other aspects of my life to make that happen.",
-                value: 1,
-                effects: [1, -1],
-                categories: ["ambition", "committed"]
-            }, {
-                label: "If someone wants to pay me to play, I’m not gonna turn them down, but realistically those people who make a career out of it are younger, better, and/or have more time and resources than I can manage. Let’s just have fun.",
-                value: 2,
-                effects: [-10, -10],
-                categories: ["ambition", "committed"]
-            }],
-            potential: [{
-                categories: ["ambition", "committed"],
-                values: [10, 10]
-            }]
+            questionText: "You've answered all our questions for now. Check back later. New questions added weekly.",
+            answers: [],
+            potential: []
         }
-
-
-
-
-
         ];
-
-
 
         return questions;
         // });

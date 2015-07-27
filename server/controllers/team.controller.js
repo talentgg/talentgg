@@ -58,14 +58,12 @@ module.exports = {
 
   getProfile: function( req, res, next ){
     var getName = req.url.split('/')[3];
-    console.log(getName);
     Team.findOne({where: {
       profile: {
         teamName: getName
       }
     }})
-       .then(function(teamProfile) {
-       console.log(teamProfile);       
+      .then(function(teamProfile) {    
         deepBoolean(teamProfile.profile);
         deepBoolean(teamProfile.ads);
         res.json(teamProfile);
@@ -74,14 +72,12 @@ module.exports = {
 
   getById: function( req, res, next ){
     var getName = req.url.split('/')[3];
-    console.log(getName);
     Team.findOne({where: {
       id: {
         teamName: getName
       }
     }})
        .then(function(teamProfile) {
-       console.log(teamProfile);       
         deepBoolean(teamProfile.profile);
         deepBoolean(teamProfile.ads);
         res.json(teamProfile);
@@ -96,20 +92,28 @@ module.exports = {
     });
   },
   addAd: function(req, res, next) {
-    var getName = req.url.split('/')[3];
-    Team.findOne({where: {
-      profile: {
-        teamName: getName
+  var getName = req.url.split('/')[3];
+  Team.findOne({
+      where: {
+        profile: {
+          teamName: getName
+        }
       }
-    }})
-    .then(function(teamProfile){
-      var newAds = teamProfile.ads;
-      newAds.push(req.body);
+    })
+    .then(function(teamProfile) {
+      var newAds = teamProfile.ads.data;
+      var newAd = req.body;
+      newAd.applicants = [];
+      newAds.push(newAd);
       Team.update({
-        ads: newAds
-      }, {where: {
-        id: teamProfile.id
-      }});
+        ads: {
+          data: newAds
+        }
+      }, {
+        where: {
+          id: teamProfile.id
+        }
+      });
     });
   },
 
@@ -117,26 +121,24 @@ module.exports = {
 
   },
   applytoteam: function(req, res, next){
-    var obj;
-    User.findOne({where: {id: req.session.passport.user}})
-      .then(function(userData){
-        user = userData;
-        Team.findById(req.body.teamid).then(function(teamData){
-          obj = teamData;
-          obj.applicants.push({id: user.id, name: user.displayName});
+    var adUpdate;
+    Team.findById(req.body.teamid).then(function(teamData){                              
+          adUpdate = teamData.ads.data;
+          adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name, ratings: req.body.ratings});
         })
           .then(function(){
-            Team.update({applicants: obj.applicants}, {where: {id: req.body.teamid}});
-          })
-      });
+            Team.update({ads: {data: adUpdate}}, {where: {id: req.body.teamid}});
+          });
   },
   addtoteam: function(req, res, next){
-    User.findOne({where: {id: req.body.userid}})
-    .then(function(userData){
-      Team.findById(req.body.teamid).then(function(teamData){
-        team.members.push({id: user.id, name: user.displayName, isAdmin: true});
-      });      
-    });
+    Team.findById(Number(req.body.teamId))
+      .then(function(teamData){
+        var updatedAds = teamData.ads.data;
+        updatedAds.splice(req.body.ad, 1);
+        var updatedMembers = teamData.members;
+        updatedMembers.push({id: req.body.userid, name: req.body.displayName, isAdmin: false});
+        Team.update({ads: {data: updatedAds}, members: updatedMembers}, {where: {id: req.body.teamId}});
+      });    
   }
 };
 
@@ -157,4 +159,4 @@ function deepBoolean(obj){
     }
   }
   return obj;
-};
+}
