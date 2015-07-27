@@ -1,45 +1,43 @@
 var React = require('react/addons');
 var Router = require('react-router');
 var Axios = require('axios');
-
-var available = arrayToString(this.state.profile.times);
-    var memberNames = [];
-    _.map(this.state.members, function(member) {
-      memberNames.push(
-        <a href={'/#/user/id/' + member.id}><div align="center">{member.name}</div></a>
-      )
-    });
+var _ = require('lodash');
+var RecUtil = require('../../utils/recUtil.js');
 
 var TeamMembers = React.createClass({
-  mixins: [Router.state, Router.Navigation],
-  getInitialState: function() {
-    return {
-      team: {},
-      bio: {}
-    };
-  },
-  componentDidMount: function() {
-    var router = this.context.router;
-
+  propTypes: {
+    members: React.PropTypes.array.isRequired,
   },
   render : function() {
-
     var members = this.props.members;
-    members.forEach(function(member) {
-      
-    })
+    var membersList = [];
+
+    for (var i = 0; i < members.length; i++) {
+      for (var key in obj) {
+      membersList.push(
+        <div>
+          <p><b>Name</b>: {this.props.name}</p>
+        </div>
+      )     
+    }
+    }
+
+    _.map(this.props.membersList, function(member, index) {
+      return <div className="col-sm-4 whitebox" key={index}>
+                {member}      
+              </div>     
+            });
 
     return (
-      <div className="col-sm-4">
-        <div className="whitebox">
-          <image className="image-rounded image-responsive" width="128px" height="128px" img src={this.props.avatar} />
-          <p><b>Name</b>: {this.props.displayName}</p>
-          <p><b>Lane</b>: {this.props.lane} </p>
-          <p><b>Role</b>: {this.props.role} </p>
-        </div>
+      <div className="row">
+        {membersList}
       </div>
     )
   }
 });
 
 module.exports = TeamMembers;
+
+          // <img className="img-rounded img-responsive" src={this.props.games.avatar} />
+          // <p><b>Role</b>: {this.props.role}</p>
+          // <p><b>Lane</b>: {this.props.lane}</p>
