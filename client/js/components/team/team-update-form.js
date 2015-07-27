@@ -21,7 +21,8 @@ var TeamUpdateForm = React.createClass({
   getInitialState: function() {
     return {
       teamName: "",
-      about: "",      
+      about: "",
+      image: "",
       times: {
         "weekdays": false,
         "weeknights": false,
@@ -62,6 +63,7 @@ var TeamUpdateForm = React.createClass({
             times: response.data.profile.times,
             purpose: response.data.profile.purpose,
             about: response.data.profile.about,
+            image: response.data.profile.image
           });
       });
   },
@@ -72,11 +74,18 @@ var TeamUpdateForm = React.createClass({
 
     var profileUpload = {
       about: this.state.about,
+      image: this.state.image,
       times: this.state.times,
       purpose: this.state.purpose
     };
-    $.post('/team/update/' + this.state.teamName, profileUpload);
+
+    var self = this;
+
+    $.post('/team/update/' + this.state.teamName, profileUpload, function() {
+      self.transitionTo('/team/' + self.state.teamName, {username: 'username'})
+    });
   },
+
   handleAd: function(e) {
     e.preventDefault();
     var newAd = {
@@ -93,9 +102,13 @@ var TeamUpdateForm = React.createClass({
     
     return (
       <div className="container">
+
         <form>
           About Us: <TextInput placeholder="update your description here"
           allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
+
+          Image Url: <TextInput placeholder="please upload your image url here"
+          allowNewLine={ true } name="image" valueLink={this.linkState('image')} />
 
           <Checkbox
           label='Times Available: '
