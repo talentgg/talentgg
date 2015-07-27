@@ -18,19 +18,32 @@ var Chart = React.createClass({
         loud: 0,
         committed: 0,
         ambition: 0
+      },
+      descriptors: {
+        dominance: ['more dominant', 'more empathetic', 'dominance'],
+        adaptable: ['more adaptable', 'more routine-based', 'adaptability'],
+        blunt: ['more blunt', 'more reticent', 'communicator'],
+        collaborative: ['more collaborative', 'more reticent', 'collaborator'],
+        brute: ['more brutal', 'more technical', 'playing style'],
+        aggressive: ['more aggressive', 'more cautious', 'playing aggression'],
+        boundaries: ['pushes boundaries', 'more respectful', 'social style'],
+        loud: ['more vocal', 'more quiet', 'volume'],
+        committed: ['more committed', 'more casual', 'commitment'],
+        ambition: ['more ambitious', 'more fun-driven', 'ambition'],
       }
-    }
+    };
   },
   componentWillReceiveProps: function(props){
     this.setState({
-      ratings: props.ratings
+      ratings: props.ratings,      
+      
     })
   },
   render: function(){
     return(
       <div className="panel panel-default whitebox">
         <div className="panel-body">
-          <Bar ratings={this.state.ratings} />
+          <Bar ratings={this.state.ratings} descriptors={this.state.descriptors} />
         </div>
       </div>
     )
@@ -38,15 +51,22 @@ var Chart = React.createClass({
 })
 
 var Bar = React.createClass({
+
   render: function(){
     var ratings = this.props.ratings;
+    var descriptors = this.props.descriptors;
+
+
     var chartList = [];
     for(var key in ratings){
+      if (!descriptors[key]) console.log("***", key)
+
+      console.log(descriptors[key][0])
       if(ratings[key] > 0){
         chartList.push(
           <div key={key} className="row">
             <div className="col-sm-6">
-              <p className="pull-right">Your {key} is high</p>
+              <p className="pull-right">{descriptors[key][0]}</p>
             </div>
             <div className="col-sm-6">
               <div className="progress">
@@ -66,14 +86,14 @@ var Bar = React.createClass({
               </div>
             </div>
             <div className="col-sm-6">
-              <p>Your {key} is low</p>
+              <p>{descriptors[key][1]}</p>
             </div>
           </div>
         )
       } else {
         chartList.push(
           <div key={key} className="row">
-            <p className="text-center">Your {key} is untested</p>
+            <p className="text-center">neutral {descriptors[key][2]}</p>
           </div>
         )
       }
