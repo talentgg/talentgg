@@ -80,6 +80,9 @@ var FindPlayers = React.createClass({
   },
   render: function() {
     var context = this;
+    console.log("MY TEAMS")
+    console.log(context.state.myTeams)
+    console.log(context.state.id)
     var teamsCaptained = RecUtil.teamsCaptained(context.state.myTeams, context.state.id);
 
     return (     

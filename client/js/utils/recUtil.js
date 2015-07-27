@@ -1,3 +1,4 @@
+var React = require('react');
 var _ = require('lodash');
 
 var RecUtil = {
@@ -47,7 +48,7 @@ var RecUtil = {
   teamsCaptained: function(teams, id) {
     var teamNodes = [];
     _.map(teams, function(myTeam) {
-      if (myTeam.captain === id) {
+      if (myTeam.teamCaptain === id) {
         teamNodes.push(<Option value={myTeam.profile.teamName}> {myTeam.profile.teamName}</Option>)
       }
     })
