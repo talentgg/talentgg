@@ -87,6 +87,8 @@ var TeamProfile = React.createClass({
     var context = this;
     Axios.get(teamToGet)
       .then(function(response) {
+        console.log("TEAM ID")
+        console.log(response.body.id)
         var cap = null;
         var mems = [];
         _.map(response.data.members, function(member) {
@@ -109,7 +111,6 @@ var TeamProfile = React.createClass({
     var router = this.context.router;
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
-
   render: function() {
     console.log("ratings");
     console.log(this.props.ratings)
@@ -189,9 +190,14 @@ var AdList = React.createClass({
   },
   approve: function(e){
     e.preventDefault();
+    console.log("approve");
     console.log(e.target.value);
+    var approval = e.target.value.split('&');
+    $.post('/team/addtoteam', {userid: approval[0], ad: approval[1], displayName: approval[2], teamId: this.props.teamId});
   },
-  reject: function(e){},
+  reject: function(e){
+    console.log("HELP")
+  },
 
   render: function() {
     var adNodes = [];
@@ -201,27 +207,27 @@ var AdList = React.createClass({
       var adRoles = RecUtil.arrayToString(this.props.ads[i]["roles"])
 
 // need a way to track if the user's applied and disable the button
-      var disableCheck = false;
+      var adminCheck = false;
       var context = this;
     
       _.map(context.props.ads, function(ad){
         // if ((ad.applicants && ad.applicants.indexOf(context.props.user) > -1) || context.props.captain === context.props.user) {          
           if (context.props.captain === context.props.user) {          
             ad.applicants.indexOf(context.props.user)
-            disableCheck = true;
+            adminCheck = true;
         }
       })
 
       // var matchScore = RecUtil.calculateMatchScore(applicant.ratings, this.props.teamRatings)
 
       var applicantNodes = [];
-      _.map(this.props.ads[i].applicants, function(applicant) {
+      _.map(this.props.ads[i].applicants, function(applicant, index) {
         console.log(applicant);
         applicantNodes.push(
           <div>
             <a href={"/#/user/" + applicant.name}>{applicant.name}</a> 50%
-            <Button disabled={disableCheck} value={applicant.name} secondary={disableCheck} onClick={this.approve}>approve</Button>
-            <Button disabled={disableCheck} value={applicant.name} secondary={disableCheck} onClick={this.reject}>reject</Button>
+            { adminCheck ? (<div><Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={adminCheck} onClick={context.approve}>approve</Button>
+            <Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={adminCheck} onClick={context.reject}>reject</Button></div>) : null }            
           </div>
           )
       })
@@ -234,8 +240,8 @@ var AdList = React.createClass({
             <p><b>Role</b>: {adRoles} </p>
             <p>{context.props.ads[i]["adCopy"]}</p>
             {applicantNodes}
-            { disableCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
-            (<Button disabled={disableCheck} value={i} secondary={disableCheck} onClick={this.handleApply}>Apply</Button>)}
+            { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
+            (<Button disabled={adminCheck} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
         </div>
       )
     };
