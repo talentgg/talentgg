@@ -48,14 +48,9 @@ var RecUtil = {
     var teamNodes = [];
     _.map(teams, function(myTeam) {
       if (myTeam.captain === id) {
-        teamNodes.push( < Option value = {
-          myTeam[i].profile.teamName
-        } > {
-          myTeam[i].profile.teamName
-        } < /Option>)
+        teamNodes.push(<Option value={myTeam.profile.teamName}> {myTeam.profile.teamName}</Option>)
       }
     })
-
     return teamNodes
   },
 
