@@ -51,7 +51,7 @@ var TeamProfile = React.createClass({
       }
     };
   },
-  componentWillMount: function () {
+  componentDidMount: function () {
     var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
     var context = this;
     Axios.get(teamToGet)
@@ -72,7 +72,29 @@ var TeamProfile = React.createClass({
             captain: cap,
             ads: response.data.ads
           });
-
+      });
+  },
+  componentWillReceiveProps: function () {
+    var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
+    var context = this;
+    Axios.get(teamToGet)
+      .then(function(response) {
+        var cap = null;
+        var mems = [];
+        console.log(response);
+        _.map(response.data.members, function(member) {
+          if (member.isAdmin === true) {
+            cap = member;
+          } else mems.push(member);
+        });
+        context.setState({
+          id: response.data.id,
+          game: response.data.game,
+          members: mems,
+          profile: response.data.profile,
+          captain: cap,
+          ads: response.data.ads
+        });
       });
   },
   handleEdit: function() {
@@ -159,9 +181,6 @@ var AdList = React.createClass({
   },
 
   render: function() {
-
-
-
   var arrayToString = function(obj) {
       var arr = [];
       for (var key in obj) {
