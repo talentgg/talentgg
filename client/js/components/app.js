@@ -8,6 +8,8 @@ var App = React.createClass({
     return {
       userId: 0,
       displayName: "",
+      verified: false,
+      verifyKey: "",
       avatar: "",
       bio: {
         times: {},
@@ -47,7 +49,7 @@ var App = React.createClass({
   },
 
   updateState: function(newState){
-    setState(newState);
+    this.setState(newState);
   },
 
   render: function() {

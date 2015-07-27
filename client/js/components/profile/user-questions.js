@@ -40,6 +40,7 @@ var UserQuestions = React.createClass({
   },
 
   handleSubmit: function(e) {
+    var self = this;
     e.preventDefault();
     var ratingUpdate = {};
     for (key in this.state.ratings) {
@@ -63,7 +64,12 @@ var UserQuestions = React.createClass({
       counter: count
     });
 
-    $.post( "/ratings", { ratings: ratingUpdate, counter: count } );
+    $.post( "/ratings", {
+      ratings: ratingUpdate,
+      counter: count
+    }, function(data){
+      self.props.updateState(data);
+    });
   },
   render: function() {
     return (

@@ -29,12 +29,10 @@ var Test = React.createClass({
     games: React.PropTypes.object.isRequired,
     temp: React.PropTypes.object.isRequired,
     ratings: React.PropTypes.object.isRequired,
+    updateState: React.PropTypes.func.isRequired
   },
 
   render: function() {
-    console.log(this.props);
-    var fitting = {height: 'auto', width: '100%'};
-
     var arrayToString = function(obj) {
       var arr = [];
       for (var key in obj) {
@@ -57,21 +55,21 @@ var Test = React.createClass({
       <div>
         <div className="row whitebox">
           <div className="col-sm-offset-1 col-sm-2">
-            <img className="img-circle center-block" width="128" height="128" src={this.props.avatar} />
+            <img className="img-circle center-block img-fit" src={this.props.avatar} />
           </div>
           <div className="col-sm-4">
             <h3>{this.props.displayName}</h3>
             <p>{this.props.bio.about === "" ? 'I haven\'t filled this out yet' : this.props.bio.about}</p>
           </div>
           <div className="col-sm-2">
-            <img className="center-block" width="128" height="128" src={"/img/tier-" + this.props.temp.rank + ".png"} />
+            <img className="center-block img-fit" src={"/img/tier-" + this.props.temp.rank + ".png"} />
           </div>
           <div className="col-sm-2">
-            <img className="center-block" width="128" height="128" src="/img/role-support.png"/>
+            <img className="center-block img-fit" src="/img/role-support.png"/>
           </div>
         </div>
         <div className="row">
-          <ul className="nav nav-pills nav-justified" role="tablist">
+          <ul className="nav nav-pills nav-justified" role="tablist" id="tabs">
             <li role="presentation" className="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="pill">Profile</a></li>
             <li role="presentation"><a href="#edit" aria-controls="edit" role="tab" data-toggle="pill">Edit</a></li>
             <li role="presentation"><a href="#questions" aria-controls="questions" role="tab" data-toggle="pill">Questions</a></li>
@@ -99,12 +97,12 @@ var Test = React.createClass({
                     <br/>
                     <div className="row">
                       <div className="col-sm-1"></div>
-                      {recentTop.map(function(val, i){ return <div key={i} className="col-sm-2"><img className="img-circle" style={fitting} src={'http://ddragon.leagueoflegends.com/cdn/5.13.1/img/champion/' + champList[val.champ] + '.png'} /></div> })}
+                      {recentTop.map(function(val, i){ return <div key={i} className="col-sm-2"><img className="img-circle img-fit" src={'http://ddragon.leagueoflegends.com/cdn/5.13.1/img/champion/' + champList[val.champ] + '.png'} /></div> })}
                     </div>
                     <br/>
                     <div className="row">
                       <div className="col-sm-1"></div>
-                      {recentBot.map(function(val, i){ return <div key={i} className="col-sm-2"><img className="img-circle" style={fitting} src={'http://ddragon.leagueoflegends.com/cdn/5.13.1/img/champion/' + champList[val.champ] + '.png'} /></div> })}
+                      {recentBot.map(function(val, i){ return <div key={i} className="col-sm-2"><img className="img-circle img-fit" src={'http://ddragon.leagueoflegends.com/cdn/5.13.1/img/champion/' + champList[val.champ] + '.png'} /></div> })}
                     </div>
                   </div>
                 </div>
@@ -112,10 +110,10 @@ var Test = React.createClass({
             </div>
           </div>
           <div role="tabpanel" className="tab-pane" id="edit">
-            <Edit initialBio={this.props.bio} />
+            <Edit initialBio={this.props.bio} updateState={this.props.updateState} />
           </div>
           <div role="tabpanel" className="tab-pane" id="questions">
-            <Questions />
+            <Questions updateState={this.props.updateState} />
           </div>
           <div role="tabpanel" className="tab-pane" id="chart">
             <Chart ratings={this.props.ratings} />
