@@ -71,7 +71,7 @@ var UserQuestions = React.createClass({
         <form id="question" onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="col-md-offset-1 col-md-10">
-              <div className="panel panel-default" id="whitebox">
+              <div className="panel panel-default whitebox">
                 <div className="panel-body">
                   <h3 className="text-center">{this.state.current.questionText}</h3>
                   <AnswersList data={this.state.current} />

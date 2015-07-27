@@ -35,16 +35,19 @@ var App = React.createClass({
         userId: response.id,
         displayName: response.displayName,
         avatar: response.games.avatar,
-        //the rest are full objects
         bio: response.bio,
         teams: response.teams,
         games: response.games,
-        counter: response.counter, //can we remove this eventually, can this be put in ratings?
+        counter: response.counter,
         answerHistory: response.answerHistory,
         ratings: response.ratings,
         temp: response.temp
       });
     });
+  },
+
+  updateState: function(newState){
+    setState(newState);
   },
 
   render: function() {
@@ -63,6 +66,7 @@ var App = React.createClass({
           answerHistory={this.state.answerHistory}
           ratings={this.state.ratings}
           temp={this.state.temp}
+          updateState={this.updateState}
           />
         </div>
       </div>

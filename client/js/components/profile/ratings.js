@@ -105,7 +105,7 @@ var ratingVisualization = React.createClass({
       .attr("fill", "black");
 
     return (
-      <div className="ratingViz" id="whitebox"> </div>
+      <div className="ratingViz whitebox"> </div>
     )
   }
 })

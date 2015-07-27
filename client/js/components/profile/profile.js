@@ -3,7 +3,8 @@ var Router = require("react-router");
 var Route = Router.Route;
 var Ratings = require('./ratings');
 var Questions = require('./user-questions');
-var Edit = require('./bio-form')
+var Edit = require('./bio-form');
+var Chart = require('./chart');
 
 var champList = {"1":"Annie","2":"Olaf","3":"Galio","4":"TwistedFate","5":"XinZhao","6":"Urgot","7":"Leblanc","8":"Vladimir",
 "9":"FiddleSticks","10":"Kayle","11":"MasterYi","12":"Alistar","13":"Ryze","14":"Sion","15":"Sivir","16":"Soraka","17":"Teemo",
@@ -27,10 +28,11 @@ var Test = React.createClass({
     bio: React.PropTypes.object.isRequired,
     games: React.PropTypes.object.isRequired,
     temp: React.PropTypes.object.isRequired,
-    ratings: React.PropTypes.object.isRequired
+    ratings: React.PropTypes.object.isRequired,
   },
 
   render: function() {
+    console.log(this.props);
     var fitting = {height: 'auto', width: '100%'};
 
     var arrayToString = function(obj) {
@@ -53,7 +55,7 @@ var Test = React.createClass({
 
     return(
       <div>
-        <div className="row" id="whitebox">
+        <div className="row whitebox">
           <div className="col-sm-offset-1 col-sm-2">
             <img className="img-circle center-block" width="128" height="128" src={this.props.avatar} />
           </div>
@@ -80,7 +82,7 @@ var Test = React.createClass({
           <div role="tabpanel" className="tab-pane active" id="profile">
             <div className="row">
               <div className="col-sm-6">
-                <div className="panel panel-default" id="whitebox">
+                <div className="panel panel-default whitebox">
                   <div className="panel-body">
                     <h3 className="text-center">Profile</h3>
                     <p><b>Available</b>: { available === "" ? 'Not available' : available}</p>
@@ -91,7 +93,7 @@ var Test = React.createClass({
                 </div>
               </div>
               <div className="col-sm-6">
-                <div className="panel panel-default" id="whitebox">
+                <div className="panel panel-default whitebox">
                   <div className="panel-body">
                     <h3 className="text-center">Ranked Games</h3>
                     <br/>
@@ -116,7 +118,7 @@ var Test = React.createClass({
             <Questions />
           </div>
           <div role="tabpanel" className="tab-pane" id="chart">
-            <Ratings stats={this.props.ratings} />
+            <Chart ratings={this.props.ratings} />
           </div>
         </div>
       </div>
@@ -127,5 +129,5 @@ var Test = React.createClass({
 module.exports = Test;
 
 /*
-
+<Ratings stats={this.props.ratings} />
 */
