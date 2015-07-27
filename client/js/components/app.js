@@ -43,8 +43,8 @@ var App = React.createClass({
         answerHistory: response.answerHistory,
         ratings: response.ratings,
         temp: response.temp
-      })
-    })
+      });
+    });
   },
 
   render: function() {
