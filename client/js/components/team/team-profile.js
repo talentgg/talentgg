@@ -46,7 +46,7 @@ var TeamProfile = React.createClass({
           adCopy: "we need a jungler like tarzan."
       }],
       applicants: [],
-      members: {},
+      members: {"name": dookie},
       captain: {
         name: "",
         id: null
@@ -144,7 +144,7 @@ var TeamProfile = React.createClass({
         </div>
         <br/>
         <div className="row">
-          <TeamMembers team={this.props.team} />
+          <TeamMembers members={this.state.members} bio={this.state.bio} />
         </div>
         <AdList ads={this.state.ads} displayName={this.props.displayName} teamId={this.state.id} />
         <div>
@@ -205,3 +205,5 @@ var AdList = React.createClass({
     );
   }
 });
+
+module.exports = AdList;
