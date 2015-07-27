@@ -58,14 +58,12 @@ module.exports = {
 
   getProfile: function( req, res, next ){
     var getName = req.url.split('/')[3];
-    console.log(getName);
     Team.findOne({where: {
       profile: {
         teamName: getName
       }
     }})
-       .then(function(teamProfile) {
-       console.log(teamProfile);       
+      .then(function(teamProfile) {    
         deepBoolean(teamProfile.profile);
         deepBoolean(teamProfile.ads);
         res.json(teamProfile);
@@ -74,14 +72,12 @@ module.exports = {
 
   getById: function( req, res, next ){
     var getName = req.url.split('/')[3];
-    console.log(getName);
     Team.findOne({where: {
       id: {
         teamName: getName
       }
     }})
        .then(function(teamProfile) {
-       console.log(teamProfile);       
         deepBoolean(teamProfile.profile);
         deepBoolean(teamProfile.ads);
         res.json(teamProfile);
@@ -105,9 +101,6 @@ module.exports = {
       }
     })
     .then(function(teamProfile) {
-      console.log("TEAM PROFILE _________>>>>>>>>>")
-      console.log("ADS _________>>>>>>>>>")
-      console.log(teamProfile.ads.data)
       var newAds = teamProfile.ads.data;
       var newAd = req.body;
       newAd.applicants = [];
@@ -128,17 +121,9 @@ module.exports = {
 
   },
   applytoteam: function(req, res, next){
-    console.log(req.body);
     var adUpdate;
     Team.findById(req.body.teamid).then(function(teamData){          
           adUpdate = teamData.ads.data;
-          console.log("1--------->")
-          console.log(adUpdate);          
-          console.log("2--------^>")
-          console.log(adUpdate[req.body.adIndex]);
-          console.log("3--------^>")
-          console.log(adUpdate[req.body.adIndex].applicants);
-          console.log("4--------^>")
           adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name});
         })
           .then(function(){
@@ -172,4 +157,4 @@ function deepBoolean(obj){
     }
   }
   return obj;
-};
+}

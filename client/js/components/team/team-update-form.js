@@ -52,11 +52,9 @@ var TeamUpdateForm = React.createClass({
   componentWillMount: function() {
     var router = this.context.router;
     var name = router.getCurrentQuery().teamname;
-    console.log(name);
     var context = this;
     Axios.get('/team/profile/' + name)
       .then(function(response) {   
-          console.log(name);       
           context.setState({
             // game: response.data.game, // what's this do here?
             members: response.data.members,
@@ -71,9 +69,6 @@ var TeamUpdateForm = React.createClass({
     e.preventDefault();
     var router = this.context.router;
     var name = router.getCurrentQuery().teamname;
-    console.log("submit");
-    console.log(name);
-    console.log(this.state.teamName);
 
     var profileUpload = {
       about: this.state.about,

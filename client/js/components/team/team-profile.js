@@ -30,7 +30,6 @@ var TeamProfile = React.createClass({
           "5v5": false
         },
         about: "",
-
         game: {},
       },
       ads: [{          // test ad
@@ -102,11 +101,13 @@ var TeamProfile = React.createClass({
         });
       });
   },
+  
   handleEdit: function() {
     var router = this.context.router;
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
-  render: function () {
+
+  render: function() {
     var captainName = this.state.captain.name;
     var isCaptain = this.state.captain.id === this.props.userId ? true : false;
     var available = RecUtil.arrayToString(this.state.profile.times);
@@ -215,3 +216,4 @@ var ApplicantList = React.createClass({
   }
 
 })
+
