@@ -186,21 +186,22 @@ var MatchList = React.createClass({
     var matchData;
     
     matchData = this.props.searchAs === "solo" ? userSubset : teamSubset;
-
+    console.log('matchData')
+    console.log(matchData);
     // do the same for myratings if they pick a team
 
     _.map(matchData, function(data) {
       overallScore = 0;
-      // if (data.id !== context.props.id) {
-      //   for (key in context.props.me) {
-      //     var score = 20 - Math.abs(context.props.me[key] - data.ratings[key]);
-      //     overallScore += score;
-      //     score = RecUtil.calculateMatchScore(score, 20);
-      //   }
-      //   overallScore = Math.round(RecUtil.calculateMatchScore(overallScore, 200) * 100);
-      //   data.overallScore = overallScore;
-      //   matchOrder.push(data);
-      // }    
+      if (data.id !== context.props.id) {
+        // for (key in context.props.me) {
+        //   var score = 20 - Math.abs(context.props.me[key] - data.ratings[key]);
+        //   overallScore += score;
+        //   score = RecUtil.calculateMatchScore(score, 20);
+        // }
+        overallScore = 50; //Math.round(RecUtil.calculateMatchScore(overallScore, 200) * 100);
+        data.overallScore = overallScore;
+        matchOrder.push(data);
+      }    
     });
 
     _.map(matchOrder, function(match) {
