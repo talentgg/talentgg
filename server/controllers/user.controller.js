@@ -53,30 +53,12 @@ module.exports = {
       obj.username = "";
       obj.hash = "";
       if((data.temp.updatedAt + (1000 * 60 * 5)) < Date.now() && data.games.verified) { //5 minute timer between api call pairs
-        obj.temp.updatedAt = Date.now();
-        relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.2/matchhistory/' + data.games.id + '?api_key=' + config.lolapi, function(err, history){
-          if(history && JSON.stringify(history).length === 4){
-            obj.temp.matches = [];
-          } else if (history) {
-            JSON.parse(history).matches.forEach(function(val, i){
-              obj.temp.matches[i] = {champ: val.participants[0].championId, win: val.participants[0].stats.winner};
-            });
-          }
-          relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.5/league/by-summoner/' + data.games.id + '?api_key=' + config.lolapi, function(err, league){
-            if(league){
-              obj.temp.rank = JSON.parse(league)[data.games.id][0].tier;
-              User.update({temp: obj.temp}, {where: {id: req.session.passport.user}})
-              .then(function(one, two){
-                res.json(obj);
-              });
-            } else {
-              obj.temp.rank = "unranked";
-              User.update({temp: obj.temp}, {where: {id: req.session.passport.user}})
-              .then(function(one, two){
-                res.json(obj);
-              });
-            }
-          });
+        updateSummoner(data.games.id, data.games.region, function(temp){
+          obj.temp.updatedAt = obj.temp.updatedAt || Date.now();
+          User.update({temp: temp}, {where: {id: req.session.passport.user}})
+          .then(function(){
+            res.json(obj);
+          })
         });
       } else {
         res.json(obj);
@@ -172,37 +154,13 @@ module.exports = {
           obj.verified = true;
           obj.verifyKey = false;
           obj.verifyRoute = false;
-          temp.updatedAt = Date.now();
-          relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.2/matchhistory/' + data.games.id + '?api_key=' + config.lolapi, function(err, history){
-            if(history && JSON.stringify(history).length === 4){
-              temp.matches = [];
-              temp.updatedAt = 0;
-            } else if (history) {
-              JSON.parse(history).matches.forEach(function(val, i){
-                temp.matches[i] = {champ: val.participants[0].championId, win: val.participants[0].stats.winner};
-              });
-            }
-            relay('https://' + data.games.region + '.api.pvp.net/api/lol/' + data.games.region + '/v2.5/league/by-summoner/' + data.games.id + '?api_key=' + config.lolapi, function(err, league){
-              if(league){
-                temp.rank = JSON.parse(league)[data.games.id][0].tier;
-                User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
-                .then(function(one, two){
-                  res.json({displayName: name, games: obj, temp: temp});
-                });
-              } else {
-                temp.rank = "unranked";
-                User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
-                .then(function(one, two){
-                  res.json({displayName: name, games: obj, temp: temp});
-                });
-              }
-            });
+          temp.updatedAt = Date.now(); //data.games.
+          updateSummoner(data.games.id, data.games.region, function(temp){
+            User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
+            .then(function(){
+              res.json({displayName: name, games: obj, temp: temp});
+            })
           });
-
-          // User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
-          // .then(function(){
-          //   res.json({displayName: name, games: obj, temp: temp});
-          // });
         } else {
           res.send("Verification failed. It may take a moment for Riot to update their servers,\n but please check to see that the name of your first rune page is: " + obj.verifyKey);
         }
@@ -210,21 +168,21 @@ module.exports = {
     });
   },
 
-  updateSummoner: function(req, res){ // Updates game data
-    var user;
-    User.findById(req.session.passport.user)
-    .then(function(info){
-      user = info.games;
-      relay('https://' + user.region + '.api.pvp.net/api/lol/' + user.region + '/v1.4/summoner/' + user.id + '?api_key=' + config.lolapi, function(er, data) {
-        user.name = JSON.parse(data)[user.id].name;
-        user.level = JSON.parse(data)[user.id].summonerLevel;
-        User.update({games: user}, {where: {id: req.session.passport.user}})
-        .then(function(){
-          res.redirect('/#/account-link');
-        });
-      });
-    });
-  },
+  // updateSummoner: function(req, res){ // Updates game data
+  //   var user;
+  //   User.findById(req.session.passport.user)
+  //   .then(function(info){
+  //     user = info.games;
+  //     relay('https://' + user.region + '.api.pvp.net/api/lol/' + user.region + '/v1.4/summoner/' + user.id + '?api_key=' + config.lolapi, function(er, data) {
+  //       user.name = JSON.parse(data)[user.id].name;
+  //       user.level = JSON.parse(data)[user.id].summonerLevel;
+  //       User.update({games: user}, {where: {id: req.session.passport.user}})
+  //       .then(function(){
+  //         res.redirect('/#/account-link');
+  //       });
+  //     });
+  //   });
+  // },
 
   updateRatings: function(req, res){ // Updates ratings data
     User.findById(req.session.passport.user)
@@ -274,6 +232,29 @@ module.exports = {
   }
 };
 
+function updateSummoner(id, region, callback){
+  var temp = {matches: []};
+  relay('https://' + region + '.api.pvp.net/api/lol/' + region + '/v2.2/matchhistory/' + id + '?api_key=' + config.lolapi, function(err, history){
+    if(!history || JSON.stringify(history).length === 4){
+      temp.matches = [];
+      temp.updatedAt = 0;
+    } else {
+      JSON.parse(history).matches.forEach(function(val, i){
+        temp.matches[i] = {champ: val.participants[0].championId, win: val.participants[0].stats.winner};
+      });
+    }
+    relay('https://' + region + '.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + id + '?api_key=' + config.lolapi, function(err, league){
+      if(!league || JSON.stringify(league).length === 4){
+        temp.rank = "unranked";
+        callback(temp);
+      } else {
+        temp.rank = JSON.parse(league)[id][0].tier;
+        callback(temp);
+      }
+    });
+  });
+}
+
 function relay(url, callback) {
   console.log('---API CALL---'); //to keep track of api calls in dev environment
   request(url, function(err, stat, body) {
@@ -281,7 +262,7 @@ function relay(url, callback) {
       callback(err, null);
     } else if(stat.statusCode < 200 || stat.statusCode >= 400) {
       console.log("Status Code: " + stat.statusCode + " at: " + url);
-      if(stat.statusCode === 404 || stat.statusCode >= 500){
+      if(stat.statusCode === 404 || stat.statusCode === 429 || stat.statusCode >= 500){
         callback(null, false);
       } //handles requests for info that doesn't exist if that happens
     } else {
