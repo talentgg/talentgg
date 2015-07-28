@@ -135,7 +135,7 @@ var TeamProfile = React.createClass({
             <p>{this.state.profile.about}</p>
           </div>
           <div className="col-sm-2">
-            <img className="center-block" width="128" height="128" src="/img/tier-silver.png"/>
+            <img className="center-block img-fit" src="/img/tier-silver.png"/>
           </div>
           <div className="col-sm-2">
             { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
@@ -143,7 +143,7 @@ var TeamProfile = React.createClass({
         </div>
         <br/>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <div className="panel panel-default whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Team Profile </h3>
@@ -151,8 +151,7 @@ var TeamProfile = React.createClass({
                 <p><b>About Us</b>: {this.state.profile.about} </p>
               </div>
             </div>
-          </div>
-          <div className="col-sm-6">
+            <br/>
             <div className="panel panel-default whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Current Members</h3>
@@ -161,10 +160,13 @@ var TeamProfile = React.createClass({
               </div>
             </div>
           </div>
+          <div className="col-sm-4">
+            <AdList ads={this.state.ads} displayName={this.props.displayName} teamRatings={this.state.teamRatings}
+            teamId={this.state.id} user={this.props.userId} captain={this.state.captain.id} myRatings={this.props.ratings} />
+          </div>
         </div>
         <br/>
-        <AdList ads={this.state.ads} displayName={this.props.displayName} teamRatings={this.state.teamRatings}
-        teamId={this.state.id} user={this.props.userId} captain={this.state.captain.id} myRatings={this.props.ratings} />
+
       </div>
     )
   }
@@ -234,7 +236,7 @@ var AdList = React.createClass({
       // console.log("adNode")
 
       adNodes.push(
-        <div className="col-sm-6 panel panel-default panel-body whitebox">
+        <div className="panel panel-default panel-body whitebox">
             <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
             <p><b>Lane</b>: {adLanes} </p>
             <p><b>Role</b>: {adRoles} </p>
