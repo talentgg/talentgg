@@ -14,7 +14,7 @@ module.exports = {
                 label: "Make it clear that the player should find a new team for the next match, and get their head out of their ass for this one.",
                 value: 0,
                 effects: [10, 10, 2, -2, 10],
-                categories: ["troll", "loud", "ambition", "adaptable", "dominance"]
+                categories: ["boundaries", "loud", "ambition", "adaptable", "dominance"]
             }, {
                 label: "Direct the player on how to play better.",
                 value: 1,
@@ -29,15 +29,15 @@ module.exports = {
                 label: "Keep an eye on their area of the board, and hop over whenever need be.",
                 value: 3,
                 effects: [5, 2, -10, -10, -5, -5],
-                categories: ["adaptable", "collaborative", "loud", "dominance", "blunt", "troll"]
+                categories: ["adaptable", "collaborative", "loud", "dominance", "blunt", "boundaries"]
             }, {
                 label: "Stay in your lane. If the other team is focused on your teammate, they'll be too distracted to deal with your plans.",
                 value: 4,
                 effects: [5, -5, -5, -10, -5, -3],
-                categories: ["adaptable", "blunt", "collaborative", "loud", "dominance", "troll"]
+                categories: ["adaptable", "blunt", "collaborative", "loud", "dominance", "boundaries"]
             }],
             potential: [{
-                categories: ["troll", "loud", "dominance", "adaptable", "collaborative"],
+                categories: ["boundaries", "loud", "dominance", "adaptable", "collaborative"],
                 values: [10, 10, 10, 5, 5]
             }]
         }, {
@@ -46,25 +46,25 @@ module.exports = {
                 label: "It’s part of the game. It heightens the spirit of competition and throws the other team off their game.",
                 value: 0,
                 effects: [10, 5, 10, 10],
-                categories: ["troll", "dominance", "loud", "blunt"]
+                categories: ["boundaries", "dominance", "loud", "blunt"]
             }, {
                 label: "It’s part of the game, but I only respond when others initiate.",
                 value: 1,
                 effects: [5, 5, 5, 5],
-                categories: ["troll", "dominance", "loud", "blunt"]
+                categories: ["boundaries", "dominance", "loud", "blunt"]
             }, {
                 label: "It doesn’t bother me. I don’t respond.",
                 value: 2,
                 effects: [-5, 5, -5, -10, -10],
-                categories: ["troll", "adaptable", "dominance", "loud", "blunt"]
+                categories: ["boundaries", "adaptable", "dominance", "loud", "blunt"]
             }, {
                 label: "I'd rather not see it.",
                 value: 3,
                 effects: [-10, -5, -5],
-                categories: ["troll", "adaptable", "blunt"]
+                categories: ["boundaries", "adaptable", "blunt"]
             }],
             potential: [{
-                categories: ["troll", "dominance", "loud", "blunt", "adaptable"],
+                categories: ["boundaries", "dominance", "loud", "blunt", "adaptable"],
                 values: [10, 5, 10, 10, 5]
             }]
         }, {
