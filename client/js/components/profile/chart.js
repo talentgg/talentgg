@@ -23,7 +23,7 @@ var Chart = React.createClass({
         dominance: ['more dominant', 'more empathetic', 'dominance'],
         adaptable: ['more adaptable', 'more particular', 'adaptability'],
         blunt: ['more blunt', 'more reticent', 'communicator'],
-        collaborative: ['more collaborative', 'more reticent', 'collaborator'],
+        collaborative: ['more collaborative', 'more individualist', 'collaborator'],
         brute: ['more brutal', 'more technical', 'playing style'],
         aggressive: ['more aggressive', 'more cautious', 'playing aggression'],
         boundaries: ['pushes boundaries', 'more respectful', 'social style'],
@@ -35,8 +35,7 @@ var Chart = React.createClass({
   },
   componentWillReceiveProps: function(props){
     this.setState({
-      ratings: props.ratings,      
-      
+      ratings: props.ratings
     })
   },
   render: function(){

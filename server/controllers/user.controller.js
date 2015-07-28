@@ -52,7 +52,7 @@ module.exports = {
       var obj = data;
       obj.username = "";
       obj.hash = "";
-      if((data.temp.updatedAt + (1000 * 60 * 5)) < Date.now() && data.games.verified) { //5 minute timer between api call pairs
+      if((data.temp.updatedAt + (1000 * 60 * 15)) < Date.now() && data.games.verified) { //15 minute timer between api call pairs
         updateSummoner(data.games.id, data.games.region, function(temp){
           obj.temp.updatedAt = obj.temp.updatedAt || Date.now();
           User.update({temp: temp}, {where: {id: req.session.passport.user}})
@@ -167,22 +167,6 @@ module.exports = {
       });
     });
   },
-
-  // updateSummoner: function(req, res){ // Updates game data
-  //   var user;
-  //   User.findById(req.session.passport.user)
-  //   .then(function(info){
-  //     user = info.games;
-  //     relay('https://' + user.region + '.api.pvp.net/api/lol/' + user.region + '/v1.4/summoner/' + user.id + '?api_key=' + config.lolapi, function(er, data) {
-  //       user.name = JSON.parse(data)[user.id].name;
-  //       user.level = JSON.parse(data)[user.id].summonerLevel;
-  //       User.update({games: user}, {where: {id: req.session.passport.user}})
-  //       .then(function(){
-  //         res.redirect('/#/account-link');
-  //       });
-  //     });
-  //   });
-  // },
 
   updateRatings: function(req, res){ // Updates ratings data
     User.findById(req.session.passport.user)

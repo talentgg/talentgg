@@ -81,3 +81,9 @@ object {
   max-width: 128px;
   max-height: 128px;
 }
+.panel h1, .panel h2, .panel h3,{
+  margin-top: 0px;
+}
+.navbar-default .navbar-toggle .icon-bar{
+  background-color: #ffffff;
+}

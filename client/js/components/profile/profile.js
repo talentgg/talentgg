@@ -5,6 +5,7 @@ var Ratings = require('./ratings');
 var Questions = require('./user-questions');
 var Edit = require('./bio-form');
 var Chart = require('./chart');
+var AccountLink = require('./accountLink');
 
 var champList = {"1":"Annie","2":"Olaf","3":"Galio","4":"TwistedFate","5":"XinZhao","6":"Urgot","7":"Leblanc","8":"Vladimir",
 "9":"FiddleSticks","10":"Kayle","11":"MasterYi","12":"Alistar","13":"Ryze","14":"Sion","15":"Sivir","16":"Soraka","17":"Teemo",
@@ -73,7 +74,7 @@ var Test = React.createClass({
             <li role="presentation" className="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="pill">Profile</a></li>
             <li role="presentation"><a href="#edit" aria-controls="edit" role="tab" data-toggle="pill">Edit</a></li>
             <li role="presentation"><a href="#questions" aria-controls="questions" role="tab" data-toggle="pill">Questions</a></li>
-            <li role="presentation"><a href="#chart" aria-controls="chart" role="tab" data-toggle="pill">Chart</a></li>
+            <li role="presentation"><a href="#link" aria-controls="chart" role="tab" data-toggle="pill">Account Link</a></li>
           </ul>
         </div>
         <div className="tab-content">
@@ -89,8 +90,19 @@ var Test = React.createClass({
                     <p><b>Lanes</b>: { laneArray === "" ? 'No lanes' : laneArray}</p>
                   </div>
                 </div>
+                <br/>
+                <div className="panel panel-default whitebox">
+                  <div className="panel-body">
+                    <h3 className="text-center">About Me</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus illum reprehenderit ducimus, cumque fugiat doloribus est laboriosam neque optio modi. Numquam optio magni ad error in itaque, tenetur ex vitae repellat aliquid dignissimos rerum porro, esse nam unde odio maiores, reiciendis illo dolor quod. Dolor animi magnam ex incidunt praesentium, velit corporis placeat, minima dicta beatae natus error eos impedit corrupti, labore consequatur sequi laborum in debitis, facere quibusdam aperiam! Deleniti ipsa, necessitatibus eligendi, dolorum eius atque obcaecati, consequatur quisquam quae, nostrum numquam nesciunt dicta itaque officia consequuntur ipsam qui modi mollitia animi distinctio voluptatibus pariatur explicabo voluptate quos. Impedit!</p>
+                  </div>
+                </div>
               </div>
               <div className="col-sm-6">
+                <div role="tabpanel" className="tab-pane" id="chart">
+                  <Chart ratings={this.props.ratings} />
+                </div>
+                <br/>
                 <div className="panel panel-default whitebox">
                   <div className="panel-body">
                     <h3 className="text-center">Ranked Games</h3>
@@ -115,8 +127,8 @@ var Test = React.createClass({
           <div role="tabpanel" className="tab-pane" id="questions">
             <Questions updateState={this.props.updateState} />
           </div>
-          <div role="tabpanel" className="tab-pane" id="chart">
-            <Chart ratings={this.props.ratings} />
+          <div role="tabpanel" className="tab-pane" id="link">
+            <AccountLink displayName={this.props.displayName} games={this.props.games} updateState={this.props.updateState} />
           </div>
         </div>
       </div>
