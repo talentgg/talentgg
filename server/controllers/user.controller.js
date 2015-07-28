@@ -105,10 +105,10 @@ module.exports = {
       deepBoolean(req.body);
     })
     .then(function(){
-      User.update({bio: req.body},{where: {id: req.session.passport.user}});
+      User.update({profile: req.body},{where: {id: req.session.passport.user}});
     })
     .then(function(){
-      res.json({bio: req.body});
+      res.json({profile: req.body});
     });
   },
 

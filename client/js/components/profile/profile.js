@@ -25,7 +25,7 @@ var Test = React.createClass({
   propTypes: {
     displayName: React.PropTypes.string.isRequired,
     avatar: React.PropTypes.string.isRequired,
-    bio: React.PropTypes.object.isRequired,
+    profile: React.PropTypes.object.isRequired,
     games: React.PropTypes.object.isRequired,
     temp: React.PropTypes.object.isRequired,
     ratings: React.PropTypes.object.isRequired,
@@ -43,10 +43,10 @@ var Test = React.createClass({
       return arr.join(', ');
     };
 
-    var available = arrayToString(this.props.bio.times);
-    var gameTypes = arrayToString(this.props.bio.purpose);
-    var roleArray = arrayToString(this.props.bio.roles);
-    var laneArray = arrayToString(this.props.bio.lanes);
+    var available = arrayToString(this.props.profile.times);
+    var gameTypes = arrayToString(this.props.profile.purpose);
+    var roleArray = arrayToString(this.props.profile.roles);
+    var laneArray = arrayToString(this.props.profile.lanes);
     var games = this.props.temp.matches.reverse();
     var recentTop = games.slice(0, Math.min(5, games.length));
     var recentBot = games.length > 4 ? games.slice(5) : [];
@@ -59,7 +59,7 @@ var Test = React.createClass({
           </div>
           <div className="col-sm-4">
             <h3>{this.props.displayName}</h3>
-            <p>{this.props.bio.about === "" ? 'I haven\'t filled this out yet' : this.props.bio.about}</p>
+            <p>{this.props.profile.about === "" ? 'I haven\'t filled this out yet' : this.props.profile.about}</p>
           </div>
           <div className="col-sm-2">
             <img className="center-block img-fit" src={"/img/tier-" + this.props.temp.rank + ".png"} />
@@ -110,7 +110,7 @@ var Test = React.createClass({
             </div>
           </div>
           <div role="tabpanel" className="tab-pane" id="edit">
-            <Edit initialBio={this.props.bio} updateState={this.props.updateState} />
+            <Edit initialBio={this.props.profile} updateState={this.props.updateState} />
           </div>
           <div role="tabpanel" className="tab-pane" id="questions">
             <Questions updateState={this.props.updateState} />

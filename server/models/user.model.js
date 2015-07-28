@@ -28,7 +28,7 @@ var User = db.define( 'user', {
     unique: false,
     allowNull: false
   },
-  bio: {
+  profile: {
     //This is for storing the user's essay data and perhaps any other person-level data
     type: Sequelize.JSON,
     defaultValue: {

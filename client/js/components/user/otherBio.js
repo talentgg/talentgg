@@ -27,7 +27,7 @@ var OtherBio = React.createClass({
   // mixins: [Router.State, Router.Navigation],
   // propTypes: {
   //   displayName: React.PropTypes.string.isRequired,
-  //   bio: React.PropTypes.object.isRequired,
+  //   profile: React.PropTypes.object.isRequired,
   //   games: React.PropTypes.object.isRequired,
   //   temp: React.PropTypes.object.isRequired
   // },
@@ -44,10 +44,10 @@ var OtherBio = React.createClass({
       return arr.join(', ');
     };
 
-    var available = arrayToString(this.props.bio.times);
-    var gameTypes = arrayToString(this.props.bio.purpose);
-    var roleArray = arrayToString(this.props.bio.roles);
-    var laneArray = arrayToString(this.props.bio.lanes);
+    var available = arrayToString(this.props.profile.times);
+    var gameTypes = arrayToString(this.props.profile.purpose);
+    var roleArray = arrayToString(this.props.profile.roles);
+    var laneArray = arrayToString(this.props.profile.lanes);
     var games = this.props.temp.matches.reverse();
     var recentTop = games.slice(0, Math.min(5, games.length));
     var recentBot = games.length > 4 ? games.slice(5) : [];
@@ -63,7 +63,7 @@ var OtherBio = React.createClass({
           </div>
           <div className="col-sm-4">
             <h3>{this.props.displayName}</h3>
-            <p>{this.props.bio.about}</p>
+            <p>{this.props.profile.about}</p>
           </div>
           <div className="col-sm-2">
             <img className="center-block" width="128" height="128" src={"/img/tier-" + this.props.temp.rank + ".png"} />
