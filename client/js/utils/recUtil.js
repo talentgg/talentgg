@@ -20,6 +20,13 @@ var RecUtil = {
     return (phat + z * z / (2 * n) - z * Math.sqrt((phat * (1 - phat) + z * z / (4 * n)) / n)) / (1 + z * z / n);
   },
 
+  calculateTeamMatch: function(user, team) {
+    
+
+
+
+  },
+
   checkIfChecked: function(obj) {
     return !(_.every(obj, function(elm) {
       return elm === false;

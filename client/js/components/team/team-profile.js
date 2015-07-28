@@ -133,7 +133,7 @@ var TeamProfile = React.createClass({
       <div>
         <div className="row whitebox">
           <div className="col-sm-offset-1 col-sm-2">
-            <img className="img-circle center-block" width="128" height="128" src={"http://cdn.cutestpaw.com/wp-content/uploads/2012/09/sss.jpg"} />
+            <img className="img-circle center-block img-fit" src={this.state.profile.image} />
           </div>
           <div className="col-sm-4">
             <h3>Team: {this.state.profile.teamName}</h3>
