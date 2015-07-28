@@ -1,6 +1,7 @@
 var React = require('react');
 var axios = require('axios');
 var _ = require('lodash');
+var MatchList = require('./matchList.js');
 
 var ReactBtn = require('react-btn-checkbox');
 var Checkbox = ReactBtn.Checkbox;
@@ -60,7 +61,7 @@ var FindPlayers = React.createClass({
     var context = this;
 
     axios.all([axios.get('/user/all'), axios.get('/profile'), axios.get('/profile/teams'), axios.get('/team/all')])
-        .then(axios.spread(function(them, me, myTeams, allTeams) {           
+        .then(axios.spread(function(them, me, myTeams, allTeams) {
             context.setState({
               allUsers: them.data,
               filteredUsers: them.data,
@@ -73,7 +74,7 @@ var FindPlayers = React.createClass({
         }));
   },
 
-  handleChange: function(e) {    
+  handleChange: function(e) {
     this.setState({
       searchAs: e.value
     });
@@ -82,18 +83,18 @@ var FindPlayers = React.createClass({
     var context = this;
     var teamsCaptained = RecUtil.teamsCaptained(context.state.myTeams, context.state.id);
 
-    return (     
+    return (
       <div className="findPlayers">
-       
+
           <form onSubmit={this.handleSubmit}>
 
-            <Select onUpdate={this.handleChange} >              
+            <Select onUpdate={this.handleChange} >
               <Option value="solo">search individuals as myself</Option>
               <Option value="team">search teams as myself</Option>
               <Separator>Teams You Captain</Separator>
               {teamsCaptained}
-            </Select>            
-          
+            </Select>
+
             <Checkbox
             label='Times: '
             options={this.state.times}
@@ -116,169 +117,17 @@ var FindPlayers = React.createClass({
             label='Lanes: '
             options={this.state.lanes}
             onChange={this.setState.bind(this)}
-            bootstrap />          
+            bootstrap />
 
           </form>
 
         <MatchList allUsers={this.state.allUsers} allTeams={this.state.allTeams} me={this.state.me}
         id={this.state.id} searchAs={this.state.searchAs} times={this.state.times} purpose={this.state.purpose}
-        roles={this.state.roles} lanes={this.state.lanes} />    
+        roles={this.state.roles} lanes={this.state.lanes} />
       </div>
       );
   }
 });
 
+
 module.exports = FindPlayers;
-
-var MatchList = React.createClass({  
-
-  render: function() {
-    
-    var context = this;
-    var userSubset
-    var teamSubset;
-
-    if (this.props.searchAs !== "team") {
-      console.log("solo")
-      userSubset = context.props.allUsers;
-      userSubset = RecUtil.checkIfChecked(context.props.times) ? RecUtil.propFilter(userSubset, "times", context) : userSubset;
-      userSubset = RecUtil.checkIfChecked(context.props.purpose) ? RecUtil.propFilter(userSubset, "purpose", context) : userSubset;
-      userSubset = RecUtil.checkIfChecked(context.props.roles) ? RecUtil.propFilter(userSubset, "roles", context) : userSubset;
-      userSubset = RecUtil.checkIfChecked(context.props.lanes) ? RecUtil.propFilter(userSubset, "lanes", context) : userSubset;
-    } else {
-      console.log("team")
-      teamSubset = context.props.allTeams;
-      console.log(teamSubset);
-      console.log(teamSubset[0])
-      teamSubset = RecUtil.checkIfChecked(context.props.times) ? RecUtil.propFilter(teamSubset, "times", context) : teamSubset;
-      teamSubset = RecUtil.checkIfChecked(context.props.purpose) ? RecUtil.propFilter(teamSubset, "purpose", context) : teamSubset;      
-      _.map(teamSubset, function(team) {
-        team.roles = {
-          "assassin": false,
-          "mage": false,
-          "marksman": false,
-          "bruiser": false,
-          "support": false,
-          "tank": false
-        },
-        team.lanes = {
-          "top": false,
-          "mid": false,
-          "bot": false,
-          "jungle": false
-        },      
-        _.map(team.ads, function(ad) {
-          for (key in ad.roles) {
-            team.roles[key] = true;
-          }
-          for (key in ad.lanes) {
-            team.lanes[key] = true;
-          }
-        })      
-      })
-    }
-    console.log(teamSubset);
-    
-
-    var MatchNodes = [];
-    var matchOrder = [];
-    var overallScore;
-    var matchData;
-    
-    matchData = this.props.searchAs === "solo" ? userSubset : teamSubset;
-    console.log('matchData')
-    console.log(matchData);
-    // do the same for myratings if they pick a team
-
-    _.map(matchData, function(data) {
-      overallScore = 0;
-      if (data.id !== context.props.id) {
-        // for (key in context.props.me) {
-        //   var score = 20 - Math.abs(context.props.me[key] - data.ratings[key]);
-        //   overallScore += score;
-        //   score = RecUtil.calculateMatchScore(score, 20);
-        // }
-        overallScore = 50; //Math.round(RecUtil.calculateMatchScore(overallScore, 200) * 100);
-        data.overallScore = overallScore;
-        matchOrder.push(data);
-      }    
-    });
-
-    _.map(matchOrder, function(match) {
-      match.link = '/#/user/' + match.displayName
-      if (!match.games) {        
-        match.games = {
-          avatar: "http://sener.is/hat.jpg"
-        }
-        match.profile = match.profile
-        match.displayName = match.profile.teamName
-        match.link = '/#/team/' + match.displayName
-      }
-
-      if (isNaN(match.overallScore)) {
-        console.log("NaN error") //keep these
-        console.log(match);
-        match.overallScore = 0;
-        }
-      });
-      matchOrder = _.sortBy(matchOrder, function(match) {
-        return match.overallScore;
-      }).reverse();
-      _.map(matchOrder, function(match) {
-      var lineData = [{
-        name: "me",
-        values: []
-      }, {
-        name: "them",
-        values: []
-      }];
-      var counter = 0;
-
-      for (var key in context.props.me) {
-        lineData[0].values.push({
-          x: counter,
-          y: Number(context.props.me[key])
-        });
-        lineData[1].values.push({
-          x: counter,
-          y: Number(match.ratings[key])
-        });
-        counter++;
-      }
-
-      MatchNodes.push(
-        <div className="row" style={RecUtil.whiteBox}>
-            <div className="row" style={RecUtil.headshot}>
-              <img className="img-circle center-block" src={match.games.avatar}/>
-              <a href={match.link}> <div align="center"> { match.displayName } </div> </a>              
-              <div> {match.overallScore}% </div>
-            </div>
-            <div className="row" style={RecUtil.stats}>
-              <div> { RecUtil.arrayToString(match.profile.purpose) } </div>    
-              <div> { RecUtil.arrayToString(match.profile.times) } </div>
-              <div> { RecUtil.arrayToString(match.profile.roles) } </div>
-              <div> { RecUtil.arrayToString(match.profile.lanes) } </div>              
-              <br />
-              <br />
-            </div>
-            <div className="row">
-              <LineChart className="row" style={RecUtil.chart}
-                legend={false}
-                data={lineData}
-                width={250}
-                height={200}
-                title=""/>
-            </div>
-        </div>
-      )
-    });
-
-    return (
-      <div>
-        <ul className="MatchList">
-          {MatchNodes}
-        </ul>          
-      </div>
-    );
-  }
-});
