@@ -17,7 +17,13 @@ module.exports = {
         User.create({
           username: username,
           hash: hash,
-          displayName: "newbro" + Math.floor(Math.random()*100000)
+          displayName: "newbro" + Math.floor(Math.random()*100000),
+          messages: [{
+            id: null,
+            displayName: 'Lea.gg Staff',
+            time: Date.now(),
+            contents: 'Welcome to Lea.gg! Be sure to link your account and answer some questions so we find some matches for you!'
+          }]
         })
         .then(function(data){
           passport.authenticate('local')(req, res, function(){

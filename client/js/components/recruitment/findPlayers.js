@@ -247,34 +247,7 @@ var MatchList = React.createClass({
       }
 
       MatchNodes.push(
-<<<<<<< HEAD
-        <div className="row" style={RecUtil.whiteBox}>
-            <div className="row" style={RecUtil.headshot}>
-              <img className="img-circle center-block" src={match.games.avatar}/>
-              <a href={match.link}> <div align="center"> { match.displayName } </div> </a>              
-              <div> {match.overallScore}% </div>
-            </div>
-            <div className="row" style={RecUtil.stats}>
-              <div> { RecUtil.arrayToString(match.profile.purpose) } </div>    
-              <div> { RecUtil.arrayToString(match.profile.times) } </div>
-              <div> { RecUtil.arrayToString(match.profile.roles) } </div>
-              <div> { RecUtil.arrayToString(match.profile.lanes) } </div>              
-              <br />
-              <br />
-            </div>
-            <div className="row">
-              <LineChart className="row" style={RecUtil.chart}
-                legend={false}
-                data={lineData}
-                width={250}
-                height={200}
-                title=""/>
-=======
-<<<<<<< HEAD
-        <div className="col-sm-3">
-=======
         <div className="col-sm-3" key={i}>
->>>>>>> fixed charts
           <div className="panel panel-default whitebox">
             <div className="panel-body">
               <a href={match.link}>
@@ -288,7 +261,6 @@ var MatchList = React.createClass({
               <div className="row">
                 <h3 className="text-center" style={{color: 'green'}}>{match.overallScore}%</h3>
               </div>
->>>>>>> 13cf05a7dbe14474974ff66c388135cfaad725dc
             </div>
           </div>
         </div>
