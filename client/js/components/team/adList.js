@@ -16,6 +16,7 @@ var AdList = React.createClass({
       name: this.props.displayName,
       adIndex: e.target.value,
       ratings: this.props.myRatings, 
+      avatar: this.props.avatar
     }
     $.post('/team/applytoteam', application);
 
@@ -28,7 +29,7 @@ var AdList = React.createClass({
     e.preventDefault();
     var approval = e.target.value.split('&');
     $.post('/team/addtoteam', {userid: approval[0], ad: approval[1], name: approval[2], teamId: this.props.teamId,
-      ratings: this.props.myRatings});
+      ratings: this.props.myRatings, avatar: this.props.avatar});
     // delete other applicants from ad
     // delete ad
   },
