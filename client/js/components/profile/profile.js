@@ -1,7 +1,6 @@
 var React = require('react');
 var Router = require("react-router");
 var Route = Router.Route;
-var Ratings = require('./ratings');
 var Questions = require('./user-questions');
 var Edit = require('./bio-form');
 var Chart = require('./chart');

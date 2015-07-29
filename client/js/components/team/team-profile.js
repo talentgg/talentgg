@@ -112,6 +112,7 @@ var TeamProfile = React.createClass({
     var router = this.context.router;
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
+
   render: function() {
     var captainName = this.state.captain.name;
     var isCaptain = this.state.captain.id === this.props.userId ? true : false;
@@ -162,11 +163,10 @@ var TeamProfile = React.createClass({
           </div>
         </div>
         <br/>
-
       </div>
+    </div>
     )
   }
 });
 
 module.exports = TeamProfile;
-
