@@ -15,8 +15,10 @@ var AdList = React.createClass({
       teamid: this.props.teamId,
       name: this.props.displayName,
       adIndex: e.target.value,
-      ratings: this.props.myRatings
+      ratings: this.props.myRatings, 
     }
+    console.log('----app---->');
+    console.log(application);
     $.post('/team/applytoteam', application);
 
   },
@@ -29,7 +31,8 @@ var AdList = React.createClass({
     console.log("approve");
     console.log(e.target.value);
     var approval = e.target.value.split('&');
-    $.post('/team/addtoteam', {userid: approval[0], ad: approval[1], displayName: approval[2], teamId: this.props.teamId});
+    $.post('/team/addtoteam', {userid: approval[0], ad: approval[1], name: approval[2], teamId: this.props.teamId,
+      ratings: this.props.myRatings});
   },
   reject: function(e){
     console.log("HELP")
@@ -61,7 +64,7 @@ var AdList = React.createClass({
         console.log(applicant);
         applicantNodes.push(
           <div>
-            <a href={"/#/user/" + applicant.name}>{applicant.name}</a> 50%
+            <a href={"/#/user/" + applicant.name}>{applicant.name}</a>
             { adminCheck ? (<div><Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={adminCheck} onClick={context.approve}>approve</Button>
             <Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={adminCheck} onClick={context.reject}>reject</Button></div>) : null }            
           </div>

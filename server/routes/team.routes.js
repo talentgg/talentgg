@@ -40,10 +40,14 @@ module.exports = function( app ) {
 
   app.post('/team/applytoteam',function(req, res){
     Team.applytoteam(req, res);
+    console.log('----applytoTeam---->');
+    console.log(req.body);
   });
 
   app.post('/team/addtoteam', function(req, res){
     Team.addtoteam(req, res);
+    console.log('----addtoTeam---->');
+    console.log(req.body);
   }); 
 
 };

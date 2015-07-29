@@ -119,15 +119,12 @@ var TeamProfile = React.createClass({
   render: function() {
     // console.log("ratings");
     // console.log(this.props.ratings)
+    console.log('-----logs------');
+    console.log(this.state.members);
     var captainName = this.state.captain.name;
     var isCaptain = this.state.captain.id === this.props.userId ? true : false;
     var available = RecUtil.arrayToString(this.state.profile.times);
-    var memberNames = [];
-    _.map(this.state.members, function(member) {
-      memberNames.push(
-        <a href={'/#/user/id/' + member.id}><div align="center">{member.name}</div></a>
-      )
-    });
+    var purpose = RecUtil.arrayToString(this.state.profile.purpose);
 
     return (
       <div>
@@ -152,6 +149,7 @@ var TeamProfile = React.createClass({
           <div className="col-sm-12">
                 <h3 className="text-center">Team Profile </h3>
                 <p><b>Available</b>: {available} </p>
+                <p><b>Purpose</b>: {purpose} </p>
                 <p><b>About Us</b>: {this.state.profile.about} </p>
               </div>
             </div>
@@ -162,11 +160,10 @@ var TeamProfile = React.createClass({
             <div className="col-sm-12">
                 <h3 className="text-center">Current Members</h3>
                 <p><b>Captain</b>: <a href={'/#/user/' + captainName}> { captainName } </a></p>
-                <TeamMembers members={this.state.members} bio={this.state.bio} />
+                <TeamMembers members={this.state.members} ads={this.state.ads}/>
               </div>
             </div>
           
-        
         <br/>
 
         <div className="row">
@@ -180,3 +177,10 @@ var TeamProfile = React.createClass({
 });
 
 module.exports = TeamProfile;
+    
+    // var memberNames = [];
+    // _.map(this.state.members, function(member) {
+    //   memberNames.push(
+    //     <a href={'/#/user/id/' + member.id}><div align="center">{member.name}</div></a>
+    //   )
+    // });

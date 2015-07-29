@@ -124,7 +124,7 @@ module.exports = {
     var adUpdate;
     Team.findById(req.body.teamid).then(function(teamData){
           adUpdate = teamData.ads.data;
-          adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name, ratings: req.body.ratings});
+          adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name, ratings: req.body.ratings, lane: req.body.lanes, role: req.body.roles});
         })
           .then(function(){
             Team.update({ads: {data: adUpdate}}, {where: {id: req.body.teamid}});
@@ -134,9 +134,13 @@ module.exports = {
     Team.findById(Number(req.body.teamId))
       .then(function(teamData){
         var updatedAds = teamData.ads.data;
+        var laneUpdate = teamData.ads.data[req.body.ad].lanes;
+        var roleUpdate = teamData.ads.data[req.body.ad].roles;
+        console.log('-----name---->');
+        console.log(req.body.name);
         updatedAds.splice(req.body.ad, 1);
         var updatedMembers = teamData.members;
-        updatedMembers.push({id: req.body.userid, name: req.body.displayName, isAdmin: false});
+        updatedMembers.push({id: req.body.userid, name: req.body.name, lanes: laneUpdate, roles: roleUpdate, ratings: req.body.ratings, isAdmin: false});
         Team.update({ads: {data: updatedAds}, members: updatedMembers}, {where: {id: req.body.teamId}});
       });
   }

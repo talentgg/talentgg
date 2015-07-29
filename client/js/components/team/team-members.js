@@ -1,32 +1,34 @@
-var React = require('react/addons');
+var React = require('react');
 var Router = require('react-router');
 var Axios = require('axios');
 var _ = require('lodash');
+
 var RecUtil = require('../../utils/recUtil.js');
 
 var TeamMembers = React.createClass({
-  propTypes: {
-    members: React.PropTypes.array.isRequired,
-  },
   render : function() {
-    var members = this.props.members;
+
     var membersList = [];
+      
+    for (var i = 0; i < this.props.members.length; i++) {
+      var adLanes = RecUtil.arrayToString(this.props.members[i]["lanes"])
+      var adRoles = RecUtil.arrayToString(this.props.ads[i]["roles"])
+      console.log('---------->');
+      console.log(adLanes);
+      console.log(adRoles);
+      var context = this;
+      var members = context.props.members;
 
-    for (var i = 0; i < members.length; i++) {
-      for (var key in obj) {
       membersList.push(
-        <div>
-          <p><b>Name</b>: {this.props.name}</p>
+        <div className="col-sm-4" id="whitebox">
+          <p><b>Name</b>: {members[i].name}</p>
+          <p><b>Lane</b>: {members[i]["lanes"]}</p>
+          <p><b>Role</b>: {adRoles}</p>
         </div>
-      )     
-    }
-    }
+      )  
+    };   
 
-    _.map(this.props.membersList, function(member, index) {
-      return <div className="col-sm-4 whitebox" key={index}>
-                {member}      
-              </div>     
-            });
+    console.log(membersList);
 
     return (
       <div className="row">
@@ -37,7 +39,3 @@ var TeamMembers = React.createClass({
 });
 
 module.exports = TeamMembers;
-
-          // <img className="img-rounded img-responsive" src={this.props.games.avatar} />
-          // <p><b>Role</b>: {this.props.role}</p>
-          // <p><b>Lane</b>: {this.props.lane}</p>
