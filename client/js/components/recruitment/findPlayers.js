@@ -138,17 +138,17 @@ var MatchList = React.createClass({
     var teamSubset;
 
     if (this.props.searchAs !== "team") {
-      console.log("solo")
+      //console.log("solo")
       userSubset = context.props.allUsers;
       userSubset = RecUtil.checkIfChecked(context.props.times) ? RecUtil.propFilter(userSubset, "times", context) : userSubset;
       userSubset = RecUtil.checkIfChecked(context.props.purpose) ? RecUtil.propFilter(userSubset, "purpose", context) : userSubset;
       userSubset = RecUtil.checkIfChecked(context.props.roles) ? RecUtil.propFilter(userSubset, "roles", context) : userSubset;
       userSubset = RecUtil.checkIfChecked(context.props.lanes) ? RecUtil.propFilter(userSubset, "lanes", context) : userSubset;
     } else {
-      console.log("team")
+      //console.log("team")
       teamSubset = context.props.allTeams;
-      console.log(teamSubset);
-      console.log(teamSubset[0])
+      //console.log(teamSubset);
+      //console.log(teamSubset[0])
       teamSubset = RecUtil.checkIfChecked(context.props.times) ? RecUtil.propFilter(teamSubset, "times", context) : teamSubset;
       teamSubset = RecUtil.checkIfChecked(context.props.purpose) ? RecUtil.propFilter(teamSubset, "purpose", context) : teamSubset;
       _.map(teamSubset, function(team) {
@@ -176,7 +176,8 @@ var MatchList = React.createClass({
         })
       })
     }
-    console.log(teamSubset);
+
+    //console.log(teamSubset);
 
 
     var MatchNodes = [];
@@ -185,8 +186,8 @@ var MatchList = React.createClass({
     var matchData;
 
     matchData = this.props.searchAs === "solo" ? userSubset : teamSubset;
-    console.log('matchData')
-    console.log(matchData);
+    //console.log('matchData')
+    //console.log(matchData);
     // do the same for myratings if they pick a team
 
     _.map(matchData, function(data) {
@@ -203,7 +204,7 @@ var MatchList = React.createClass({
       }
     });
 
-    _.map(matchOrder, function(match) {
+    _.map(matchOrder, function(match, i) {
       match.link = '/#/user/' + match.displayName
       if (!match.games) {
         match.games = {
@@ -215,8 +216,8 @@ var MatchList = React.createClass({
       }
 
       if (isNaN(match.overallScore)) {
-        console.log("NaN error") //keep these
-        console.log(match);
+        //console.log("NaN error") //keep these
+        //console.log(match);
         match.overallScore = 0;
         }
       });
@@ -246,7 +247,11 @@ var MatchList = React.createClass({
       }
 
       MatchNodes.push(
+<<<<<<< HEAD
         <div className="col-sm-3">
+=======
+        <div className="col-sm-3" key={i}>
+>>>>>>> fixed charts
           <div className="panel panel-default whitebox">
             <div className="panel-body">
               <a href={match.link}>
