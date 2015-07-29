@@ -9,13 +9,13 @@ var TeamMembers = React.createClass({
   componentWillMount: function() {
     Axios.get('./profile')
       .then(function(e) {
-        
+
       });
   },
   render : function() {
 
     var membersList = [];
-      
+
     for (var i = 0; i < this.props.members.length; i++) {
       var context = this;
       var currentMembers = context.props.members;
@@ -34,9 +34,10 @@ var TeamMembers = React.createClass({
             <p><b>Lane</b>: {addLanes}</p>
             <p><b>Role</b>: {addRoles}</p>
           </div>
+          <br/>
         </div>
-      )  
-    };   
+      )
+    };
 
     return (
       <div className="membersList">
