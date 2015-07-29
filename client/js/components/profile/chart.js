@@ -21,7 +21,7 @@ var Chart = React.createClass({
       },
       descriptors: {
         dominance: ['more dominant', 'more empathetic', 'dominance'],
-        adaptable: ['more adaptable', 'more routine-based', 'adaptability'],
+        adaptable: ['more adaptable', 'more particular', 'adaptability'],
         blunt: ['more blunt', 'more reticent', 'communicator'],
         collaborative: ['more collaborative', 'more reticent', 'collaborator'],
         brute: ['more brutal', 'more technical', 'playing style'],
@@ -59,9 +59,6 @@ var Bar = React.createClass({
 
     var chartList = [];
     for(var key in ratings){
-      if (!descriptors[key]) console.log("***", key)
-
-      console.log(descriptors[key][0])
       if(ratings[key] > 0){
         chartList.push(
           <div key={key} className="row">

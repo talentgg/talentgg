@@ -21,9 +21,23 @@ var RecUtil = {
   },
 
   calculateTeamMatch: function(user, team) {
-    
+        console.log(user.counter);
 
+        var target = {
+          collaborative: team[collaborative], 
+          boundaries: team[boundaries],
+          loud: team[loud],
+          committed: team[committed],
+          ambition: team[ambition],
 
+          aggressive: team[aggressive],
+          dominance: (Math.abs(team[aggressive]) * - 1),
+          // adaptable: //+ makes it nonfactor. -, check. make this a message, //<-- not too much total rigidness
+          blunt: team[blunt]// check for tiers,     //<-- not too much total?
+          // brute: // message,
+        };
+
+      
 
   },
 
@@ -44,7 +58,7 @@ var RecUtil = {
     return _.filter(userList, function(user) {
       var filterTest = false;
       _.map(filters, function(elm) {
-        if (user.bio[property][elm] === true) {
+        if (user.profile[property][elm] === true) {
           filterTest = true;
         }
       });
