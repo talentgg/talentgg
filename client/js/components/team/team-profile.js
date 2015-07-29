@@ -146,7 +146,7 @@ var TeamProfile = React.createClass({
         <br/>
 
         <div className="row" id="whitebox">
-          <div className="col-sm-12">
+          <div className="col-sm-8">
                 <h3 className="text-center">Team Profile </h3>
                 <p><b>Available</b>: {available} </p>
                 <p><b>Purpose</b>: {purpose} </p>
@@ -157,7 +157,7 @@ var TeamProfile = React.createClass({
           <br/>  
 
           <div className="row" id="whitebox">
-            <div className="col-sm-12">
+            <div className="col-sm-8">
                 <h3 className="text-center">Current Members</h3>
                 <p><b>Captain</b>: <a href={'/#/user/' + captainName}> { captainName } </a></p>
                 <TeamMembers members={this.state.members} />

@@ -15,20 +15,22 @@ var TeamMembers = React.createClass({
       var currentMembers = context.props.members;
       var addLanes = RecUtil.arrayToString(currentMembers[i].lanes);
       var addRoles = RecUtil.arrayToString(currentMembers[i].roles);
-      console.log('lookie here');
-      console.log(addLanes);
-      console.log(addRoles);
 
       membersList.push(
         <div className="col-sm-8" id="whitebox">
-          <p><b>Name</b>: {currentMembers[i].name}</p>
-          <p><b>Lane</b>: {addLanes}</p>
-          <p><b>Role</b>: {addRoles}</p>
+          <div className="col-sm-offset-1 col-sm-2">
+            <img className="img-circle center-block img-responsive" src={"http://www.homersimpsonquotes.com/images/homer.gif"} />
+          </div>
+          <div className="col-sm-2">
+            <p><b>Name</b>: {currentMembers[i].name}</p>
+          </div>
+          <div className="col-sm-3">
+            <p><b>Lane</b>: {addLanes}</p>
+            <p><b>Role</b>: {addRoles}</p>
+          </div>
         </div>
       )  
     };   
-
-    console.log(membersList);
 
     return (
       <div className="membersList">

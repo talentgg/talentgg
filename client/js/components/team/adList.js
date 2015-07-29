@@ -17,8 +17,6 @@ var AdList = React.createClass({
       adIndex: e.target.value,
       ratings: this.props.myRatings, 
     }
-    console.log('----app---->');
-    console.log(application);
     $.post('/team/applytoteam', application);
 
   },
@@ -28,14 +26,14 @@ var AdList = React.createClass({
   },
   approve: function(e){
     e.preventDefault();
-    console.log("approve");
-    console.log(e.target.value);
     var approval = e.target.value.split('&');
     $.post('/team/addtoteam', {userid: approval[0], ad: approval[1], name: approval[2], teamId: this.props.teamId,
       ratings: this.props.myRatings});
+    // delete other applicants from ad
+    // delete ad
   },
   reject: function(e){
-    console.log("HELP")
+    // delete from applicants array
   },
 
   render: function() {
