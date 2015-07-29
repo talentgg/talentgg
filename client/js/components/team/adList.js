@@ -15,8 +15,7 @@ var AdList = React.createClass({
       teamid: this.props.teamId,
       name: this.props.displayName,
       adIndex: e.target.value,
-      ratings: this.props.myRatings,
-      avatar: this.props.avatar
+      ratings: this.props.myRatings
     }
     $.post('/team/applytoteam', application);
 
@@ -46,14 +45,15 @@ var AdList = React.createClass({
 
 // need a way to track if the user's applied and disable the button
       var adminCheck = false;
+      var uniqId = true;
       var context = this;
 
       _.map(context.props.ads, function(ad){
-        // if ((ad.applicants && ad.applicants.indexOf(context.props.user) > -1) || context.props.captain === context.props.user) {
-          if (context.props.captain === context.props.user) {
-            ad.applicants.indexOf(context.props.user)
+        // if ((ad.applicants && ad.applicants.indexOf(context.props.user) > -1) || context.props.captain === context.props.user) {          
+          if (context.props.captain === context.props.user) {          
+            // this line doesn't do anything ---> ad.applicants.indexOf(context.props.user)
             adminCheck = true;
-        }
+          }
       })
 
       // var matchScore = RecUtil.calculateMatchScore(applicant.ratings, this.props.teamRatings)
@@ -69,24 +69,20 @@ var AdList = React.createClass({
           </div>
           )
       })
-      console.log("adNode")
 
-      adNodes.push(
-        <div>
-          <div className="panel panel-default panel-body whitebox">
-            <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
-            <p><b>Lane</b>: {adLanes} </p>
-            <p><b>Role</b>: {adRoles} </p>
-            <p>{context.props.ads[i]["adCopy"]}</p>
-            {applicantNodes}
-            { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
-            (<Button disabled={adminCheck} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
-          </div>
-          <br/>
+      adNodes.push(         
+        <div className="panel panel-default panel-body whitebox">
+          <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
+          <p><b>Lane</b>: {adLanes} </p>
+          <p><b>Role</b>: {adRoles} </p>
+          <p>{context.props.ads[i]["adCopy"]}</p>
+          {applicantNodes}
+          { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
+          (<Button disabled={this.props.games.verified ? "" : "disabled"} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
         </div>
       )
     };
-    console.log("render")
+
     return (
       <div className="answersList">
         {adNodes}
