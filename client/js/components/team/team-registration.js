@@ -20,6 +20,12 @@ var TeamRegistration = React.createClass({
         "weekdays": false,
         "weeknights": false,
         "weekends": false
+      },
+      purpose: {
+        "casual": false,
+        "ranked": false,
+        "3v3": false,
+        "5v5": false
       }
     };
   },
@@ -49,6 +55,12 @@ var TeamRegistration = React.createClass({
           <Checkbox
           label='Times Available: '
           options={this.state.times}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <Checkbox
+          label='Purpose: '
+          options={this.state.purpose}
           onChange={this.setState.bind(this)}
           bootstrap />
 
