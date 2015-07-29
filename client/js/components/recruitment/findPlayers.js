@@ -60,7 +60,7 @@ var FindPlayers = React.createClass({
     var context = this;
 
     axios.all([axios.get('/user/all'), axios.get('/profile'), axios.get('/profile/teams'), axios.get('/team/all')])
-        .then(axios.spread(function(them, me, myTeams, allTeams) {           
+        .then(axios.spread(function(them, me, myTeams, allTeams) {
             context.setState({
               allUsers: them.data,
               filteredUsers: them.data,
@@ -73,7 +73,7 @@ var FindPlayers = React.createClass({
         }));
   },
 
-  handleChange: function(e) {    
+  handleChange: function(e) {
     this.setState({
       searchAs: e.value
     });
@@ -82,18 +82,18 @@ var FindPlayers = React.createClass({
     var context = this;
     var teamsCaptained = RecUtil.teamsCaptained(context.state.myTeams, context.state.id);
 
-    return (     
+    return (
       <div className="findPlayers">
-       
+
           <form onSubmit={this.handleSubmit}>
 
-            <Select onUpdate={this.handleChange} >              
+            <Select onUpdate={this.handleChange} >
               <Option value="solo">search individuals as myself</Option>
               <Option value="team">search teams as myself</Option>
               <Separator>Teams You Captain</Separator>
               {teamsCaptained}
-            </Select>            
-          
+            </Select>
+
             <Checkbox
             label='Times: '
             options={this.state.times}
@@ -116,13 +116,13 @@ var FindPlayers = React.createClass({
             label='Lanes: '
             options={this.state.lanes}
             onChange={this.setState.bind(this)}
-            bootstrap />          
+            bootstrap />
 
           </form>
 
         <MatchList allUsers={this.state.allUsers} allTeams={this.state.allTeams} me={this.state.me}
         id={this.state.id} searchAs={this.state.searchAs} times={this.state.times} purpose={this.state.purpose}
-        roles={this.state.roles} lanes={this.state.lanes} />    
+        roles={this.state.roles} lanes={this.state.lanes} />
       </div>
       );
   }
@@ -130,28 +130,27 @@ var FindPlayers = React.createClass({
 
 module.exports = FindPlayers;
 
-var MatchList = React.createClass({  
+var MatchList = React.createClass({
 
   render: function() {
-    
     var context = this;
     var userSubset
     var teamSubset;
 
     if (this.props.searchAs !== "team") {
-      console.log("solo")
+      //console.log("solo")
       userSubset = context.props.allUsers;
       userSubset = RecUtil.checkIfChecked(context.props.times) ? RecUtil.propFilter(userSubset, "times", context) : userSubset;
       userSubset = RecUtil.checkIfChecked(context.props.purpose) ? RecUtil.propFilter(userSubset, "purpose", context) : userSubset;
       userSubset = RecUtil.checkIfChecked(context.props.roles) ? RecUtil.propFilter(userSubset, "roles", context) : userSubset;
       userSubset = RecUtil.checkIfChecked(context.props.lanes) ? RecUtil.propFilter(userSubset, "lanes", context) : userSubset;
     } else {
-      console.log("team")
+      //console.log("team")
       teamSubset = context.props.allTeams;
-      console.log(teamSubset);
-      console.log(teamSubset[0])
+      //console.log(teamSubset);
+      //console.log(teamSubset[0])
       teamSubset = RecUtil.checkIfChecked(context.props.times) ? RecUtil.propFilter(teamSubset, "times", context) : teamSubset;
-      teamSubset = RecUtil.checkIfChecked(context.props.purpose) ? RecUtil.propFilter(teamSubset, "purpose", context) : teamSubset;      
+      teamSubset = RecUtil.checkIfChecked(context.props.purpose) ? RecUtil.propFilter(teamSubset, "purpose", context) : teamSubset;
       _.map(teamSubset, function(team) {
         team.roles = {
           "assassin": false,
@@ -166,7 +165,7 @@ var MatchList = React.createClass({
           "mid": false,
           "bot": false,
           "jungle": false
-        },      
+        },
         _.map(team.ads, function(ad) {
           for (key in ad.roles) {
             team.roles[key] = true;
@@ -174,20 +173,21 @@ var MatchList = React.createClass({
           for (key in ad.lanes) {
             team.lanes[key] = true;
           }
-        })      
+        })
       })
     }
-    console.log(teamSubset);
-    
+
+    //console.log(teamSubset);
+
 
     var MatchNodes = [];
     var matchOrder = [];
     var overallScore;
     var matchData;
-    
+
     matchData = this.props.searchAs === "solo" ? userSubset : teamSubset;
-    console.log('matchData')
-    console.log(matchData);
+    //console.log('matchData')
+    //console.log(matchData);
     // do the same for myratings if they pick a team
 
     _.map(matchData, function(data) {
@@ -201,12 +201,12 @@ var MatchList = React.createClass({
         overallScore = 50; //Math.round(RecUtil.calculateMatchScore(overallScore, 200) * 100);
         data.overallScore = overallScore;
         matchOrder.push(data);
-      }    
+      }
     });
 
-    _.map(matchOrder, function(match) {
+    _.map(matchOrder, function(match, i) {
       match.link = '/#/user/' + match.displayName
-      if (!match.games) {        
+      if (!match.games) {
         match.games = {
           avatar: "http://sener.is/hat.jpg"
         }
@@ -216,8 +216,8 @@ var MatchList = React.createClass({
       }
 
       if (isNaN(match.overallScore)) {
-        console.log("NaN error") //keep these
-        console.log(match);
+        //console.log("NaN error") //keep these
+        //console.log(match);
         match.overallScore = 0;
         }
       });
@@ -247,6 +247,7 @@ var MatchList = React.createClass({
       }
 
       MatchNodes.push(
+<<<<<<< HEAD
         <div className="row" style={RecUtil.whiteBox}>
             <div className="row" style={RecUtil.headshot}>
               <img className="img-circle center-block" src={match.games.avatar}/>
@@ -268,16 +269,61 @@ var MatchList = React.createClass({
                 width={250}
                 height={200}
                 title=""/>
+=======
+<<<<<<< HEAD
+        <div className="col-sm-3">
+=======
+        <div className="col-sm-3" key={i}>
+>>>>>>> fixed charts
+          <div className="panel panel-default whitebox">
+            <div className="panel-body">
+              <a href={match.link}>
+                <div className="row">
+                  <img className="img-circle center-block img-fit" src={match.games.avatar}/>
+                </div>
+                <div className="row">
+                  <h4 className="text-center">{match.displayName}</h4>
+                </div>
+              </a>
+              <div className="row">
+                <h3 className="text-center" style={{color: 'green'}}>{match.overallScore}%</h3>
+              </div>
+>>>>>>> 13cf05a7dbe14474974ff66c388135cfaad725dc
             </div>
+          </div>
         </div>
       )
+      /*
+      <div className="row" style={RecUtil.headshot}>
+        <div>
+
+        </div>
+      </div>
+      <div className="row" style={RecUtil.stats}>
+        <div> { RecUtil.arrayToString(match.bio.purpose) } </div>
+        <div> { RecUtil.arrayToString(match.bio.times) } </div>
+        <div> { RecUtil.arrayToString(match.bio.roles) } </div>
+        <div> { RecUtil.arrayToString(match.bio.lanes) } </div>
+        <br />
+        <br />
+      </div>
+      <div className="row">
+        <LineChart className="row" style={RecUtil.chart}
+          legend={false}
+          data={lineData}
+          width={250}
+          height={200}
+          title=""
+        />
+      </div>
+      */
     });
 
     return (
       <div>
-        <ul className="MatchList">
+        <ul className="MatchList row">
           {MatchNodes}
-        </ul>          
+        </ul>
       </div>
     );
   }

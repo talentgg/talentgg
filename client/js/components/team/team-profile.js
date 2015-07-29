@@ -69,8 +69,6 @@ var TeamProfile = React.createClass({
       .then(function(response) {
           var cap = null;
           var mems = [];
-          console.log('members----->');
-          console.log(response.data.members);
           _.map(response.data.members, function(member) {
             if (member.isAdmin === true) {
               cap = member;
@@ -92,8 +90,6 @@ var TeamProfile = React.createClass({
     var context = this;
     Axios.get(teamToGet)
       .then(function(response) {
-        // console.log("TEAM ID")
-        // console.log(response.body.id)
         var cap = null;
         var mems = [];
         _.map(response.data.members, function(member) {
@@ -117,10 +113,6 @@ var TeamProfile = React.createClass({
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
   render: function() {
-    // console.log("ratings");
-    // console.log(this.props.ratings)
-    console.log('-----logs------');
-    console.log(this.state.members);
     var captainName = this.state.captain.name;
     var isCaptain = this.state.captain.id === this.props.userId ? true : false;
     var available = RecUtil.arrayToString(this.state.profile.times);
@@ -137,7 +129,7 @@ var TeamProfile = React.createClass({
             <p>{this.state.profile.about}</p>
           </div>
           <div className="col-sm-2">
-            <img className="center-block" width="128" height="128" src="/img/tier-silver.png"/>
+            <img className="center-block img-fit" src="/img/tier-silver.png"/>
           </div>
           <div className="col-sm-2">
             { this.state.captain.id === this.props.userId ? (<Button primary onClick={this.handleEdit}>Admin</Button>) : null}
@@ -145,36 +137,35 @@ var TeamProfile = React.createClass({
         </div>
         <br/>
 
-        <div className="row" id="whitebox">
+        <div className="row">
           <div className="col-sm-8">
+            <div className="panel panel-default whitebox">
+              <div className="panel-body">
                 <h3 className="text-center">Team Profile </h3>
                 <p><b>Available</b>: {available} </p>
                 <p><b>Purpose</b>: {purpose} </p>
                 <p><b>About Us</b>: {this.state.profile.about} </p>
               </div>
             </div>
-
-          <br/>  
-
-          <div className="row" id="whitebox">
-            <div className="col-sm-8">
+            <br/>
+            <div className="panel panel-default whitebox">
+              <div className="panel-body">
                 <h3 className="text-center">Current Members</h3>
                 <p><b>Captain</b>: <a href={'/#/user/' + captainName}> { captainName } </a></p>
                 <TeamMembers members={this.state.members} />
               </div>
             </div>
-          
+          <div className="col-sm-4">
+            <AdList ads={this.state.ads} displayName={this.props.displayName} teamRatings={this.state.teamRatings}
+            teamId={this.state.id} user={this.props.userId} captain={this.state.captain.id} myRatings={this.props.ratings} />
+          </div>
+        </div>
         <br/>
 
-        <div className="row">
-          
-        </div>
-       <AdList ads={this.state.ads} displayName={this.props.displayName} teamRatings={this.state.teamRatings}
-        teamId={this.state.id} user={this.props.userId} captain={this.state.captain.id} myRatings={this.props.ratings} />
       </div>
     )
   }
 });
 
 module.exports = TeamProfile;
-    
+

@@ -47,7 +47,6 @@ var Header = React.createClass({
               <li className="dropdown">
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
                 <ul className="dropdown-menu">
-                  <li><Link to="accountLink">Account Link</Link></li>
                   <li><Link to="settings">Settings</Link></li>
                   <li><Link to="about">About</Link></li>
                   <li role="separator" className="divider"></li>
