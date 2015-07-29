@@ -71,14 +71,14 @@ var AdList = React.createClass({
       console.log("adNode")
 
       adNodes.push(         
-        <div className="col-sm-2" id="whitebox">
-            <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
-            <p><b>Lane</b>: {adLanes} </p>
-            <p><b>Role</b>: {adRoles} </p>
-            <p>{context.props.ads[i]["adCopy"]}</p>
-            {applicantNodes}
-            { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
-            (<Button disabled={adminCheck} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
+        <div className="panel panel-default panel-body whitebox">
+          <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
+          <p><b>Lane</b>: {adLanes} </p>
+          <p><b>Role</b>: {adRoles} </p>
+          <p>{context.props.ads[i]["adCopy"]}</p>
+          {applicantNodes}
+          { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
+          (<Button disabled={adminCheck} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
         </div>
       )
     };
