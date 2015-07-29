@@ -16,6 +16,7 @@ var AdList = React.createClass({
       name: this.props.displayName,
       adIndex: e.target.value,
       ratings: this.props.myRatings, 
+      avatar: this.props.avatar
     }
     $.post('/team/applytoteam', application);
 
@@ -28,7 +29,7 @@ var AdList = React.createClass({
     e.preventDefault();
     var approval = e.target.value.split('&');
     $.post('/team/addtoteam', {userid: approval[0], ad: approval[1], name: approval[2], teamId: this.props.teamId,
-      ratings: this.props.myRatings});
+      ratings: this.props.myRatings, avatar: this.props.avatar});
     // delete other applicants from ad
     // delete ad
   },
@@ -71,14 +72,14 @@ var AdList = React.createClass({
       console.log("adNode")
 
       adNodes.push(         
-        <div className="col-sm-2" id="whitebox">
-            <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
-            <p><b>Lane</b>: {adLanes} </p>
-            <p><b>Role</b>: {adRoles} </p>
-            <p>{context.props.ads[i]["adCopy"]}</p>
-            {applicantNodes}
-            { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
-            (<Button disabled={adminCheck} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
+        <div className="panel panel-default panel-body whitebox">
+          <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
+          <p><b>Lane</b>: {adLanes} </p>
+          <p><b>Role</b>: {adRoles} </p>
+          <p>{context.props.ads[i]["adCopy"]}</p>
+          {applicantNodes}
+          { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
+          (<Button disabled={adminCheck} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
         </div>
       )
     };
