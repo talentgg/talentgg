@@ -34,6 +34,7 @@ var AdList = React.createClass({
   },
   reject: function(e){
     // delete from applicants array
+    console.log(e.target);
   },
 
   render: function() {
