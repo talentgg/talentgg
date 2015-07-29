@@ -160,7 +160,7 @@ var TeamProfile = React.createClass({
             <div className="col-sm-12">
                 <h3 className="text-center">Current Members</h3>
                 <p><b>Captain</b>: <a href={'/#/user/' + captainName}> { captainName } </a></p>
-                <TeamMembers members={this.state.members} ads={this.state.ads}/>
+                <TeamMembers members={this.state.members} />
               </div>
             </div>
           
@@ -178,9 +178,3 @@ var TeamProfile = React.createClass({
 
 module.exports = TeamProfile;
     
-    // var memberNames = [];
-    // _.map(this.state.members, function(member) {
-    //   memberNames.push(
-    //     <a href={'/#/user/id/' + member.id}><div align="center">{member.name}</div></a>
-    //   )
-    // });

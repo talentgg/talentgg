@@ -11,19 +11,19 @@ var TeamMembers = React.createClass({
     var membersList = [];
       
     for (var i = 0; i < this.props.members.length; i++) {
-      var adLanes = RecUtil.arrayToString(this.props.members[i]["lanes"])
-      var adRoles = RecUtil.arrayToString(this.props.ads[i]["roles"])
-      console.log('---------->');
-      console.log(adLanes);
-      console.log(adRoles);
       var context = this;
-      var members = context.props.members;
+      var currentMembers = context.props.members;
+      var addLanes = RecUtil.arrayToString(currentMembers[i].lanes);
+      var addRoles = RecUtil.arrayToString(currentMembers[i].roles);
+      console.log('lookie here');
+      console.log(addLanes);
+      console.log(addRoles);
 
       membersList.push(
-        <div className="col-sm-4" id="whitebox">
-          <p><b>Name</b>: {members[i].name}</p>
-          <p><b>Lane</b>: {members[i]["lanes"]}</p>
-          <p><b>Role</b>: {adRoles}</p>
+        <div className="col-sm-8" id="whitebox">
+          <p><b>Name</b>: {currentMembers[i].name}</p>
+          <p><b>Lane</b>: {addLanes}</p>
+          <p><b>Role</b>: {addRoles}</p>
         </div>
       )  
     };   
@@ -31,7 +31,7 @@ var TeamMembers = React.createClass({
     console.log(membersList);
 
     return (
-      <div className="row">
+      <div className="membersList">
         {membersList}
       </div>
     )

@@ -133,9 +133,9 @@ module.exports = {
   addtoteam: function(req, res, next){
     Team.findById(Number(req.body.teamId))
       .then(function(teamData){
-        var updatedAds = teamData.ads.data;
-        var laneUpdate = teamData.ads.data[req.body.ad].lanes;
-        var roleUpdate = teamData.ads.data[req.body.ad].roles;
+        var updatedAds = deepBoolean(teamData.ads.data);
+        var laneUpdate = deepBoolean(teamData.ads.data[req.body.ad].lanes);
+        var roleUpdate = deepBoolean(teamData.ads.data[req.body.ad].roles);
         console.log('-----name---->');
         console.log(req.body.name);
         updatedAds.splice(req.body.ad, 1);
