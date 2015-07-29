@@ -133,7 +133,7 @@ module.exports = {
                 categories: ["ambition", "committed"],
                 values: [10, 10]
             }]
-           }, {   ///////// 6
+           }, {
             questionText: "It’s a close game late in the laning phase. Your enemies have left your lane, but you’re low on vision. How do you decide what to do next?",
             answers: [{
                 label: "Push my lane – force them to come back or lose objectives.",
@@ -242,9 +242,7 @@ module.exports = {
             potential: []
         }
         ];
-
         return questions;
-        // });
     }
 
 };
