@@ -26,7 +26,13 @@ button {
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
+
 }
+
+button:disabled{
+  background-color: #afafaf !important;
+}
+
 .nav-pills>li>a:hover, a {
   color: #f05f40;
 }

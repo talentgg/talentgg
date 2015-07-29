@@ -160,7 +160,7 @@ var TeamProfile = React.createClass({
           <div className="col-sm-4">
             <AdList ads={this.state.ads} displayName={this.props.displayName} teamRatings={this.state.teamRatings}
             teamId={this.state.id} user={this.props.userId} captain={this.state.captain.id} myRatings={this.props.ratings}
-            avatar={this.props.avatar} />
+            avatar={this.props.avatar} games={this.props.games} />
           </div>
         </div>
         <br/>
