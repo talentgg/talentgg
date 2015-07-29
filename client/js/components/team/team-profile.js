@@ -227,7 +227,7 @@ var AdList = React.createClass({
         // console.log(applicant);
         applicantNodes.push(
           <div>
-            <a href={"/#/user/" + applicant.name}>{applicant.name}</a> 50%
+            <a key={index} href={"/#/user/" + applicant.name}>{applicant.name}</a> 50%
             { adminCheck ? (<div><Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={adminCheck} onClick={context.approve}>approve</Button>
             <Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={adminCheck} onClick={context.reject}>reject</Button></div>) : null }
           </div>
