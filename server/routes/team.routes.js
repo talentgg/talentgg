@@ -33,6 +33,10 @@ module.exports = function( app ) {
     Team.addAd(req, res);
   });
 
+  app.post('/team/removefromad', function(req, res){
+    console.log(req);
+    Team.removeFromAd(req, res);
+  });
 
   app.post('/team/invite', function(req, res){
     Team.invite(req, res);

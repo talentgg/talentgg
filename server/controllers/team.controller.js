@@ -84,7 +84,6 @@ module.exports = {
      });
    },
 
-
   getAllProfiles: function( req, res, next ){
     Team.findAll()
     .then(function (teamProfiles) {
@@ -141,7 +140,12 @@ module.exports = {
         updatedMembers.push({id: req.body.userid, name: req.body.name, lanes: laneUpdate, roles: roleUpdate, ratings: req.body.ratings, avatar: req.body.avatar, isAdmin: false});
         Team.update({ads: {data: updatedAds}, members: updatedMembers}, {where: {id: req.body.teamId}});
       });
-  }
+  },
+
+removeFromAd: function( req, res, next ){
+    res.json(req);
+  },
+
 };
 
 
