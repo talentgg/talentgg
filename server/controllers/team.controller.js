@@ -20,7 +20,7 @@ module.exports = {
       })
       .then(function(teamData){
         team = teamData;
-        user.teams.push({id: team.id, teamName: req.body.teamName, url: req.body.teamName.toLowerCase().replace(' ', '-')});
+        user.teams.push({id: team.id, teamName: req.body.teamName, url: urlify(req.body.teamName)});
       })
       .then(function(){
         User.update({teams: user.teams}, {where: {id: req.session.passport.user}});
@@ -34,34 +34,32 @@ module.exports = {
   updateProfile: function(req, res, next) {
     var getName = urlify(req.url.split('/')[3]);
     Team.findOne({
-        where: {
-          lookupName: getName
-        }
-      })
-      .then(function(teamProfile) {
-          var profile = req.body;
-          profile.teamName = getName;
-          Team.update({
-              profile: profile
-            }, {
-              where: {
-                id: teamProfile.id
-              }
-            })
-            .then(function() {
-              res.redirect('/#/');
-            });
-        });
-    },
+      where: {
+        lookupName: getName
+      }
+    })
+    .then(function(teamProfile) {
+        var profile = req.body;
+        profile.teamName = getName;
+        Team.update({
+            profile: profile
+          }, {
+            where: {
+              id: teamProfile.id
+            }
+          })
+          .then(function() {
+            res.redirect('/#/');
+          });
+      });
+  },
 
 
 
   getProfile: function( req, res, next ){
     var getName = urlify(req.url.split('/')[3]);
-    console.log(getName);
     Team.findOne({where: { lookupName: getName }})
     .then(function(teamProfile) {
-      console.log(teamProfile)
       deepBoolean(teamProfile.profile);
       deepBoolean(teamProfile.ads);
       res.json(teamProfile);
@@ -116,7 +114,6 @@ module.exports = {
   },
 
   applyToTeam: function(req, res, next){
-    var adUpdate;
     Team.findById(req.body.teamId)
     .then(function(teamData){
       teamData.ads.data[req.body.adIndex].applicants.push({
@@ -125,6 +122,7 @@ module.exports = {
         ratings: req.body.ratings,
         region: req.body.region
       });
+      deepBoolean(teamData.ads.data);
       Team.update({ads: teamData.ads}, {where: {id: req.body.teamId}})
       .then(function(){
         res.json({ads: teamData.ads});
@@ -155,7 +153,7 @@ module.exports = {
           userData.teams.push({
             id: teamData.id,
             teamName: teamData.profile.teamName,
-            url: req.body.teamName.toLowerCase().replace(' ', '-')
+            url: teamData.profile.teamName.toLowerCase().replace(' ', '-')
           })
           User.update({teams: userData.teams},{where: {id: req.body.userId}})
           .then(function(){
