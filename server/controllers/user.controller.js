@@ -53,6 +53,7 @@ module.exports = {
   },
 
   getOwnProfile: function(req, res){
+    console.log(req.session);
     User.findById(req.session.passport.user)
     .then(function(data){
       var obj = data;
