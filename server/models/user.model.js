@@ -25,10 +25,19 @@ var User = db.define( 'user', {
   displayName: {
     //This is the user's in-app name, defaulted to something like newbro123456
     type: Sequelize.STRING,
-    unique: false,
+    unique: true,
     allowNull: false
   },
-  bio: {
+  lookupName: {
+    type: Sequelize.STRING,
+    defaultValue: ""
+  },
+  messages: {
+    type: Sequelize.JSON,
+    allowNull: false,
+    defaultValue: []
+  },
+  profile: {
     //This is for storing the user's essay data and perhaps any other person-level data
     type: Sequelize.JSON,
     defaultValue: {

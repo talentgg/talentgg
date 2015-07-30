@@ -9,7 +9,7 @@ var viewProfile = React.createClass({
   mixins: [Router.State],
   getInitialState: function() {
     return {
-      bio: {
+      profile: {
         times: {
         "weekdays": false,
         "weeknights": false,
@@ -56,7 +56,7 @@ var viewProfile = React.createClass({
       then(function(response) {
         console.log(response.data.displayName);
         context.setState({
-          bio: response.data.bio,
+          profile: response.data.profile,
           displayName: response.data.displayName,
           ratings: response.data.ratings,
           games: response.data.games,
@@ -67,9 +67,15 @@ var viewProfile = React.createClass({
   },
 
   render: function() {
-    console.log("VIEW PROFILE START");
     return (
-      <OtherBio displayName={this.state.displayName} bio={this.state.bio} games={this.state.games} temp={this.state.temp} id={this.state.id} />
+      <OtherBio
+      displayName={this.state.displayName}
+      profile={this.state.profile}
+      games={this.state.games}
+      temp={this.state.temp}
+      id={this.state.id}
+      ratings={this.state.ratings}
+      />
     );
   }
 });

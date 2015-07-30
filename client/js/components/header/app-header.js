@@ -36,18 +36,17 @@ var Header = React.createClass({
               <li className="dropdown">
                 <Link to='/' className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i className="fa fa-users" /> My Teams <span className="caret"></span></Link>
                 <ul className="dropdown-menu">
-                  { this.props.teams.map(function(team){ return <li key={team.id}><Link to={"/team/" + team.teamName} > {team.teamName} </Link></li> })}
+                  { this.props.teams.map(function(team){ return <li key={team.id}><Link to={"/team/" + team.url} > {team.teamName} </Link></li> })}
                   { this.props.teams.length < 3 ? (<li><Link to="/teamregistration"> Create a Team </Link></li>) : null }
                 </ul>
               </li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><Link to="profile"><image className="img-rounded" height="20px" width="20px" src={this.props.avatar} /> {this.props.displayName}</Link></li>
-              <li><Link to="/" style={{fontSize: '20px'}}><i className="fa fa-envelope" /></Link></li>
+              <li><Link to="/messages" style={{fontSize: '20px'}}><i className="fa fa-envelope" /></Link></li>
               <li className="dropdown">
                 <Link to='/' style={{fontSize: '20px'}} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-cog"></span></Link>
                 <ul className="dropdown-menu">
-                  <li><Link to="accountLink">Account Link</Link></li>
                   <li><Link to="settings">Settings</Link></li>
                   <li><Link to="about">About</Link></li>
                   <li role="separator" className="divider"></li>

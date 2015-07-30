@@ -11,7 +11,8 @@ var App = React.createClass({
       verified: false,
       verifyKey: "",
       avatar: "",
-      bio: {
+      messages: [],
+      profile: {
         times: {},
         purpose: {},
         roles: {},
@@ -37,7 +38,8 @@ var App = React.createClass({
         userId: response.id,
         displayName: response.displayName,
         avatar: response.games.avatar,
-        bio: response.bio,
+        messages: response.messages,
+        profile: response.profile,
         teams: response.teams,
         games: response.games,
         counter: response.counter,
@@ -61,7 +63,8 @@ var App = React.createClass({
           userId={this.state.userId}
           displayName={this.state.displayName}
           avatar={this.state.avatar}
-          bio={this.state.bio}
+          messages={this.state.messages}
+          profile={this.state.profile}
           teams={this.state.teams}
           games={this.state.games}
           counter={this.state.counter}

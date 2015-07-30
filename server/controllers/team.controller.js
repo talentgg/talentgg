@@ -5,20 +5,22 @@ var passport = require('passport');
 module.exports = {
 
   register: function( req, res, next ) {
-    var user, team;
+    var team;
     User.findOne({where: {id: req.session.passport.user}})
-    .then(function(userData){
-      user = userData;
-    })
-    .then(function(){
+    .then(function(user){
       Team.create({
+        lookupName: urlify(req.body.teamName),
         profile: req.body,
         teamCaptain: user.id,  // redundant, but this gets checked a lot and saves having to iterate over keys every time
-        members: [{id: user.id, name: user.displayName, isAdmin: true}]
+        members: [{
+          id: user.id,
+          name: user.displayName,
+          ratings: user.ratings,
+          avatar: user.games.avatar}]
       })
       .then(function(teamData){
         team = teamData;
-        user.teams.push({id: team.id, teamName: team.profile.teamName});
+        user.teams.push({id: team.id, teamName: req.body.teamName, url: req.body.teamName.toLowerCase().replace(' ', '-')});
       })
       .then(function(){
         User.update({teams: user.teams}, {where: {id: req.session.passport.user}});
@@ -30,52 +32,46 @@ module.exports = {
   },
 
   updateProfile: function(req, res, next) {
-      var getName = req.url.split('/')[3];
-      Team.findOne({
-          where: {
-            profile: {
-              teamName: getName
-            }
-          }
-        })
-        .then(function(teamProfile) {
-            var profile = req.body;
-            profile.teamName = getName;
-            Team.update({
-                profile: profile
-              }, {
-                where: {
-                  id: teamProfile.id
-                }
-              })
-              .then(function() {
-                res.redirect('/#/');
-              });
-          });
-      },
+    var getName = urlify(req.url.split('/')[3]);
+    Team.findOne({
+        where: {
+          lookupName: getName
+        }
+      })
+      .then(function(teamProfile) {
+          var profile = req.body;
+          profile.teamName = getName;
+          Team.update({
+              profile: profile
+            }, {
+              where: {
+                id: teamProfile.id
+              }
+            })
+            .then(function() {
+              res.redirect('/#/');
+            });
+        });
+    },
 
 
 
   getProfile: function( req, res, next ){
-    var getName = req.url.split('/')[3];
-    Team.findOne({where: {
-      profile: {
-        teamName: getName
-      }
-    }})
-      .then(function(teamProfile) {
-        deepBoolean(teamProfile.profile);
-        deepBoolean(teamProfile.ads);
-        res.json(teamProfile);
-     });
-   },
+    var getName = urlify(req.url.split('/')[3]);
+    console.log(getName);
+    Team.findOne({where: { lookupName: getName }})
+    .then(function(teamProfile) {
+      console.log(teamProfile)
+      deepBoolean(teamProfile.profile);
+      deepBoolean(teamProfile.ads);
+      res.json(teamProfile);
+    });
+  },
 
   getById: function( req, res, next ){
     var getName = req.url.split('/')[3];
     Team.findOne({where: {
-      id: {
-        teamName: getName
-      }
+      id: getName
     }})
        .then(function(teamProfile) {
         deepBoolean(teamProfile.profile);
@@ -84,20 +80,18 @@ module.exports = {
      });
    },
 
-
   getAllProfiles: function( req, res, next ){
     Team.findAll()
     .then(function (teamProfiles) {
       res.json(teamProfiles);
     });
   },
+
   addAd: function(req, res, next) {
-  var getName = req.url.split('/')[3];
+  var getName = urlify(req.url.split('/')[3]);
   Team.findOne({
       where: {
-        profile: {
-          teamName: getName
-        }
+        lookupName: getName
       }
     })
     .then(function(teamProfile) {
@@ -120,28 +114,90 @@ module.exports = {
   invite: function(req, res, next){
 
   },
-  applytoteam: function(req, res, next){
-    var adUpdate;
-    Team.findById(req.body.teamid).then(function(teamData){
-          adUpdate = teamData.ads.data;
-          adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name, ratings: req.body.ratings});
-        })
-          .then(function(){
-            Team.update({ads: {data: adUpdate}}, {where: {id: req.body.teamid}});
-          });
-  },
-  addtoteam: function(req, res, next){
-    Team.findById(Number(req.body.teamId))
-      .then(function(teamData){
-        var updatedAds = teamData.ads.data;
-        updatedAds.splice(req.body.ad, 1);
-        var updatedMembers = teamData.members;
-        updatedMembers.push({id: req.body.userid, name: req.body.displayName, isAdmin: false});
-        Team.update({ads: {data: updatedAds}, members: updatedMembers}, {where: {id: req.body.teamId}});
-      });
-  }
-};
 
+  applyToTeam: function(req, res, next){
+    var adUpdate;
+    Team.findById(req.body.teamId)
+    .then(function(teamData){
+      teamData.ads.data[req.body.adIndex].applicants.push({
+        id: req.session.passport.user,
+        name: req.body.name,
+        ratings: req.body.ratings,
+        region: req.body.region
+      });
+      Team.update({ads: teamData.ads}, {where: {id: req.body.teamId}})
+      .then(function(){
+        res.json({ads: teamData.ads});
+      })
+    });
+  },
+
+  addToTeam: function(req, res, next){
+    Team.findById(req.body.teamId)
+    .then(function(teamData){
+      var updatedAds = deepBoolean(teamData.ads.data);
+      var laneUpdate = deepBoolean(teamData.ads.data[req.body.ad].lanes);
+      var roleUpdate = deepBoolean(teamData.ads.data[req.body.ad].roles);
+      updatedAds.splice(req.body.ad, 1);
+      teamData.members.push({
+        id: req.body.userId,
+        name: req.body.name,
+        lanes: laneUpdate,
+        roles: roleUpdate,
+        ratings: req.body.ratings,
+        avatar: req.body.avatar,
+        isAdmin: false
+      });
+      Team.update({ads: {data: updatedAds}, members: teamData.members}, {where: {id: req.body.teamId}})
+      .then(function(){
+        User.findById(req.body.userId)
+        .then(function(userData){
+          userData.teams.push({
+            id: teamData.id,
+            teamName: teamData.profile.teamName,
+            url: req.body.teamName.toLowerCase().replace(' ', '-')
+          })
+          User.update({teams: userData.teams},{where: {id: req.body.userId}})
+          .then(function(){
+            res.json({ads: {data: updatedAds}, members: teamData.members});
+          })
+        })
+      })
+    });
+  },
+
+  removeFromAd: function( req, res, next ){
+    var obj;
+    Team.findById(req.body.teamId)
+    .then(function(teamData){
+      obj = teamData.ads.data[req.body.adIndex].applicants;
+      for(var i = 0; i < obj.length; i++){
+        if(obj[i].name === req.body.name){
+          obj.splice(i, 1);
+          teamData.ads.data[req.body.adIndex].applicants = obj;
+          Team.update({ads: teamData.ads}, {where: {id: req.body.teamId}})
+          .then(function(){
+            res.json({ads: teamData.ads});
+          })
+        }
+      }
+    })
+  },
+
+  removeAd: function(req, res){ //teamId
+    Team.findById(req.body.teamId)
+    .then(function(teamData){
+      teamData.ads.data.splice(req.body.index, 1);
+      deepBoolean(teamData.ads.data);
+      Team.update({ads: teamData.ads}, {where: {id: req.body.teamId}})
+      .then(function(){
+        res.json({ads: teamData.ads});
+      })
+    })
+  }
+
+
+};
 
 function deepBoolean(obj){
   if(typeof obj !== 'object') {
@@ -159,4 +215,8 @@ function deepBoolean(obj){
     }
   }
   return obj;
+}
+
+function urlify(str){
+  return str.toLowerCase().replace(' ', '-').replace('%20', '-');
 }

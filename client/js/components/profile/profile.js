@@ -1,10 +1,10 @@
 var React = require('react');
 var Router = require("react-router");
 var Route = Router.Route;
-var Ratings = require('./ratings');
 var Questions = require('./user-questions');
 var Edit = require('./bio-form');
 var Chart = require('./chart');
+var AccountLink = require('./accountLink');
 
 var champList = {"1":"Annie","2":"Olaf","3":"Galio","4":"TwistedFate","5":"XinZhao","6":"Urgot","7":"Leblanc","8":"Vladimir",
 "9":"FiddleSticks","10":"Kayle","11":"MasterYi","12":"Alistar","13":"Ryze","14":"Sion","15":"Sivir","16":"Soraka","17":"Teemo",
@@ -25,7 +25,7 @@ var Test = React.createClass({
   propTypes: {
     displayName: React.PropTypes.string.isRequired,
     avatar: React.PropTypes.string.isRequired,
-    bio: React.PropTypes.object.isRequired,
+    profile: React.PropTypes.object.isRequired,
     games: React.PropTypes.object.isRequired,
     temp: React.PropTypes.object.isRequired,
     ratings: React.PropTypes.object.isRequired,
@@ -43,10 +43,10 @@ var Test = React.createClass({
       return arr.join(', ');
     };
 
-    var available = arrayToString(this.props.bio.times);
-    var gameTypes = arrayToString(this.props.bio.purpose);
-    var roleArray = arrayToString(this.props.bio.roles);
-    var laneArray = arrayToString(this.props.bio.lanes);
+    var available = arrayToString(this.props.profile.times);
+    var gameTypes = arrayToString(this.props.profile.purpose);
+    var roleArray = arrayToString(this.props.profile.roles);
+    var laneArray = arrayToString(this.props.profile.lanes);
     var games = this.props.temp.matches.reverse();
     var recentTop = games.slice(0, Math.min(5, games.length));
     var recentBot = games.length > 4 ? games.slice(5) : [];
@@ -59,7 +59,7 @@ var Test = React.createClass({
           </div>
           <div className="col-sm-4">
             <h3>{this.props.displayName}</h3>
-            <p>{this.props.bio.about === "" ? 'I haven\'t filled this out yet' : this.props.bio.about}</p>
+            <p>{this.props.profile.about === "" ? 'I haven\'t filled this out yet' : this.props.profile.about}</p>
           </div>
           <div className="col-sm-2">
             <img className="center-block img-fit" src={"/img/tier-" + this.props.temp.rank + ".png"} />
@@ -73,7 +73,7 @@ var Test = React.createClass({
             <li role="presentation" className="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="pill">Profile</a></li>
             <li role="presentation"><a href="#edit" aria-controls="edit" role="tab" data-toggle="pill">Edit</a></li>
             <li role="presentation"><a href="#questions" aria-controls="questions" role="tab" data-toggle="pill">Questions</a></li>
-            <li role="presentation"><a href="#chart" aria-controls="chart" role="tab" data-toggle="pill">Chart</a></li>
+            <li role="presentation"><a href="#link" aria-controls="chart" role="tab" data-toggle="pill">Account Link</a></li>
           </ul>
         </div>
         <div className="tab-content">
@@ -89,8 +89,17 @@ var Test = React.createClass({
                     <p><b>Lanes</b>: { laneArray === "" ? 'No lanes' : laneArray}</p>
                   </div>
                 </div>
+                <br/>
+                <div className="panel panel-default whitebox">
+                  <div className="panel-body">
+                    <h3 className="text-center">About Me</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus illum reprehenderit ducimus, cumque fugiat doloribus est laboriosam neque optio modi. Numquam optio magni ad error in itaque, tenetur ex vitae repellat aliquid dignissimos rerum porro, esse nam unde odio maiores, reiciendis illo dolor quod. Dolor animi magnam ex incidunt praesentium, velit corporis placeat, minima dicta beatae natus error eos impedit corrupti, labore consequatur sequi laborum in debitis, facere quibusdam aperiam! Deleniti ipsa, necessitatibus eligendi, dolorum eius atque obcaecati, consequatur quisquam quae, nostrum numquam nesciunt dicta itaque officia consequuntur ipsam qui modi mollitia animi distinctio voluptatibus pariatur explicabo voluptate quos. Impedit!</p>
+                  </div>
+                </div>
               </div>
               <div className="col-sm-6">
+                <Chart ratings={this.props.ratings} />
+                <br/>
                 <div className="panel panel-default whitebox">
                   <div className="panel-body">
                     <h3 className="text-center">Ranked Games</h3>
@@ -110,13 +119,13 @@ var Test = React.createClass({
             </div>
           </div>
           <div role="tabpanel" className="tab-pane" id="edit">
-            <Edit initialBio={this.props.bio} updateState={this.props.updateState} />
+            <Edit initialBio={this.props.profile} updateState={this.props.updateState} />
           </div>
           <div role="tabpanel" className="tab-pane" id="questions">
             <Questions updateState={this.props.updateState} />
           </div>
-          <div role="tabpanel" className="tab-pane" id="chart">
-            <Chart ratings={this.props.ratings} />
+          <div role="tabpanel" className="tab-pane" id="link">
+            <AccountLink displayName={this.props.displayName} games={this.props.games} updateState={this.props.updateState} />
           </div>
         </div>
       </div>

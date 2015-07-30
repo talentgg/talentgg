@@ -1,6 +1,7 @@
 var React = require('react');
 var Axios = require('axios');
 var Router = require('react-router');
+var Chart = require('../profile/chart');
 
 var fitting = {height: 'auto', width: '100%'};
 
@@ -27,7 +28,7 @@ var OtherBio = React.createClass({
   // mixins: [Router.State, Router.Navigation],
   // propTypes: {
   //   displayName: React.PropTypes.string.isRequired,
-  //   bio: React.PropTypes.object.isRequired,
+  //   profile: React.PropTypes.object.isRequired,
   //   games: React.PropTypes.object.isRequired,
   //   temp: React.PropTypes.object.isRequired
   // },
@@ -44,10 +45,10 @@ var OtherBio = React.createClass({
       return arr.join(', ');
     };
 
-    var available = arrayToString(this.props.bio.times);
-    var gameTypes = arrayToString(this.props.bio.purpose);
-    var roleArray = arrayToString(this.props.bio.roles);
-    var laneArray = arrayToString(this.props.bio.lanes);
+    var available = arrayToString(this.props.profile.times);
+    var gameTypes = arrayToString(this.props.profile.purpose);
+    var roleArray = arrayToString(this.props.profile.roles);
+    var laneArray = arrayToString(this.props.profile.lanes);
     var games = this.props.temp.matches.reverse();
     var recentTop = games.slice(0, Math.min(5, games.length));
     var recentBot = games.length > 4 ? games.slice(5) : [];
@@ -63,7 +64,7 @@ var OtherBio = React.createClass({
           </div>
           <div className="col-sm-4">
             <h3>{this.props.displayName}</h3>
-            <p>{this.props.bio.about}</p>
+            <p>{this.props.profile.about}</p>
           </div>
           <div className="col-sm-2">
             <img className="center-block" width="128" height="128" src={"/img/tier-" + this.props.temp.rank + ".png"} />
@@ -84,8 +85,17 @@ var OtherBio = React.createClass({
                 <p><b>Lanes</b>: { laneArray === "" ? 'No lanes' : laneArray}</p>
               </div>
             </div>
+            <br/>
+            <div className="panel panel-default whitebox">
+              <div className="panel-body">
+                <h3 className="text-center">About Me</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus illum reprehenderit ducimus, cumque fugiat doloribus est laboriosam neque optio modi. Numquam optio magni ad error in itaque, tenetur ex vitae repellat aliquid dignissimos rerum porro, esse nam unde odio maiores, reiciendis illo dolor quod. Dolor animi magnam ex incidunt praesentium, velit corporis placeat, minima dicta beatae natus error eos impedit corrupti, labore consequatur sequi laborum in debitis, facere quibusdam aperiam! Deleniti ipsa, necessitatibus eligendi, dolorum eius atque obcaecati, consequatur quisquam quae, nostrum numquam nesciunt dicta itaque officia consequuntur ipsam qui modi mollitia animi distinctio voluptatibus pariatur explicabo voluptate quos. Impedit!</p>
+              </div>
+            </div>
           </div>
           <div className="col-sm-6">
+            <Chart ratings={this.props.ratings} />
+            <br/>
             <div className="panel panel-default whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Recent Games</h3>

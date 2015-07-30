@@ -21,7 +21,8 @@ var TeamUpdateForm = React.createClass({
   getInitialState: function() {
     return {
       teamName: "",
-      about: "",      
+      about: "",
+      image: "",
       times: {
         "weekdays": false,
         "weeknights": false,
@@ -31,7 +32,7 @@ var TeamUpdateForm = React.createClass({
         "3x3 Casual": false,
         "5x5 Casual": false,
         "5x5 Ranked": false
-      }, 
+      },
       lanes: {
         "top": false,
         "mid": false,
@@ -54,14 +55,16 @@ var TeamUpdateForm = React.createClass({
     var name = router.getCurrentQuery().teamname;
     var context = this;
     Axios.get('/team/profile/' + name)
-      .then(function(response) {   
+      .then(function(response) {
           context.setState({
             // game: response.data.game, // what's this do here?
             members: response.data.members,
+            lookupName: response.data.lookupName,
             teamName: name,
             times: response.data.profile.times,
             purpose: response.data.profile.purpose,
             about: response.data.profile.about,
+            image: response.data.profile.image
           });
       });
   },
@@ -72,30 +75,42 @@ var TeamUpdateForm = React.createClass({
 
     var profileUpload = {
       about: this.state.about,
+      image: this.state.image,
       times: this.state.times,
       purpose: this.state.purpose
     };
-    $.post('/team/update/' + this.state.teamName, profileUpload);
+
+    var self = this;
+
+    $.post('/team/update/' + this.state.lookupName, profileUpload, function() {
+      self.transitionTo('/team/' + self.state.lookupName, {username: 'username'})
+    });
   },
+
   handleAd: function(e) {
     e.preventDefault();
+    var self = this;
     var newAd = {
       lanes: this.state.lanes,
       roles: this.state.roles,
       adCopy: this.state.adCopy,
       applicants: []
     }
-    var adPath = '/team/addad/' + this.state.teamName;
+    var adPath = '/team/addad/' + this.state.lookupName;
     $.post(adPath, newAd);
-    this.transitionTo('/team/' + this.state.teamName, {username: 'username'});
+    this.transitionTo('/team/' + this.state.lookupName, {username: 'username'});
   },
   render: function() {
-    
+    console.log(this.state);
     return (
       <div className="container">
+
         <form>
           About Us: <TextInput placeholder="update your description here"
           allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
+
+          Image Url: <TextInput placeholder="please upload your image url here"
+          allowNewLine={ true } name="image" valueLink={this.linkState('image')} />
 
           <Checkbox
           label='Times Available: '
@@ -126,7 +141,7 @@ var TeamUpdateForm = React.createClass({
 
           <TextInput placeholder="Add notes here." allowNewLine={true} name="adCopy" valueLink={this.linkState('adCopy')} />
 
-          <Button primary type="submit" onClick={this.handleAd} >Post New Ad</Button>
+          <Button primary type="submit" value="submit" onClick={this.handleAd} >Post New Ad</Button>
 
         </form>
       </div>

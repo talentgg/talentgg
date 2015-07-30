@@ -18,7 +18,7 @@ var TeamRegistration = require("./components/team/team-registration"); //Making 
 var TeamProfile = require("./components/team/team-profile"); //Viewing a team
 var TeamUpdateForm = require("./components/team/team-update-form");
 var FindPlayers = require("./components/recruitment/findPlayers"); //Finding players/teams
-var AccountLink = require("./components/settings/accountLink"); //Connecting account
+var Messages = require("./components/profile/messages");
 var Settings = require("./components/settings/settings"); //Changing email/password
 var About = require("./components/settings/about"); //About page
 var NotFound = React.createClass({
@@ -37,7 +37,7 @@ module.exports = (
     <Route name="teamprofile" path="/team/:teamname" handler={TeamProfile}/>
     <Route name="teamupdateform" path="/teamupdate" handler={TeamUpdateForm}/>
     <Route name="findplayers" path="/findplayers" handler={FindPlayers}/>
-    <Route name="accountLink" path="/account-link" handler={AccountLink}/>
+    <Route name="messages" path="/messages" handler={Messages}/>
     <Route name="settings" path="/settings" handler={Settings}/>
     <Route name="about" path="/about" handler={About}/>
     <NotFoundRoute handler={NotFound}/>

@@ -20,6 +20,12 @@ var TeamRegistration = React.createClass({
         "weekdays": false,
         "weeknights": false,
         "weekends": false
+      },
+      purpose: {
+        "casual": false,
+        "ranked": false,
+        "3v3": false,
+        "5v5": false
       }
     };
   },
@@ -29,7 +35,7 @@ var TeamRegistration = React.createClass({
     var teamBio = this.state;
     $.post("/team/register", teamBio, function(data){
       self.props.updateState(data);
-      self.transitionTo('/team/' + teamBio.teamName)
+      self.transitionTo('/team/' + teamBio.teamName.toLowerCase().replace(' ', '-'))
     });
   },
   render: function() {
@@ -49,6 +55,12 @@ var TeamRegistration = React.createClass({
           <Checkbox
           label='Times Available: '
           options={this.state.times}
+          onChange={this.setState.bind(this)}
+          bootstrap />
+
+          <Checkbox
+          label='Purpose: '
+          options={this.state.purpose}
           onChange={this.setState.bind(this)}
           bootstrap />
 
