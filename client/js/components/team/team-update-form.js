@@ -32,7 +32,7 @@ var TeamUpdateForm = React.createClass({
         "3x3 Casual": false,
         "5x5 Casual": false,
         "5x5 Ranked": false
-      }, 
+      },
       lanes: {
         "top": false,
         "mid": false,
@@ -55,7 +55,7 @@ var TeamUpdateForm = React.createClass({
     var name = router.getCurrentQuery().teamname;
     var context = this;
     Axios.get('/team/profile/' + name)
-      .then(function(response) {   
+      .then(function(response) {
           context.setState({
             // game: response.data.game, // what's this do here?
             members: response.data.members,
@@ -99,7 +99,7 @@ var TeamUpdateForm = React.createClass({
     this.transitionTo('/team/' + this.state.teamName, {username: 'username'});
   },
   render: function() {
-    
+
     return (
       <div className="container">
 
@@ -139,7 +139,7 @@ var TeamUpdateForm = React.createClass({
 
           <TextInput placeholder="Add notes here." allowNewLine={true} name="adCopy" valueLink={this.linkState('adCopy')} />
 
-          <Button primary type="submit" onClick={this.handleAd} >Post New Ad</Button>
+          <Button primary type="submit" value="submit" onClick={this.handleAd} >Post New Ad</Button>
 
         </form>
       </div>

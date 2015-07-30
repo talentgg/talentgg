@@ -18,9 +18,10 @@ var TeamProfile = React.createClass({
     ratings: React.PropTypes.object.isRequired,
     counter: React.PropTypes.number.isRequired
   },
+
   getInitialState: function() {
     return {
-      id: null,
+      teamId: null,
       profile: {
         teamName: "",
         times: {
@@ -37,7 +38,7 @@ var TeamProfile = React.createClass({
         about: "",
         game: {},
       },
-      ads: [{          // test ad
+      ads: {data: [{          // test ad
           lanes: {
             top: false,
             mid: false,
@@ -53,7 +54,7 @@ var TeamProfile = React.createClass({
             tank: false
           },
           adCopy: "we need a jungler like tarzan."
-      }],
+      }]},
       members: {},
       teamRatings: {},
       captain: {
@@ -62,54 +63,25 @@ var TeamProfile = React.createClass({
       }
     };
   },
+
   componentDidMount: function() {
-    var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
-    var context = this;
-    Axios.get(teamToGet)
-      .then(function(response) {
-          var cap = null;
-          var mems = [];
-          _.map(response.data.members, function(member) {
-            if (member.isAdmin === true) {
-              cap = member;
-            } else mems.push(member);
-          });
-          context.setState({
-            id: response.data.id,
-            game: response.data.game,
-            members: mems,
-            profile: response.data.profile,
-            captain: cap,
-            teamRatings: response.data.ratings,
-            ads: response.data.ads.data
-          });
-      });
+    var self = this;
+    $.get('/team/profile/' + window.location.hash.split('/')[2], function(response){
+      self.setState({
+        teamId: response.id,
+        game: response.game,
+        captain: response.members[0],
+        members: response.members.slice(1),
+        profile: response.profile,
+        teamRatings: response.ratings,
+        ads: response.ads
+      })
+    })
   },
+
   updateTeam: function(newState){
     this.setState(newState);
   },
-  // componentWillReceiveProps: function() {
-  //   var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
-  //   var context = this;
-  //   Axios.get(teamToGet)
-  //     .then(function(response) {
-  //       var cap = null;
-  //       var mems = [];
-  //       _.map(response.data.members, function(member) {
-  //         if (member.isAdmin === true) {
-  //           cap = member;
-  //         } else mems.push(member);
-  //       });
-  //       context.setState({
-  //         id: response.data.id,
-  //         game: response.data.game,
-  //         members: mems,
-  //         profile: response.data.profile,
-  //         captain: cap,
-  //         ads: response.data.ads
-  //       });
-  //     });
-  // },
 
   handleEdit: function() {
     var router = this.context.router;
@@ -117,8 +89,6 @@ var TeamProfile = React.createClass({
   },
 
   render: function() {
-    var captainName = this.state.captain.name;
-    var isCaptain = this.state.captain.id === this.props.userId ? true : false;
     var available = RecUtil.arrayToString(this.state.profile.times);
     var purpose = RecUtil.arrayToString(this.state.profile.purpose);
 
@@ -155,7 +125,7 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Current Members</h3>
-                <p><b>Captain</b>: <a href={'/#/user/' + captainName}> { captainName } </a></p>
+                <p><b>Captain</b>: <a href={'/#/user/' + this.state.captain.name}> { this.state.captain.name } </a></p>
                 <TeamMembers members={this.state.members} />
               </div>
             </div>
@@ -165,9 +135,9 @@ var TeamProfile = React.createClass({
             ads={this.state.ads}
             displayName={this.props.displayName}
             teamRatings={this.state.teamRatings}
-            teamId={this.state.id}
-            user={this.props.userId}
-            captain={this.state.captain.id}
+            teamId={this.state.teamId}
+            userId={this.props.userId}
+            captain={this.state.captain}
             myRatings={this.props.ratings}
             avatar={this.props.avatar}
             games={this.props.games}

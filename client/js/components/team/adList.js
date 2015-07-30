@@ -10,27 +10,47 @@ var RecUtil = require('../../utils/recUtil.js');
 
 var AdList = React.createClass({
 
+  propTypes: {
+    ads: React.PropTypes.object.isRequired,
+    userId: React.PropTypes.number.isRequired,
+    captain: React.PropTypes.object.isRequired
+  },
+
+  getInitialState: function() {
+    return {
+      ads: this.props.ads.data,
+      captain: this.props.captain
+    }
+  },
+
   componentWillReceiveProps: function(props){
     this.setState({
-      ads: props.ads
+      ads: props.ads.data,
+      userId: props.userId,
+      captain: props.captain
     })
   },
 
-  handleApply: function(e) {
+  userApply: function(e) {
+    var self = this;
     e.preventDefault();
-    var application = {
+    $.post('/team/applyToTeam', {
       teamid: this.props.teamId,
       name: this.props.displayName,
       adIndex: e.target.value,
       ratings: this.props.myRatings
-    }
-    $.post('/team/applytoteam', application);
+    }, function(ads){
+      self.props.updateTeam(ads);
+    });
   },
-  removeAd: function(e){
+
+  userWithdraw: function(e){
     e.preventDefault();
-    // $.post('/team/removead', {adIndex: e.target.value});     // <-- make this
+    console.log("trigger user withdraw");
   },
-  approve: function(e){
+
+  captainApprove: function(e){
+    var self = this;
     e.preventDefault();
     var approval = e.target.value.split('&');
     $.post('/team/addtoteam', {userid: approval[0], ad: approval[1], name: approval[2], teamId: this.props.teamId,
@@ -38,7 +58,9 @@ var AdList = React.createClass({
     // delete other applicants from ad
     // delete ad
   },
-  reject: function(e){
+
+  captainReject: function(e){
+    var self = this;
     e.preventDefault();
     var self = this;
     var send = {
@@ -46,56 +68,58 @@ var AdList = React.createClass({
       adIndex: e.target.value.split('&')[1],
       name: e.target.value.split('&')[2]
     }
-    $.post('/team/removefromad', send, function(data){
-      console.log(data);
-      self.props.updateTeam(data);
+    $.post('/team/removefromad', send, function(ads){
+      console.log(ads);
+      self.props.updateTeam(ads);
     });
   },
 
+  removeAd: function(e){
+    var self = this;
+    e.preventDefault();
+    console.log("trigger remove ad");
+  },
+
   render: function() {
+    console.log(this.state);
+    var context = this;
+    var isAdmin = this.state.captain.id === this.props.userId;
     var adNodes = [];
-    console.log("start")
-    for (var i = 0; i < this.props.ads.length; i++) {
-      var adLanes = RecUtil.arrayToString(this.props.ads[i]["lanes"])
-      var adRoles = RecUtil.arrayToString(this.props.ads[i]["roles"])
 
-// need a way to track if the user's applied and disable the button
-      var adminCheck = false;
-      var uniqId = true;
-      var context = this;
-
-      _.map(context.props.ads, function(ad){
-        // if ((ad.applicants && ad.applicants.indexOf(context.props.user) > -1) || context.props.captain === context.props.user) {
-          if (context.props.captain === context.props.user) {
-            // this line doesn't do anything ---> ad.applicants.indexOf(context.props.user)
-            adminCheck = true;
-          }
-      })
-
-      // var matchScore = RecUtil.calculateMatchScore(applicant.ratings, this.props.teamRatings)
-
+    for (var i = 0; i < this.state.ads.length; i++) {
+      var adLanes = RecUtil.arrayToString(this.state.ads[i]["lanes"]);
+      var adRoles = RecUtil.arrayToString(this.state.ads[i]["roles"]);
       var applicantNodes = [];
-      _.map(this.props.ads[i].applicants, function(applicant, index) {
-        console.log(applicant);
-        applicantNodes.push(
-          <div>
-            <a href={"/#/user/" + applicant.name}>{applicant.name}</a>
-            { adminCheck ? (<div><Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={adminCheck} onClick={context.approve}>approve</Button>
-            <Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={adminCheck} onClick={context.reject}>reject</Button></div>) : null }
-          </div>
+      var notApplied = true;
+      // need a way to track if the user's applied and disable the button
+
+      // var matchScore = RecUtil.calculateMatchScore(applicant.ratings, this.state.teamRatings)
+
+      _.map(this.state.ads[i].applicants, function(applicant, index) {
+        if(isAdmin){
+          applicantNodes.push(
+            <div key={index}>
+              <a href={"/#/user/" + applicant.name} target=" _blank">{applicant.name}</a>
+              <Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={isAdmin} onClick={context.captainApprove}>approve</Button>
+              <Button value={applicant.id + "&" + index + "&" + applicant.name} secondary={isAdmin} onClick={context.captainReject}>reject</Button>
+            </div>
           )
+        } else if(applicant.id === context.props.userId){
+          notApplied = false;
+        }
+
       })
 
       adNodes.push(
-        <div>
+        <div key={i}>
           <div className="panel panel-default panel-body whitebox">
             <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
             <p><b>Lane</b>: {adLanes} </p>
             <p><b>Role</b>: {adRoles} </p>
-            <p>{context.props.ads[i]["adCopy"]}</p>
+            <p>{context.state.ads[i]["adCopy"]}</p>
             {applicantNodes}
-            { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
-            (<Button disabled={this.props.games.verified ? "" : "disabled"} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
+            { isAdmin ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
+            (<Button disabled={this.props.games.verified && notApplied ? "" : "disabled"} value={i} secondary={isAdmin} onClick={this.userApply}>Apply</Button>)}
           </div>
           <br/>
         </div>

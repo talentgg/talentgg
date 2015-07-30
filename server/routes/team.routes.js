@@ -41,8 +41,8 @@ module.exports = function( app ) {
     Team.invite(req, res);
   });
 
-  app.post('/team/applytoteam',function(req, res){
-    Team.applytoteam(req, res);
+  app.post('/team/applyToTeam',function(req, res){
+    Team.applyToTeam(req, res);
   });
 
   app.post('/team/addtoteam', function(req, res){

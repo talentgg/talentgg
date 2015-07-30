@@ -119,16 +119,20 @@ module.exports = {
   invite: function(req, res, next){
 
   },
-  applytoteam: function(req, res, next){
+
+  applyToTeam: function(req, res, next){
     var adUpdate;
-    Team.findById(req.body.teamid).then(function(teamData){
-          adUpdate = teamData.ads.data;
-          adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name, ratings: req.body.ratings});
-        })
-          .then(function(){
-            Team.update({ads: {data: adUpdate}}, {where: {id: req.body.teamid}});
-          });
+    Team.findById(req.body.teamid)
+    .then(function(teamData){
+      adUpdate = teamData.ads.data;
+      adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name, ratings: req.body.ratings});
+      Team.update({ads: {data: adUpdate}}, {where: {id: req.body.teamid}})
+      .then(function(){
+        res.json({ads: {data: adUpdate}});
+      })
+    });
   },
+  
   addtoteam: function(req, res, next){
     Team.findById(Number(req.body.teamId))
       .then(function(teamData){
