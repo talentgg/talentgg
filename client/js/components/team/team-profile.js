@@ -35,6 +35,7 @@ var TeamProfile = React.createClass({
           "3v3": false,
           "5v5": false
         },
+        tagLine: "",
         about: "",
         game: {},
       },
@@ -100,7 +101,7 @@ var TeamProfile = React.createClass({
           </div>
           <div className="col-sm-4">
             <h3>Team: {this.state.profile.teamName}</h3>
-            <p>{this.state.profile.about}</p>
+            <p>{this.state.profile.tagLine}</p>
           </div>
           <div className="col-sm-2">
             <img className="center-block img-fit" src="/img/tier-silver.png"/>
