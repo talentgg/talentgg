@@ -33,7 +33,7 @@ module.exports = function( app ) {
     Team.addAd(req, res);
   });
 
-  app.post('/team/removefromad', function(req, res){
+  app.post('/team/removeFromAd', function(req, res){
     Team.removeFromAd(req, res);
   });
 
@@ -41,12 +41,16 @@ module.exports = function( app ) {
     Team.invite(req, res);
   });
 
-  app.post('/team/applytoteam',function(req, res){
-    Team.applytoteam(req, res);
+  app.post('/team/applyToTeam',function(req, res){
+    Team.applyToTeam(req, res);
   });
 
-  app.post('/team/addtoteam', function(req, res){
-    Team.addtoteam(req, res);
+  app.post('/team/addToTeam', function(req, res){
+    Team.addToTeam(req, res);
+  });
+
+  app.post('/team/removeAd', function(req, res){
+    Team.removeAd(req, res);
   });
 
 };

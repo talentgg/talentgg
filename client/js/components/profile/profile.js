@@ -98,9 +98,7 @@ var Test = React.createClass({
                 </div>
               </div>
               <div className="col-sm-6">
-                <div role="tabpanel" className="tab-pane" id="chart">
-                  <Chart ratings={this.props.ratings} />
-                </div>
+                <Chart ratings={this.props.ratings} />
                 <br/>
                 <div className="panel panel-default whitebox">
                   <div className="panel-body">

@@ -25,8 +25,12 @@ var User = db.define( 'user', {
   displayName: {
     //This is the user's in-app name, defaulted to something like newbro123456
     type: Sequelize.STRING,
-    unique: false,
+    unique: true,
     allowNull: false
+  },
+  lookupName: {
+    type: Sequelize.STRING,
+    defaultValue: ""
   },
   messages: {
     type: Sequelize.JSON,

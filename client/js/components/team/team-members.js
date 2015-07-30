@@ -23,7 +23,7 @@ var TeamMembers = React.createClass({
       var addRoles = RecUtil.arrayToString(currentMembers[i].roles);
 
       membersList.push(
-        <div className="col-sm-8" id="whitebox">
+        <div className="col-sm-8" id="whitebox" key={i}>
           <div className="col-sm-3">
             <img className="img-circle img-fit" src={currentMembers[i].avatar} />
           </div>

@@ -67,9 +67,15 @@ var viewProfile = React.createClass({
   },
 
   render: function() {
-    console.log("VIEW PROFILE START");
     return (
-      <OtherBio displayName={this.state.displayName} profile={this.state.profile} games={this.state.games} temp={this.state.temp} id={this.state.id} />
+      <OtherBio
+      displayName={this.state.displayName}
+      profile={this.state.profile}
+      games={this.state.games}
+      temp={this.state.temp}
+      id={this.state.id}
+      ratings={this.state.ratings}
+      />
     );
   }
 });

@@ -35,7 +35,7 @@ var TeamRegistration = React.createClass({
     var teamBio = this.state;
     $.post("/team/register", teamBio, function(data){
       self.props.updateState(data);
-      self.transitionTo('/team/' + teamBio.teamName)
+      self.transitionTo('/team/' + teamBio.teamName.toLowerCase().replace(' ', '-'))
     });
   },
   render: function() {

@@ -32,7 +32,7 @@ var TeamUpdateForm = React.createClass({
         "3x3 Casual": false,
         "5x5 Casual": false,
         "5x5 Ranked": false
-      }, 
+      },
       lanes: {
         "top": false,
         "mid": false,
@@ -55,10 +55,11 @@ var TeamUpdateForm = React.createClass({
     var name = router.getCurrentQuery().teamname;
     var context = this;
     Axios.get('/team/profile/' + name)
-      .then(function(response) {   
+      .then(function(response) {
           context.setState({
             // game: response.data.game, // what's this do here?
             members: response.data.members,
+            lookupName: response.data.lookupName,
             teamName: name,
             times: response.data.profile.times,
             purpose: response.data.profile.purpose,
@@ -81,25 +82,26 @@ var TeamUpdateForm = React.createClass({
 
     var self = this;
 
-    $.post('/team/update/' + this.state.teamName, profileUpload, function() {
-      self.transitionTo('/team/' + self.state.teamName, {username: 'username'})
+    $.post('/team/update/' + this.state.lookupName, profileUpload, function() {
+      self.transitionTo('/team/' + self.state.lookupName, {username: 'username'})
     });
   },
 
   handleAd: function(e) {
     e.preventDefault();
+    var self = this;
     var newAd = {
       lanes: this.state.lanes,
       roles: this.state.roles,
       adCopy: this.state.adCopy,
       applicants: []
     }
-    var adPath = '/team/addad/' + this.state.teamName;
+    var adPath = '/team/addad/' + this.state.lookupName;
     $.post(adPath, newAd);
-    this.transitionTo('/team/' + this.state.teamName, {username: 'username'});
+    this.transitionTo('/team/' + this.state.lookupName, {username: 'username'});
   },
   render: function() {
-    
+    console.log(this.state);
     return (
       <div className="container">
 
@@ -139,7 +141,7 @@ var TeamUpdateForm = React.createClass({
 
           <TextInput placeholder="Add notes here." allowNewLine={true} name="adCopy" valueLink={this.linkState('adCopy')} />
 
-          <Button primary type="submit" onClick={this.handleAd} >Post New Ad</Button>
+          <Button primary type="submit" value="submit" onClick={this.handleAd} >Post New Ad</Button>
 
         </form>
       </div>

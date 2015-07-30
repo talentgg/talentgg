@@ -1,6 +1,7 @@
 var React = require('react');
 var Axios = require('axios');
 var Router = require('react-router');
+var Chart = require('../profile/chart');
 
 var fitting = {height: 'auto', width: '100%'};
 
@@ -84,8 +85,17 @@ var OtherBio = React.createClass({
                 <p><b>Lanes</b>: { laneArray === "" ? 'No lanes' : laneArray}</p>
               </div>
             </div>
+            <br/>
+            <div className="panel panel-default whitebox">
+              <div className="panel-body">
+                <h3 className="text-center">About Me</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus illum reprehenderit ducimus, cumque fugiat doloribus est laboriosam neque optio modi. Numquam optio magni ad error in itaque, tenetur ex vitae repellat aliquid dignissimos rerum porro, esse nam unde odio maiores, reiciendis illo dolor quod. Dolor animi magnam ex incidunt praesentium, velit corporis placeat, minima dicta beatae natus error eos impedit corrupti, labore consequatur sequi laborum in debitis, facere quibusdam aperiam! Deleniti ipsa, necessitatibus eligendi, dolorum eius atque obcaecati, consequatur quisquam quae, nostrum numquam nesciunt dicta itaque officia consequuntur ipsam qui modi mollitia animi distinctio voluptatibus pariatur explicabo voluptate quos. Impedit!</p>
+              </div>
+            </div>
           </div>
           <div className="col-sm-6">
+            <Chart ratings={this.props.ratings} />
+            <br/>
             <div className="panel panel-default whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Recent Games</h3>
