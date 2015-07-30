@@ -33,7 +33,7 @@ module.exports = function( app ) {
     Team.addAd(req, res);
   });
 
-  app.post('/team/removefromad', function(req, res){
+  app.post('/team/removeFromAd', function(req, res){
     Team.removeFromAd(req, res);
   });
 
@@ -45,8 +45,8 @@ module.exports = function( app ) {
     Team.applyToTeam(req, res);
   });
 
-  app.post('/team/addtoteam', function(req, res){
-    Team.addtoteam(req, res);
+  app.post('/team/addToTeam', function(req, res){
+    Team.addToTeam(req, res);
   });
 
 };

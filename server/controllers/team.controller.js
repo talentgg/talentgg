@@ -122,43 +122,56 @@ module.exports = {
 
   applyToTeam: function(req, res, next){
     var adUpdate;
-    Team.findById(req.body.teamid)
+    Team.findById(req.body.teamId)
     .then(function(teamData){
-      adUpdate = teamData.ads.data;
-      adUpdate[req.body.adIndex].applicants.push({id: req.session.passport.user, name: req.body.name, ratings: req.body.ratings});
-      Team.update({ads: {data: adUpdate}}, {where: {id: req.body.teamid}})
+      teamData.ads.data[req.body.adIndex].applicants.push({
+        id: req.session.passport.user,
+        name: req.body.name,
+        ratings: req.body.ratings}
+      );
+      Team.update({ads: teamData.ads}, {where: {id: req.body.teamId}})
       .then(function(){
-        res.json({ads: {data: adUpdate}});
+        res.json({ads: teamData.ads});
       })
     });
   },
-  
-  addtoteam: function(req, res, next){
-    Team.findById(Number(req.body.teamId))
-      .then(function(teamData){
-        var updatedAds = deepBoolean(teamData.ads.data);
-        var laneUpdate = deepBoolean(teamData.ads.data[req.body.ad].lanes);
-        var roleUpdate = deepBoolean(teamData.ads.data[req.body.ad].roles);
-        updatedAds.splice(req.body.ad, 1);
-        var updatedMembers = teamData.members;
-        updatedMembers.push({id: req.body.userid, name: req.body.name, lanes: laneUpdate, roles: roleUpdate, ratings: req.body.ratings, avatar: req.body.avatar, isAdmin: false});
-        Team.update({ads: {data: updatedAds}, members: updatedMembers}, {where: {id: req.body.teamId}});
+
+  addToTeam: function(req, res, next){
+    Team.findById(req.body.teamId)
+    .then(function(teamData){
+      var updatedAds = deepBoolean(teamData.ads.data);
+      var laneUpdate = deepBoolean(teamData.ads.data[req.body.ad].lanes);
+      var roleUpdate = deepBoolean(teamData.ads.data[req.body.ad].roles);
+      updatedAds.splice(req.body.ad, 1);
+      var updatedMembers = teamData.members;
+      updatedMembers.push({
+        id: req.body.userid,
+        name: req.body.name,
+        lanes: laneUpdate,
+        roles: roleUpdate,
+        ratings: req.body.ratings,
+        avatar: req.body.avatar,
+        isAdmin: false
       });
+      Team.update({ads: {data: updatedAds}, members: updatedMembers}, {where: {id: req.body.teamId}})
+      .then(function(){
+        res.json({ads: {data: updatedAds}, members: updatedMembers});
+      })
+    });
   },
 
   removeFromAd: function( req, res, next ){
     var obj;
     Team.findById(req.body.teamId)
     .then(function(teamData){
-      var team = teamData.ads;
       obj = teamData.ads.data[req.body.adIndex].applicants;
       for(var i = 0; i < obj.length; i++){
         if(obj[i].name === req.body.name){
           obj.splice(i, 1);
-          team.data[req.body.adIndex].applicants = obj;
-          Team.update({ads: team}, {where: {id: req.body.teamId}})
+          teamData.ads.data[req.body.adIndex].applicants = obj;
+          Team.update({ads: teamData.ads}, {where: {id: req.body.teamId}})
           .then(function(){
-            res.json({ads: team});
+            res.json({ads: teamData.ads});
           })
         }
       }

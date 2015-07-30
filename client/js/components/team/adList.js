@@ -31,44 +31,49 @@ var AdList = React.createClass({
     })
   },
 
-  userApply: function(e) {
+  userApply: function(e) { // I work
     var self = this;
     e.preventDefault();
     $.post('/team/applyToTeam', {
-      teamid: this.props.teamId,
+      teamId: this.props.teamId,
       name: this.props.displayName,
       adIndex: e.target.value,
       ratings: this.props.myRatings
-    }, function(ads){
-      self.props.updateTeam(ads);
+    }, function(data){
+      self.props.updateTeam(data);
     });
   },
 
   userWithdraw: function(e){
+    var self = this;
     e.preventDefault();
     console.log("trigger user withdraw");
   },
 
-  captainApprove: function(e){
+  captainApprove: function(e){ // I work
     var self = this;
     e.preventDefault();
     var approval = e.target.value.split('&');
-    $.post('/team/addtoteam', {userid: approval[0], ad: approval[1], name: approval[2], teamId: this.props.teamId,
-      ratings: this.props.myRatings, avatar: this.props.avatar});
-    // delete other applicants from ad
-    // delete ad
+    $.post('/team/addToTeam', {
+      userId: approval[0],
+      ad: approval[1],
+      name: approval[2],
+      teamId: this.props.teamId,
+      ratings: this.props.myRatings,
+      avatar: this.props.avatar //this needs to change as it captures the captain's own avatar, not the user's
+    }, function(data){
+      self.props.updateTeam(data);
+    });
   },
 
   captainReject: function(e){
     var self = this;
     e.preventDefault();
-    var self = this;
-    var send = {
+    $.post('/team/removeFromAd', {
       teamId: this.props.teamId,
       adIndex: e.target.value.split('&')[1],
       name: e.target.value.split('&')[2]
-    }
-    $.post('/team/removefromad', send, function(ads){
+    }, function(ads){
       console.log(ads);
       self.props.updateTeam(ads);
     });
