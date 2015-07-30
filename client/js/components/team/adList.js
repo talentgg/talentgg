@@ -38,7 +38,8 @@ var AdList = React.createClass({
       teamId: this.props.teamId,
       name: this.props.displayName,
       adIndex: e.target.value,
-      ratings: this.props.myRatings
+      ratings: this.props.myRatings,
+      region: this.props.games.region
     }, function(data){
       self.props.updateTeam(data);
     });
@@ -60,7 +61,7 @@ var AdList = React.createClass({
       name: approval[2],
       teamId: this.props.teamId,
       ratings: this.props.myRatings,
-      avatar: this.props.avatar //this needs to change as it captures the captain's own avatar, not the user's
+      avatar: 'http://avatar.leagueoflegends.com/' + approval[3] + '/' + approval[2] + '.png'
     }, function(data){
       self.props.updateTeam(data);
     });
@@ -78,7 +79,7 @@ var AdList = React.createClass({
     });
   },
 
-  removeAd: function(e){
+  removeAd: function(e){ // I work
     var self = this;
     e.preventDefault();
     $.post('/team/removeAd', {
@@ -113,7 +114,7 @@ var AdList = React.createClass({
               </div>
               <div className="col-sm-7">
                 <Button className="pull-right" value={applicant.id + "&" + index + "&" + applicant.name} secondary={isAdmin} onClick={context.captainReject}>reject</Button>
-                <Button className="pull-right" value={applicant.id + "&" + index + "&" + applicant.name} secondary={isAdmin} onClick={context.captainApprove}>approve</Button>
+                <Button className="pull-right" value={applicant.id + "&" + index + "&" + applicant.name + '&' + applicant.region} secondary={isAdmin} onClick={context.captainApprove}>approve</Button>
               </div>
             </div>
           )

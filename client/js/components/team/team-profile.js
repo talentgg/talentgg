@@ -71,7 +71,7 @@ var TeamProfile = React.createClass({
         teamId: response.id,
         game: response.game,
         captain: response.members[0],
-        members: response.members.slice(1),
+        members: response.members,
         profile: response.profile,
         teamRatings: response.ratings,
         ads: response.ads
@@ -125,7 +125,7 @@ var TeamProfile = React.createClass({
             <div className="panel panel-default whitebox">
               <div className="panel-body">
                 <h3 className="text-center">Current Members</h3>
-                <p><b>Captain</b>: <a href={'/#/user/' + this.state.captain.name}> { this.state.captain.name } </a></p>
+                <br/>
                 <TeamMembers members={this.state.members} />
               </div>
             </div>

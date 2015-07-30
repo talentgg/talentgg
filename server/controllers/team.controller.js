@@ -5,16 +5,13 @@ var passport = require('passport');
 module.exports = {
 
   register: function( req, res, next ) {
-    var user, team;
+    var team;
     User.findOne({where: {id: req.session.passport.user}})
-    .then(function(userData){
-      user = userData;
-    })
-    .then(function(){
+    .then(function(user){
       Team.create({
         profile: req.body,
         teamCaptain: user.id,  // redundant, but this gets checked a lot and saves having to iterate over keys every time
-        members: [{id: user.id, name: user.displayName, isAdmin: true}]
+        members: [{id: user.id, name: user.displayName, isAdmin: true, ratings: user.ratings, avatar: user.games.avatar}]
       })
       .then(function(teamData){
         team = teamData;
@@ -127,8 +124,9 @@ module.exports = {
       teamData.ads.data[req.body.adIndex].applicants.push({
         id: req.session.passport.user,
         name: req.body.name,
-        ratings: req.body.ratings}
-      );
+        ratings: req.body.ratings,
+        region: req.body.region
+      });
       Team.update({ads: teamData.ads}, {where: {id: req.body.teamId}})
       .then(function(){
         res.json({ads: teamData.ads});
