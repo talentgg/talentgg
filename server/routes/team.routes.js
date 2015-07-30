@@ -34,7 +34,6 @@ module.exports = function( app ) {
   });
 
   app.post('/team/removefromad', function(req, res){
-    console.log(req);
     Team.removeFromAd(req, res);
   });
 
@@ -48,6 +47,6 @@ module.exports = function( app ) {
 
   app.post('/team/addtoteam', function(req, res){
     Team.addtoteam(req, res);
-  }); 
+  });
 
 };
