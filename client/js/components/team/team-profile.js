@@ -79,8 +79,8 @@ var TeamProfile = React.createClass({
     })
   },
 
-  updateTeam: function(newState){
-    this.setState(newState);
+  updateTeam: function(newState, callback){
+    this.setState(newState, callback);
   },
 
   handleEdit: function() {

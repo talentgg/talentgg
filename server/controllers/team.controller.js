@@ -184,6 +184,19 @@ module.exports = {
     })
   },
 
+  removeAd: function(req, res){ //teamId
+    Team.findById(req.body.teamId)
+    .then(function(teamData){
+      teamData.ads.data.splice(req.body.index, 1);
+      deepBoolean(teamData.ads.data);
+      Team.update({ads: teamData.ads}, {where: {id: req.body.teamId}})
+      .then(function(){
+        res.json({ads: teamData.ads});
+      })
+    })
+  }
+
+
 };
 
 

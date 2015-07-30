@@ -49,4 +49,8 @@ module.exports = function( app ) {
     Team.addToTeam(req, res);
   });
 
+  app.post('/team/removeAd', function(req, res){
+    Team.removeAd(req, res);
+  });
+
 };
