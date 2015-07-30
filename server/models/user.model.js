@@ -66,7 +66,8 @@ var User = db.define( 'user', {
         "support": false,
         "tank": false
       },
-     about: ""
+     about: "",
+     tagLine: ""
     }
   },
   teams: {

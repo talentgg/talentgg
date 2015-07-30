@@ -59,7 +59,7 @@ var Test = React.createClass({
           </div>
           <div className="col-sm-4">
             <h3>{this.props.displayName}</h3>
-            <p>{this.props.profile.about === "" ? 'I haven\'t filled this out yet' : this.props.profile.about}</p>
+            <p>{this.props.profile.tagLine === "" ? 'I haven\'t filled this out yet' : this.props.profile.tagLine}</p>
           </div>
           <div className="col-sm-2">
             <img className="center-block img-fit" src={"/img/tier-" + this.props.temp.rank + ".png"} />
@@ -93,7 +93,7 @@ var Test = React.createClass({
                 <div className="panel panel-default whitebox">
                   <div className="panel-body">
                     <h3 className="text-center">About Me</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus illum reprehenderit ducimus, cumque fugiat doloribus est laboriosam neque optio modi. Numquam optio magni ad error in itaque, tenetur ex vitae repellat aliquid dignissimos rerum porro, esse nam unde odio maiores, reiciendis illo dolor quod. Dolor animi magnam ex incidunt praesentium, velit corporis placeat, minima dicta beatae natus error eos impedit corrupti, labore consequatur sequi laborum in debitis, facere quibusdam aperiam! Deleniti ipsa, necessitatibus eligendi, dolorum eius atque obcaecati, consequatur quisquam quae, nostrum numquam nesciunt dicta itaque officia consequuntur ipsam qui modi mollitia animi distinctio voluptatibus pariatur explicabo voluptate quos. Impedit!</p>
+                    <p>{this.props.profile.about === "" ? 'I haven\'t filled this out yet' : this.props.profile.about}</p>
                   </div>
                 </div>
               </div>
