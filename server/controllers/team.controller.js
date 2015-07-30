@@ -143,9 +143,8 @@ module.exports = {
       var laneUpdate = deepBoolean(teamData.ads.data[req.body.ad].lanes);
       var roleUpdate = deepBoolean(teamData.ads.data[req.body.ad].roles);
       updatedAds.splice(req.body.ad, 1);
-      var updatedMembers = teamData.members;
-      updatedMembers.push({
-        id: req.body.userid,
+      teamData.members.push({
+        id: req.body.userId,
         name: req.body.name,
         lanes: laneUpdate,
         roles: roleUpdate,
@@ -153,9 +152,16 @@ module.exports = {
         avatar: req.body.avatar,
         isAdmin: false
       });
-      Team.update({ads: {data: updatedAds}, members: updatedMembers}, {where: {id: req.body.teamId}})
+      Team.update({ads: {data: updatedAds}, members: teamData.members}, {where: {id: req.body.teamId}})
       .then(function(){
-        res.json({ads: {data: updatedAds}, members: updatedMembers});
+        User.findById(req.body.userId)
+        .then(function(userData){
+          userData.teams.push({id: teamData.id, teamName: teamData.profile.teamName})
+          User.update({teams: userData.teams},{where: {id: req.body.userId}})
+          .then(function(){
+            res.json({ads: {data: updatedAds}, members: teamData.members});
+          })
+        })
       })
     });
   },

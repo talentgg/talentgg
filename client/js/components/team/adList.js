@@ -50,7 +50,7 @@ var AdList = React.createClass({
     console.log("trigger user withdraw");
   },
 
-  captainApprove: function(e){ // I work
+  captainApprove: function(e){ // I still need to add myself to the user's team field
     var self = this;
     e.preventDefault();
     var approval = e.target.value.split('&');
