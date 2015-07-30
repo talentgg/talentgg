@@ -9,13 +9,18 @@ module.exports = {
     User.findOne({where: {id: req.session.passport.user}})
     .then(function(user){
       Team.create({
+        lookupName: urlify(req.body.teamName),
         profile: req.body,
         teamCaptain: user.id,  // redundant, but this gets checked a lot and saves having to iterate over keys every time
-        members: [{id: user.id, name: user.displayName, isAdmin: true, ratings: user.ratings, avatar: user.games.avatar}]
+        members: [{
+          id: user.id,
+          name: user.displayName,
+          ratings: user.ratings,
+          avatar: user.games.avatar}]
       })
       .then(function(teamData){
         team = teamData;
-        user.teams.push({id: team.id, teamName: team.profile.teamName});
+        user.teams.push({id: team.id, teamName: req.body.teamName, url: req.body.teamName.toLowerCase().replace(' ', '-')});
       })
       .then(function(){
         User.update({teams: user.teams}, {where: {id: req.session.passport.user}});
@@ -27,52 +32,46 @@ module.exports = {
   },
 
   updateProfile: function(req, res, next) {
-      var getName = req.url.split('/')[3];
-      Team.findOne({
-          where: {
-            profile: {
-              teamName: getName
-            }
-          }
-        })
-        .then(function(teamProfile) {
-            var profile = req.body;
-            profile.teamName = getName;
-            Team.update({
-                profile: profile
-              }, {
-                where: {
-                  id: teamProfile.id
-                }
-              })
-              .then(function() {
-                res.redirect('/#/');
-              });
-          });
-      },
+    var getName = urlify(req.url.split('/')[3]);
+    Team.findOne({
+        where: {
+          lookupName: getName
+        }
+      })
+      .then(function(teamProfile) {
+          var profile = req.body;
+          profile.teamName = getName;
+          Team.update({
+              profile: profile
+            }, {
+              where: {
+                id: teamProfile.id
+              }
+            })
+            .then(function() {
+              res.redirect('/#/');
+            });
+        });
+    },
 
 
 
   getProfile: function( req, res, next ){
-    var getName = req.url.split('/')[3];
-    Team.findOne({where: {
-      profile: {
-        teamName: getName
-      }
-    }})
-      .then(function(teamProfile) {
-        deepBoolean(teamProfile.profile);
-        deepBoolean(teamProfile.ads);
-        res.json(teamProfile);
-     });
-   },
+    var getName = urlify(req.url.split('/')[3]);
+    console.log(getName);
+    Team.findOne({where: { lookupName: getName }})
+    .then(function(teamProfile) {
+      console.log(teamProfile)
+      deepBoolean(teamProfile.profile);
+      deepBoolean(teamProfile.ads);
+      res.json(teamProfile);
+    });
+  },
 
   getById: function( req, res, next ){
     var getName = req.url.split('/')[3];
     Team.findOne({where: {
-      id: {
-        teamName: getName
-      }
+      id: getName
     }})
        .then(function(teamProfile) {
         deepBoolean(teamProfile.profile);
@@ -87,13 +86,12 @@ module.exports = {
       res.json(teamProfiles);
     });
   },
+
   addAd: function(req, res, next) {
-  var getName = req.url.split('/')[3];
+  var getName = urlify(req.url.split('/')[3]);
   Team.findOne({
       where: {
-        profile: {
-          teamName: getName
-        }
+        lookupName: getName
       }
     })
     .then(function(teamProfile) {
@@ -154,7 +152,11 @@ module.exports = {
       .then(function(){
         User.findById(req.body.userId)
         .then(function(userData){
-          userData.teams.push({id: teamData.id, teamName: teamData.profile.teamName})
+          userData.teams.push({
+            id: teamData.id,
+            teamName: teamData.profile.teamName,
+            url: req.body.teamName.toLowerCase().replace(' ', '-')
+          })
           User.update({teams: userData.teams},{where: {id: req.body.userId}})
           .then(function(){
             res.json({ads: {data: updatedAds}, members: teamData.members});
@@ -197,7 +199,6 @@ module.exports = {
 
 };
 
-
 function deepBoolean(obj){
   if(typeof obj !== 'object') {
     if(obj === 'true' || obj === 'false'){
@@ -214,4 +215,8 @@ function deepBoolean(obj){
     }
   }
   return obj;
+}
+
+function urlify(str){
+  return str.toLowerCase().replace(' ', '-').replace('%20', '-');
 }

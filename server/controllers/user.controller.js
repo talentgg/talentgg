@@ -152,19 +152,17 @@ module.exports = {
   verifySummoner: function(req, res){
     User.findById(req.session.passport.user)
     .then(function(data){
-      var obj = data.games;
-      var name = data.displayName.split(' (')[0];
-      var temp = data.temp;
-      relay(obj.verifyRoute, function(err, body){
-        if(JSON.parse(body)[obj.id].pages[0].name === obj.verifyKey || config.environment === 'development'){
-          obj.verified = true;
-          obj.verifyKey = false;
-          obj.verifyRoute = false;
-          temp.updatedAt = Date.now(); //data.games.
+      data.displayName = data.displayName.split(' (')[0];
+      data.lookupName = data.displayName.toLowerCase().replace(' ', '');
+      relay(data.games.verifyRoute, function(err, body){
+        if(JSON.parse(body)[data.games.id].pages[0].name === data.games.verifyKey || config.environment === 'development'){
+          data.games.verified = true;
+          data.games.verifyKey = false;
+          data.games.verifyRoute = false;
           updateSummoner(data.games.id, data.games.region, function(temp){
-            User.update({displayName: name, games: obj, temp: temp}, {where: {id: req.session.passport.user}})
+            User.update({displayName: data.displayName, lookupName: data.lookupName, games: data.games, temp: temp}, {where: {id: req.session.passport.user}})
             .then(function(){
-              res.json({displayName: name, games: obj, temp: temp});
+              res.json({displayName: data.displayName, lookupName: data.lookupName, games: data.games, temp: temp});
             })
           });
         } else {
@@ -191,7 +189,7 @@ module.exports = {
   // Functions that retrieve other user information - more sanitized results
 
   profileByName: function(req, res, name){
-    User.findOne({where: {displayName: name}})
+    User.findOne({where: {lookupName: name.toLowerCase()}})
     .then(function(data){
       var obj = data;
       obj.username = false; // hides user's email
@@ -229,6 +227,7 @@ function updateSummoner(id, region, callback){
       temp.matches = [];
       temp.updatedAt = 0;
     } else {
+      temp.updatedAt = Date.now();
       JSON.parse(history).matches.forEach(function(val, i){
         temp.matches[i] = {champ: val.participants[0].championId, win: val.participants[0].stats.winner};
       });

@@ -9,6 +9,11 @@ var Team = db.define( 'team', {
     autoIncrement: true,
     primaryKey: true
   },
+  lookupName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
   //Team-specific schema
   profile: {
     //This is for storing team-level data, similar to bio
@@ -31,7 +36,7 @@ var Team = db.define( 'team', {
         "5v5": false
       },
       about: "You haven't filled this out yet"
-    }    
+    }
   },
   ratings: {
     //This is for storing the user's attributes

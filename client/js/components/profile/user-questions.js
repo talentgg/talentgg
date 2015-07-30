@@ -90,11 +90,13 @@ var UserQuestions = React.createClass({
             </div>
           </div>
         </form>
-        <QuestionHistory historyArray={this.state.answerHistory} qs={this.state.questionStore} />
       </div>
       );
   }
 });
+
+// <QuestionHistory historyArray={this.state.answerHistory} qs={this.state.questionStore} />
+
 
 var AnswersList = React.createClass({
 render: function() {
