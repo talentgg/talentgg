@@ -34,7 +34,11 @@ var AdList = React.createClass({
   },
   reject: function(e){
     // delete from applicants array
-    console.log(e.target);
+    // split('-')[8]
+    var id = this.props.teamId;
+    var ad = (e.target.value.split('&')[1]);
+    var name = (e.target.value.split('&')[2]);
+    $.post('/team/removefromad', {teamId: id, adIndex: ad, displayName: name});
   },
 
   render: function() {
