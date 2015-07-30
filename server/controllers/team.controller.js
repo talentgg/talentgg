@@ -163,7 +163,10 @@ module.exports = {
       })
     });
   },
+  removeTeamMember: function(req, res) {
 
+
+  },
   removeFromAd: function( req, res, next ){
     var obj;
     Team.findById(req.body.teamId)
