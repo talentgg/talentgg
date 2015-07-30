@@ -2,6 +2,9 @@ var React = require('react/addons');
 var Router = require('react-router');
 var Axios = require('axios');
 var TeamProfile = require('./team-profile');
+var TeamMembers = require('./team-members');
+var _ = require('lodash');
+
 
 var ReactBtn = require('react-btn-checkbox');
 var Checkbox = ReactBtn.Checkbox;
@@ -47,7 +50,8 @@ var TeamUpdateForm = React.createClass({
         "support": false,
         "tank": false
       },
-      adCopy: "Help Wanted"
+      adCopy: "Help Wanted",
+      members: {},
     };
   },
   componentWillMount: function() {
@@ -97,13 +101,41 @@ var TeamUpdateForm = React.createClass({
       roles: this.state.roles,
       adCopy: this.state.adCopy,
       applicants: []
-    }
+    };
     var adPath = '/team/addad/' + this.state.lookupName;
     $.post(adPath, newAd);
     this.transitionTo('/team/' + this.state.lookupName, {username: 'username'});
   },
+  removeTeamMember: function(e) {
+    var context = this;
+    e.preventDefault();
+    console.log(e.target.value);
+    $.post('/team/removeTeamMember',{
+      teamId: this.props.teamId,
+      memberName: e.target.value
+    }, function(data) {
+      context.props.updateTeam(data);
+    });
+  },
   render: function() {
-    console.log(this.state);
+
+    var context = this;
+    var members = _.map(this.state.members, function(member){
+      return (
+        <div className="col-sm-8" id="whitebox">
+          <div className="col-sm-3">
+            <img className="img-circle img-fit" src={member.avatar} />
+          </div>
+          <div className="col-sm-2">
+            <p><b>Name</b>: {member.name}</p>
+          </div>
+          <div className="col-sm-3">
+            <Button primary onClick={context.removeTeamMember} value={member.name}>Remove</Button>
+          </div>
+          <br/>
+      </div>);
+    });
+
     return (
       <div className="container">
 
@@ -149,6 +181,17 @@ var TeamUpdateForm = React.createClass({
           <Button primary type="submit" value="submit" onClick={this.handleAd} >Post New Ad</Button>
 
         </form>
+
+        <div className="panel panel-default whitebox">
+          <div className="panel-body">
+            <h3 className="text-center">Current Members</h3>
+            {members}
+            <br/>
+
+          </div>
+        </div>
+
+
       </div>
     )
   }
