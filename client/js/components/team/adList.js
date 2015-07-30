@@ -9,6 +9,13 @@ Button = belle.Button;
 var RecUtil = require('../../utils/recUtil.js');
 
 var AdList = React.createClass({
+
+  componentWillReceiveProps: function(props){
+    this.setState({
+      ads: props.ads
+    })
+  },
+
   handleApply: function(e) {
     e.preventDefault();
     var application = {
@@ -18,7 +25,6 @@ var AdList = React.createClass({
       ratings: this.props.myRatings
     }
     $.post('/team/applytoteam', application);
-
   },
   removeAd: function(e){
     e.preventDefault();
@@ -33,12 +39,17 @@ var AdList = React.createClass({
     // delete ad
   },
   reject: function(e){
-    // delete from applicants array
-    // split('-')[8]
-    var id = this.props.teamId;
-    var ad = (e.target.value.split('&')[1]);
-    var name = (e.target.value.split('&')[2]);
-    $.post('/team/removefromad', {teamId: id, adIndex: ad, displayName: name});
+    e.preventDefault();
+    var self = this;
+    var send = {
+      teamId: this.props.teamId,
+      adIndex: e.target.value.split('&')[1],
+      name: e.target.value.split('&')[2]
+    }
+    $.post('/team/removefromad', send, function(data){
+      console.log(data);
+      self.props.updateTeam(data);
+    });
   },
 
   render: function() {
@@ -54,8 +65,8 @@ var AdList = React.createClass({
       var context = this;
 
       _.map(context.props.ads, function(ad){
-        // if ((ad.applicants && ad.applicants.indexOf(context.props.user) > -1) || context.props.captain === context.props.user) {          
-          if (context.props.captain === context.props.user) {          
+        // if ((ad.applicants && ad.applicants.indexOf(context.props.user) > -1) || context.props.captain === context.props.user) {
+          if (context.props.captain === context.props.user) {
             // this line doesn't do anything ---> ad.applicants.indexOf(context.props.user)
             adminCheck = true;
           }
@@ -75,15 +86,18 @@ var AdList = React.createClass({
           )
       })
 
-      adNodes.push(         
-        <div className="panel panel-default panel-body whitebox">
-          <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
-          <p><b>Lane</b>: {adLanes} </p>
-          <p><b>Role</b>: {adRoles} </p>
-          <p>{context.props.ads[i]["adCopy"]}</p>
-          {applicantNodes}
-          { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
-          (<Button disabled={this.props.games.verified ? "" : "disabled"} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
+      adNodes.push(
+        <div>
+          <div className="panel panel-default panel-body whitebox">
+            <img className="center-block" width="64" height="64" src="/img/role-mage.png"/>
+            <p><b>Lane</b>: {adLanes} </p>
+            <p><b>Role</b>: {adRoles} </p>
+            <p>{context.props.ads[i]["adCopy"]}</p>
+            {applicantNodes}
+            { adminCheck ? (<Button primary onClick={this.removeAd}>Remove</Button>) :
+            (<Button disabled={this.props.games.verified ? "" : "disabled"} value={i} secondary={adminCheck} onClick={this.handleApply}>Apply</Button>)}
+          </div>
+          <br/>
         </div>
       )
     };

@@ -85,28 +85,31 @@ var TeamProfile = React.createClass({
           });
       });
   },
-  componentWillReceiveProps: function() {
-    var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
-    var context = this;
-    Axios.get(teamToGet)
-      .then(function(response) {
-        var cap = null;
-        var mems = [];
-        _.map(response.data.members, function(member) {
-          if (member.isAdmin === true) {
-            cap = member;
-          } else mems.push(member);
-        });
-        context.setState({
-          id: response.data.id,
-          game: response.data.game,
-          members: mems,
-          profile: response.data.profile,
-          captain: cap,
-          ads: response.data.ads
-        });
-      });
+  updateTeam: function(newState){
+    this.setState(newState);
   },
+  // componentWillReceiveProps: function() {
+  //   var teamToGet = "/team/profile/" + window.location.hash.split('/')[2];
+  //   var context = this;
+  //   Axios.get(teamToGet)
+  //     .then(function(response) {
+  //       var cap = null;
+  //       var mems = [];
+  //       _.map(response.data.members, function(member) {
+  //         if (member.isAdmin === true) {
+  //           cap = member;
+  //         } else mems.push(member);
+  //       });
+  //       context.setState({
+  //         id: response.data.id,
+  //         game: response.data.game,
+  //         members: mems,
+  //         profile: response.data.profile,
+  //         captain: cap,
+  //         ads: response.data.ads
+  //       });
+  //     });
+  // },
 
   handleEdit: function() {
     var router = this.context.router;
@@ -158,9 +161,18 @@ var TeamProfile = React.createClass({
             </div>
           </div>
           <div className="col-sm-4">
-            <AdList ads={this.state.ads} displayName={this.props.displayName} teamRatings={this.state.teamRatings}
-            teamId={this.state.id} user={this.props.userId} captain={this.state.captain.id} myRatings={this.props.ratings}
-            avatar={this.props.avatar} games={this.props.games} />
+            <AdList
+            ads={this.state.ads}
+            displayName={this.props.displayName}
+            teamRatings={this.state.teamRatings}
+            teamId={this.state.id}
+            user={this.props.userId}
+            captain={this.state.captain.id}
+            myRatings={this.props.ratings}
+            avatar={this.props.avatar}
+            games={this.props.games}
+            updateTeam={this.updateTeam}
+            />
           </div>
         </div>
         <br/>

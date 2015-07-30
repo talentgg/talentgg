@@ -142,8 +142,23 @@ module.exports = {
       });
   },
 
-removeFromAd: function( req, res, next ){
-    res.json(req);
+  removeFromAd: function( req, res, next ){
+    var obj;
+    Team.findById(req.body.teamId)
+    .then(function(teamData){
+      var team = teamData.ads;
+      obj = teamData.ads.data[req.body.adIndex].applicants;
+      for(var i = 0; i < obj.length; i++){
+        if(obj[i].name === req.body.name){
+          obj.splice(i, 1);
+          team.data[req.body.adIndex].applicants = obj;
+          Team.update({ads: team}, {where: {id: req.body.teamId}})
+          .then(function(){
+            res.json({ads: team});
+          })
+        }
+      }
+    })
   },
 
 };
