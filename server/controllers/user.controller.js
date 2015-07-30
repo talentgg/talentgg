@@ -53,24 +53,27 @@ module.exports = {
   },
 
   getOwnProfile: function(req, res){
-    console.log(req.session);
-    User.findById(req.session.passport.user)
-    .then(function(data){
-      var obj = data;
-      obj.username = "";
-      obj.hash = "";
-      if((data.temp.updatedAt + (1000 * 60 * 15)) < Date.now() && data.games.verified) { //15 minute timer between api call pairs
-        updateSummoner(data.games.id, data.games.region, function(temp){
-          obj.temp.updatedAt = obj.temp.updatedAt || Date.now();
-          User.update({temp: temp}, {where: {id: req.session.passport.user}})
-          .then(function(){
-            res.json(obj);
-          })
-        });
-      } else {
-        res.json(obj);
-      }
-    });
+    if(!req.session.passport.user){
+      res.json({});
+    } else {
+      User.findById(req.session.passport.user)
+      .then(function(data){
+        var obj = data;
+        obj.username = "";
+        obj.hash = "";
+        if((data.temp.updatedAt + (1000 * 60 * 15)) < Date.now() && data.games.verified) { //15 minute timer between api call pairs
+          updateSummoner(data.games.id, data.games.region, function(temp){
+            obj.temp.updatedAt = obj.temp.updatedAt || Date.now();
+            User.update({temp: temp}, {where: {id: req.session.passport.user}})
+            .then(function(){
+              res.json(obj);
+            })
+          });
+        } else {
+          res.json(obj);
+        }
+      });
+    }
   },
 
   getTeamsOwned: function(req, res){ // sends profiles of teams they captain
