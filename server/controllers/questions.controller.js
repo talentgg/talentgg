@@ -13,7 +13,7 @@ module.exports = {
             answers: [{
                 label: "Make it clear that the player should find a new team for the next match, and get their head out of their ass for this one.",
                 value: 0,
-                effects: [10, 10, 2, -2, 10],
+                effects: [20, 10, 2, -2, 10],
                 categories: ["boundaries", "loud", "ambition", "adaptable", "dominance"]
             }, {
                 label: "Direct the player on how to play better.",
@@ -23,22 +23,22 @@ module.exports = {
             }, {
                 label: "Direct your team to compensate for your weak teammate.",
                 value: 2,
-                effects: [5, 3, 5],
+                effects: [5, 3, 10],
                 categories: ["dominance", "adaptable", "collaborative"]
             }, {
                 label: "Keep an eye on their area of the board, and hop over whenever need be.",
                 value: 3,
-                effects: [5, 2, -10, -10, -5, -5],
+                effects: [5, 2, -10, -10, -5, -20],
                 categories: ["adaptable", "collaborative", "loud", "dominance", "blunt", "boundaries"]
             }, {
                 label: "Stay in your lane. If the other team is focused on your teammate, they'll be too distracted to deal with your plans.",
                 value: 4,
-                effects: [5, -5, -5, -10, -5, -3],
+                effects: [5, -5, -10, -10, -5, -10],
                 categories: ["adaptable", "blunt", "collaborative", "loud", "dominance", "boundaries"]
             }],
             potential: [{
                 categories: ["boundaries", "loud", "dominance", "adaptable", "collaborative"],
-                values: [10, 10, 10, 5, 5]
+                values: [10, 10, 10, 5, 10]
             }]
         }, {
             questionText: "What’s your take on trolling and trash talking?",
@@ -155,88 +155,149 @@ module.exports = {
                 categories: ["aggressive"],
                 values: [10]
             }]
-           }, {
+           }, { // 7
             questionText: "In which of these styles do you feel most effective?",
             answers: [{
                 label: "Picking off enemies with powerful, focused attacks.",
                 value: 0,
-                effects: [10, 10],
-                categories: ["ambition", "committed"]
+                effects: [10, 10, -10],
+                categories: ["brute", "aggressive", "collaborative"]
             }, {
                 label: "Wiping out crowds with area-of-effect abilities.",
                 value: 1,
-                effects: [1, -1],
-                categories: ["ambition", "committed"]
+                effects: [-5, 10],
+                categories: ["brute", "aggressive"]
             }, {
                 label: "Snaring and displacing enemies with pulls and knockbacks.",
                 value: 2,
-                effects: [-10, -10],
-                categories: ["ambition", "committed"]
+                effects: [-10],
+                categories: ["brute"]
             }, {
                 label: "Controlling the map with wards and traps.",
                 value: 3,
-                effects: [-10, -10],
-                categories: ["ambition", "committed"]
+                effects: [5, -10],
+                categories: ["collaborative", "aggressive"]
             }, {
                 label: "Supporting allies with heals and buffs.",
                 value: 3,
-                effects: [-10, -10],
-                categories: ["ambition", "committed"]
+                effects: [10, -10],
+                categories: ["collaborative", "aggressive"]
             }],
             potential: [{
-                categories: ["ambition", "committed"],
-                values: [10, 10]
+                categories: ["brute", "aggressive", "collaborative"],
+                values: [10, 10, 10]
             }]
-        }, {
+        }, {    // 8
             questionText: "I ward...",
             answers: [{
                 label: "constantly.",
                 value: 0,
-                effects: [10, 10],
-                categories: ["ambition", "committed"]
+                effects: [-10, 5],
+                categories: ["brute", "collaborative"]
             }, {
                 label: "when I remember / when I'm warned.",
                 value: 1,
-                effects: [1, -1],
-                categories: ["ambition", "committed"]
+                effects: [2],
+                categories: ["brute"]
             }, {
                 label: "maybe once or twice, but it's not that important.",
                 value: 2,
-                effects: [-10, -10],
-                categories: ["ambition", "committed"]
+                effects: [10, -5],
+                categories: ["brute", "collaborative"]
             }],
             potential: [{
-                categories: ["ambition", "committed"],
-                values: [10, 10]
+                categories: ["brute", "collaborative"],
+                values: [10, 5]
             }]
-           }, {
-            questionText: "What’s the most difficult part of being on a team?",
+           }, {  // 9
+            questionText: "Late laning phase. Your teammate is playing aggressively, but the other team keeps waiting until he's deep in a lane and then ambushing him for kills.",
             answers: [{
-                label: "Finding teammates who are good at the game.",
+                label: "If you keep making the same mistake, you're an idiot and I don't mind saying something.",
                 value: 0,
-                effects: [10, 10],
-                categories: ["ambition", "committed"]
+                effects: [15, 10, 5, 10],
+                categories: ["blunt", "dominance", "boundaries", "loud"]
             }, {
-                label: "Finding likable teammates with good attitudes.",
+                label: "I can leave my lane to handle it next time they push too far.",
                 value: 1,
-                effects: [1, -1],
-                categories: ["ambition", "committed"]
+                effects: [-10, 10, 10, -5],
+                categories: ["blunt", "adaptable", "collaborative", "boundaries"]
             }, {
-                label: "Coordinating roles and responsibilities.",
+                label: "I generally just worry about my own game.",
                 value: 1,
-                effects: [1, -1],
+                effects: [-15, -10, -10, -10, -10],
+                categories: ["blunt", "dominance", "collaborative", "adaptable", "loud"]
+            }],
+            potential: [{
+                categories: ["blunt", "dominance", "collaborative", "adaptable"],
+                values: [15, 10, 10, 10]
+            }]
+             }, {  // 10
+            questionText: "What’s your relationship to LoL?",
+            answers: [{
+                label: "It's stress relief after a long day at school or work.",
+                value: 0,
+                effects: [-15, -20],
                 categories: ["ambition", "committed"]
             }, {
-                label: "Coordinating schedules.",
-                value: 2,
+                label: "Everyone knows I play a lot. Being a good LoL player is part of my identity.",
+                value: 1,
                 effects: [-10, -10],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "It's more than a game. It's a major part of my social life, and I care about the skills I'm building by playing.",
+                value: 1,
+                effects: [5, 5],
+                categories: ["ambition", "committed"]
+            }, {
+                label: "Not only do I want to go professional, but it's a significant part of my schedule and I don't make other plans that interfere with that.",
+                value: 2,
+                effects: [-15, 20],
                 categories: ["ambition", "committed"]
             }],
             potential: [{
-                categories: ["ambition", "committed"],
-                values: [10, 10]
+                effects: [15, 20],
+                categories: ["ambition", "committed"]
             }]
-           }, {
+             }, {  //11
+            questionText: "Meta -",
+            answers: [{
+                label: "Tried and true. I get mad when teammates don't respect proper lanes and go rogue.",
+                value: 0,
+                effects: [-10, 5, 10, 5],
+                categories: ["adaptable", "blunt", "loud", "collaborative"]
+            }, {
+                label: "It's the default, but when players try something new I go with it.",
+                value: 1,
+                effects: [10, -5, -10],
+                categories: ["adaptable", "blunt", "loud"]
+            }, {
+                label: "I love deviating from meta.",
+                value: 1,
+                effects: [10, -5],
+                categories: ["adaptable", "collaborative"]
+            }],
+            potential: [{
+                categories: ["adaptable", "blunt", "loud", "collaborative"]
+                values: [10, 5, 10, 5]
+            }]
+             }, {  // 12
+            questionText: "Pick one:",
+            answers: [{
+                label: "j42d",
+                value: 0,
+                effects: [15, 25, 30, 30, 15, 20, 20, 15],
+                categories: ["dominance", "blunt", "brute", "aggressive", "boundaries", "loud", "committed", "ambitious"]
+            }, {
+                label: "ls93",
+                value: 1,
+                effects: [-15, -25, -30, -30, -15, -20, -20, -15],
+                categories: ["dominance", "blunt", "brute", "aggressive", "boundaries", "loud", "committed", "ambitious"]
+            }],
+            potential: [{
+                effects: [15, 25, 30, 30, 15, 20, 20, 15],
+                categories: ["dominance", "blunt", "brute", "aggressive", "boundaries", "loud", "committed", "ambitious"]
+            }]
+             }, {
             questionText: "You've answered all our questions for now. Check back later. New questions added weekly.",
             answers: [],
             potential: []
