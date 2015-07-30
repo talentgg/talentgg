@@ -6,12 +6,6 @@ var _ = require('lodash');
 var RecUtil = require('../../utils/recUtil.js');
 
 var TeamMembers = React.createClass({
-  componentWillMount: function() {
-    Axios.get('./profile')
-      .then(function(e) {
-
-      });
-  },
   render : function() {
 
     var membersList = [];
@@ -23,18 +17,17 @@ var TeamMembers = React.createClass({
       var addRoles = RecUtil.arrayToString(currentMembers[i].roles);
 
       membersList.push(
-        <div className="col-sm-8" id="whitebox" key={i}>
+        <div className="col-sm-12" style={{marginBottom: "15px"}} key={i}>
           <div className="col-sm-3">
             <img className="img-circle img-fit" src={currentMembers[i].avatar} />
           </div>
-          <div className="col-sm-2">
+          <div className="col-sm-3">
             <p><b>Name</b>: {currentMembers[i].name}</p>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-6">
             <p><b>Lane</b>: {addLanes}</p>
             <p><b>Role</b>: {addRoles}</p>
           </div>
-          <br/>
         </div>
       )
     };

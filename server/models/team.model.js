@@ -35,7 +35,8 @@ var Team = db.define( 'team', {
         "3v3": false,
         "5v5": false
       },
-      about: "You haven't filled this out yet"
+      about: "You haven't filled this out yet",
+      tagLine: "You haven't filled this out yet"
     }
   },
   ratings: {
