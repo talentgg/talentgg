@@ -64,6 +64,7 @@ var TeamUpdateForm = React.createClass({
             times: response.data.profile.times,
             purpose: response.data.profile.purpose,
             about: response.data.profile.about,
+            tagLine: response.data.profile.tagLine,
             image: response.data.profile.image
           });
       });
@@ -74,6 +75,7 @@ var TeamUpdateForm = React.createClass({
     var name = router.getCurrentQuery().teamname;
 
     var profileUpload = {
+      tagLine: this.state.tagLine,
       about: this.state.about,
       image: this.state.image,
       times: this.state.times,
@@ -106,6 +108,9 @@ var TeamUpdateForm = React.createClass({
       <div className="container">
 
         <form>
+          Tagline: <TextInput placeholder="update your description here"
+          allowNewLine={ true } name="tagLine" valueLink={this.linkState('tagLine')} />
+
           About Us: <TextInput placeholder="update your description here"
           allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
 
