@@ -277,7 +277,7 @@ module.exports = {
                 categories: ["adaptable", "collaborative"]
             }],
             potential: [{
-                categories: ["adaptable", "blunt", "loud", "collaborative"]
+                categories: ["adaptable", "blunt", "loud", "collaborative"],
                 values: [10, 5, 10, 5]
             }]
              }, {  // 12

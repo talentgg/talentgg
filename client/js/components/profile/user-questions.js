@@ -1,7 +1,6 @@
 var React = require('react');
 var axios = require('axios');
-// TODO: add field for potentialMax
-// TODO: add record of answers
+//TODO: fix previous answers on reload
 
 var UserQuestions = React.createClass({
   getInitialState: function() {
@@ -43,7 +42,7 @@ var UserQuestions = React.createClass({
     var self = this;
     e.preventDefault();
     var ratingUpdate = {};
-    for (key in this.state.ratings) {
+    for (var key in this.state.ratings) {
       ratingUpdate[key] = this.state.ratings[key];
     }
     this.state.answerHistory[this.state.counter] = e.target.answer.value;
@@ -57,7 +56,7 @@ var UserQuestions = React.createClass({
         }
       }
     }
-    var count = this.state.counter + 1
+    var count = this.state.counter + 1;
     this.setState({
       ratings: ratingUpdate,
       current: this.state.questionStore[count],
