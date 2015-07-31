@@ -65,10 +65,10 @@ var MatchList = React.createClass({
             return (id.id === user.id);
           });
         });
-        console.log(memberRatings);
-        console.log("member // team")
-        console.log(team.ratings);
-        console.log(typeof team.ratings.dominance)
+        // console.log(memberRatings);
+        // console.log("member // team")
+        // console.log(team.ratings);
+        // console.log(typeof team.ratings.dominance)
 
         _.each(memberRatings, function(member) {
           _.each(member.ratings, function(rating, key) {
@@ -78,8 +78,8 @@ var MatchList = React.createClass({
         _.each(team.ratings, function(rating) {
           rating /= memberRatings.length;
         });
-        console.log("target");
-        console.log(team.ratings);
+        // console.log("target");
+        // console.log(team.ratings);
       });
     }
 
@@ -87,25 +87,29 @@ var MatchList = React.createClass({
     var matchOrder = [];
     var overallScore;
     var matchData = this.props.searchAs === "solo" ? userSubset : teamSubset;
-
+    console.log(this.props.searchAs);
     // do the same for myratings if they pick a team
 
     _.each(matchData, function(data) {
+      console.log("DATA")
+      console.log(data);
       overallScore = 0;
       for (key in context.props.me) {  
-        var score = 100 - Math.abs(context.props.me[key] - data.ratings[key]);
-        data.ratings[key] = RecUtil.calculateMatchScore(score, 100)
+        var score = 100 - Math.abs(Number(context.props.me[key]) - Number(data.ratings[key]));
+        console.log("SCORE", score);
+        console.log("team", data.ratings[key], typeof data.ratings[key])
+        console.log("me", context.props.me[key], typeof context.props.me[key])
+        data.ratings[key] = RecUtil.calculateMatchScore(score, 100);
         console.log(key, ":", data.ratings[key]);        
         overallScore += data.ratings[key];        
       }
-      overallScore *= 100;
-      data.overallScore = Math.round(RecUtil.calculateMatchScore(overallScore, 1000) * 100);;
+      overallScore *= 10;
+      data.overallScore = Math.round(RecUtil.calculateMatchScore(overallScore, 100) * 100);;
       matchOrder.push(data);
     });
 
     _.each(matchOrder, function(match) {
-      match.link = context.props.searchAs === 'solo' ? '/#/user/' + match.displayName : '/#/team/' + match.profile.teamName;
-      // var pic = match.games ? match.games.avatar : "http://sener.is/hat.jpg";
+      match.link = context.props.searchAs === 'solo' ? '/#/user/' + match.displayName : '/#/team/' + match.profile.teamName;      
         if (!match.games) {        
           match.games = {
             avatar: "http://sener.is/hat.jpg"
@@ -153,7 +157,7 @@ var MatchList = React.createClass({
     var MatchNodes = _.map(matchOrder, function(match) {
       return (<div className="row" style={RecUtil.whiteBox}>
           <div className="row" style={RecUtil.headshot}>
-            <img className="img-circle center-block" src={match.games.avatar}/>
+            <img className="img-circle center-block img-fit" src={match.games.avatar}/>
             <a href={match.link}> <div align="center"> { match.displayName } </div> </a>              
             <div> {match.overallScore}% </div>
           </div>
@@ -166,17 +170,18 @@ var MatchList = React.createClass({
             <br />
           </div>
           <div className="row">
-            <LineChart className="row" style={RecUtil.chart}
-              legend={false}
-              data={match.lineData}
-              width={250}
-              height={200}
-              title=""
-            />
+            
           </div>
         </div>
       )
     });
+    // <LineChart className="row" style={RecUtil.chart}
+    //           legend={false}
+    //           data={match.lineData}
+    //           width={250}
+    //           height={200}
+    //           title=""
+    //         />
       console.log("matchNodes.length")
       console.log(MatchNodes.length)
 
