@@ -41,7 +41,8 @@ var BioForm = React.createClass({
         "support": false,
         "tank": false
       },
-      about: ""
+      about: "",
+      tagLine: ""
     };
   },
   componentWillReceiveProps: function(props){
@@ -50,7 +51,8 @@ var BioForm = React.createClass({
       purpose: props.initialBio.purpose,
       lanes: props.initialBio.lanes,
       roles: props.initialBio.roles,
-      about: props.initialBio.about
+      about: props.initialBio.about,
+      tagLine: props.initialBio.tagLine
     })
   },
   handleSubmit: function(e) {
@@ -61,7 +63,8 @@ var BioForm = React.createClass({
       purpose: this.state.purpose,
       lanes: this.state.lanes,
       roles: this.state.roles,
-      about: this.state.about
+      about: this.state.about,
+      tagLine: this.state.tagLine
     }, function(data){
       self.props.updateState(data);
       $('#tabs a:first').tab('show');
@@ -75,10 +78,17 @@ var BioForm = React.createClass({
           <label className="control-label col-sm-3 col-md-2">Tagline</label>
           <div className="col-sm-offset-3 col-md-offset-2">
             <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
-             allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
+             allowNewLine={ true } name="tagLine" valueLink={this.linkState('tagLine')} />
           </div>
         </div>
 
+        <div className="form-group">
+          <label className="control-label col-sm-3 col-md-2">About</label>
+          <div className="col-sm-offset-3 col-md-offset-2">
+            <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
+             allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
+          </div>
+        </div>
 
         <div className="form-group">
           <label className="control-label col-sm-3 col-md-2">Times Available</label>
