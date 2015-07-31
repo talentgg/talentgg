@@ -15,7 +15,7 @@ var RecUtil = {
 
   calculateMatchScore: function(pos, n) {
     var z, phat;
-    z = 1.56; // 1.96 = 95%
+    z = 1.96; // 1.96 = 95%
     phat = 1 * pos / n;
     return (phat + z * z / (2 * n) - z * Math.sqrt((phat * (1 - phat) + z * z / (4 * n)) / n)) / (1 + z * z / n);
   },
@@ -82,7 +82,7 @@ var RecUtil = {
     margin: '25',
     border: 'solid black 1px',
     height: '250',
-    width: '700',
+    width: '450',
     display: 'inline-block'
   },
   headshot: {
