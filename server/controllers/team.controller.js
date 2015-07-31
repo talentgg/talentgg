@@ -195,6 +195,18 @@ module.exports = {
         res.json({ads: teamData.ads});
       })
     })
+  },
+
+  removeTeamMember: function(req, res) {
+    Team.findById(req.body.teamId)
+    .then(function(teamData) {
+      for (var i = 0; i < teamData.members.length; i++) {
+        if (teamData.members[i].name === req.body.memberName) {
+          var updated = teamData.members.slice(0,i).concat(teamData.members.slice(i+1));
+          Team.update({members: updated}, {where: {id: req.body.teamId}})
+        }
+      }
+    })
   }
 
 
