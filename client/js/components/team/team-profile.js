@@ -89,6 +89,11 @@ var TeamProfile = React.createClass({
     this.transitionTo('teamupdateform', {username: 'username'}, {teamname: this.state.profile.teamName});
   },
 
+  handleAds: function() {
+    var router = this.context.router;
+    this.transitionTo('createad', {username: 'username'}, {teamname: this.state.profile.teamName});
+  },
+
   render: function() {
     var available = RecUtil.arrayToString(this.state.profile.times);
     var purpose = RecUtil.arrayToString(this.state.profile.purpose);

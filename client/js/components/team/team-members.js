@@ -22,9 +22,13 @@ var TeamMembers = React.createClass({
             <img className="img-circle img-fit" src={currentMembers[i].avatar} />
           </div>
           <div className="col-sm-3">
-            <p><b>Name</b>: {currentMembers[i].name}</p>
+            <br/>
+            <br/>
+            <p><h4>{currentMembers[i].name}</h4></p>
           </div>
           <div className="col-sm-6">
+            <br/>
+            <br/>
             <p><b>Lane</b>: {addLanes}</p>
             <p><b>Role</b>: {addRoles}</p>
           </div>
