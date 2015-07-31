@@ -53,4 +53,9 @@ module.exports = function( app ) {
     Team.removeAd(req, res);
   });
 
+  app.post('/team/removeTeamMember', function(req, res){
+  console.log('i get the request');
+  Team.removeTeamMember(req, res);
+  });
+
 };

@@ -69,7 +69,8 @@ var TeamUpdateForm = React.createClass({
             purpose: response.data.profile.purpose,
             about: response.data.profile.about,
             tagLine: response.data.profile.tagLine,
-            image: response.data.profile.image
+            image: response.data.profile.image,
+            teamId: response.data.id
           });
       });
   },
@@ -109,9 +110,8 @@ var TeamUpdateForm = React.createClass({
   removeTeamMember: function(e) {
     var context = this;
     e.preventDefault();
-    console.log(e.target.value);
     $.post('/team/removeTeamMember',{
-      teamId: this.props.teamId,
+      teamId: context.state.teamId,
       memberName: e.target.value
     }, function(data) {
       context.props.updateTeam(data);
