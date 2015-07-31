@@ -5,7 +5,6 @@ var TeamProfile = require('./team-profile');
 var TeamMembers = require('./team-members');
 var _ = require('lodash');
 
-
 var ReactBtn = require('react-btn-checkbox');
 var Checkbox = ReactBtn.Checkbox;
 var Radio = ReactBtn.Radio;
@@ -24,6 +23,7 @@ var TeamUpdateForm = React.createClass({
   getInitialState: function() {
     return {
       teamName: "",
+      tagLine: "",
       about: "",
       image: "",
       times: {
@@ -122,77 +122,132 @@ var TeamUpdateForm = React.createClass({
     var context = this;
     var members = _.map(this.state.members, function(member){
       return (
-        <div className="col-sm-8" id="whitebox">
-          <div className="col-sm-3">
+        <div className="col-sm-6" style={{marginBottom: "15px"}}>
+          <div className="col-sm-4">
             <img className="img-circle img-fit" src={member.avatar} />
           </div>
-          <div className="col-sm-2">
-            <p><b>Name</b>: {member.name}</p>
+          <div className="col-sm-4">
+            <br/>
+            <br/>
+            <p><h4>{member.name}</h4></p>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-4">
+            <br/>
+            <br/>
             <Button primary onClick={context.removeTeamMember} value={member.name}>Remove</Button>
           </div>
-          <br/>
       </div>);
     });
 
     return (
       <div className="container">
+      <form className="form-horizontal" id="teamform" onSubmit={this.handleSubmit}>
+        <h2> Team Settings </h2>
 
-        <form>
-          Tagline: <TextInput placeholder="update your description here"
+        <div className="form-group">
+        <label className="control-label col-sm-3 col-md-2">Tagline</label>
+        <div className="col-sm-offset-3 col-md-offset-2">
+          <TextInput placeholder="Update your description here"
           allowNewLine={ true } name="tagLine" valueLink={this.linkState('tagLine')} />
+        </div>
+      </div>
 
-          About Us: <TextInput placeholder="update your description here"
-          allowNewLine={ true } name="about" valueLink={this.linkState('about')} />
+      <div className="form-group">
+        <label className="control-label col-sm-3 col-md-2">Image Url</label>
+        <div className="col-sm-offset-3 col-md-offset-2">
+          <TextInput placeholder="Update your image url here"
+            allowNewLine={ true } name="image" valueLink={this.linkState('image')} />
+        </div>
+      </div>
 
-          Image Url: <TextInput placeholder="please upload your image url here"
-          allowNewLine={ true } name="image" valueLink={this.linkState('image')} />
+      <div className="form-group">
+        <label className="control-label col-sm-3 col-md-2">About Us</label>
+        <div className="col-sm-offset-3 col-md-offset-2">
+          <TextInput defaultValue="Update about us here."
+            allowNewLine={ true } name="about"  valueLink={this.linkState('about')} />
+          </div>
+      </div>
 
+      <div className="form-group">
+        <label className="control-label col-sm-3 col-md-2">Times Available</label>
+        <div className="col-sm-9 col-md-10">
           <Checkbox
-          label='Times Available: '
+          label=""
           options={this.state.times}
           onChange={this.setState.bind(this)}
           bootstrap />
+        </div>
+      </div>
 
+      <div className="form-group">
+        <label className="control-label col-sm-3 col-md-2">Purpose</label>
+        <div className="col-sm-9 col-md-10">
           <Checkbox
-          label='Purpose: '
+          label=""
           options={this.state.purpose}
           onChange={this.setState.bind(this)}
           bootstrap />
+        </div>
+      </div>
 
-          <Button type="submit" onClick={this.handleSubmit} >Submit Changes</Button>
+      <div className="form-group">
+        <div className="col-sm-offset-5 col-sm-2">
+          <Button primary type="submit" value="Submit">Update</Button>
+        </div>
+      </div>
+      </form>
 
-          <h3> Create New Ad </h3>
-          <Checkbox
-          label='lanes: '
-          options={this.state.lanes}
-          onChange={this.setState.bind(this)}
-          bootstrap />
+      <form className="form-horizontal" id="adform" onSubmit={this.handleAd}>   
 
-          <Checkbox
-          label='roles: '
-          options={this.state.roles}
-          onChange={this.setState.bind(this)}
-          bootstrap />
-
-          <TextInput placeholder="Add notes here." allowNewLine={true} name="adCopy" valueLink={this.linkState('adCopy')} />
-
-          <Button primary type="submit" value="submit" onClick={this.handleAd} >Post New Ad</Button>
-
-        </form>
-
-        <div className="panel panel-default whitebox">
-          <div className="panel-body">
-            <h3 className="text-center">Current Members</h3>
-            {members}
-            <br/>
-
+        <h2> Create New Ad </h2>
+        <div className="form-group">
+          <label className="control-label col-sm-3 col-md-2">Lanes</label>
+          <div className="col-sm-9 col-md-10">
+            <Checkbox
+            label=""
+            options={this.state.lanes}
+            onChange={this.setState.bind(this)}
+            bootstrap />
           </div>
         </div>
 
+        <div className="form-group">
+          <label className="control-label col-sm-3 col-md-2">Roles</label>
+          <div className="col-sm-9 col-md-10">
+            <Checkbox
+            label=""
+            options={this.state.roles}
+            onChange={this.setState.bind(this)}
+            bootstrap />
+          </div>
+        </div>
 
-      </div>
+        <div className="form-group">
+          <label className="control-label col-sm-3 col-md-2">Ad Copy</label>
+          <div className="col-sm-offset-3 col-md-offset-2">
+            <TextInput defaultValue="Add notes here."
+             allowNewLine={true} name="adCopy" valueLink={this.linkState('adCopy')} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-offset-5 col-sm-2">
+            <Button primary type="submit" value="Submit">Post New Ad</Button>
+          </div>
+        </div>
+      </form>
+      <br/>
+      <br/>
+
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <h2 className="text-center">Current Members</h2>
+            <br/>
+            {members}
+            <br/>
+          </div>
+        </div>
+      </div> 
     )
   }
 });
