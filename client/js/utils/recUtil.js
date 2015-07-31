@@ -3,7 +3,7 @@ var _ = require('lodash');
 
 var RecUtil = {
 
-  arrayToString: function(obj) {
+  objectToString: function(obj) { 
     var string = [];
     for (var key in obj) {
       if (obj[key] === true) {
@@ -13,16 +13,15 @@ var RecUtil = {
     return string.toString();
   },
 
-  calculateMatchScore: function(pos, n) {
+  calculateMatchScore: function(pos, n) {  // lower bound wilson score confidence interval of a bernouilli parameter
     var z, phat;
     z = 1.96; // 1.96 = 95%
     phat = 1 * pos / n;
     return (phat + z * z / (2 * n) - z * Math.sqrt((phat * (1 - phat) + z * z / (4 * n)) / n)) / (1 + z * z / n);
   },
 
-  calculateTeamMatch: function(user, team) {
-        console.log(user.counter);
-
+  calculateTeamMatch: function(user, team) { // currently not in use, but this is where you could differentiate team algorithm further
+        
         var target = {
           collaborative: team[collaborative], 
           boundaries: team[boundaries],
@@ -36,12 +35,9 @@ var RecUtil = {
           blunt: team[blunt]// check for tiers,     //<-- not too much total?
           // brute: // message,
         };
-
-      
-
   },
 
-  checkIfChecked: function(obj) {
+  checkIfChecked: function(obj) {         // don't iterate unless something's checked
     return !(_.every(obj, function(elm) {
       return elm === false;
     }) || _.every(obj, function(elm) {
@@ -51,7 +47,6 @@ var RecUtil = {
 
   propFilter: function(userList, property, context) {
     var filters = [];
-
     for (var key in context.props[property]) {
       if (context.props[property][key] === true) filters.push(key);
     }
@@ -111,8 +106,6 @@ var RecUtil = {
     float: 'right',
     textAlign: 'center'
   }
-
-
 };
 
 module.exports = RecUtil;

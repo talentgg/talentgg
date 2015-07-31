@@ -14,8 +14,6 @@ var MatchList = React.createClass({
     var teamSubset;
     var key;
 
-    
-
     if (this.props.searchAs !== "team") {
       console.log("solo");
       userSubset = _.filter(context.props.allUsers, function(user) {   // remove self from pool
@@ -65,11 +63,6 @@ var MatchList = React.createClass({
             return (id.id === user.id);
           });
         });
-        // console.log(memberRatings);
-        // console.log("member // team")
-        // console.log(team.ratings);
-        // console.log(typeof team.ratings.dominance)
-
         _.each(memberRatings, function(member) {
           _.each(member.ratings, function(rating, key) {
             team.ratings[key] += Number(rating);
@@ -78,8 +71,6 @@ var MatchList = React.createClass({
         _.each(team.ratings, function(rating) {
           rating /= memberRatings.length;
         });
-        // console.log("target");
-        // console.log(team.ratings);
       });
     }
 
@@ -87,18 +78,11 @@ var MatchList = React.createClass({
     var matchOrder = [];
     var overallScore;
     var matchData = this.props.searchAs === "solo" ? userSubset : teamSubset;
-    console.log(this.props.searchAs);
-    // do the same for myratings if they pick a team
 
     _.each(matchData, function(data) {
-      console.log("DATA")
-      console.log(data);
       overallScore = 0;
       for (key in context.props.me) {  
-        var score = 100 - Math.abs(Number(context.props.me[key]) - Number(data.ratings[key]));
-        console.log("SCORE", score);
-        console.log("team", data.ratings[key], typeof data.ratings[key])
-        console.log("me", context.props.me[key], typeof context.props.me[key])
+        var score = 100 - Math.abs(Number(context.props.me[key]) - Number(data.ratings[key]));        
         data.ratings[key] = RecUtil.calculateMatchScore(score, 100);
         console.log(key, ":", data.ratings[key]);        
         overallScore += data.ratings[key];        
@@ -151,10 +135,7 @@ var MatchList = React.createClass({
       return match.overallScore;
     }).reverse();
 
-    console.log("matchOrder");
-    console.log(matchOrder);
-
-    var MatchNodes = _.map(matchOrder, function(match) {
+    MatchNodes = _.map(matchOrder, function(match) {
       return (<div className="row" style={RecUtil.whiteBox}>
           <div className="row" style={RecUtil.headshot}>
             <img className="img-circle center-block img-fit" src={match.games.avatar}/>
@@ -162,10 +143,10 @@ var MatchList = React.createClass({
             <div> {match.overallScore}% </div>
           </div>
           <div className="row" style={RecUtil.stats}>
-            <div> { RecUtil.arrayToString(match.profile.purpose) } </div>    
-            <div> { RecUtil.arrayToString(match.profile.times) } </div>
-            <div> { RecUtil.arrayToString(match.profile.roles) } </div>
-            <div> { RecUtil.arrayToString(match.profile.lanes) } </div>              
+            <div> { RecUtil.objectToString(match.profile.purpose) } </div>    
+            <div> { RecUtil.objectToString(match.profile.times) } </div>
+            <div> { RecUtil.objectToString(match.profile.roles) } </div>
+            <div> { RecUtil.objectToString(match.profile.lanes) } </div>              
             <br />
             <br />
           </div>
@@ -175,6 +156,7 @@ var MatchList = React.createClass({
         </div>
       )
     });
+    // possible chart for matching page
     // <LineChart className="row" style={RecUtil.chart}
     //           legend={false}
     //           data={match.lineData}
@@ -182,9 +164,7 @@ var MatchList = React.createClass({
     //           height={200}
     //           title=""
     //         />
-      console.log("matchNodes.length")
-      console.log(MatchNodes.length)
-
+      
     return (
       <div>
         <ul className="MatchList">
