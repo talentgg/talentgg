@@ -179,7 +179,7 @@ module.exports = {
                 categories: ["collaborative", "aggressive"]
             }, {
                 label: "Supporting allies with heals and buffs.",
-                value: 3,
+                value: 4,
                 effects: [10, -10],
                 categories: ["collaborative", "aggressive"]
             }],
@@ -223,7 +223,7 @@ module.exports = {
                 categories: ["blunt", "adaptable", "collaborative", "boundaries"]
             }, {
                 label: "I generally just worry about my own game.",
-                value: 1,
+                value: 2,
                 effects: [-15, -10, -10, -10, -10],
                 categories: ["blunt", "dominance", "collaborative", "adaptable", "loud"]
             }],
@@ -245,12 +245,12 @@ module.exports = {
                 categories: ["ambition", "committed"]
             }, {
                 label: "It's more than a game. It's a major part of my social life, and I care about the skills I'm building by playing.",
-                value: 1,
+                value: 2,
                 effects: [5, 5],
                 categories: ["ambition", "committed"]
             }, {
                 label: "Not only do I want to go professional, but it's a significant part of my schedule and I don't make other plans that interfere with that.",
-                value: 2,
+                value: 3,
                 effects: [-15, 20],
                 categories: ["ambition", "committed"]
             }],
@@ -272,7 +272,7 @@ module.exports = {
                 categories: ["adaptable", "blunt", "loud"]
             }, {
                 label: "I love deviating from meta.",
-                value: 1,
+                value: 2,
                 effects: [10, -5],
                 categories: ["adaptable", "collaborative"]
             }],

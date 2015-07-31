@@ -29,17 +29,20 @@ var UserQuestions = React.createClass({
 
     axios.all([getQuestions(), getRatings()])
         .then(axios.spread(function(qs, profile) {
+          console.log(typeof profile.data.counter)
+          console.log(profile.data.counter)
             context.setState({
-              current: qs.data[profile.data.counter],
+              current: qs.data[Number(profile.data.counter)],
               questionStore: qs.data,
               counter: profile.data.counter,
-              ratings: profile.data.ratings
+              ratings: profile.data.ratings,
+              answerHistory: profile.data.answerHistory.data
             });
         }));
   },
 
   handleSubmit: function(e) {
-    var self = this;
+    var context = this;
     e.preventDefault();
     var ratingUpdate = {};
     for (var key in this.state.ratings) {
@@ -65,9 +68,12 @@ var UserQuestions = React.createClass({
 
     $.post( "/ratings", {
       ratings: ratingUpdate,
-      counter: count
+      counter: count,
+      answerHistory: {
+        data: this.state.answerHistory
+      }
     }, function(data){
-      self.props.updateState(data);
+      context.props.updateState(data);
     });
   },
   render: function() {
@@ -89,12 +95,13 @@ var UserQuestions = React.createClass({
             </div>
           </div>
         </form>
+        
       </div>
       );
   }
 });
-
 // <QuestionHistory historyArray={this.state.answerHistory} qs={this.state.questionStore} />
+
 
 
 var AnswersList = React.createClass({
@@ -116,13 +123,20 @@ render: function() {
 
 var QuestionHistory = React.createClass({
 render: function() {
+  console.log("start qh")
     var HistoryNodes = [];
     for (var i = this.props.historyArray.length - 1; i >= 0; i--) {
+      console.log("--------->>")
+      console.log(this.props.qs[i].answers)
+      console.log(this.props.historyArray);
+      console.log(this.props.historyArray[i])
+      console.log(this.props.qs[i].answers[0].label)
+      console.log(this.props.qs[i].answers[Number(this.props.historyArray[i])].label)
       HistoryNodes.push(
         <div key={i}>
           <h3> {this.props.qs[i].questionText} </h3>
           <h4> You answered: </h4>
-          <h5> {this.props.qs[i].answers[this.props.historyArray[i]].label} </h5>
+          <h5> {this.props.qs[i].answers[Number(this.props.historyArray[i])].label} </h5>
         </div>
       )
     };

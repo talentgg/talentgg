@@ -14,13 +14,13 @@ var MatchList = React.createClass({
     var teamSubset;
     var key;
 
-    // filter out own team
+    
 
     if (this.props.searchAs !== "team") {
       console.log("solo");
-      userSubset = _.filter(context.props.allUsers, function(user) {
+      userSubset = _.filter(context.props.allUsers, function(user) {   // remove self from pool
         return user.id !== context.props.id;
-      });
+      }); // apply filters
       userSubset = RecUtil.checkIfChecked(context.props.times) ? RecUtil.propFilter(userSubset, "times", context) : userSubset;
       userSubset = RecUtil.checkIfChecked(context.props.purpose) ? RecUtil.propFilter(userSubset, "purpose", context) : userSubset;
       userSubset = RecUtil.checkIfChecked(context.props.roles) ? RecUtil.propFilter(userSubset, "roles", context) : userSubset;
@@ -35,7 +35,7 @@ var MatchList = React.createClass({
           return member.id === context.props.id;
         });
       });
-      _.map(teamSubset, function(team) {
+      _.map(teamSubset, function(team) { // for team search, filters depend on which ads run
         team.roles = {
           "assassin": false,
           "mage": false,
@@ -59,7 +59,7 @@ var MatchList = React.createClass({
           }
         });
 
-        // team matching logic. create a target profile.
+        // team matching logic. create a target profile. first, extract the ratings of all the members from the "allUser" pool.
         var memberRatings = _.filter(context.props.allUsers, function(user) {
           return _.some(team.members, function(id) {
             return (id.id === user.id);
@@ -68,7 +68,18 @@ var MatchList = React.createClass({
         console.log(memberRatings);
         console.log("member // team")
         console.log(team.ratings);
+        console.log(typeof team.ratings.dominance)
 
+        _.each(memberRatings, function(member) {
+          _.each(member.ratings, function(rating, key) {
+            team.ratings[key] += Number(rating);
+          });
+        });
+        _.each(team.ratings, function(rating) {
+          rating /= memberRatings.length;
+        });
+        console.log("target");
+        console.log(team.ratings);
       });
     }
 
@@ -82,13 +93,13 @@ var MatchList = React.createClass({
     _.each(matchData, function(data) {
       overallScore = 0;
       for (key in context.props.me) {  
-        var score = Math.abs(context.props.me[key] - data.ratings[key]);
-        // var score = RecUtil.calculateMatchScore(context.props.me[key], data.ratings[key]);
-        overallScore += score;
-        // score = RecUtil.calculateMatchScore(score, 20);
+        var score = 100 - Math.abs(context.props.me[key] - data.ratings[key]);
+        data.ratings[key] = RecUtil.calculateMatchScore(score, 100)
+        console.log(key, ":", data.ratings[key]);        
+        overallScore += data.ratings[key];        
       }
-      Math.round(RecUtil.calculateMatchScore(overallScore, 200) * 100);
-      data.overallScore = overallScore;
+      overallScore *= 100;
+      data.overallScore = Math.round(RecUtil.calculateMatchScore(overallScore, 1000) * 100);;
       matchOrder.push(data);
     });
 
