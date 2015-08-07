@@ -2,6 +2,7 @@ var React = require('react');
 var Axios = require('axios');
 var Router = require('react-router');
 var Chart = require('../profile/chart');
+var RecUtil = require('../../utils/recUtil.js')
 
 var fitting = {height: 'auto', width: '100%'};
 
@@ -34,28 +35,14 @@ var OtherBio = React.createClass({
   // },
 
   render: function() {
-    console.log("STARTTTT");
-    var arrayToString = function(obj) {
-      var arr = [];
-      for (var key in obj) {
-        if (obj[key] === true) {
-          arr.push(key);
-        }
-      }
-      return arr.join(', ');
-    };
-
-    var available = arrayToString(this.props.profile.times);
-    var gameTypes = arrayToString(this.props.profile.purpose);
-    var roleArray = arrayToString(this.props.profile.roles);
-    var laneArray = arrayToString(this.props.profile.lanes);
+    var available = RecUtil.objectToString(this.props.profile.times);
+    var gameTypes = RecUtil.objectToString(this.props.profile.purpose);
+    var roleArray = RecUtil.objectToString(this.props.profile.roles);
+    var laneArray = RecUtil.objectToString(this.props.profile.lanes);
     var games = this.props.temp.matches.reverse();
     var recentTop = games.slice(0, Math.min(5, games.length));
     var recentBot = games.length > 4 ? games.slice(5) : [];
-    console.log("THIS PROPS");
-    console.log(this.props);
-
-
+    
     return (
       <div>
         <div className="row whitebox">

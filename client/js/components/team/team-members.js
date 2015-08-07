@@ -13,8 +13,8 @@ var TeamMembers = React.createClass({
     for (var i = 0; i < this.props.members.length; i++) {
       var context = this;
       var currentMembers = context.props.members;
-      var addLanes = RecUtil.arrayToString(currentMembers[i].lanes);
-      var addRoles = RecUtil.arrayToString(currentMembers[i].roles);
+      var addLanes = RecUtil.objectToString(currentMembers[i].lanes);
+      var addRoles = RecUtil.objectToString(currentMembers[i].roles);
 
       membersList.push(
         <div className="col-sm-12" style={{marginBottom: "15px"}} key={i}>

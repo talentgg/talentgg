@@ -5,6 +5,7 @@ var Questions = require('./user-questions');
 var Edit = require('./bio-form');
 var Chart = require('./chart');
 var AccountLink = require('./accountLink');
+var RecUtil = require('../../utils/recUtil.js');
 
 var champList = {"1":"Annie","2":"Olaf","3":"Galio","4":"TwistedFate","5":"XinZhao","6":"Urgot","7":"Leblanc","8":"Vladimir",
 "9":"FiddleSticks","10":"Kayle","11":"MasterYi","12":"Alistar","13":"Ryze","14":"Sion","15":"Sivir","16":"Soraka","17":"Teemo",
@@ -33,20 +34,11 @@ var Test = React.createClass({
   },
 
   render: function() {
-    var arrayToString = function(obj) {
-      var arr = [];
-      for (var key in obj) {
-        if (obj[key]) {
-          arr.push(key);
-        }
-      }
-      return arr.join(', ');
-    };
 
-    var available = arrayToString(this.props.profile.times);
-    var gameTypes = arrayToString(this.props.profile.purpose);
-    var roleArray = arrayToString(this.props.profile.roles);
-    var laneArray = arrayToString(this.props.profile.lanes);
+    var available = RecUtil.objectToString(this.props.profile.times);
+    var gameTypes = RecUtil.objectToString(this.props.profile.purpose);
+    var roleArray = RecUtil.objectToString(this.props.profile.roles);
+    var laneArray = RecUtil.objectToString(this.props.profile.lanes);
     var games = this.props.temp.matches.reverse();
     var recentTop = games.slice(0, Math.min(5, games.length));
     var recentBot = games.length > 4 ? games.slice(5) : [];

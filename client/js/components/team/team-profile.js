@@ -95,8 +95,8 @@ var TeamProfile = React.createClass({
   },
 
   render: function() {
-    var available = RecUtil.arrayToString(this.state.profile.times);
-    var purpose = RecUtil.arrayToString(this.state.profile.purpose);
+    var available = RecUtil.objectToString(this.state.profile.times);
+    var purpose = RecUtil.objectToString(this.state.profile.purpose);
 
     return (
       <div>

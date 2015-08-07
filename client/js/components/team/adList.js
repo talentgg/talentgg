@@ -98,8 +98,8 @@ var AdList = React.createClass({
     var adNodes = [];
 
     for (var i = 0; i < this.state.ads.length; i++) {
-      var adLanes = RecUtil.arrayToString(this.state.ads[i]["lanes"]);
-      var adRoles = RecUtil.arrayToString(this.state.ads[i]["roles"]);
+      var adLanes = RecUtil.objectToString(this.state.ads[i]["lanes"]);
+      var adRoles = RecUtil.objectToString(this.state.ads[i]["roles"]);
       var applicantNodes = [];
       var notApplied = true;
 
