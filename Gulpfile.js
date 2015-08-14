@@ -12,7 +12,7 @@ gulp.task('start', function () {
     script: 'server/server.js',
     ext: 'js html ejs jsx',
     env: { 'NODE_ENV': 'development' }
-  })
+  });
 });
 
 /* Bundles required modules */
