@@ -1,7 +1,7 @@
 var React = require('react');
 var axios = require('axios');
 var _ = require('lodash');
-var MatchList = require('./matchList.js');
+var MatchList = require('./MatchList.js');
 
 var ReactBtn = require('react-btn-checkbox');
 var Checkbox = ReactBtn.Checkbox;
